@@ -1,0 +1,33 @@
+<div>
+  <label><span i18n>name:</span>
+    <input [(ngModel)]="player.name" placeholder="name">
+  </label>
+</div>
+<div>
+  <label><span i18n>name:</span>
+    <input [(ngModel)]="player.surname" placeholder="surname">
+  </label>
+</div>
+<div>
+  <label><span i18n>name:</span>
+    <input type="number" [(ngModel)]="player.age" placeholder="age">
+  </label>
+</div>
+<div>
+  <span i18n>sex:</span>
+  <mat-radio-group name="playerSex" [(ngModel)]="player">
+    <mat-radio-button [value]=0><span i18n>Male</span>
+    </mat-radio-button>
+    <mat-radio-button [value]=1><span i18n>Female</span>
+    </mat-radio-button>
+  </mat-radio-group>
+</div>
+<div>
+  <span i18n>level:</span>
+  <mat-radio-group name="playerRank" [(ngModel)]="player.rank">
+    <div *ngFor="let rank of ranks">
+    <mat-radio-button [value]="rank" [checked]="player.rank == rank">{{rank_strings[rank]}}
+    </mat-radio-button>
+  </div>
+  </mat-radio-group>
+</div>
