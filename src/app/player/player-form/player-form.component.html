@@ -1,15 +1,82 @@
-<div>
+<form class="form-horizontal" role="form" class="edit-user" name="player-form" #playerForm="ngForm">
+  {{player | json}}
+  <div class="form-group">
+    <label for="name" class="col-md-2 control-label col-md-offset-2" i18n>
+      Player name
+    </label>
+    <div class="col-md-5">
+      <input type="text" name="name" class="form-control" placeholder="player name" [(ngModel)]="player.name">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="surname" class="col-md-2 control-label col-md-offset-2" i18n>
+      Surname
+    </label>
+    <div class="col-md-5">
+      <input type="text" name="surname" class="form-control" placeholder="player surname" [(ngModel)]="player.surname">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="sex" class="col-md-2 control-label col-md-offset-2" i18n>
+      Sex
+    </label>
+    <div class="col-md-5">
+      <input name="sex" type="radio" id="button-sex-man" [checked]="0===player.sex" [(ngModel)]="player.sex" [value]=0 i18n/>Man
+      <input name="sex" type="radio" id="button-sex-woman" [checked]="1===player.sex" [(ngModel)]="player.sex" [value]=1 i18n/>Woman<br/>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="birthday" class="col-md-2 control-label col-md-offset-2" i18n>
+      Birthday
+    </label>
+    <div class="col-md-5">
+      <input type="date" id="exampleInput" name="birthday" [(ngModel)]="player.birthday" required />
+    </div>
+  </div>
+  {{rankEnum|json}}{{player.rank}}{{ranks}}
+  <div class="form-group">
+    <label for="rank" class="col-md-2 control-label col-md-offset-2" i18n>
+      Rank
+    </label>
+    <div class="col-md-5">
+      <select id="rank-select" [(ngModel)]="player.rank" class="form-control" name="rank" [compareWith]="rankCompare">
+      <option *ngFor="let rank of ranks" [ngValue]=rank>{{rank_strings[rank]}}</option></select>
+    </div>
+    {{player.rank}}
+  </div>
+  <div class="form-group" ng-class="{'has-warning has-feedback':errors.name}">
+    <label for="club" class="col-md-2 control-label col-md-offset-2" i18n>
+      Club
+    </label>
+    <!-- <div class="col-md-5">
+      <select id="club-select" [(ngModel)]="player.club_id" class="form-control" name="club"
+      ng-options="club.id as club.name for club in clubs"></select>
+    </div> -->
+  </div>
+  <div class="form-group">
+    <!-- <div class="col-md-offset-2 col-md-3">
+      <button class="btn btn-default" type="button" ng-click="cancel()" id="cancel-player">{{'CANCEL'|translate}}</button>
+    </div>
+    <div class="col-md-4 text-right">
+      <button class="btn btn-primary" ng-click="save()" id="save-player">{{'SAVE'|translate}}</button>
+    </div> -->
+  </div>
+</form>
+<!-- <section class="row">
+  <div class="col-md-6 col-md-offset-3"
+  <article class="pnael panel-info">
+    <div>
   <label><span i18n>name:</span>
     <input [(ngModel)]="player.name" placeholder="name">
   </label>
 </div>
 <div>
-  <label><span i18n>name:</span>
+  <label><span i18n>surname:</span>
     <input [(ngModel)]="player.surname" placeholder="surname">
   </label>
 </div>
 <div>
-  <label><span i18n>name:</span>
+  <label><span i18n>age:</span>
     <input type="number" [(ngModel)]="player.age" placeholder="age">
   </label>
 </div>
@@ -31,3 +98,30 @@
   </div>
   </mat-radio-group>
 </div>
+</article>
+</div>
+</section> -->
+<!-- <section class="col-md-6 col-md-offset-3">
+  <article class="panel panel-info">
+    <header class="panel-heading"><h1>{{player.name}} {{player.surname}}</h1>
+    </header>
+    <p class="panel-body">
+      <div class="h3" i18n>RANK: {{mapRanks(player.rank)}}</div>
+      <div class="h3" i18n>CLUB: <a href="" ng-click="viewPlayersClub()" > {{player.club.name}}</a></div>
+    </p>
+  </article>
+  <section>
+    <div class="col-md-9">
+      <button ng-click="index()" class="btn btn-default" id="index-player" i18n>
+        &larr; INDEX
+      </button>
+      <button ng-click="back()" class="btn btn-default" id="back-player" i18n>
+        &larr; BACK
+      </button>
+      <div ng-show="isAdmin" class="col-md-9 text-right btn-group">
+        <button (click)="edit()" class="btn btn-info" id="edit-player" i18n> EDIT </button>
+        <button (click)="delete()" class="btn btn-danger" id="delete-player"i18n> DELETE </button>
+      </div>
+    </div>
+  </section>
+</section> -->

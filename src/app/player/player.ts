@@ -43,7 +43,7 @@ export class Player {
   name: string;
   surname: string;
   sex: Sex;
-  age: number;
+  birthday: Date;
   rank: Rank;
   club_id: number;
   id: number;

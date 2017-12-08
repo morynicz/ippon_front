@@ -8,25 +8,27 @@ import { Player, Sex, Rank, RANK_STRINGS } from '../player'
 })
 export class PlayerFormComponent implements OnInit {
   player: Player = {
-      name: 'Link',
-      surname: 'Sursur',
-      sex: Sex.Male,
-      age: 28,
-      rank: Rank.Kyu_1,
-      club_id: 0,
-      id: 0
+    name: 'Link',
+    surname: 'Sursur',
+    sex: Sex.Male,
+    birthday: new Date("2012-12-12"),
+    rank: Rank.Kyu_1,
+    club_id: 0,
+    id: 0
   };
-  rank: any;
+  rankEnum: any;
   ranks: any[];
   rank_strings: string[];
 
   constructor() {
     this.rank_strings = RANK_STRINGS;
-    this.rank = Rank;
-    this.ranks = Object.keys(this.rank).filter(f => !isNaN(Number(f)));
- }
+    this.ranks = Object.keys(Rank).filter(f => !isNaN(Number(f)));
+  }
 
   ngOnInit() {
   }
 
+  rankCompare(r1: Rank, r2: Rank): boolean {
+    return r1 == r2;
+  }
 }

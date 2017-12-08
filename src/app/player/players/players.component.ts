@@ -11,7 +11,7 @@ export class PlayersComponent implements OnInit {
       name: 'Link',
       surname: 'Sursur',
       sex: Sex.Male,
-      age: 28,
+      birthday: new Date("12.12.12"),
       rank: Rank.Kyu_1,
       club_id: 0,
       id: 0
