@@ -30,10 +30,10 @@
       Birthday
     </label>
     <div class="col-md-5">
-      <input type="date" id="exampleInput" name="birthday" [(ngModel)]="player.birthday" required />
+      <!-- <input type="date" name="birthday" [(ngModel)]="player.birthday" required /> -->
+      <input type="date" name="birthday" [ngModel]="player.birthday | date:'yyyy-MM-dd'" (ngModelChange)="player.birthday = $event" required>
     </div>
   </div>
-  {{rankEnum|json}}{{player.rank}}{{ranks}}
   <div class="form-group">
     <label for="rank" class="col-md-2 control-label col-md-offset-2" i18n>
       Rank
