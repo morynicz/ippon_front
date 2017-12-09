@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Player, Sex, Rank } from '../player'
+import { Player, Sex, Rank } from '../player';
+import { PlayerService } from "../player.service"
 
 @Component({
   selector: 'app-players',
@@ -7,18 +8,19 @@ import { Player, Sex, Rank } from '../player'
   styleUrls: ['./players.component.css']
 })
 export class PlayersComponent implements OnInit {
-  player: Player = {
-      name: 'Link',
-      surname: 'Sursur',
-      sex: Sex.Male,
-      birthday: new Date("12.12.12"),
-      rank: Rank.Kyu_1,
-      club_id: 0,
-      id: 0
-  };
-  constructor() { }
+  players: Player[];
+  constructor(private playerService: PlayerService) { }
 
   ngOnInit() {
+    this.getPlayers();
+  }
+
+  getPlayers(): void {
+    this.playerService.getPlayers().subscribe(players => this.players = players);
+  }
+
+  viewPlayer(player: Player): void {
+
   }
 
 }

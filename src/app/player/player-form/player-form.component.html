@@ -30,7 +30,6 @@
       Birthday
     </label>
     <div class="col-md-5">
-      <!-- <input type="date" name="birthday" [(ngModel)]="player.birthday" required /> -->
       <input type="date" name="birthday" [ngModel]="player.birthday | date:'yyyy-MM-dd'" (ngModelChange)="player.birthday = $event" required>
     </div>
   </div>

@@ -1,5 +1,27 @@
+<!-- <h1>Players</h2>
+  <ul class="players">
+    <li>
+      <span class="badge">
 <h2>
   {{player.name | uppercase}} {{player.surname | uppercase}}
 </h2>
 <div><span i18n>Rank: </span>{{player.rank}}</div>
-<div><span i18n>Age: </span>{{player.age}}<div>
+<div><span i18n>Birthday: </span>{{player.birthday}}</div> -->
+
+<header class="row">
+  <h1 class="text-center col-md-6 col-md-offset-3" i18n>Players</h1>
+</header>
+
+<section class="row">
+  <div ng-show="isAdmin" class="form-group col-md-6 col-md-offset-3 text-center">
+    <button class="btn btn-info btn-lg" id="new-player" i18n>Add</button>
+  </div>
+</section>
+
+<section class="row" *ngIf="players.length > 0">
+  <ul class="list-unstyled">
+    <li *ngFor="let player of players">
+      <app-player-line [player]="player"></app-player-line>
+    </li>
+  </ul>
+</section>
