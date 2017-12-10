@@ -10,15 +10,12 @@
   </article>
   <section>
     <div class="col-md-9">
-      <button ng-click="index()" class="btn-primary" id="index-player" i18n>
-        &larr; INDEX
-      </button>
-      <button ng-click="back()" class="btn-primary" id="back-player" i18n>
+      <button (click)="goBack()" class="btn-primary" id="back-player" i18n>
         &larr; BACK
       </button>
-      <div ng-show="isAdmin" class="col-md-9 text-right btn-group">
-        <button class="btn btn-info" id="edit-player" i18n> EDIT </button>
-        <button class="btn btn-danger" id="delete-player" i18n> DELETE </button>
+      <div *ngIf="isAdmin" class="col-md-9 text-right btn-group">
+        <button routerLink="/player/{{player.id}}/edit" class="btn btn-info" id="edit-player" i18n> EDIT </button>
+        <button (click)="delete()" class="btn btn-danger" id="delete-player" i18n> DELETE </button>
       </div>
     </div>
   </section>
