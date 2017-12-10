@@ -32,9 +32,9 @@ import { HomeComponent } from './home/home.component';
     AppRoutingModule,
     HttpClientModule,
     //Fake!
-    HttpClientInMemoryWebApiModule.forRoot(
-      InMemoryDataService, { dataEncapsulation: false }
-    )
+    // HttpClientInMemoryWebApiModule.forRoot(
+    //   InMemoryDataService, { dataEncapsulation: false }
+    // )
   ],
   providers: [PlayerService],
   bootstrap: [AppComponent]

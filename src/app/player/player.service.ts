@@ -25,7 +25,8 @@ export class PlayerService {
 
   getPlayer(id: number): Observable<Player> {
     // return of(PLAYERS.find(player => player.id === id));
-    const url = `${this.playersUrl}/${id}`;
+    const url = `http://localhost:3000/players/${id}.json`
+    // const url = `${this.playersUrl}/${id}`;
     return this.http.get<Player>(url)
       .pipe(catchError(this.handleError(`getHero id=${id}`, new Player())));
   }
