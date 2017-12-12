@@ -4,8 +4,12 @@
       <h1>{{ player.name }} {{ player.surname }}</h1>
     </header>
     <div class="panel-body">
-      <div class="h3" i18n>RANK: {{ player.rank }}</div>
-      <div class="h3" i18n>CLUB: {{ player.club_id }}</div>
+      <div class="h3">
+        <span i18n>RANK:</span> {{ player.rank }}</div>
+      <div class="h3">
+        <span i18n>CLUB:</span>
+        <a routerLink="/club/{{club.id}}"> {{ club.name }}</a>
+      </div>
     </div>
   </article>
   <section>

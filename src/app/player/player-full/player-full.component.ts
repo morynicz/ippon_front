@@ -5,6 +5,9 @@ import { Location } from '@angular/common';
 import { PlayerService } from '../player.service';
 import { Player, Sex, Rank } from '../player'
 
+import { ClubService } from '../../club/club.service';
+import { Club } from '../../club/club';
+
 @Component({
   selector: 'app-player-full',
   templateUrl: './player-full.component.html',
@@ -12,13 +15,15 @@ import { Player, Sex, Rank } from '../player'
 })
 export class PlayerFullComponent implements OnInit {
   player: Player;
+  club: Club;
   isAdmin: boolean = true;
 
   constructor(
     private route: ActivatedRoute,
-    private playerService: PlayerService,
     private location: Location,
-    private router: Router
+    private router: Router,
+    private playerService: PlayerService,
+    private clubService: ClubService
   ) { }
 
   ngOnInit(): void {
@@ -28,7 +33,11 @@ export class PlayerFullComponent implements OnInit {
   getPlayer(): void {
     const id = +this.route.snapshot.paramMap.get('id');
     console.log(`id: ${id}`);
-    this.playerService.getPlayer(id).subscribe(player => this.player = player);
+    this.playerService.getPlayer(id).subscribe(player => {
+      this.player = player;
+      this.clubService.getClub(player.club_id).subscribe(club => this.club = club);
+    }
+    );
   }
 
   goBack(): void {

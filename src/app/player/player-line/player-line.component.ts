@@ -13,8 +13,4 @@ export class PlayerLineComponent implements OnInit {
 
   ngOnInit() {
   }
-
-  viewPlayer(player: Player): void {
-
-  }
 }

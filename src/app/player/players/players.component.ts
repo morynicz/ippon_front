@@ -18,9 +18,4 @@ export class PlayersComponent implements OnInit {
   getPlayers(): void {
     this.playerService.getPlayers().subscribe(players => this.players = players);
   }
-
-  viewPlayer(player: Player): void {
-
-  }
-
 }

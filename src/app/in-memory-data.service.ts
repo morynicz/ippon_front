@@ -36,7 +36,7 @@ export class InMemoryDataService implements InMemoryDbService {
         "sex": 1,
         "birthday": "2004-04-04T00:00:00.000Z",
         "rank": 5,
-        "club_id": 4,
+        "club_id": 0,
         "id": 4
       },
       {
@@ -45,10 +45,34 @@ export class InMemoryDataService implements InMemoryDbService {
         "sex": 1,
         "birthday": "2005-05-05T00:00:00.000Z",
         "rank": 6,
-        "club_id": 5,
+        "club_id": 1,
         "id": 5
       }
     ];
-    return { players };
+
+    const clubs = [
+      {
+        id: 1,
+        name: "club 1",
+        webpage: "www1",
+        city: "city1",
+        description: "desc1"
+      },
+      {
+        id: 2,
+        name: "club 2",
+        webpage: "www2",
+        city: "city2",
+        description: "desc2"
+      },
+      {
+        id: 3,
+        name: "club 3",
+        webpage: "www3",
+        city: "city3",
+        description: "desc3"
+      }
+    ]
+    return { players, clubs };
   }
 }

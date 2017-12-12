@@ -6,7 +6,6 @@ import { of } from 'rxjs/observable/of';
 import { catchError, map, tap } from 'rxjs/operators';
 
 import { Player } from './player';
-import { PLAYERS } from "./mock-players";
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -18,20 +17,19 @@ export class PlayerService {
   constructor(private http: HttpClient) { }
 
   getPlayers(): Observable<Player[]> {
-    // return of(PLAYERS);
     return this.http.get<Player[]>(this.playersUrl)
       .pipe(catchError(this.handleError('getPlayers', [])));
   }
 
   getPlayer(id: number): Observable<Player> {
-    // return of(PLAYERS.find(player => player.id === id));
-    const url = `http://localhost:3000/players/${id}.json`
-    // const url = `${this.playersUrl}/${id}`;
+    // const url = `http://localhost:3000/players/${id}.json`
+    const url = `${this.playersUrl}/${id}`;
     return this.http.get<Player>(url)
-      .pipe(catchError(this.handleError(`getHero id=${id}`, new Player())));
+      .pipe(catchError(this.handleError(`getPlayer id=${id}`, new Player())));
   }
 
   updatePlayer(player: Player): Observable<any> {
+    // const url = `http://localhost:3000/players/${id}.json`
     return this.http.put(this.playersUrl, player, httpOptions).pipe(catchError(this.handleError<any>('updateHero')));
   }
 
