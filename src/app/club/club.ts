@@ -3,4 +3,5 @@ export class Club {
   name: string;
   webpage: string;
   description: string;
+  city: string;
 }
