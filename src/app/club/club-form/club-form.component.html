@@ -1,0 +1,45 @@
+<form class="form-horizontal" role="form" class="edit-user">
+  <div class="form-group" ng-class="{'has-warning has-feedback':errors.name}">
+    <label for="name" class="col-md-2 control-label col-md-offset-2" i18n>
+      Name
+    </label>
+    <div class="col-md-5">
+      <input type="text" name="name" class="form-control" placeholder="club name" [(ngModel)]="club.name">
+    </div>
+  </div>
+  <div class="form-group" ng-class="{'has-warning has-feedback':errors.name}">
+    <label for="city" class="col-md-2 control-label col-md-offset-2">
+      City
+    </label>
+    <div class="col-md-5">
+      <textarea name="city" class="form-control" [(ngModel)]='club.city' placeholder="city">
+      </textarea>
+    </div>
+  </div>
+  <div class="form-group" ng-class="{'has-warning has-feedback':errors.name}">
+    <label for="webpage" class="col-md-2 control-label col-md-offset-2" i18n>
+      Webpage
+    </label>
+    <div class="col-md-5">
+      <textarea name="webpage" class="form-control" [(ngModel)]='club.webpage' placeholder="Webpage">
+      </textarea>
+    </div>
+  </div>
+  <div class="form-group" ng-class="{'has-warning has-feedback':errors.name}">
+    <label for="description" class="col-md-2 control-label col-md-offset-2" i18n>
+      Description
+    </label>
+    <div class="col-md-5">
+      <textarea name="description" class="form-control" [(ngModel)]='club.description' placeholder="Description">
+      </textarea>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-md-offset-2 col-md-3">
+      <button class="btn btn-default" routerLink="/club/{{club.id}}" id="cancel-club" i18n>Cancel</button>
+    </div>
+    <div class="col-md-4 text-right">
+      <button class="btn btn-primary" (click)="save()" id="save-club" i18n>Save</button>
+    </div>
+  </div>
+</form>

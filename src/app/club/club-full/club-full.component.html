@@ -1,0 +1,58 @@
+<section class="col-md-6 col-md-offset-3">
+  <article class="panel panel-info">
+    <header class="panel-heading">
+      <h1>{{club.name}}</h1> {{club.city}}
+    </header>
+    <p class="panel-body">
+      <a href="{{club.webpage}}">{{club.webpage}}</a>
+    </p>
+    <p class="panel-body">
+      {{club.description}}
+    </p>
+  </article>
+  <section>
+    <div class="col-md-9">
+      <button routerLink="/clubs" class="btn btn-default" id="index-club" i18n>
+        &larr; Index
+      </button>
+      <div *ngIf="isAdmin" class="col-md-9 text-right btn-group">
+        <button routerLink="/club/{{club.id}}/edit" class="btn btn-info" id="edit-club" i18n> Edit </button>
+        <button (click)="delete()" class="btn btn-danger" id="delete-club" i18n> Delete </button>
+      </div>
+    </div>
+    <div>
+      <ul class="list-unstyled">
+        {{players | json }}
+        <li *ngFor="let player of players">
+          <app-player-line [player]="player"></app-player-line>
+        </li>
+      </ul>
+      <div *ngIf="isAdmin" class="col-md-9 text-right btn-group">
+        <button routerLink="/player/new" [queryParams]="{clubId: club.id}" class="btn btn-info" id="new-player" i18n> Add Player </button>
+      </div>
+    </div>
+    <!-- <div ng-show="signedIn() && admins && users">
+      <ul class="list-unstyled">
+        <li ng-repeat="admin in admins">
+          <section id="{{admin.username}}-admin-row" class="well col-md-6 col-md-offset-3">
+            <h1 class="h3 col-md-6 text-left" style="margin-top: 0">
+                <span>{{admin.username}}</span><span>
+                <button ng-click="deleteAdmin(admin.id)" class="btn btn-danger" id="delete-admin"> {{'DELETE' | translate}} </button></span>
+              </h1>
+          </section>
+        </li>
+      </ul>
+      <ul class="list-unstyled">
+        <li ng-repeat="user in users">
+          <section id="{{user.username}}-user-row" class="well col-md-6 col-md-offset-3">
+            <h1 class="h3 col-md-6 text-left" style="margin-top: 0">
+                {{user.username}}
+                <button ng-click="addAdmin(user.id)" class="btn btn-info" id="add-admin" > {{'ADD' | translate}} </button>
+              </h1>
+          </section>
+        </li>
+      </ul>
+    </div> -->
+
+  </section>
+</section>
