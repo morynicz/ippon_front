@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 
 import { PlayerFullComponent } from './player-full.component';
 
@@ -8,9 +9,10 @@ describe('PlayerFullComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PlayerFullComponent ]
+      declarations: [PlayerFullComponent],
+      imports: [RouterTestingModule]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
