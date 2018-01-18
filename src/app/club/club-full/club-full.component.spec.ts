@@ -1,23 +1,13 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+
+import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs/observable/of';
 
 import { ClubFullComponent } from './club-full.component';
-
-class ParamMapSpy {
-  id: number;
-  arg: string;
-  get(s: string) {
-    this.arg = s;
-    return this.id;
-  }
-}
-
-class SnapshotStub {
-  parmaMap: ParamMapStub;
-}
-
-class RouteStub {
-  snapshot: SnapshotStub;
-}
+import { Club } from '../club';
+import { ClubService } from '../club.service';
+import { Player } from '../../player/player';
 
 class ClubServiceSpy {
   id: number;
@@ -35,8 +25,8 @@ describe('ClubFullComponent', () => {
     TestBed.configureTestingModule({
       providers: [
         { provide: ClubService, useClass: ClubServiceSpy },
-        { provide: Route, useClass: RouteStub }
       ],
+      imports: [RouterTestingModule],
       declarations: [ClubFullComponent]
     })
       .compileComponents();
