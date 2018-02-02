@@ -23,7 +23,7 @@ class PlayerServiceSpy {
     club_id: 0,
     id: 0
   }
-  getPlayer(id: number) {
+  getPlayer(id: number): Observable<Player> {
     this.id = id;
     return of(this.player);
   }
@@ -37,6 +37,9 @@ class ClubServiceSpy {
     description: 'D',
     city: 'Ci',
     webpage: 'W'
+  }
+  getClubs(): Observable<Club[]> {
+    return of([this.club]);
   }
 }
 

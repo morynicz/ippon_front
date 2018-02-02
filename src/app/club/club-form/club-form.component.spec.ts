@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 
 import { ClubFormComponent } from './club-form.component';
 import { ClubService } from '../club.service';
+import { Club } from '../club'
 
 class ClubServiceSpy {
   id: number;

@@ -38,6 +38,9 @@ class ClubServiceSpy {
     city: 'Ci',
     webpage: 'W'
   }
+  getClub(id: number): Observable<Club> {
+    return of(this.club);
+  }
 }
 
 describe('PlayerFullComponent', () => {
