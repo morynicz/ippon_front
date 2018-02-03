@@ -7,6 +7,7 @@ import { Club } from '../club';
 describe('ClubLineComponent', () => {
   let component: ClubLineComponent;
   let fixture: ComponentFixture<ClubLineComponent>;
+  let expectedClub: Club;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -19,6 +20,16 @@ describe('ClubLineComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ClubLineComponent);
     component = fixture.componentInstance;
+
+    // el = fixture.debugElement.query(By.css('.club'));
+    expectedClub = {
+      id: 1,
+      name: 'C1',
+      description: 'D1',
+      city: 'Ci1',
+      webpage: 'W1'
+    };
+    component.club = expectedClub;
     fixture.detectChanges();
   });
 
