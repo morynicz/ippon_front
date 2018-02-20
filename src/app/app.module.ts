@@ -20,6 +20,8 @@ import { ClubFullComponent } from './club/club-full/club-full.component';
 import { ClubsComponent } from './club/clubs/clubs.component';
 import { ClubLineComponent } from './club/club-line/club-line.component';
 import { ClubFormComponent } from './club/club-form/club-form.component';
+import { LoginFormComponent } from './authorization/login-form/login-form.component';
+import { AuthenticationService } from './authorization/authentication.service';
 
 @NgModule({
   declarations: [
@@ -33,7 +35,8 @@ import { ClubFormComponent } from './club/club-form/club-form.component';
     ClubFullComponent,
     ClubsComponent,
     ClubLineComponent,
-    ClubFormComponent
+    ClubFormComponent,
+    LoginFormComponent
   ],
   imports: [
     BrowserModule,
@@ -45,7 +48,7 @@ import { ClubFormComponent } from './club/club-form/club-form.component';
       InMemoryDataService, { dataEncapsulation: false }
     )
   ],
-  providers: [PlayerService, ClubService],
+  providers: [PlayerService, ClubService, AuthenticationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

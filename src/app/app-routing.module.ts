@@ -10,6 +10,8 @@ import { ClubsComponent } from "./club/clubs/clubs.component";
 import { ClubFullComponent } from './club/club-full/club-full.component';
 import { ClubFormComponent } from './club/club-form/club-form.component';
 
+import { LoginFormComponent } from './authorization/login-form/login-form.component';
+
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
@@ -20,7 +22,8 @@ const routes: Routes = [
   { path: 'club/new', component: ClubFormComponent },
   { path: 'club/:id/edit', component: ClubFormComponent },
   { path: 'club/:id', component: ClubFullComponent },
-  { path: 'clubs', component: ClubsComponent }
+  { path: 'clubs', component: ClubsComponent },
+  { path: 'login', component: LoginFormComponent }
 ]
 
 @NgModule({

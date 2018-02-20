@@ -1,0 +1,24 @@
+<form class="form-horizontal" role="form" class="edit-user" name="login-form">
+  <div class="form-group">
+    <label for="email" class="col-md-2 control-label col-md-offset-2" required i18n>
+      Email
+    </label>
+    <div class="col-md-5">
+      <input type="email" name="email" class="form-control" placeholder="email@server.com" [(ngModel)]="credentials.email">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="password" class="col-md-2 control-label col-md-offset-2" required i18n>
+      Password
+    </label>
+    <div class="col-md-5">
+      <input type="password" name="password" class="form-control" placeholder="email@server.com" [(ngModel)]="credentials.password">
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-md-4 text-right">
+      <button class="btn btn-primary" (click)="logIn()" id="login-login" i18n>Log in</button>
+    </div>
+  </div>
+  {{credentials | json}}
+</form>
