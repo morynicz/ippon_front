@@ -33,7 +33,6 @@ export class ClubFullComponent implements OnInit {
 
   getClub(): void {
     const id = +this.route.snapshot.paramMap.get('id');
-    console.log(`id: ${id}`);
     this.clubService.getClub(id).subscribe(club => {
       this.club = club;
     });
@@ -42,7 +41,6 @@ export class ClubFullComponent implements OnInit {
   getPlayers(): void {
     const id = +this.route.snapshot.paramMap.get('id');
     this.playerService.getPlayers().subscribe(players => {
-      console.log(players);
       this.players = players.filter(player => player.club_id === id);
     });
   }

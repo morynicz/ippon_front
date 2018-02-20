@@ -17,10 +17,8 @@ export class ClubGuard implements CanActivate {
     let isAdmin: boolean = false;
 
     return new Observable<boolean>((observer) => {
-      console.log("DUPA: " + id);
       if (id && this.authenticationService.authenticated) {
         this.authorizationService.isClubAdmin(id).subscribe(result => {
-          console.log("================auth result: " + result);
           observer.next(result.isAuthorized);
         });
       } else {

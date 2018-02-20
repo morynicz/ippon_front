@@ -44,13 +44,11 @@ export class PlayerFormComponent implements OnInit {
 
   getPlayer(): void {
     const id = +this.route.snapshot.paramMap.get('id');
-    console.log(`id: ${id}`);
     this.playerService.getPlayer(id).subscribe(player => this.player = player);
   }
 
   handleQueryParams(): void {
     this.route.queryParams.subscribe(params => {
-      console.log(params);
       if (params["clubId"]) {
         this.player.club_id = +params["clubId"];
       }

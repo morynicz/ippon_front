@@ -30,7 +30,6 @@ export class ClubFormComponent implements OnInit {
 
   getClub(): void {
     const id = +this.route.snapshot.paramMap.get('id');
-    console.log(`id: ${id}`);
     this.clubService.getClub(id).subscribe(club => this.club = club);
   }
 
