@@ -23,6 +23,7 @@ import { ClubFormComponent } from './club/club-form/club-form.component';
 import { LoginFormComponent } from './authorization/login-form/login-form.component';
 import { AuthenticationService } from './authorization/authentication.service';
 import { JwtHelperWrapperService } from './authorization/jwt-helper-wrapper.service';
+import { TokenStorageService } from "./authorization/token-storage.service";
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { JwtHelperWrapperService } from './authorization/jwt-helper-wrapper.serv
     PlayerService,
     ClubService,
     AuthenticationService,
-    JwtHelperWrapperService],
+    JwtHelperWrapperService,
+    TokenStorageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
