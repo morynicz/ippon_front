@@ -7,16 +7,16 @@ import { of } from 'rxjs/observable/of';
 import { FormsModule } from '@angular/forms';
 
 import { Credentials, LoginFormComponent } from './login-form.component';
-import { User, AuthenticationService } from '../authentication.service';
+import { AuthenticationService } from '../authentication.service';
 
 class AuthenticationServiceSpy {
   password: string;
   email: string;
 
-  logIn(email: string, password: string): Observable<User> {
+  logIn(email: string, password: string): Observable<void> {
     this.password = password;
     this.email = email;
-    return of(new User());
+    return of();
   }
 }
 
