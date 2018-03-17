@@ -22,6 +22,7 @@ import { ClubLineComponent } from './club/club-line/club-line.component';
 import { ClubFormComponent } from './club/club-form/club-form.component';
 import { LoginFormComponent } from './authorization/login-form/login-form.component';
 import { AuthenticationService } from './authorization/authentication.service';
+import { JwtHelperWrapperService } from './authorization/jwt-helper-wrapper.service';
 
 @NgModule({
   declarations: [
@@ -44,11 +45,15 @@ import { AuthenticationService } from './authorization/authentication.service';
     AppRoutingModule,
     HttpClientModule,
     // Fake!
-    HttpClientInMemoryWebApiModule.forRoot(
-      InMemoryDataService, { dataEncapsulation: false }
-    )
+    // HttpClientInMemoryWebApiModule.forRoot(
+    //   InMemoryDataService, { dataEncapsulation: false }
+    // )
   ],
-  providers: [PlayerService, ClubService, AuthenticationService],
+  providers: [
+    PlayerService,
+    ClubService,
+    AuthenticationService,
+    JwtHelperWrapperService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
