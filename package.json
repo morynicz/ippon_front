@@ -21,6 +21,7 @@
     "@angular/platform-browser": "^5.2.5",
     "@angular/platform-browser-dynamic": "^5.2.5",
     "@angular/router": "^5.2.5",
+    "@auth0/angular-jwt": "^1.1.0",
     "angular-in-memory-web-api": "^0.5.3",
     "auth0-js": "^9.2.3",
     "bootstrap": "^3.3.7",
