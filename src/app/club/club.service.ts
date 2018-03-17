@@ -23,14 +23,12 @@ export class ClubService {
   }
 
   getClub(id: number): Observable<Club> {
-    // const url = `http://localhost:3000/players/${id}.json`
     const url = `${this.clubsUrl}/${id}`;
     return this.http.get<Club>(url)
       .pipe(catchError(this.handleError(`getClub id=${id}`, new Club())));
   }
 
   updateClub(club: Club): Observable<any> {
-    // const url = `http://localhost:3000/players/${id}.json`
     return this.http.put(this.clubsUrl, club, httpOptions).pipe(catchError(this.handleError<any>('updateClub')));
   }
 
