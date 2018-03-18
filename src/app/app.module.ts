@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService } from './in-memory-data.service';
@@ -22,6 +22,7 @@ import { ClubLineComponent } from './club/club-line/club-line.component';
 import { ClubFormComponent } from './club/club-form/club-form.component';
 import { LoginFormComponent } from './authorization/login-form/login-form.component';
 import { AuthenticationService } from './authorization/authentication.service';
+import { AuthenticationInterceptor } from './authorization/authentication-interceptor';
 import { JwtHelperWrapperService } from './authorization/jwt-helper-wrapper.service';
 import { TokenStorageService } from "./authorization/token-storage.service";
 
@@ -54,6 +55,7 @@ import { TokenStorageService } from "./authorization/token-storage.service";
     PlayerService,
     ClubService,
     AuthenticationService,
+    { provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true },
     JwtHelperWrapperService,
     TokenStorageService],
   bootstrap: [AppComponent]
