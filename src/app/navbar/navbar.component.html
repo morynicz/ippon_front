@@ -34,8 +34,8 @@
           <ul class="dropdown-menu">
             <li *ngIf="!signedIn()"><a routerLink="/login" i18n>Log in</a></li>
             <li *ngIf="!signedIn()"><a routerLink="/register" i18n>Register</a></li>
-            <li *ngIf="!signedIn()"><a routerLink="/">{{user.username}}</a></li>
-            <li *ngIf="!signedIn()"><a (click)="logout()" i18n>Log out</a></li>
+            <li *ngIf="signedIn()"><a routerLink="/">{{user.username}}</a></li>
+            <li *ngIf="signedIn()"><a class="logOut" (click)="logout()" i18n>Log out</a></li>
           </ul>
         </li>
       </ul>
