@@ -86,7 +86,7 @@ describe('AuthenticationService', () => {
       expect(tokenStorage.getAccessCalled).toBe(true);
     }));
 
-  it('should lear the tokens when logout() called',
+  it('should clear the tokens when logout() called',
     inject([AuthenticationService], (service: AuthenticationService) => {
       service.logOut();
       expect(tokenStorage.clearCalled).toBe(true);
