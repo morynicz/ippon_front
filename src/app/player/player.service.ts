@@ -13,18 +13,18 @@ const httpOptions = {
 
 @Injectable()
 export class PlayerService {
-  private playersUrl = "api/players";
+  private playersUrl = "http://localhost:8000/ippon/players";
   constructor(private http: HttpClient) { }
 
   getPlayers(): Observable<Player[]> {
-    return this.http.get<Player[]>(this.playersUrl)
+    return this.http.get<Player[]>(this.playersUrl, httpOptions)
       .pipe(catchError(this.handleError('getPlayers', [])));
   }
 
   getPlayer(id: number): Observable<Player> {
     // const url = `http://localhost:3000/players/${id}.json`
     const url = `${this.playersUrl}/${id}`;
-    return this.http.get<Player>(url)
+    return this.http.get<Player>(url, httpOptions)
       .pipe(catchError(this.handleError(`getPlayer id=${id}`, new Player())));
   }
 

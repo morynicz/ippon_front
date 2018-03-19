@@ -8,7 +8,7 @@
   </div>
 </section>
 
-<section class="row" *ngIf="players.length > 0">
+<section class="row" *ngIf="players && players.length > 0">
   <ul class="list-unstyled">
     <li *ngFor="let player of players">
       <app-player-line [player]="player"></app-player-line>

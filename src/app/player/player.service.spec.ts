@@ -6,7 +6,7 @@ import { of } from 'rxjs/observable/of';
 import { PlayerService } from './player.service';
 import { Player, Sex, Rank } from './player'
 
-const playersUrl = "api/players";
+const playersUrl = "http://localhost:8000/ippon/players";
 
 describe('PlayerService', () => {
   let injector: TestBed;
