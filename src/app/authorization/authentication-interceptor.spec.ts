@@ -11,8 +11,9 @@ import { AuthenticationInterceptor } from './authentication-interceptor';
 
 class TokenStorageSpy {
   getAccessCalled: boolean = false;
+  getAccessResult: string;
   getAccess(): string {
-    return 'access';
+    return this.getAccessResult;
   }
 }
 
@@ -39,9 +40,23 @@ describe('AuthenticationInterceptor', () => {
         http: HttpClient,
         backend: HttpTestingController
       ) => {
+        tokenStorage.getAccessResult = 'access';
         http.get<void>('api/').subscribe(response => expect(response).toBeTruthy());
         const request = backend.expectOne(req => (req.headers.has("Authorization")
           && req.headers.get("Authorization") === "Bearer access"));
+        request.flush({ data: 'test' });
+        backend.verify();
+      })));
+
+  it('should add nothing to header when token not present',
+    async(inject([AuthenticationInterceptor, HttpClient, HttpTestingController],
+      (interceptor: AuthenticationInterceptor,
+        http: HttpClient,
+        backend: HttpTestingController
+      ) => {
+        tokenStorage.getAccessResult = '';
+        http.get<void>('api/').subscribe(response => expect(response).toBeTruthy());
+        const request = backend.expectOne(req => (!req.headers.has("Authorization")));
         request.flush({ data: 'test' });
         backend.verify();
       })));
