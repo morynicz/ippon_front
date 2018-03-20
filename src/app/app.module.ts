@@ -17,7 +17,7 @@ import { PlayerFullComponent } from './player/player-full/player-full.component'
 import { PlayerFormComponent } from './player/player-form/player-form.component';
 import { PlayerLineComponent } from './player/player-line/player-line.component';
 import { ClubFullComponent } from './club/club-full/club-full.component';
-import { ClubsComponent } from './club/clubs/clubs.component';
+import { ClubListComponent } from './club/club-list/club-list.component';
 import { ClubLineComponent } from './club/club-line/club-line.component';
 import { ClubFormComponent } from './club/club-form/club-form.component';
 import { LoginFormComponent } from './authorization/login-form/login-form.component';
@@ -36,7 +36,7 @@ import { TokenStorageService } from "./authorization/token-storage.service";
     NavbarComponent,
     HomeComponent,
     ClubFullComponent,
-    ClubsComponent,
+    ClubListComponent,
     ClubLineComponent,
     ClubFormComponent,
     LoginFormComponent

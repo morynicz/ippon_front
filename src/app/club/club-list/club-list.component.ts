@@ -4,11 +4,11 @@ import { ClubService } from '../club.service';
 import { Club } from '../club';
 
 @Component({
-  selector: 'app-clubs',
-  templateUrl: './clubs.component.html',
-  styleUrls: ['./clubs.component.css']
+  selector: 'ippon-club-list',
+  templateUrl: './club-list.component.html',
+  styleUrls: ['./club-list.component.css']
 })
-export class ClubsComponent implements OnInit {
+export class ClubListComponent implements OnInit {
   clubs: Club[];
   constructor(private clubService: ClubService) { }
 
