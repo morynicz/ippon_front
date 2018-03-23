@@ -5,6 +5,7 @@ import { of } from 'rxjs/observable/of';
 
 import { ClubService } from './club.service';
 import { Club } from './club';
+import { User } from '../user';
 
 const clubsUrl = 'http://localhost:8000/ippon/clubs/';
 
@@ -92,5 +93,57 @@ describe('ClubService', () => {
           && req.url === clubsUrl + '0/'));
       })));
 
+  it('calls the clubs api url with application/json content type and get method when getClubs called',
+    async(inject([ClubService, HttpTestingController],
+      (service: ClubService, backend: HttpTestingController) => {
+        const admins: User[] = [
+          {
+            id: 0,
+            name: 'N0'
+          }, {
+            id: 2,
+            name: 'N2'
+          }
+        ];
+        const club: Club =
+          { name: 'P1', city: 'F1', description: 'D1', webpage: 'W1', id: 0 };
+        service.getAdmins(club).subscribe(resp => expect(resp).toBe(admins));
+        const req = backend.expectOne((req) => (
+          req.headers.has('Content-Type')
+          && req.headers.get('Content-Type') === 'application/json'
+          && req.method === 'GET'
+          && req.url === clubsUrl + club.id + '/admins/'));
+        req.flush(admins);
+      })));
 
+  it('calls the api url with json content type and POST method when addClubAdmin called',
+    async(inject([ClubService, HttpTestingController],
+      (service: ClubService, backend: HttpTestingController) => {
+        const club: Club =
+          { name: 'K1', city: 'C1', description: 'D1', webpage: 'W1', id: 0 };
+        const user: User = { id: 4, name: 'u4' };
+        const admins: User[] = [
+          { id: 4, name: 'u4' }
+        ];
+        service.addClubAdmin(club, user).subscribe(resp => expect(resp).toBe(admins));
+        const reqest = backend.expectOne((req) => (
+          req.headers.has('Content-Type')
+          && req.headers.get('Content-Type') === 'application/json'
+          && req.method === 'POST'
+          && req.url === clubsUrl + club.id + '/admins/'));
+        reqest.flush(admins);
+      })));
+
+  it('calls the clubs api url with application/json content type and delete method when deleteClub called',
+    async(inject([ClubService, HttpTestingController],
+      (service: ClubService, backend: HttpTestingController) => {
+        const club: Club =
+          { name: 'P1', city: 'F1', description: 'D1', webpage: 'W1', id: 0 };
+        service.deleteClub(club).subscribe();
+        const req = backend.expectOne((req) => (
+          req.headers.has('Content-Type')
+          && req.headers.get('Content-Type') === 'application/json'
+          && req.method === 'DELETE'
+          && req.url === clubsUrl + '0/'));
+      })));
 });

@@ -5,7 +5,8 @@ import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { catchError, map, tap } from 'rxjs/operators';
 
-import { Club } from './club'
+import { Club } from './club';
+import { User } from '../user';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -41,6 +42,26 @@ export class ClubService {
     const url = `${this.clubsUrl}${club.id}/`;
     return this.http.delete<Club>(url, httpOptions).pipe(
       catchError(this.handleError<Club>('deleteClub'))
+    );
+  }
+
+  getAdmins(club: Club): Observable<User[]> {
+    const url = `${this.clubsUrl}${club.id}/admins/`;
+    return this.http.get<User[]>(url, httpOptions).pipe(
+      catchError(this.handleError<User[]>('getAdmins'))
+    );
+  }
+
+  addClubAdmin(club: Club, user: User): Observable<User[]> {
+    const url = `${this.clubsUrl}${club.id}/admins/`;
+    return this.http.post<User[]>(url, user, httpOptions)
+      .pipe(catchError(this.handleError<any>('addClubAdmin')));
+  }
+
+  deleteClubAdmin(club: Club, user: User): Observable<User[]> {
+    const url = `${this.clubsUrl}${club.id}/admins/${user.id}`;
+    return this.http.delete<User[]>(url, httpOptions).pipe(
+      catchError(this.handleError<User[]>('deleteClub'))
     );
   }
 
