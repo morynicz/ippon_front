@@ -11,7 +11,8 @@
 <section class="row" ng-if="clubs.length">
   <ul class="list-unstyled">
     <li *ngFor="let club of clubs">
-      <app-club-line [club]="club"></app-club-line>
+      <ippon-club-line [club]="club">
+      </ippon-club-line>
     </li>
   </ul>
 </section>

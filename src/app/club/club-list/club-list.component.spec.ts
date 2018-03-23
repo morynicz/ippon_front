@@ -86,7 +86,7 @@ describe('ClubListComponent', () => {
     fixture.whenStable().then(() => {
       const de = fixture.debugElement;
       const html = de.nativeElement;
-      const clubLines = html.querySelectorAll('app-club-line');
+      const clubLines = html.querySelectorAll('ippon-club-line');
 
       expect(clubLines[0].textContent).toContain('C1');
       expect(clubLines[0].textContent).toContain('Ci1');

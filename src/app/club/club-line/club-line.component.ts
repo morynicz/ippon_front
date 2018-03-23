@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Club } from "../club"
 
 @Component({
-  selector: 'app-club-line',
+  selector: 'ippon-club-line',
   templateUrl: './club-line.component.html',
   styleUrls: ['./club-line.component.css']
 })
