@@ -3,7 +3,7 @@ import { Player } from '../player';
 
 
 @Component({
-  selector: 'app-player-line',
+  selector: 'ippon-player-line',
   templateUrl: './player-line.component.html',
   styleUrls: ['./player-line.component.css']
 })
