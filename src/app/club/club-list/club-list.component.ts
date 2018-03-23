@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { ClubService } from '../club.service';
 import { Club } from '../club';
+import { AuthenticationService } from '../../authorization/authentication.service';
 
 @Component({
   selector: 'ippon-club-list',
@@ -10,7 +11,9 @@ import { Club } from '../club';
 })
 export class ClubListComponent implements OnInit {
   clubs: Club[];
-  constructor(private clubService: ClubService) { }
+  constructor(
+    private clubService: ClubService,
+    private authenticationService: AuthenticationService) { }
 
   ngOnInit() {
     this.getClubs();
@@ -21,6 +24,6 @@ export class ClubListComponent implements OnInit {
   }
 
   signedIn(): boolean {
-    return true;
+    return this.authenticationService.isLoggedIn();
   }
 }
