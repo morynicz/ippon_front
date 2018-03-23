@@ -30,7 +30,6 @@ export class ClubFullComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log('init');
     const id = +this.route.snapshot.paramMap.get('id');
 
     this.getClub(id);
@@ -53,7 +52,6 @@ export class ClubFullComponent implements OnInit {
   getAuthorization(id: number): void {
     this.authorizationService.isClubAdmin(id).subscribe((auth) => {
       this.isAdmin = auth.isAuthorized;
-      console.log(this.isAdmin);
     });
   }
 }
