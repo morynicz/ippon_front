@@ -8,6 +8,8 @@ import { Player } from '../../player/player'
 import { ClubService } from '../club.service';
 import { Club } from '../club';
 
+import { Authorization, AuthorizationService } from '../../authorization/authorization.service';
+
 @Component({
   selector: 'app-club-full',
   templateUrl: './club-full.component.html',
@@ -23,26 +25,35 @@ export class ClubFullComponent implements OnInit {
     private location: Location,
     private router: Router,
     private playerService: PlayerService,
-    private clubService: ClubService
+    private clubService: ClubService,
+    private authorizationService: AuthorizationService
   ) { }
 
   ngOnInit() {
-    this.getClub();
-    this.getPlayers();
+    console.log('init');
+    const id = +this.route.snapshot.paramMap.get('id');
+
+    this.getClub(id);
+    this.getPlayers(id);
+    this.getAuthorization(id);
   }
 
-  getClub(): void {
-    const id = +this.route.snapshot.paramMap.get('id');
+  getClub(id: number): void {
     this.clubService.getClub(id).subscribe(club => {
       this.club = club;
     });
   }
 
-  getPlayers(): void {
-    const id = +this.route.snapshot.paramMap.get('id');
+  getPlayers(id: number): void {
     this.playerService.getPlayers().subscribe(players => {
       this.players = players.filter(player => player.club_id === id);
     });
   }
 
+  getAuthorization(id: number): void {
+    this.authorizationService.isClubAdmin(id).subscribe((auth) => {
+      this.isAdmin = auth.isAuthorized;
+      console.log(this.isAdmin);
+    });
+  }
 }
