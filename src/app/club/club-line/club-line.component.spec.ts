@@ -21,7 +21,6 @@ describe('ClubLineComponent', () => {
     fixture = TestBed.createComponent(ClubLineComponent);
     component = fixture.componentInstance;
 
-    // el = fixture.debugElement.query(By.css('.club'));
     expectedClub = {
       id: 1,
       name: 'C1',
@@ -35,5 +34,11 @@ describe('ClubLineComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should display club name and city', () => {
+    const html = fixture.debugElement.nativeElement;
+    expect(html.textContent).toContain('C1');
+    expect(html.textContent).toContain('Ci1');
   });
 });
