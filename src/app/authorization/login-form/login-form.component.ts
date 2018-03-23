@@ -22,8 +22,6 @@ export class LoginFormComponent implements OnInit {
   }
 
   logIn(): void {
-    console.log('creds');
-    console.log(this.credentials);
     this.authenticationService.logIn(this.credentials.email, this.credentials.password)
       .subscribe(() => {
         this.router.navigateByUrl("/");
