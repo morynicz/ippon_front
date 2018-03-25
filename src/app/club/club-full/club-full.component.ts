@@ -51,7 +51,7 @@ export class ClubFullComponent implements OnInit {
 
   getAuthorization(id: number): void {
     this.authorizationService.isClubAdmin(id).subscribe((auth) => {
-      this.isAdmin = auth.isAuthorized;
+      this.isAdmin = auth;
     });
   }
 }

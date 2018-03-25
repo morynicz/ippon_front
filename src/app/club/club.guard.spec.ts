@@ -12,9 +12,9 @@ import { AuthorizationService, Authorization } from '../authorization/authorizat
 import { AuthenticationService } from '../authorization/authentication.service';
 
 class AuthorizationServiceMock {
-  isClubAdminValue: Authorization;
+  isClubAdminValue: boolean;
   called: number;
-  isClubAdmin(id: number): Observable<Authorization> {
+  isClubAdmin(id: number): Observable<boolean> {
     this.called = id;
     return of(this.isClubAdminValue);
   }
@@ -84,7 +84,7 @@ describe('ClubGuard', () => {
     async(inject(
       [ClubGuard, Router],
       (guard: ClubGuard, router: Router) => {
-        authorizationServiceMock.isClubAdminValue = { isAuthorized: true };
+        authorizationServiceMock.isClubAdminValue = true;
         authenticationServiceDummy.authenticated = true;
         guard.canActivate(activatedRouteSnapshot, new RouterStateSnapshotStub()).subscribe(
           result => expect(result).toBeTruthy());
@@ -96,7 +96,7 @@ describe('ClubGuard', () => {
     async(inject(
       [ClubGuard, Router],
       (guard: ClubGuard, router: Router) => {
-        authorizationServiceMock.isClubAdminValue = { isAuthorized: false };
+        authorizationServiceMock.isClubAdminValue = false;
         authenticationServiceDummy.authenticated = true;
         guard.canActivate(activatedRouteSnapshot, new RouterStateSnapshotStub()).subscribe(
           result => expect(result).toBeFalsy());
@@ -107,7 +107,7 @@ describe('ClubGuard', () => {
     async(inject(
       [ClubGuard, Router],
       (guard: ClubGuard, router: Router) => {
-        authorizationServiceMock.isClubAdminValue = { isAuthorized: true };
+        authorizationServiceMock.isClubAdminValue = true;
         authenticationServiceDummy.authenticated = false;
         guard.canActivate(activatedRouteSnapshot, new RouterStateSnapshotStub()).subscribe(
           result => expect(result).toBeFalsy());

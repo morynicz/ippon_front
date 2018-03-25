@@ -26,7 +26,7 @@ describe('AuthorizationService', () => {
   it('should query clubAdmin API when isClubAdmin is called', async(inject([AuthorizationService, HttpTestingController], (service: AuthorizationService, backend: HttpTestingController) => {
     let clubId: number = 42;
     service.isClubAdmin(clubId).subscribe(result => {
-      expect(result.isAuthorized).toEqual(true);
+      expect(result).toEqual(true);
     });
 
     backend.expectOne({
@@ -38,7 +38,7 @@ describe('AuthorizationService', () => {
   it('should query tournamentAdmin API when isTournamentAdmin is called', async(inject([AuthorizationService, HttpTestingController], (service: AuthorizationService, backend: HttpTestingController) => {
     let tournamentId: number = 11;
     service.isTournamentAdmin(tournamentId).subscribe(result => {
-      expect(result.isAuthorized).toEqual(false);
+      expect(result).toEqual(false);
     });
 
     backend.expectOne({
@@ -50,7 +50,7 @@ describe('AuthorizationService', () => {
   it('should query tournamentStaff API when isTournamentStaff is called', async(inject([AuthorizationService, HttpTestingController], (service: AuthorizationService, backend: HttpTestingController) => {
     let tournamentId: number = 11;
     service.isTournamentStaff(tournamentId).subscribe(result => {
-      expect(result.isAuthorized).toEqual(true);
+      expect(result).toEqual(true);
     });
 
     backend.expectOne({
@@ -58,4 +58,5 @@ describe('AuthorizationService', () => {
       method: 'GET'
     }).flush({ isAuthorized: true });
   })));
+
 });

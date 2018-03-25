@@ -14,20 +14,26 @@ export class AuthorizationService {
   private authorizationUrl = "api/authorization";
   constructor(private http: HttpClient) { }
 
-  isClubAdmin(id: number): Observable<Authorization> {
+  isClubAdmin(id: number): Observable<boolean> {
     return this.isAuthorized(id, '/club/');
   }
 
-  isTournamentAdmin(id: number): Observable<Authorization> {
+  isTournamentAdmin(id: number): Observable<boolean> {
     return this.isAuthorized(id, '/tournament/admin/');
   }
 
-  isTournamentStaff(id: number): Observable<Authorization> {
+  isTournamentStaff(id: number): Observable<boolean> {
     return this.isAuthorized(id, '/tournament/staff/');
   }
 
-  private isAuthorized(id: number, urlPath: string): Observable<Authorization> {
-    return this.http.get<Authorization>(this.authorizationUrl + urlPath + id);
+  private isAuthorized(id: number, urlPath: string): Observable<boolean> {
+    return new Observable<boolean>((observer) => {
+      this.http.get<Authorization>(this.authorizationUrl + urlPath + id).subscribe(result => {
+        observer.next(result.isAuthorized);
+      }, error => {
+        console.log(error);
+        observer.next(false);
+      });
+    });
   }
-
 }

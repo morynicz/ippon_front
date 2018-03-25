@@ -65,9 +65,9 @@ class PlayerServiceDummy {
 class AuthorizationServiceDummy {
   isClubAdminResult: boolean = false;
   isClubAdminCallArgument: number = -1;
-  isClubAdmin(clubId: number): Observable<Authorization> {
+  isClubAdmin(clubId: number): Observable<boolean> {
     this.isClubAdminCallArgument = clubId;
-    return of({ isAuthorized: this.isClubAdminResult });
+    return of(this.isClubAdminResult);
   }
 }
 
