@@ -25,6 +25,7 @@ import { AuthenticationService } from './authorization/authentication.service';
 import { AuthenticationInterceptor } from './authorization/authentication-interceptor';
 import { JwtHelperWrapperService } from './authorization/jwt-helper-wrapper.service';
 import { TokenStorageService } from "./authorization/token-storage.service";
+import { AuthorizationService } from './authorization/authorization.service';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,9 @@ import { TokenStorageService } from "./authorization/token-storage.service";
     AuthenticationService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true },
     JwtHelperWrapperService,
-    TokenStorageService],
+    TokenStorageService,
+    AuthorizationService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
