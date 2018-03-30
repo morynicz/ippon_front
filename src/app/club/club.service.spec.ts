@@ -6,6 +6,7 @@ import { of } from 'rxjs/observable/of';
 import { ClubService } from './club.service';
 import { Club } from './club';
 import { User } from '../user';
+import { Player, Sex, Rank } from '../player/player';
 
 const clubsUrl = 'http://localhost:8000/ippon/clubs/';
 
@@ -134,16 +135,51 @@ describe('ClubService', () => {
         reqest.flush(admins);
       })));
 
-  it('calls the clubs api url with application/json content type and delete method when deleteClub called',
+  it('calls the clubs api url with application/json content type and delete method when deleteClubAdmin called',
     async(inject([ClubService, HttpTestingController],
       (service: ClubService, backend: HttpTestingController) => {
         const club: Club =
           { name: 'P1', city: 'F1', description: 'D1', webpage: 'W1', id: 0 };
-        service.deleteClub(club).subscribe();
-        const req = backend.expectOne((req) => (
+        const user: User = { id: 4, name: 'u4' };
+        const admins: User[] = [];
+        service.deleteClubAdmin(club, user).subscribe();
+        const request = backend.expectOne((req) => (
           req.headers.has('Content-Type')
           && req.headers.get('Content-Type') === 'application/json'
           && req.method === 'DELETE'
-          && req.url === clubsUrl + '0/'));
+          && req.url === clubsUrl + club.id + '/admins/' + user.id));
+        request.flush(admins);
+      })));
+
+  it('calls the clubs api url with application/json content type and get method when getPlayers called',
+    async(inject([ClubService, HttpTestingController],
+      (service: ClubService, backend: HttpTestingController) => {
+        const players: Player[] = [{
+          name: 'P1',
+          surname: 'S1',
+          sex: Sex.Male,
+          birthday: new Date("2001-01-01"),
+          rank: Rank.Kyu_5,
+          club_id: 0,
+          id: 0
+        },
+        {
+          name: 'P3',
+          surname: 'S3',
+          sex: Sex.Female,
+          birthday: new Date("2002-02-02"),
+          rank: Rank.Kyu_4,
+          club_id: 0,
+          id: 2
+        }];
+        const club: Club =
+          { name: 'P1', city: 'F1', description: 'D1', webpage: 'W1', id: 0 };
+        service.getPlayers(club).subscribe(resp => expect(resp).toBe(players));
+        const reqest = backend.expectOne((req) => (
+          req.headers.has('Content-Type')
+          && req.headers.get('Content-Type') === 'application/json'
+          && req.method === 'GET'
+          && req.url === clubsUrl + club.id + '/players/'));
+        reqest.flush(players);
       })));
 });

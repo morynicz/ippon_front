@@ -7,6 +7,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 
 import { Club } from './club';
 import { User } from '../user';
+import { Player } from '../player/player';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -43,6 +44,12 @@ export class ClubService {
     return this.http.delete<Club>(url, httpOptions).pipe(
       catchError(this.handleError<Club>('deleteClub'))
     );
+  }
+
+  getPlayers(club: Club): Observable<Player[]> {
+    const url = `${this.clubsUrl}${club.id}/players/`;
+    return this.http.get<Player[]>(url, httpOptions)
+      .pipe(catchError(this.handleError(`getPlayers id=${club.id}`, new Array<Player>())));
   }
 
   getAdmins(club: Club): Observable<User[]> {
