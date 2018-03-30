@@ -46,10 +46,10 @@ export class ClubService {
     );
   }
 
-  getPlayers(club: Club): Observable<Player[]> {
-    const url = `${this.clubsUrl}${club.id}/players/`;
+  getPlayers(clubId: number): Observable<Player[]> {
+    const url = `${this.clubsUrl}${clubId}/players/`;
     return this.http.get<Player[]>(url, httpOptions)
-      .pipe(catchError(this.handleError(`getPlayers id=${club.id}`, new Array<Player>())));
+      .pipe(catchError(this.handleError(`getPlayers id=${clubId}`, new Array<Player>())));
   }
 
   getAdmins(club: Club): Observable<User[]> {

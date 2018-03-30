@@ -174,7 +174,7 @@ describe('ClubService', () => {
         }];
         const club: Club =
           { name: 'P1', city: 'F1', description: 'D1', webpage: 'W1', id: 0 };
-        service.getPlayers(club).subscribe(resp => expect(resp).toBe(players));
+        service.getPlayers(club.id).subscribe(resp => expect(resp).toBe(players));
         const reqest = backend.expectOne((req) => (
           req.headers.has('Content-Type')
           && req.headers.get('Content-Type') === 'application/json'
