@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 
-import { PlayerService } from '../../player/player.service';
 import { Player } from '../../player/player'
 
 import { ClubService } from '../club.service';
@@ -24,7 +23,6 @@ export class ClubFullComponent implements OnInit {
     private route: ActivatedRoute,
     private location: Location,
     private router: Router,
-    private playerService: PlayerService,
     private clubService: ClubService,
     private authorizationService: AuthorizationService
   ) { }
@@ -44,8 +42,8 @@ export class ClubFullComponent implements OnInit {
   }
 
   getPlayers(id: number): void {
-    this.playerService.getPlayers().subscribe(players => {
-      this.players = players.filter(player => player.club_id === id);
+    this.clubService.getPlayers(id).subscribe(players => {
+      this.players = players;
     });
   }
 

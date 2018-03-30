@@ -1,5 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { By } from '@angular/platform-browser';
+import { ActivatedRoute, convertToParamMap, ParamMap } from '@angular/router';
 
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
@@ -14,10 +16,14 @@ import { PlayerService } from '../../player/player.service';
 
 import { Authorization, AuthorizationService } from '../../authorization/authorization.service';
 
+const clubId: number = 1;
+
 class ClubServiceSpy {
   id: number;
+  deleteClubCallId: number = -1;
+  getPlayersClubId: number = -1;
   club: Club = {
-    id: 1,
+    id: clubId,
     name: 'C1',
     description: 'D1',
     city: 'Ci1',
@@ -27,26 +33,19 @@ class ClubServiceSpy {
     this.id = id;
     return of(this.club);
   }
-}
+  deleteClub(club: Club): Observable<Club> {
+    this.deleteClubCallId = club.id;
+    return of(this.club);
+  }
 
-class PlayerServiceDummy {
   players: Player[] = [{
     name: 'P1',
     surname: 'S1',
     sex: Sex.Male,
     birthday: new Date("2001-01-01"),
     rank: Rank.Kyu_5,
-    club_id: 0,
+    club_id: clubId,
     id: 0
-  },
-  {
-    name: 'P2',
-    surname: 'S2',
-    sex: Sex.Male,
-    birthday: new Date("2002-02-02"),
-    rank: Rank.Kyu_4,
-    club_id: 1,
-    id: 1
   },
   {
     name: 'P3',
@@ -54,10 +53,11 @@ class PlayerServiceDummy {
     sex: Sex.Female,
     birthday: new Date("2002-02-02"),
     rank: Rank.Kyu_4,
-    club_id: 0,
+    club_id: clubId,
     id: 2
   }];
-  getPlayers(): Observable<Player[]> {
+  getPlayers(clubId: number): Observable<Player[]> {
+    this.getPlayersClubId = clubId;
     return of(this.players);
   }
 }
@@ -75,14 +75,22 @@ describe('ClubFullComponent', () => {
   let component: ClubFullComponent;
   let fixture: ComponentFixture<ClubFullComponent>;
   let authorizationService: AuthorizationServiceDummy;
+  let clubService: ClubServiceSpy;
 
   beforeEach(async(() => {
     authorizationService = new AuthorizationServiceDummy();
+    clubService = new ClubServiceSpy();
     TestBed.configureTestingModule({
       providers: [
-        { provide: ClubService, useClass: ClubServiceSpy },
-        { provide: PlayerService, useClass: PlayerServiceDummy },
-        { provide: AuthorizationService, useValue: authorizationService }
+        { provide: ClubService, useValue: clubService },
+        { provide: AuthorizationService, useValue: authorizationService },
+        {
+          provide: ActivatedRoute, useValue: {
+            snapshot: {
+              paramMap: convertToParamMap({ id: clubId })
+            }
+          }
+        }
       ],
       imports: [RouterTestingModule],
       declarations: [ClubFullComponent, PlayerLineComponent]
@@ -108,15 +116,19 @@ describe('ClubFullComponent', () => {
     expect(html.textContent).toContain('W1');
   });
 
-  it('should display all club players but not other clubs players', () => {
-    const de = fixture.debugElement;
-    const html = de.nativeElement;
-    const playerLines = html.querySelectorAll('ippon-player-line');
-    expect(playerLines[0].textContent).toContain('P1');
-    expect(playerLines[0].textContent).toContain('S1');
-    expect(playerLines[1].textContent).toContain('P3');
-    expect(playerLines[1].textContent).toContain('S3');
-  });
+  it('should display all club players', async(() => {
+    fixture.whenStable().then(() => {
+      fixture.detectChanges();
+      const de = fixture.debugElement;
+      const html = de.nativeElement;
+      const playerLines = html.querySelectorAll('ippon-player-line');
+      expect(playerLines[0].textContent).toContain('P1');
+      expect(playerLines[0].textContent).toContain('S1');
+      expect(playerLines[1].textContent).toContain('P3');
+      expect(playerLines[1].textContent).toContain('S3');
+      expect(clubService.getPlayersClubId).toEqual(clubId);
+    });
+  }));
 
   it('should not display admin controls if the user is not club admin', async(() => {
     fixture.whenStable().then(() => {
@@ -134,14 +146,15 @@ describe('ClubFullComponent with admin logged in', () => {
   let component: ClubFullComponent;
   let fixture: ComponentFixture<ClubFullComponent>;
   let authorizationService: AuthorizationServiceDummy;
+  let clubService: ClubServiceSpy;
 
   beforeEach(async(() => {
     authorizationService = new AuthorizationServiceDummy();
     authorizationService.isClubAdminResult = true;
+    clubService = new ClubServiceSpy();
     TestBed.configureTestingModule({
       providers: [
-        { provide: ClubService, useClass: ClubServiceSpy },
-        { provide: PlayerService, useClass: PlayerServiceDummy },
+        { provide: ClubService, useValue: clubService },
         { provide: AuthorizationService, useValue: authorizationService }
       ],
       imports: [RouterTestingModule],
