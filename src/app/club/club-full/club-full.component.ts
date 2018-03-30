@@ -52,4 +52,8 @@ export class ClubFullComponent implements OnInit {
       this.isAdmin = auth;
     });
   }
+
+  deleteClub(): void {
+    this.clubService.deleteClub(this.club);
+  }
 }

@@ -17,7 +17,7 @@
       </button>
       <div *ngIf="isAdmin" class="col-md-9 text-right btn-group">
         <button routerLink="/club/{{club.id}}/edit" class="btn btn-info" id="edit-club" i18n> Edit </button>
-        <button (click)="delete()" class="btn btn-danger" id="delete-club" i18n> Delete </button>
+        <button (click)="deleteClub()" class="btn btn-danger" id="delete-club" i18n> Delete </button>
       </div>
     </div>
     <div>
@@ -28,7 +28,7 @@
         </li>
       </ul>
       <div *ngIf="isAdmin" class="col-md-9 text-right btn-group">
-        <button routerLink="/player/new" [queryParams]="{clubId: club.id}" class="btn btn-info" id="new-player" i18n> Add Player </button>
+        <button routerLink="/player/new" [queryParams]="{clubId: club.id}" class="btn btn-info" id="new-player-club" i18n> Add Player </button>
       </div>
     </div>
   </section>

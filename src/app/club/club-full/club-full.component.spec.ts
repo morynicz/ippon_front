@@ -177,7 +177,27 @@ describe('ClubFullComponent with admin logged in', () => {
       const html = de.nativeElement;
       expect(html.querySelector('#delete-club')).toBeTruthy();
       expect(html.querySelector('#edit-club')).toBeTruthy();
-      expect(html.querySelector('#new-player')).toBeTruthy();
+      expect(html.querySelector('#new-player-club')).toBeTruthy();
     });
+  });
+
+  it('should call deleteClub from club service with correct id when delete club button clicked',
+    async(() => {
+      fixture.whenStable().then(() => {
+        fixture.detectChanges();
+        const btn = fixture.debugElement.query(By.css('#delete-club'));
+        btn.triggerEventHandler('click', null);
+        expect(clubService.deleteClubCallId).toEqual(clubId);
+      });
+    }));
+
+  it('should provide link to editing club', () => {
+    const btn = fixture.debugElement.query(By.css('#edit-club'));
+    expect(btn.nativeElement.getAttribute('ng-reflect-router-link')).toBe('/club/' + clubId + '/edit');
+  });
+
+  it('should provide link to adding new players', () => {
+    const btn = fixture.debugElement.query(By.css('#new-player-club'));
+    expect(btn.nativeElement.getAttribute('ng-reflect-router-link')).toBe('/player/new');
   });
 });
