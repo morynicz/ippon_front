@@ -5,7 +5,7 @@ import { of } from 'rxjs/observable/of';
 
 import { AuthorizationService, Authorization } from './authorization.service';
 
-const authorizationUrl = "api/authorization";
+const authorizationUrl = "http://localhost:8000/ippon/authorization";
 
 describe('AuthorizationService', () => {
   beforeEach(() => {
@@ -30,7 +30,7 @@ describe('AuthorizationService', () => {
     });
 
     backend.expectOne({
-      url: authorizationUrl + '/club/' + clubId,
+      url: authorizationUrl + '/clubs/' + clubId,
       method: 'GET'
     }).flush({ isAuthorized: true });
   })));
@@ -42,7 +42,7 @@ describe('AuthorizationService', () => {
     });
 
     backend.expectOne({
-      url: authorizationUrl + '/tournament/admin/' + tournamentId,
+      url: authorizationUrl + '/tournaments/admins/' + tournamentId,
       method: 'GET'
     }).flush({ isAuthorized: false });
   })));
@@ -54,7 +54,7 @@ describe('AuthorizationService', () => {
     });
 
     backend.expectOne({
-      url: authorizationUrl + '/tournament/staff/' + tournamentId,
+      url: authorizationUrl + '/tournaments/staff/' + tournamentId,
       method: 'GET'
     }).flush({ isAuthorized: true });
   })));

@@ -11,19 +11,19 @@ export class Authorization {
 
 @Injectable()
 export class AuthorizationService {
-  private authorizationUrl = "api/authorization";
+  private authorizationUrl = "http://localhost:8000/ippon/authorization";
   constructor(private http: HttpClient) { }
 
   isClubAdmin(id: number): Observable<boolean> {
-    return this.isAuthorized(id, '/club/');
+    return this.isAuthorized(id, '/clubs/');
   }
 
   isTournamentAdmin(id: number): Observable<boolean> {
-    return this.isAuthorized(id, '/tournament/admin/');
+    return this.isAuthorized(id, '/tournaments/admins/');
   }
 
   isTournamentStaff(id: number): Observable<boolean> {
-    return this.isAuthorized(id, '/tournament/staff/');
+    return this.isAuthorized(id, '/tournaments/staff/');
   }
 
   private isAuthorized(id: number, urlPath: string): Observable<boolean> {
