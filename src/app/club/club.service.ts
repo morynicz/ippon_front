@@ -30,7 +30,7 @@ export class ClubService {
       .pipe(catchError(this.handleError(`getClub id=${id}`, new Club())));
   }
 
-  updateClub(club: Club): Observable<any> {
+  updateClub(club: Club): Observable<Club> {
     const url = `${this.clubsUrl}${club.id}/`;
     return this.http.put(url, club, httpOptions).pipe(catchError(this.handleError<any>('updateClub')));
   }
