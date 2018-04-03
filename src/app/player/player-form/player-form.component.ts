@@ -29,7 +29,6 @@ export class PlayerFormComponent implements OnInit {
   ) {
     this.rank_strings = RANK_STRINGS;
     this.ranks = Object.keys(Rank).filter(f => !isNaN(Number(f)));
-    console.log(this.route.snapshot.paramMap);
   }
 
   ngOnInit(): void {
