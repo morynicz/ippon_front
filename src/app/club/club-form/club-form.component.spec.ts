@@ -30,14 +30,25 @@ class ClubServiceSpy {
     return of(this.club);
   }
 
-  addClub(club: Club) {
+  addClub(club: Club): Observable<Club> {
     this.addClubValue = club;
+    return of(club);
   }
 
   updateClub(club: Club): Observable<Club> {
     this.updateClubValue = club;
     return of(club);
   }
+}
+
+function expectClubsToBeEqual(
+  value: Club,
+  expected: Club
+) {
+  expect(value.city).toBe(expected.city);
+  expect(value.description).toBe(expected.description);
+  expect(value.webpage).toBe(expected.webpage);
+  expect(value.name).toBe(expected.name);
 }
 
 function setInput(
@@ -120,10 +131,70 @@ describe('ClubFormComponent', () => {
             city: city,
             webpage: webpage,
           };
-          expect(clubService.updateClubValue.city).toBe(city);
-          expect(clubService.updateClubValue.description).toBe(description);
-          expect(clubService.updateClubValue.webpage).toBe(webpage);
-          expect(clubService.updateClubValue.name).toBe(name);
+          expectClubsToBeEqual(clubService.updateClubValue, expectedClub);
+        });
+      }));
+  });
+
+  describe('when clubId is not available', () => {
+    beforeEach(async(() => {
+      clubService = new ClubServiceSpy();
+      TestBed.configureTestingModule({
+        declarations: [ClubFormComponent],
+        imports: [FormsModule, RouterTestingModule],
+        providers: [
+          { provide: ClubService, useValue: clubService },
+        ]
+      })
+        .compileComponents();
+    }));
+
+    beforeEach(() => {
+      fixture = TestBed.createComponent(ClubFormComponent);
+      component = fixture.componentInstance;
+      fixture.detectChanges();
+    });
+
+    it('should create', () => {
+      expect(component).toBeTruthy();
+    });
+
+    it('should not load any values',
+      async(() => {
+        fixture.whenStable().then(() => {
+          let de = fixture.debugElement;
+          expect(de.query(By.css("[name=name]")).nativeElement.value)
+            .toBe("");
+          expect(de.query(By.css("[name=city]")).nativeElement.value)
+            .toBe("");
+          expect(de.query(By.css("[name=description]")).nativeElement.value)
+            .toBe("");
+          expect(de.query(By.css("[name=webpage]")).nativeElement.value)
+            .toBe("");
+        });
+      }));
+
+    it('should call club service addClub with club values set in form',
+      async(() => {
+        fixture.whenStable().then(() => {
+          let name = 'bbbbbbb';
+          let city = 'ccccccc';
+          let webpage = 'wwwwwww';
+          let description = 'ddddddd';
+          setInput('name', name, fixture);
+          setInput('description', description, fixture);
+          setInput('webpage', webpage, fixture);
+          setInput('city', city, fixture);
+          let btn = fixture.debugElement.query(By.css("#save-club"));
+          btn.triggerEventHandler('click', null);
+          let expectedClub: Club = {
+            id: clubId,
+            name: name,
+            description: description,
+            city: city,
+            webpage: webpage,
+          };
+          expectClubsToBeEqual(clubService.addClubValue, expectedClub);
         });
       }));
   });
