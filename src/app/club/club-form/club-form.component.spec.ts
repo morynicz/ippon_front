@@ -123,7 +123,7 @@ describe('ClubFormComponent', () => {
           setInput('webpage', webpage, fixture);
           setInput('city', city, fixture);
           let btn = fixture.debugElement.query(By.css("#save-club"));
-          btn.triggerEventHandler('click', null);
+          btn.nativeElement.click();
           let expectedClub: Club = {
             id: clubId,
             name: name,
@@ -186,7 +186,7 @@ describe('ClubFormComponent', () => {
           setInput('webpage', webpage, fixture);
           setInput('city', city, fixture);
           let btn = fixture.debugElement.query(By.css("#save-club"));
-          btn.triggerEventHandler('click', null);
+          btn.nativeElement.click();
           let expectedClub: Club = {
             id: clubId,
             name: name,
