@@ -6,7 +6,12 @@ import { of } from 'rxjs/observable/of';
 import { PlayerService } from './player.service';
 import { Player, Sex, Rank } from './player'
 
-const playersUrl = "http://localhost:8000/ippon/players";
+import {
+  IPPON_HOST,
+  PLAYERS_ENDPOINT
+} from '../rest-api';
+
+const playersUrl = IPPON_HOST + PLAYERS_ENDPOINT;
 
 describe('PlayerService', () => {
   let injector: TestBed;
@@ -18,9 +23,6 @@ describe('PlayerService', () => {
       imports: [HttpClientTestingModule],
       providers: [PlayerService]
     });
-    // injector = getTestBed();
-    // service = injector.get(PlayerService);
-    // httpMock = injector.get(HttpTestingController);
   });
 
   afterEach(inject([HttpTestingController], (backend: HttpTestingController) => {

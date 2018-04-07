@@ -9,31 +9,41 @@ export class Authorization {
   isAuthorized: boolean;
 }
 
+import {
+  IPPON_HOST,
+  AUTHORIZATION_ENDPOINT,
+  CLUBS_ENDPOINT,
+  TOURNAMENTS_ENDPOINT,
+  ADMINS_ENDPOINT,
+  STAFF_ENDPOINT
+} from '../rest-api';
+
 @Injectable()
 export class AuthorizationService {
-  private authorizationUrl = "http://localhost:8000/ippon/authorization";
+  private authorizationUrl = IPPON_HOST + AUTHORIZATION_ENDPOINT;
   constructor(private http: HttpClient) { }
 
   isClubAdmin(id: number): Observable<boolean> {
-    return this.isAuthorized(id, '/clubs/');
+    return this.isAuthorized(id, CLUBS_ENDPOINT);
   }
 
   isTournamentAdmin(id: number): Observable<boolean> {
-    return this.isAuthorized(id, '/tournaments/admins/');
+    return this.isAuthorized(id, TOURNAMENTS_ENDPOINT + ADMINS_ENDPOINT);
   }
 
   isTournamentStaff(id: number): Observable<boolean> {
-    return this.isAuthorized(id, '/tournaments/staff/');
+    return this.isAuthorized(id, TOURNAMENTS_ENDPOINT + STAFF_ENDPOINT);
   }
 
   private isAuthorized(id: number, urlPath: string): Observable<boolean> {
     return new Observable<boolean>((observer) => {
-      this.http.get<Authorization>(this.authorizationUrl + urlPath + id).subscribe(result => {
-        observer.next(result.isAuthorized);
-      }, error => {
-        console.log(error);
-        observer.next(false);
-      });
+      this.http.get<Authorization>(this.authorizationUrl + urlPath + '/' + id)
+        .subscribe(result => {
+          observer.next(result.isAuthorized);
+        }, error => {
+          console.log(error);
+          observer.next(false);
+        });
     });
   }
 }

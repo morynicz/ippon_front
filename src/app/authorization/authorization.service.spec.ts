@@ -4,8 +4,16 @@ import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 
 import { AuthorizationService, Authorization } from './authorization.service';
+import {
+  IPPON_HOST,
+  AUTHORIZATION_ENDPOINT,
+  CLUBS_ENDPOINT,
+  TOURNAMENTS_ENDPOINT,
+  ADMINS_ENDPOINT,
+  STAFF_ENDPOINT
+} from '../rest-api';
 
-const authorizationUrl = "http://localhost:8000/ippon/authorization";
+const authorizationUrl = IPPON_HOST + AUTHORIZATION_ENDPOINT;
 
 describe('AuthorizationService', () => {
   beforeEach(() => {
@@ -30,7 +38,7 @@ describe('AuthorizationService', () => {
     });
 
     backend.expectOne({
-      url: authorizationUrl + '/clubs/' + clubId,
+      url: authorizationUrl + CLUBS_ENDPOINT + '/' + clubId,
       method: 'GET'
     }).flush({ isAuthorized: true });
   })));
@@ -42,7 +50,7 @@ describe('AuthorizationService', () => {
     });
 
     backend.expectOne({
-      url: authorizationUrl + '/tournaments/admins/' + tournamentId,
+      url: authorizationUrl + TOURNAMENTS_ENDPOINT + ADMINS_ENDPOINT + '/' + tournamentId,
       method: 'GET'
     }).flush({ isAuthorized: false });
   })));
@@ -54,7 +62,7 @@ describe('AuthorizationService', () => {
     });
 
     backend.expectOne({
-      url: authorizationUrl + '/tournaments/staff/' + tournamentId,
+      url: authorizationUrl + TOURNAMENTS_ENDPOINT + STAFF_ENDPOINT + '/' + tournamentId,
       method: 'GET'
     }).flush({ isAuthorized: true });
   })));

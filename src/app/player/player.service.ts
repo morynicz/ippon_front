@@ -7,13 +7,18 @@ import { catchError, map, tap } from 'rxjs/operators';
 
 import { Player } from './player';
 
+import {
+  IPPON_HOST,
+  PLAYERS_ENDPOINT
+} from '../rest-api';
+
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 }
 
 @Injectable()
 export class PlayerService {
-  private playersUrl = "http://localhost:8000/ippon/players";
+  private playersUrl = IPPON_HOST + PLAYERS_ENDPOINT;
   constructor(private http: HttpClient) { }
 
   getPlayers(): Observable<Player[]> {
@@ -22,14 +27,12 @@ export class PlayerService {
   }
 
   getPlayer(id: number): Observable<Player> {
-    // const url = `http://localhost:3000/players/${id}.json`
-    const url = `${this.playersUrl}/${id}`;
+    const url = `${this.playersUrl}${id}`;
     return this.http.get<Player>(url, httpOptions)
       .pipe(catchError(this.handleError(`getPlayer id=${id}`, new Player())));
   }
 
   updatePlayer(player: Player): Observable<any> {
-    // const url = `http://localhost:3000/players/${id}.json`
     return this.http.put(this.playersUrl, player, httpOptions).pipe(catchError(this.handleError<any>('updateHero')));
   }
 
@@ -38,7 +41,7 @@ export class PlayerService {
   }
 
   deletePlayer(player: Player): Observable<Player> {
-    const url = `${this.playersUrl}/${player.id}`;
+    const url = `${this.playersUrl}${player.id}`;
     return this.http.delete<Player>(url, httpOptions).pipe(
       catchError(this.handleError<Player>('deletePlayer'))
     );

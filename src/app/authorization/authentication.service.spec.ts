@@ -6,6 +6,12 @@ import { TokenStorageService } from "./token-storage.service";
 
 import { AuthenticationService } from './authentication.service';
 
+import {
+  AUTHENTICATION_HOST,
+  AUTHENTICATION_ENDPOINT,
+  TOKEN_ENDPOINT
+} from '../rest-api';
+
 class TokenStorageSpy {
   getAccessCalled: boolean = false;
   setAccessToken: string = "";
@@ -37,7 +43,7 @@ class JwtHelperSpy {
   }
 }
 
-const authenticationUrl = "http://localhost:8000/auth";
+const authenticationUrl: string = AUTHENTICATION_HOST + AUTHENTICATION_ENDPOINT;
 
 describe('AuthenticationService', () => {
   let tokenStorage: TokenStorageSpy;
@@ -62,7 +68,7 @@ describe('AuthenticationService', () => {
       (service: AuthenticationService, http: HttpTestingController) => {
         service.logIn("user", "password").subscribe();
         const req = http.expectOne({
-          url: authenticationUrl + '/token',
+          url: authenticationUrl + TOKEN_ENDPOINT,
           method: 'POST'
         });
       }));

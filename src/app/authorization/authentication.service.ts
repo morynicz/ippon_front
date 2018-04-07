@@ -4,6 +4,11 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/do';
 import { JwtHelperWrapperService } from "./jwt-helper-wrapper.service";
 import { TokenStorageService } from "./token-storage.service";
+import {
+  AUTHENTICATION_HOST,
+  AUTHENTICATION_ENDPOINT,
+  TOKEN_ENDPOINT
+} from '../rest-api';
 
 export class Token {
   access: string;
@@ -21,7 +26,8 @@ const httpOptions = {
 
 @Injectable()
 export class AuthenticationService {
-  private authenticationUrl = "http://localhost:8000/auth";
+  private authenticationUrl: string = AUTHENTICATION_HOST
+  + AUTHENTICATION_ENDPOINT;
   constructor(
     private http: HttpClient,
     private jwtHelper: JwtHelperWrapperService,
@@ -34,7 +40,7 @@ export class AuthenticationService {
 
   logIn(email: string, password: string): Observable<void> {
     return new Observable((observer) => {
-      this.http.post<Token>(this.authenticationUrl + '/token',
+      this.http.post<Token>(this.authenticationUrl + TOKEN_ENDPOINT,
         { "username": email, "password": password }, httpOptions)
         .subscribe(res => this.setSession(res));
       observer.next();
