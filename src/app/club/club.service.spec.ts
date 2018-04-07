@@ -25,10 +25,6 @@ describe('ClubService', () => {
     });
   });
 
-  it('should be created', inject([ClubService], (service: ClubService) => {
-    expect(service).toBeTruthy();
-  }));
-
   it('calls the clubs api url with application/json content type and POST method when addClub called',
     async(inject([ClubService, HttpTestingController],
       (service: ClubService, backend: HttpTestingController) => {
