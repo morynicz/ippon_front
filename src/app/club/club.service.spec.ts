@@ -35,11 +35,11 @@ describe('ClubService', () => {
         const club =
           { name: 'K1', city: 'C1', description: 'D1', webpage: 'W1', id: 0 };
         service.addClub(club).subscribe(resp => expect(resp).toBe(club));
-        const req = backend.expectOne((req) => (
-          req.headers.has('Content-Type')
-          && req.headers.get('Content-Type') === 'application/json'
-          && req.method === 'POST'
-          && req.url === clubsUrl));
+        const req = backend.expectOne(clubsUrl);
+        expect(req.request.headers.has('Content-Type')).toBe(true);
+        expect(req.request.headers.get('Content-Type')).toBe('application/json');
+        expect(req.request.method).toBe('POST');
+        expect(req.request.body).toBe(club);
         req.flush(club);
       })));
 
@@ -52,12 +52,11 @@ describe('ClubService', () => {
           { name: 'K2', city: 'C2', description: 'D2', webpage: 'W2', id: 1 },
         ];
         service.getClubs().subscribe(resp => expect(resp).toBe(clubs));
-        const reqest = backend.expectOne((req) => (
-          req.headers.has('Content-Type')
-          && req.headers.get('Content-Type') === 'application/json'
-          && req.method === 'GET'
-          && req.url === clubsUrl));
-        reqest.flush(clubs);
+        const req = backend.expectOne(clubsUrl);
+        expect(req.request.headers.has('Content-Type')).toBe(true);
+        expect(req.request.headers.get('Content-Type')).toBe('application/json');
+        expect(req.request.method).toBe('GET');
+        req.flush(clubs);
       })));
 
   it('calls the clubs api url with application/json content type and get method when getClub called',
@@ -66,12 +65,11 @@ describe('ClubService', () => {
         const club =
           { name: 'K1', city: 'C1', description: 'D1', webpage: 'W1', id: 0 };
         service.getClub(club.id).subscribe(resp => expect(resp).toBe(club));
-        const reqest = backend.expectOne((req) => (
-          req.headers.has('Content-Type')
-          && req.headers.get('Content-Type') === 'application/json'
-          && req.method === 'GET'
-          && req.url === clubsUrl + `${club.id}/`));
-        reqest.flush(club);
+        const req = backend.expectOne(clubsUrl + `${club.id}/`);
+        expect(req.request.headers.has('Content-Type')).toBe(true);
+        expect(req.request.headers.get('Content-Type')).toBe('application/json');
+        expect(req.request.method).toBe('GET');
+        req.flush(club);
       })));
 
   it('calls the clubs api url with application/json content type and post method when updateClub called',
@@ -80,11 +78,11 @@ describe('ClubService', () => {
         const club: Club =
           { name: 'P1', city: 'F1', description: 'D1', webpage: 'W1', id: 0 };
         service.updateClub(club).subscribe(resp => expect(resp).toBe(club));
-        const req = backend.expectOne((req) => (
-          req.headers.has('Content-Type')
-          && req.headers.get('Content-Type') === 'application/json'
-          && req.method === 'PUT'
-          && req.url === clubsUrl + `${club.id}/`));
+        const req = backend.expectOne(clubsUrl + `${club.id}/`);
+        expect(req.request.headers.has('Content-Type')).toBe(true);
+        expect(req.request.headers.get('Content-Type')).toBe('application/json');
+        expect(req.request.method).toBe('PUT');
+        expect(req.request.body).toBe(club);
         req.flush(club);
       })));
 
@@ -94,11 +92,10 @@ describe('ClubService', () => {
         const club: Club =
           { name: 'P1', city: 'F1', description: 'D1', webpage: 'W1', id: 0 };
         service.deleteClub(club).subscribe();
-        const req = backend.expectOne((req) => (
-          req.headers.has('Content-Type')
-          && req.headers.get('Content-Type') === 'application/json'
-          && req.method === 'DELETE'
-          && req.url === clubsUrl + `${club.id}/`));
+        const req = backend.expectOne(clubsUrl + `${club.id}/`);
+        expect(req.request.headers.has('Content-Type')).toBe(true);
+        expect(req.request.headers.get('Content-Type')).toBe('application/json');
+        expect(req.request.method).toBe('DELETE');
       })));
 
   it('calls the clubs api url with application/json content type and get method when getAdmins called',
@@ -116,11 +113,10 @@ describe('ClubService', () => {
         const club: Club =
           { name: 'P1', city: 'F1', description: 'D1', webpage: 'W1', id: 0 };
         service.getAdmins(club).subscribe(resp => expect(resp).toBe(admins));
-        const req = backend.expectOne((req) => (
-          req.headers.has('Content-Type')
-          && req.headers.get('Content-Type') === 'application/json'
-          && req.method === 'GET'
-          && req.url === clubsUrl + `${club.id}/` + ADMINS_ENDPOINT));
+        const req = backend.expectOne(clubsUrl + `${club.id}/` + ADMINS_ENDPOINT);
+        expect(req.request.headers.has('Content-Type')).toBe(true);
+        expect(req.request.headers.get('Content-Type')).toBe('application/json');
+        expect(req.request.method).toBe('GET');
         req.flush(admins);
       })));
 
@@ -134,12 +130,12 @@ describe('ClubService', () => {
           { id: 4, name: 'u4' }
         ];
         service.addClubAdmin(club, user).subscribe(resp => expect(resp).toBe(admins));
-        const reqest = backend.expectOne((req) => (
-          req.headers.has('Content-Type')
-          && req.headers.get('Content-Type') === 'application/json'
-          && req.method === 'POST'
-          && req.url === clubsUrl + `${club.id}/` + ADMINS_ENDPOINT));
-        reqest.flush(admins);
+        const req = backend.expectOne(clubsUrl + `${club.id}/` + ADMINS_ENDPOINT);
+        expect(req.request.headers.has('Content-Type')).toBe(true);
+        expect(req.request.headers.get('Content-Type')).toBe('application/json');
+        expect(req.request.method).toBe('POST');
+        expect(req.request.body).toBe(user);
+        req.flush(admins);
       })));
 
   it('calls the clubs api url with application/json content type and delete method when deleteClubAdmin called',
@@ -151,12 +147,11 @@ describe('ClubService', () => {
         const admins: User[] = [];
         service.deleteClubAdmin(club, user).subscribe();
         const expectedUrl = clubsUrl + `${club.id}/` + ADMINS_ENDPOINT + user.id;
-        const request = backend.expectOne((req) => (
-          req.headers.has('Content-Type')
-          && req.headers.get('Content-Type') === 'application/json'
-          && req.method === 'DELETE'
-          && req.url === expectedUrl));
-        request.flush(admins);
+        const req = backend.expectOne(expectedUrl);
+        expect(req.request.headers.has('Content-Type')).toBe(true);
+        expect(req.request.headers.get('Content-Type')).toBe('application/json');
+        expect(req.request.method).toBe('DELETE');
+        req.flush(admins);
       })));
 
   it('calls the clubs api url with application/json content type and get method when getPlayers called',
@@ -183,11 +178,10 @@ describe('ClubService', () => {
         const club: Club =
           { name: 'P1', city: 'F1', description: 'D1', webpage: 'W1', id: 0 };
         service.getPlayers(club.id).subscribe(resp => expect(resp).toBe(players));
-        const reqest = backend.expectOne((req) => (
-          req.headers.has('Content-Type')
-          && req.headers.get('Content-Type') === 'application/json'
-          && req.method === 'GET'
-          && req.url === clubsUrl + `${club.id}/` + PLAYERS_ENDPOINT));
-        reqest.flush(players);
+        const req = backend.expectOne(clubsUrl + `${club.id}/` + PLAYERS_ENDPOINT);
+        expect(req.request.headers.has('Content-Type')).toBe(true);
+        expect(req.request.headers.get('Content-Type')).toBe('application/json');
+        expect(req.request.method).toBe('GET');
+        req.flush(players);
       })));
 });
