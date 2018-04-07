@@ -7,7 +7,6 @@ import { of } from 'rxjs/observable/of';
 import { PlayerFullComponent } from './player-full.component';
 import { Player, Rank, Sex } from '../player';
 import { PlayerService } from '../player.service';
-import { PLAYERS } from '../mock-players'
 
 import { Club } from '../../club/club'
 import { ClubService } from '../../club/club.service';
