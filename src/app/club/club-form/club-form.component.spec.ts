@@ -3,6 +3,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, convertToParamMap, ParamMap } from '@angular/router';
+import { Location } from '@angular/common';
 
 import { ClubFormComponent } from './club-form.component';
 import { ClubService } from '../club.service';
@@ -41,6 +42,13 @@ class ClubServiceSpy {
   }
 }
 
+class LocationSpy {
+  clicked: boolean = false;
+  back(): void {
+    this.clicked = true;
+  }
+}
+
 function expectClubsToBeEqual(
   value: Club,
   expected: Club
@@ -61,15 +69,24 @@ function setInput(
   fixture.detectChanges();
 }
 
+function fillForm(club: Club, fixture: ComponentFixture<ClubFormComponent>): void {
+  setInput('name', club.name, fixture);
+  setInput('description', club.description, fixture);
+  setInput('webpage', club.webpage, fixture);
+  setInput('city', club.city, fixture);
+}
+
 describe('ClubFormComponent', () => {
   let component: ClubFormComponent;
   let fixture: ComponentFixture<ClubFormComponent>;
   let clubService: ClubServiceSpy;
   let el: HTMLElement;
+  let location: LocationSpy;
 
   describe('when clubId is available', () => {
     beforeEach(async(() => {
       clubService = new ClubServiceSpy();
+      location = new LocationSpy();
       TestBed.configureTestingModule({
         declarations: [ClubFormComponent],
         imports: [FormsModule, RouterTestingModule],
@@ -81,7 +98,9 @@ describe('ClubFormComponent', () => {
                 paramMap: convertToParamMap({ id: clubId })
               }
             }
-          }]
+          },
+          { provide: Location, useValue: location }
+        ]
       })
         .compileComponents();
     }));
@@ -111,29 +130,38 @@ describe('ClubFormComponent', () => {
         });
       }));
 
-    it('should call club service updateClub with club values set in form',
-      async(() => {
-        fixture.whenStable().then(() => {
-          let name = 'bbbbbbb';
-          let city = 'ccccccc';
-          let webpage = 'wwwwwww';
-          let description = 'ddddddd';
-          setInput('name', name, fixture);
-          setInput('description', description, fixture);
-          setInput('webpage', webpage, fixture);
-          setInput('city', city, fixture);
-          let btn = fixture.debugElement.query(By.css("#save-club"));
+    describe('when form is filled out and submit clicked',
+      () => {
+        let expectedClub: Club = {
+          id: clubId,
+          name: 'bbbbbbb',
+          description: 'ddddddd',
+          city: 'ccccccc',
+          webpage: 'wwwwwww',
+        };
+        let btn;
+        beforeEach(async(() => {
+          fixture.detectChanges();
+          btn = fixture.debugElement.query(By.css("#save-club"));
+        }));
+        it('should call club service updateClub with club values set in form',
+          async(() => {
+            fillForm(expectedClub, fixture);
+            btn.nativeElement.click();
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+              expectClubsToBeEqual(clubService.updateClubValue, expectedClub);
+            });
+          }));
+        it('should go back to previous location', async(() => {
+          fillForm(expectedClub, fixture);
           btn.nativeElement.click();
-          let expectedClub: Club = {
-            id: clubId,
-            name: name,
-            description: description,
-            city: city,
-            webpage: webpage,
-          };
-          expectClubsToBeEqual(clubService.updateClubValue, expectedClub);
-        });
-      }));
+          fixture.detectChanges();
+          fixture.whenStable().then(() => {
+            expect(location.clicked).toBeTruthy();
+          });
+        }));
+      });
   });
 
   describe('when clubId is not available', () => {
@@ -174,28 +202,36 @@ describe('ClubFormComponent', () => {
         });
       }));
 
-    it('should call club service addClub with club values set in form',
-      async(() => {
+    describe('when form is filled out and submit clicked', () => {
+      let expectedClub: Club = {
+        id: clubId,
+        name: 'bbbbbbb',
+        description: 'ddddddd',
+        city: 'ccccccc',
+        webpage: 'wwwwwww',
+      };
+      let btn;
+      beforeEach(async(() => {
+        fixture.detectChanges();
+        btn = fixture.debugElement.query(By.css("#save-club"));
+      }));
+      it('should call club service addClub with club values set in form',
+        async(() => {
+          fixture.whenStable().then(() => {
+            fillForm(expectedClub, fixture);
+            btn.nativeElement.click();
+            fixture.detectChanges();
+            expectClubsToBeEqual(clubService.addClubValue, expectedClub);
+          });
+        }));
+      it('should go back to previous location', async(() => {
+        fillForm(expectedClub, fixture);
+        btn.nativeElement.click();
+        fixture.detectChanges();
         fixture.whenStable().then(() => {
-          let name = 'bbbbbbb';
-          let city = 'ccccccc';
-          let webpage = 'wwwwwww';
-          let description = 'ddddddd';
-          setInput('name', name, fixture);
-          setInput('description', description, fixture);
-          setInput('webpage', webpage, fixture);
-          setInput('city', city, fixture);
-          let btn = fixture.debugElement.query(By.css("#save-club"));
-          btn.nativeElement.click();
-          let expectedClub: Club = {
-            id: clubId,
-            name: name,
-            description: description,
-            city: city,
-            webpage: webpage,
-          };
-          expectClubsToBeEqual(clubService.addClubValue, expectedClub);
+          expect(location.clicked).toBeTruthy();
         });
       }));
+    });
   });
 });
