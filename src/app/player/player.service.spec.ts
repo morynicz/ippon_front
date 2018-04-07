@@ -15,8 +15,6 @@ const playersUrl = IPPON_HOST + PLAYERS_ENDPOINT;
 
 describe('PlayerService', () => {
   let injector: TestBed;
-  let service: PlayerService;
-  let httpMock: HttpTestingController;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -30,8 +28,7 @@ describe('PlayerService', () => {
   }));
 
   it('calls upon proper url and returns result when getPlayersCalled', async(inject([PlayerService, HttpTestingController], (service: PlayerService, backend: HttpTestingController) => {
-    let receivedPlayers: Player[];
-    let dummyPlayers = [
+    let dummyPlayers: Player[] = [
       {
         name: 'P1',
         surname: 'S1',
@@ -52,9 +49,94 @@ describe('PlayerService', () => {
       }
     ];
     service.getPlayers().subscribe(players => {
-      expect(players).toEqual(dummyPlayers);
+      expect(players).toBe(dummyPlayers);
     });
     const req = backend.expectOne(`${playersUrl}`);
     expect(req.request.method).toBe("GET");
+    expect(req.request.headers.has('Content-Type')).toBe(true);
+    expect(req.request.headers.get('Content-Type')).toBe('application/json');
+    req.flush(dummyPlayers);
   })));
+
+  it('calls the api url with application/json content type and POST method when addPlayer called',
+    inject([PlayerService, HttpTestingController],
+      (service: PlayerService, backend: HttpTestingController) => {
+        const player =
+          {
+            name: 'P1',
+            surname: 'S1',
+            sex: Sex.Male,
+            birthday: new Date("2001-01-01"),
+            rank: Rank.Kyu_5,
+            club_id: 0,
+            id: 0
+          };
+        service.addPlayer(player).subscribe(resp => expect(resp).toBe(player));
+        const req = backend.expectOne(playersUrl);
+        expect(req.request.headers.has('Content-Type')).toBe(true);
+        expect(req.request.headers.get('Content-Type')).toBe('application/json');
+        expect(req.request.method).toBe('POST');
+        expect(req.request.body).toBe(player);
+        req.flush(player);
+      }));
+
+  it('calls the api url with application/json content type and get method when getPlayer called',
+    inject([PlayerService, HttpTestingController],
+      (service: PlayerService, backend: HttpTestingController) => {
+        const player = {
+          name: 'P1',
+          surname: 'S1',
+          sex: Sex.Male,
+          birthday: new Date("2001-01-01"),
+          rank: Rank.Kyu_5,
+          club_id: 0,
+          id: 0
+        };
+        service.getPlayer(player.id).subscribe(resp => expect(resp).toBe(player));
+        const req = backend.expectOne(playersUrl + `${player.id}/`);
+        expect(req.request.headers.has('Content-Type')).toBe(true);
+        expect(req.request.headers.get('Content-Type')).toBe('application/json');
+        expect(req.request.method).toBe('GET');
+        req.flush(player);
+      }));
+
+  it('calls the api url with application/json content type and post method when updatePlayer called',
+    async(inject([PlayerService, HttpTestingController],
+      (service: PlayerService, backend: HttpTestingController) => {
+        const player = {
+          name: 'P1',
+          surname: 'S1',
+          sex: Sex.Male,
+          birthday: new Date("2001-01-01"),
+          rank: Rank.Kyu_5,
+          club_id: 0,
+          id: 0
+        };
+        service.updatePlayer(player).subscribe(resp => expect(resp).toBe(player));
+        const req = backend.expectOne(playersUrl + `${player.id}/`);
+        expect(req.request.headers.has('Content-Type')).toBe(true);
+        expect(req.request.headers.get('Content-Type')).toBe('application/json');
+        expect(req.request.method).toBe('PUT');
+        expect(req.request.body).toBe(player);
+        req.flush(player);
+      })));
+
+  it('calls the clubs api url with application/json content type and delete method when deleteClub called',
+    async(inject([PlayerService, HttpTestingController],
+      (service: PlayerService, backend: HttpTestingController) => {
+        const player = {
+          name: 'P1',
+          surname: 'S1',
+          sex: Sex.Male,
+          birthday: new Date("2001-01-01"),
+          rank: Rank.Kyu_5,
+          club_id: 0,
+          id: 0
+        };
+        service.deletePlayer(player).subscribe();
+        const req = backend.expectOne(playersUrl + `${player.id}/`);
+        expect(req.request.headers.has('Content-Type')).toBe(true);
+        expect(req.request.headers.get('Content-Type')).toBe('application/json');
+        expect(req.request.method).toBe('DELETE');
+      })));
 });

@@ -27,23 +27,26 @@ export class PlayerService {
   }
 
   getPlayer(id: number): Observable<Player> {
-    const url = `${this.playersUrl}${id}`;
+    const url = `${this.playersUrl}${id}/`;
     return this.http.get<Player>(url, httpOptions)
       .pipe(catchError(this.handleError(`getPlayer id=${id}`, new Player())));
   }
 
   updatePlayer(player: Player): Observable<any> {
-    return this.http.put(this.playersUrl, player, httpOptions).pipe(catchError(this.handleError<any>('updateHero')));
+    const url = `${this.playersUrl}${player.id}/`;
+    return this.http.put(url, player, httpOptions)
+      .pipe(catchError(this.handleError<any>('updatePlayer id=${player.id}')));
   }
 
   addPlayer(player: Player): Observable<Player> {
-    return this.http.post(this.playersUrl, player, httpOptions).pipe(catchError(this.handleError<any>('updateHero')));
+    return this.http.post(this.playersUrl, player, httpOptions)
+      .pipe(catchError(this.handleError<any>('addPlayer id=${player.id}')));
   }
 
   deletePlayer(player: Player): Observable<Player> {
-    const url = `${this.playersUrl}${player.id}`;
+    const url = `${this.playersUrl}${player.id}/`;
     return this.http.delete<Player>(url, httpOptions).pipe(
-      catchError(this.handleError<Player>('deletePlayer'))
+      catchError(this.handleError<Player>('deletePlayer id=${player.id}'))
     );
   }
 
