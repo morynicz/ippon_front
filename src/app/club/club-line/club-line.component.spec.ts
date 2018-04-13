@@ -1,5 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { By } from '@angular/platform-browser';
 
 import { ClubLineComponent } from './club-line.component';
 import { Club } from '../club';
@@ -8,6 +9,7 @@ describe('ClubLineComponent', () => {
   let component: ClubLineComponent;
   let fixture: ComponentFixture<ClubLineComponent>;
   let expectedClub: Club;
+  let html;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -30,15 +32,24 @@ describe('ClubLineComponent', () => {
     };
     component.club = expectedClub;
     fixture.detectChanges();
+    html = fixture.debugElement.nativeElement;
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should display club name and city', () => {
-    const html = fixture.debugElement.nativeElement;
-    expect(html.textContent).toContain('C1');
-    expect(html.textContent).toContain('Ci1');
+  describe("when created", () => {
+    it('should display club name', () => {
+      expect(html.textContent).toContain('C1');
+    });
+    it('should display club city', () => {
+      expect(html.textContent).toContain('C1');
+    });
+    it('should provide link to the club', () => {
+      const link = fixture.debugElement.query(By.css('a'));
+      expect(link.nativeElement.getAttribute('ng-reflect-router-link'))
+        .toBe('/club/' + expectedClub.id);
+    });
   });
 });
