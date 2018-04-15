@@ -3,27 +3,31 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 
 import { PlayerService } from '../player.service';
-import { Player, Sex, Rank } from '../player'
+import { Player, Sex, Rank, RANK_STRINGS } from '../player'
 
 import { ClubService } from '../../club/club.service';
 import { Club } from '../../club/club';
 
+import { Authorization, AuthorizationService } from '../../authorization/authorization.service';
+
 @Component({
-  selector: 'app-player-full',
+  selector: 'ippon-player-full',
   templateUrl: './player-full.component.html',
   styleUrls: ['./player-full.component.css']
 })
 export class PlayerFullComponent implements OnInit {
   player: Player;
   club: Club;
-  isAdmin: boolean = true;
+  isAdmin: boolean = false;
+  sexEnum = Sex;
 
   constructor(
     private route: ActivatedRoute,
     private location: Location,
     private router: Router,
     private playerService: PlayerService,
-    private clubService: ClubService
+    private clubService: ClubService,
+    private authorizationService: AuthorizationService
   ) { }
 
   ngOnInit(): void {
@@ -34,9 +38,18 @@ export class PlayerFullComponent implements OnInit {
     const id = +this.route.snapshot.paramMap.get('id');
     this.playerService.getPlayer(id).subscribe(player => {
       this.player = player;
-      this.clubService.getClub(player.club_id).subscribe(club => this.club = club);
-    }
-    );
+      this.getClub(player.club_id);
+      this.getAuthorization(player.club_id);
+    });
+  }
+
+  getClub(clubId: number): void {
+    this.clubService.getClub(clubId).subscribe(club => this.club = club);
+  }
+
+  getAuthorization(clubId: number): void {
+    this.authorizationService.isClubAdmin(clubId)
+      .subscribe(response => this.isAdmin = response);
   }
 
   goBack(): void {

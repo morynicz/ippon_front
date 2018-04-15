@@ -4,8 +4,18 @@
       <h1>{{ player.name }} {{ player.surname }}</h1>
     </header>
     <div class="panel-body">
-      <div class="h3">
-        <span i18n>RANK:</span> {{ player.rank }}</div>
+      <div *ngIf="isAdmin">
+        <div class="h3">
+          <span i18n>RANK:</span> {{ player.rank | kendoRank }}
+        </div>
+        <div class="h3">
+          <span i18n>BIRTHDAY:</span> {{ player.birthday | date: 'yyyy-MM-dd' }}</div>
+        <div class="h3">
+          <span i18n>GENDER:</span>
+          <span *ngIf="player.sex == sexEnum.Male" i18n>Male</span>
+          <span *ngIf="player.sex == sexEnum.Female" i18n>Female</span>
+        </div>
+      </div>
       <div class="h3">
         <span i18n>CLUB:</span>
         <a routerLink="/club/{{club.id}}"> {{ club.name }}</a>
@@ -19,7 +29,7 @@
       </button>
       <div *ngIf="isAdmin" class="col-md-9 text-right btn-group">
         <button routerLink="/player/{{player.id}}/edit" class="btn btn-info" id="edit-player" i18n> EDIT </button>
-        <button (click)="delete()" class="btn btn-danger" id="delete-player" i18n> DELETE </button>
+        <button (click)="deletePlayer()" class="btn btn-danger" id="delete-player" i18n> DELETE </button>
       </div>
     </div>
   </section>
