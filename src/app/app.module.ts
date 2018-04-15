@@ -12,7 +12,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { HomeComponent } from './home/home.component';
 import { ClubService } from './club/club.service';
 import { PlayerService } from "./player/player.service";
-import { PlayersComponent } from './player/players/players.component';
+import { PlayerListComponent } from './player/player-list/player-list.component';
 import { PlayerFullComponent } from './player/player-full/player-full.component';
 import { PlayerFormComponent } from './player/player-form/player-form.component';
 import { PlayerLineComponent } from './player/player-line/player-line.component';
@@ -29,10 +29,16 @@ import { AuthorizationService } from './authorization/authorization.service';
 import { KendoRankPipe } from './player/kendo-rank.pipe';
 
 @NgModule({
+  imports: [
+    BrowserModule,
+    FormsModule,
+    AppRoutingModule,
+    HttpClientModule,
+  ],
   declarations: [
     AppComponent,
     PlayerFullComponent,
-    PlayersComponent,
+    PlayerListComponent,
     PlayerFormComponent,
     PlayerLineComponent,
     NavbarComponent,
@@ -51,7 +57,7 @@ import { KendoRankPipe } from './player/kendo-rank.pipe';
     { provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true },
     JwtHelperWrapperService,
     TokenStorageService,
-    AuthorizationService
+    AuthorizationService,
   ],
   bootstrap: [AppComponent]
 })
