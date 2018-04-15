@@ -77,127 +77,124 @@ describe('ClubFullComponent', () => {
   let authorizationService: AuthorizationServiceDummy;
   let clubService: ClubServiceSpy;
 
-  beforeEach(async(() => {
-    authorizationService = new AuthorizationServiceDummy();
-    clubService = new ClubServiceSpy();
-    TestBed.configureTestingModule({
-      providers: [
-        { provide: ClubService, useValue: clubService },
-        { provide: AuthorizationService, useValue: authorizationService },
-        {
-          provide: ActivatedRoute, useValue: {
-            snapshot: {
-              paramMap: convertToParamMap({ id: clubId })
+  describe("when user is not admin", () => {
+    beforeEach(async(() => {
+      authorizationService = new AuthorizationServiceDummy();
+      clubService = new ClubServiceSpy();
+      TestBed.configureTestingModule({
+        providers: [
+          { provide: ClubService, useValue: clubService },
+          { provide: AuthorizationService, useValue: authorizationService },
+          {
+            provide: ActivatedRoute, useValue: {
+              snapshot: {
+                paramMap: convertToParamMap({ id: clubId })
+              }
             }
           }
-        }
-      ],
-      imports: [RouterTestingModule],
-      declarations: [ClubFullComponent, PlayerLineComponent]
-    })
-      .compileComponents();
-  }));
+        ],
+        imports: [RouterTestingModule],
+        declarations: [ClubFullComponent, PlayerLineComponent]
+      })
+        .compileComponents();
+    }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(ClubFullComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-
-  it('should display all club details', () => {
-    const html = fixture.debugElement.nativeElement;
-    expect(html.textContent).toContain('C1');
-    expect(html.textContent).toContain('Ci1');
-    expect(html.textContent).toContain('D1');
-    expect(html.textContent).toContain('W1');
-  });
-
-  it('should display all club players', async(() => {
-    fixture.whenStable().then(() => {
+    beforeEach(() => {
+      fixture = TestBed.createComponent(ClubFullComponent);
+      component = fixture.componentInstance;
       fixture.detectChanges();
-      const de = fixture.debugElement;
-      const html = de.nativeElement;
-      const playerLines = html.querySelectorAll('ippon-player-line');
-      expect(playerLines[0].textContent).toContain('P1');
-      expect(playerLines[0].textContent).toContain('S1');
-      expect(playerLines[1].textContent).toContain('P3');
-      expect(playerLines[1].textContent).toContain('S3');
-      expect(clubService.getPlayersClubId).toEqual(clubId);
     });
-  }));
 
-  it('should not display admin controls if the user is not club admin', async(() => {
-    fixture.whenStable().then(() => {
-      fixture.detectChanges();
-      const de = fixture.debugElement;
-      const html = de.nativeElement;
-      expect(html.querySelector('#delete-club')).toBeFalsy();
-      expect(html.querySelector('#edit-club')).toBeFalsy();
-      expect(html.querySelector('#new-player')).toBeFalsy();
+    it('should create', () => {
+      expect(component).toBeTruthy();
     });
-  }));
-});
 
-describe('ClubFullComponent with admin logged in', () => {
-  let component: ClubFullComponent;
-  let fixture: ComponentFixture<ClubFullComponent>;
-  let authorizationService: AuthorizationServiceDummy;
-  let clubService: ClubServiceSpy;
-
-  beforeEach(async(() => {
-    authorizationService = new AuthorizationServiceDummy();
-    authorizationService.isClubAdminResult = true;
-    clubService = new ClubServiceSpy();
-    TestBed.configureTestingModule({
-      providers: [
-        { provide: ClubService, useValue: clubService },
-        { provide: AuthorizationService, useValue: authorizationService }
-      ],
-      imports: [RouterTestingModule],
-      declarations: [ClubFullComponent, PlayerLineComponent]
-    })
-      .compileComponents();
-  }));
-
-  beforeEach(() => {
-    fixture = TestBed.createComponent(ClubFullComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should display admin controls if the user is club admin', () => {
-    authorizationService.isClubAdminResult = true;
-    fixture.whenStable().then(() => {
-      fixture.detectChanges();
-      const de = fixture.debugElement;
-      const html = de.nativeElement;
-      expect(html.querySelector('#delete-club')).toBeTruthy();
-      expect(html.querySelector('#edit-club')).toBeTruthy();
-      expect(html.querySelector('#new-player-club')).toBeTruthy();
+    it('should display all club details', () => {
+      const html = fixture.debugElement.nativeElement;
+      expect(html.textContent).toContain('C1');
+      expect(html.textContent).toContain('Ci1');
+      expect(html.textContent).toContain('D1');
+      expect(html.textContent).toContain('W1');
     });
-  });
 
-  it('should call deleteClub from club service with correct id when delete club button clicked',
-    async(() => {
+    it('should display all club players', async(() => {
       fixture.whenStable().then(() => {
         fixture.detectChanges();
-        const btn = fixture.debugElement.query(By.css('#delete-club'));
-        btn.triggerEventHandler('click', null);
-        expect(clubService.deleteClubCallId).toEqual(clubId);
+        const de = fixture.debugElement;
+        const html = de.nativeElement;
+        const playerLines = html.querySelectorAll('ippon-player-line');
+        expect(playerLines[0].textContent).toContain('P1');
+        expect(playerLines[0].textContent).toContain('S1');
+        expect(playerLines[1].textContent).toContain('P3');
+        expect(playerLines[1].textContent).toContain('S3');
+        expect(clubService.getPlayersClubId).toEqual(clubId);
       });
     }));
 
-  it('should provide link to editing club', () => {
-    const btn = fixture.debugElement.query(By.css('#edit-club'));
-    expect(btn.nativeElement.getAttribute('ng-reflect-router-link')).toBe('/club/' + clubId + '/edit');
+    it('should not display admin controls if the user is not club admin', async(() => {
+      fixture.whenStable().then(() => {
+        fixture.detectChanges();
+        const de = fixture.debugElement;
+        const html = de.nativeElement;
+        expect(html.querySelector('#delete-club')).toBeFalsy();
+        expect(html.querySelector('#edit-club')).toBeFalsy();
+        expect(html.querySelector('#new-player')).toBeFalsy();
+      });
+    }));
   });
+  describe("when user is admin", () => {
+    beforeEach(async(() => {
+      authorizationService = new AuthorizationServiceDummy();
+      authorizationService.isClubAdminResult = true;
+      clubService = new ClubServiceSpy();
+      TestBed.configureTestingModule({
+        providers: [
+          { provide: ClubService, useValue: clubService },
+          { provide: AuthorizationService, useValue: authorizationService }
+        ],
+        imports: [RouterTestingModule],
+        declarations: [ClubFullComponent, PlayerLineComponent]
+      })
+        .compileComponents();
+    }));
 
-  it('should provide link to adding new players', () => {
-    const btn = fixture.debugElement.query(By.css('#new-player-club'));
-    expect(btn.nativeElement.getAttribute('ng-reflect-router-link')).toBe('/player/new');
+    beforeEach(() => {
+      fixture = TestBed.createComponent(ClubFullComponent);
+      component = fixture.componentInstance;
+      fixture.detectChanges();
+    });
+
+    it('should display admin controls if the user is club admin', () => {
+      authorizationService.isClubAdminResult = true;
+      fixture.whenStable().then(() => {
+        fixture.detectChanges();
+        const de = fixture.debugElement;
+        const html = de.nativeElement;
+        expect(html.querySelector('#delete-club')).toBeTruthy();
+        expect(html.querySelector('#edit-club')).toBeTruthy();
+        expect(html.querySelector('#new-player-club')).toBeTruthy();
+      });
+    });
+
+    it('should call deleteClub from club service with correct id when delete club button clicked',
+      async(() => {
+        fixture.whenStable().then(() => {
+          fixture.detectChanges();
+          const btn = fixture.debugElement.query(By.css('#delete-club'));
+          btn.triggerEventHandler('click', null);
+          expect(clubService.deleteClubCallId).toEqual(clubId);
+        });
+      }));
+
+    it('should provide link to editing club', () => {
+      const btn = fixture.debugElement.query(By.css('#edit-club'));
+      expect(btn.nativeElement.getAttribute('ng-reflect-router-link')).toBe('/club/' + clubId + '/edit');
+    });
+
+    it('should provide link to adding new players', () => {
+      const btn = fixture.debugElement.query(By.css('#new-player-club'));
+      expect(btn.nativeElement.getAttribute('ng-reflect-router-link')).toBe('/player/new');
+    });
+
   });
 });
