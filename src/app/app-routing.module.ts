@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from "@angular/router";
 
 import { HomeComponent } from "./home/home.component";
-import { PlayersComponent } from "./player/players/players.component";
+import { PlayerListComponent } from "./player/player-list/player-list.component";
 import { PlayerFullComponent } from "./player/player-full/player-full.component";
 import { PlayerFormComponent } from "./player/player-form/player-form.component";
 
@@ -18,7 +18,7 @@ const routes: Routes = [
   { path: 'player/new', component: PlayerFormComponent },
   { path: 'player/:id/edit', component: PlayerFormComponent },
   { path: 'player/:id', component: PlayerFullComponent },
-  { path: 'players', component: PlayersComponent },
+  { path: 'players', component: PlayerListComponent },
   { path: 'club/new', component: ClubFormComponent },
   { path: 'club/:id/edit', component: ClubFormComponent },
   { path: 'club/:id', component: ClubFullComponent },
