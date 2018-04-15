@@ -26,6 +26,7 @@ import { AuthenticationInterceptor } from './authorization/authentication-interc
 import { JwtHelperWrapperService } from './authorization/jwt-helper-wrapper.service';
 import { TokenStorageService } from "./authorization/token-storage.service";
 import { AuthorizationService } from './authorization/authorization.service';
+import { KendoRankPipe } from './player/kendo-rank.pipe';
 
 @NgModule({
   declarations: [
@@ -40,17 +41,8 @@ import { AuthorizationService } from './authorization/authorization.service';
     ClubListComponent,
     ClubLineComponent,
     ClubFormComponent,
-    LoginFormComponent
-  ],
-  imports: [
-    BrowserModule,
-    FormsModule,
-    AppRoutingModule,
-    HttpClientModule,
-    // Fake!
-    // HttpClientInMemoryWebApiModule.forRoot(
-    //   InMemoryDataService, { dataEncapsulation: false }
-    // )
+    LoginFormComponent,
+    KendoRankPipe,
   ],
   providers: [
     PlayerService,
