@@ -1,9 +1,13 @@
+
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { FormsModule } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
+import { ActivatedRoute, convertToParamMap, ParamMap } from '@angular/router';
+import { Location } from '@angular/common';
+import { By } from '@angular/platform-browser';
 
 import { PlayerFormComponent } from './player-form.component';
 import { Player, Rank, Sex } from './../player';
@@ -23,53 +27,234 @@ class PlayerServiceSpy {
     club_id: 0,
     id: 0
   }
+  updatePalyerValue: Player;
+  updatePlayer(player: Player): Observable<any> {
+    this.updatePalyerValue = player;
+    return of(true);
+  }
   getPlayer(id: number): Observable<Player> {
     this.id = id;
     return of(this.player);
   }
+  addPalyerValue: Player;
+  addPlayer(player: Player): Observable<Player> {
+    this.addPalyerValue = player;
+    return of(this.addPalyerValue);
+  }
+
 }
 
 class ClubServiceSpy {
   id: number;
-  club: Club = {
-    id: 1,
+  clubs: Club[] = [{
+    id: 0,
     name: 'C4',
     description: 'D',
     city: 'Ci',
     webpage: 'W'
-  }
+  }, {
+    id: 1,
+    name: 'C8',
+    description: 'D5',
+    city: 'Ci12',
+    webpage: 'W7'
+  }];
   getClubs(): Observable<Club[]> {
-    return of([this.club]);
+    return of(this.clubs);
   }
+}
+
+class LocationSpy {
+  clicked: boolean = false;
+  back(): void {
+    this.clicked = true;
+  }
+}
+
+function expectPlayersToBeEqual(
+  value: Player,
+  expected: Player
+) {
+  expect(value.name).toBe(expected.name);
+  expect(value.surname).toBe(expected.surname);
+  expect(value.sex).toBe(expected.sex);
+  expect(value.rank).toBe(expected.rank);
+  expect(value.club_id).toBe(expected.club_id);
+  expect(value.birthday).toBe(expected.birthday);
 }
 
 describe('PlayerFormComponent', () => {
   let component: PlayerFormComponent;
   let fixture: ComponentFixture<PlayerFormComponent>;
-  let playerServiceSpy: PlayerServiceSpy;
-  let clubServiceSpy: ClubServiceSpy;
+  let playerService: PlayerServiceSpy;
+  let clubService: ClubServiceSpy;
+  let el: HTMLElement;
+  let location: LocationSpy;
 
-  beforeEach(async(() => {
-    playerServiceSpy = new PlayerServiceSpy();
-    clubServiceSpy = new ClubServiceSpy();
+  describe('when playerId is available', () => {
+    beforeEach(async(() => {
+      playerService = new PlayerServiceSpy();
+      clubService = new ClubServiceSpy();
+      location = new LocationSpy();
+      TestBed.configureTestingModule({
+        declarations: [PlayerFormComponent],
+        imports: [FormsModule, RouterTestingModule],
+        providers: [
+          { provide: PlayerService, useValue: playerService },
+          { provide: ClubService, useValue: clubService },
+          {
+            provide: ActivatedRoute, useValue: {
+              snapshot: {
+                paramMap: convertToParamMap({ id: playerService.player.id })
+              }
+            }
+          },
+          { provide: Location, useValue: location }
+        ]
+      })
+        .compileComponents();
+    }));
 
-    TestBed.configureTestingModule({
-      declarations: [PlayerFormComponent],
-      imports: [FormsModule, RouterTestingModule],
-      providers: [
-        { provide: PlayerService, useValue: playerServiceSpy },
-        { provide: ClubService, useValue: clubServiceSpy }]
-    })
-      .compileComponents();
-  }));
+    beforeEach(() => {
+      fixture = TestBed.createComponent(PlayerFormComponent);
+      component = fixture.componentInstance;
+      fixture.detectChanges();
+    });
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(PlayerFormComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    it('should load name of player with given id',
+      async(() => {
+        fixture.whenStable().then(() => {
+          let de = fixture.debugElement;
+          let clubInput = de.query(By.css("[name=club]")).nativeElement.value;
+          expect(de.query(By.css("[name=name]")).nativeElement.value)
+            .toContain(playerService.player.name);
+        });
+      }));
+
+    it('should load surname of player with given id',
+      async(() => {
+        fixture.whenStable().then(() => {
+          let de = fixture.debugElement;
+          expect(de.query(By.css("[name=surname]")).nativeElement.value)
+            .toContain(playerService.player.surname);
+        });
+      }));
+    it('should load rank of player with given id',
+      async(() => {
+        fixture.whenStable().then(() => {
+          let de = fixture.debugElement;
+          expect(de.query(By.css("[name=rank]")).nativeElement.value)
+            .toContain(playerService.player.rank);
+        });
+      }));
+    it('should load sex of player with given id',
+      async(() => {
+        fixture.whenStable().then(() => {
+          let de = fixture.debugElement;
+          let sexInput = de.queryAll(By.css("[name=sex]"));
+          expect(sexInput[0].nativeElement.checked).toBe(true);
+          expect(sexInput[1].nativeElement.checked).toBe(false);
+        });
+      }));
+    it('should load club name of player with given id',
+      async(() => {
+        fixture.whenStable().then(() => {
+          let de = fixture.debugElement;
+          expect(de.query(By.css("[name=club]")).nativeElement
+            .selectedOptions[0].label)
+            .toContain(clubService.clubs[0].name);
+        });
+      }));
+
+
+    describe('when form is filled out and submit clicked',
+      () => {
+        let expectedPlayer: Player;
+        let btn;
+        beforeEach(async(() => {
+          fixture.detectChanges();
+          btn = fixture.debugElement.query(By.css("#save-player"));
+          expectedPlayer = {
+            name: 'P2',
+            surname: 'S2',
+            sex: Sex.Female,
+            birthday: new Date("2002-03-04"),
+            rank: Rank.Dan_8,
+            club_id: 2,
+            id: playerService.player.id
+          };
+          component.player = expectedPlayer;
+          fixture.detectChanges();
+          btn.nativeElement.click();
+          fixture.detectChanges();
+        }));
+        it('should call player service updatePlayer with player values set in form',
+          async(() => {
+            fixture.whenStable().then(() => {
+              expectPlayersToBeEqual(playerService.updatePalyerValue, expectedPlayer);
+            });
+          }));
+        it('should go back to previous location', async(() => {
+          fixture.whenStable().then(() => {
+            expect(location.clicked).toBeTruthy();
+          });
+        }));
+      });
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  describe('when playerId is not available', () => {
+    beforeEach(async(() => {
+      playerService = new PlayerServiceSpy();
+      clubService = new ClubServiceSpy();
+      location = new LocationSpy();
+      TestBed.configureTestingModule({
+        declarations: [PlayerFormComponent],
+        imports: [FormsModule, RouterTestingModule],
+        providers: [
+          { provide: PlayerService, useValue: playerService },
+          { provide: ClubService, useValue: clubService },
+          { provide: Location, useValue: location }
+        ]
+      })
+        .compileComponents();
+    }));
+
+    beforeEach(() => {
+      fixture = TestBed.createComponent(PlayerFormComponent);
+      component = fixture.componentInstance;
+      fixture.detectChanges();
+    });
+    describe('when form is filled out and submit clicked',
+      () => {
+        let expectedPlayer: Player;
+        let btn;
+        beforeEach(async(() => {
+          fixture.detectChanges();
+          btn = fixture.debugElement.query(By.css("#save-player"));
+          expectedPlayer = {
+            name: 'P2',
+            surname: 'S2',
+            sex: Sex.Female,
+            birthday: new Date("2002-03-04"),
+            rank: Rank.Dan_8,
+            club_id: 2,
+            id: playerService.player.id
+          };
+          component.player = expectedPlayer;
+          fixture.detectChanges();
+          btn.nativeElement.click();
+        }));
+        it('should call player service updatePlayer with player values set in form',
+          async(() => {
+            fixture.whenStable().then(() => {
+              expectPlayersToBeEqual(playerService.addPalyerValue, expectedPlayer);
+            });
+          }));
+        it('should go back to previous location', async(() => {
+          fixture.whenStable().then(() => {
+            expect(location.clicked).toBeTruthy();
+          });
+        }));
+      });
   });
 });
