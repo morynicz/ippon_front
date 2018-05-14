@@ -37,7 +37,7 @@ export class AuthorizationService {
 
   private isAuthorized(id: number, urlPath: string): Observable<boolean> {
     return new Observable<boolean>((observer) => {
-      this.http.get<Authorization>(this.authorizationUrl + urlPath + '/' + id)
+      this.http.get<Authorization>(this.authorizationUrl + urlPath + id)
         .subscribe(result => {
           observer.next(result.isAuthorized);
         }, error => {

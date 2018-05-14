@@ -38,7 +38,7 @@ describe('AuthorizationService', () => {
     });
 
     backend.expectOne({
-      url: authorizationUrl + CLUBS_ENDPOINT + '/' + clubId,
+      url: authorizationUrl + CLUBS_ENDPOINT + clubId,
       method: 'GET'
     }).flush({ isAuthorized: true });
   })));
@@ -50,7 +50,7 @@ describe('AuthorizationService', () => {
     });
 
     backend.expectOne({
-      url: authorizationUrl + TOURNAMENTS_ENDPOINT + ADMINS_ENDPOINT + '/' + tournamentId,
+      url: authorizationUrl + TOURNAMENTS_ENDPOINT + ADMINS_ENDPOINT + tournamentId,
       method: 'GET'
     }).flush({ isAuthorized: false });
   })));
@@ -62,7 +62,7 @@ describe('AuthorizationService', () => {
     });
 
     backend.expectOne({
-      url: authorizationUrl + TOURNAMENTS_ENDPOINT + STAFF_ENDPOINT + '/' + tournamentId,
+      url: authorizationUrl + TOURNAMENTS_ENDPOINT + STAFF_ENDPOINT + tournamentId,
       method: 'GET'
     }).flush({ isAuthorized: true });
   })));
