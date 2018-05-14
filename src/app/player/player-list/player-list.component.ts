@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Player, Sex, Rank } from '../player';
+import { Player } from '../player';
+import { Rank } from '../../rank';
+import { Sex } from '../../sex';
 import { PlayerService } from "../player.service"
 
 @Component({

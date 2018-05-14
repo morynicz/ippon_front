@@ -6,7 +6,9 @@ import { of } from 'rxjs/observable/of';
 import { ClubService } from './club.service';
 import { Club } from './club';
 import { User } from '../user';
-import { Player, Sex, Rank } from '../player/player';
+import { Player } from '../player/player';
+import { Rank } from '../rank';
+import { Sex } from '../sex';
 
 import {
   IPPON_HOST,

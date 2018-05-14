@@ -3,7 +3,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 
 import { PlayerService } from '../player.service';
-import { Player, Sex, Rank, RANK_STRINGS } from '../player'
+import { Player } from '../player'
+import { Rank, RANK_STRINGS } from '../../rank';
+import { Sex } from '../../sex';
 
 import { ClubService } from '../../club/club.service';
 import { Club } from '../../club/club';

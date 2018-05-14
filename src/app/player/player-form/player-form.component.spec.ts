@@ -10,8 +10,10 @@ import { Location } from '@angular/common';
 import { By } from '@angular/platform-browser';
 
 import { PlayerFormComponent } from './player-form.component';
-import { Player, Rank, Sex } from './../player';
+import { Player } from './../player';
 import { PlayerService } from '../player.service';
+import { Rank } from '../../rank';
+import { Sex } from '../../sex';
 
 import { Club } from '../../club/club'
 import { ClubService } from '../../club/club.service';

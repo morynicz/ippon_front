@@ -4,7 +4,9 @@ import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 
 import { PlayerService } from './player.service';
-import { Player, Sex, Rank } from './player'
+import { Player } from './player'
+import { Rank } from '../rank';
+import { Sex } from '../sex';
 
 import {
   IPPON_HOST,

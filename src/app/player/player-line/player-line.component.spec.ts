@@ -3,7 +3,9 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
 
 import { PlayerLineComponent } from './player-line.component';
-import { Player, Sex, Rank } from '../player';
+import { Player } from '../player';
+import { Rank } from '../../rank';
+import { Sex } from '../../sex';
 
 describe('PlayerLineComponent', () => {
   let component: PlayerLineComponent;

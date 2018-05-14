@@ -10,7 +10,9 @@ import { ClubFullComponent } from './club-full.component';
 import { Club } from '../club';
 import { ClubService } from '../club.service';
 
-import { Player, Sex, Rank } from '../../player/player';
+import { Player } from '../../player/player';
+import { Rank } from '../../rank';
+import { Sex } from '../../sex';
 import { PlayerLineComponent } from '../../player/player-line/player-line.component';
 import { PlayerService } from '../../player/player.service';
 

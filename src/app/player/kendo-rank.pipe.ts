@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Rank, RANK_STRINGS } from './player';
+import { Rank, RANK_STRINGS } from '../rank';
 
 @Pipe({ name: 'kendoRank' })
 export class KendoRankPipe implements PipeTransform {

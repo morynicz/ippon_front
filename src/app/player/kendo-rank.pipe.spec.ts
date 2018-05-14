@@ -1,5 +1,5 @@
 import { KendoRankPipe } from './kendo-rank.pipe';
-import { Rank, RANK_STRINGS } from './player';
+import { Rank, RANK_STRINGS } from '../rank';
 
 describe('KendoRankPipe', () => {
   let pipe: KendoRankPipe;

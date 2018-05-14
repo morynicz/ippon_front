@@ -6,7 +6,9 @@ import { of } from 'rxjs/observable/of';
 
 import { PlayerListComponent } from './player-list.component';
 import { PlayerLineComponent } from '../player-line/player-line.component';
-import { Sex, Rank, Player } from '../player';
+import { Player } from '../player';
+import { Rank } from '../../rank';
+import { Sex } from '../../sex';
 import { PlayerService } from '../player.service';
 
 const dummyPlayers: Player[] = [{
