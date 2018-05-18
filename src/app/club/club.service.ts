@@ -39,11 +39,13 @@ export class ClubService {
 
   updateClub(club: Club): Observable<Club> {
     const url = `${this.clubsUrl}${club.id}/`;
-    return this.http.put(url, club, httpOptions).pipe(catchError(this.handleError<any>('updateClub')));
+    return this.http.put(url, club, httpOptions)
+      .pipe(catchError(this.handleError<any>('updateClub')));
   }
 
   addClub(club: Club): Observable<Club> {
-    return this.http.post(this.clubsUrl, club, httpOptions).pipe(catchError(this.handleError<any>('addClub')));
+    return this.http.post(this.clubsUrl, club, httpOptions)
+      .pipe(catchError(this.handleError<any>('addClub')));
   }
 
   deleteClub(club: Club): Observable<Club> {
