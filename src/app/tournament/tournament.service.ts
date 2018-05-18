@@ -22,8 +22,8 @@ export class TournamentService {
   constructor(private http: HttpClient) { }
 
   getTournaments(): Observable<Tournament[]> {
-    return this.http.get<Tournaments>(this.tournamentsUrl, httpOptions)
-      .pipe(catchError(this.handleError('getTournaments')));
+    return this.http.get<Tournament>(this.tournamentsUrl, httpOptions)
+      .pipe(catchError(this.handleError<any>('getTournaments')));
   }
 
   getTournament(id: number): Observable<Tournament> {
@@ -36,6 +36,12 @@ export class TournamentService {
     return this.http.post<Tournament>(
       this.tournamentsUrl, tournament, httpOptions)
       .pipe(catchError(this.handleError<any>('addTournament')));
+  }
+
+  updateTournament(tournament: Tournament): Observable<Tournament> {
+    const url = `${this.tournamentsUrl}${tournament.id}/`;
+    return this.http.put<Tournament>(url, tournament, httpOptions)
+      .pipe(catchError(this.handleError<any>('updateTournament')));
   }
 
   private handleError<T>(operation = 'operation', result?: T) {
