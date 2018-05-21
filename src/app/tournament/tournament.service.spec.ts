@@ -13,7 +13,8 @@ import { User } from '../user';
 
 import {
   IPPON_HOST,
-  TOURNAMENTS_ENDPOINT
+  TOURNAMENTS_ENDPOINT,
+  ADMINS_ENDPOINT
 } from '../rest-api';
 
 const tournamentsUrl = IPPON_HOST + TOURNAMENTS_ENDPOINT;
@@ -63,6 +64,7 @@ const tournaments: Tournament[] = [
 
 
 describe('TournamentService', () => {
+  const tournamentUrl: string = tournamentsUrl + `${tournament.id}/`;
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [TournamentService],
@@ -77,9 +79,6 @@ describe('TournamentService', () => {
 
   describe("when addTournament is called", () => {
     let expected: Tournament = tournament;
-    beforeEach(() => {
-      expected["id"] = 4;
-    });
     it("calls the tournaments api url",
       inject(
         [TournamentService, HttpTestingController],
@@ -189,8 +188,7 @@ describe('TournamentService', () => {
           backend: HttpTestingController) => {
           service.getTournament(tournament.id)
             .subscribe();
-          const req = backend.expectOne(
-            tournamentsUrl + `${tournament.id}/`);
+          const req = backend.expectOne(tournamentUrl);
         }));
     it("uses GET method",
       inject(
@@ -199,8 +197,7 @@ describe('TournamentService', () => {
           backend: HttpTestingController) => {
           service.getTournament(tournament.id)
             .subscribe();
-          const req = backend.expectOne(
-            tournamentsUrl + `${tournament.id}/`);
+          const req = backend.expectOne(tournamentUrl);
           expect(req.request.method).toBe('GET');
         }));
     it("sends request with application/json content type headers",
@@ -210,8 +207,7 @@ describe('TournamentService', () => {
           backend: HttpTestingController) => {
           service.getTournament(tournament.id)
             .subscribe();
-          const req = backend.expectOne(
-            tournamentsUrl + `${tournament.id}/`);
+          const req = backend.expectOne(tournamentUrl);
           expect(req.request.headers.has('Content-Type'))
             .toBe(true);
           expect(req.request.headers.get('Content-Type'))
@@ -225,8 +221,7 @@ describe('TournamentService', () => {
           service.getTournament(tournament.id)
             .subscribe(response => expect(response)
               .toBe(tournament));
-          const req = backend.expectOne(
-            tournamentsUrl + `${tournament.id}/`);
+          const req = backend.expectOne(tournamentUrl);
           req.flush(tournament);
         }));
   });
@@ -239,8 +234,7 @@ describe('TournamentService', () => {
           backend: HttpTestingController) => {
           service.updateTournament(tournament)
             .subscribe();
-          const req = backend.expectOne(
-            tournamentsUrl + `${tournament.id}/`);
+          const req = backend.expectOne(tournamentUrl);
         }));
     it("uses PUT method",
       inject(
@@ -249,8 +243,7 @@ describe('TournamentService', () => {
           backend: HttpTestingController) => {
           service.updateTournament(tournament)
             .subscribe();
-          const req = backend.expectOne(
-            tournamentsUrl + `${tournament.id}/`);
+          const req = backend.expectOne(tournamentUrl);
           expect(req.request.method).toBe('PUT');
         }));
     it("sends request with application/json content type headers",
@@ -260,8 +253,7 @@ describe('TournamentService', () => {
           backend: HttpTestingController) => {
           service.updateTournament(tournament)
             .subscribe();
-          const req = backend.expectOne(
-            tournamentsUrl + `${tournament.id}/`);
+          const req = backend.expectOne(tournamentUrl);
           expect(req.request.headers.has('Content-Type'))
             .toBe(true);
           expect(req.request.headers.get('Content-Type'))
@@ -289,8 +281,7 @@ describe('TournamentService', () => {
           backend: HttpTestingController) => {
           service.deleteTournament(tournament)
             .subscribe();
-          const req = backend.expectOne(
-            tournamentsUrl + `${tournament.id}/`);
+          const req = backend.expectOne(tournamentUrl);
         }));
     it("uses DELETE method",
       inject(
@@ -299,8 +290,7 @@ describe('TournamentService', () => {
           backend: HttpTestingController) => {
           service.deleteTournament(tournament)
             .subscribe();
-          const req = backend.expectOne(
-            tournamentsUrl + `${tournament.id}/`);
+          const req = backend.expectOne(tournamentUrl);
           expect(req.request.method).toBe('DELETE');
         }));
     it("sends request with application/json content type headers",
@@ -310,12 +300,70 @@ describe('TournamentService', () => {
           backend: HttpTestingController) => {
           service.deleteTournament(tournament)
             .subscribe();
-          const req = backend.expectOne(
-            tournamentsUrl + `${tournament.id}/`);
+          const req = backend.expectOne(tournamentUrl);
           expect(req.request.headers.has('Content-Type'))
             .toBe(true);
           expect(req.request.headers.get('Content-Type'))
             .toBe('application/json');
         }));
+  });
+
+  describe("when admins api is used", () => {
+    const adminsUrl: string = tournamentUrl + ADMINS_ENDPOINT;
+    let admins: User[] = [
+      {
+        id: 1,
+        name: 'N1'
+      },
+      {
+        id: 2,
+        name: 'N2'
+      }
+    ];
+    describe("when getAdmins is called", () => {
+      it("calls the tournaments api url",
+        inject(
+          [TournamentService, HttpTestingController],
+          (service: TournamentService,
+            backend: HttpTestingController) => {
+            service.getAdmins(tournament.id)
+              .subscribe();
+            const req = backend.expectOne(adminsUrl);
+          }));
+      it("uses GET method",
+        inject(
+          [TournamentService, HttpTestingController],
+          (service: TournamentService,
+            backend: HttpTestingController) => {
+            service.getAdmins(tournament.id)
+              .subscribe();
+            const req = backend.expectOne(tournamentUrl + ADMINS_ENDPOINT);
+            expect(req.request.method).toBe('GET');
+          }));
+      it("sends request with application/json content type headers",
+        inject(
+          [TournamentService, HttpTestingController],
+          (service: TournamentService,
+            backend: HttpTestingController) => {
+            service.getAdmins(tournament.id)
+              .subscribe();
+            const req = backend.expectOne(adminsUrl);
+            expect(req.request.headers.has('Content-Type'))
+              .toBe(true);
+            expect(req.request.headers.get('Content-Type'))
+              .toBe('application/json');
+          }));
+      it("responds with requested tournament",
+        inject(
+          [TournamentService, HttpTestingController],
+          (service: TournamentService,
+            backend: HttpTestingController) => {
+            service.getAdmins(tournament.id)
+              .subscribe(response => expect(response)
+                .toBe(admins));
+            const req = backend.expectOne(adminsUrl);
+            req.flush(admins);
+          }));
+    });
   });
 });

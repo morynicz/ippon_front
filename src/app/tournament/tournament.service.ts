@@ -6,10 +6,12 @@ import { catchError, map, tap } from 'rxjs/operators';
 
 import {
   IPPON_HOST,
-  TOURNAMENTS_ENDPOINT
+  TOURNAMENTS_ENDPOINT,
+  ADMINS_ENDPOINT
 } from '../rest-api';
 
 import { Tournament } from './tournament';
+import { User } from '../user';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -51,6 +53,12 @@ export class TournamentService {
     return this.http.delete<{}>(
       this.getTournamentUrl(tournament.id), httpOptions)
       .pipe(catchError(this.handleError<any>('updateTournament')));
+  }
+
+  getAdmins(id: number): Observable<User[]> {
+    return this.http.get<User[]>(
+      this.getTournamentUrl(id) + ADMINS_ENDPOINT, httpOptions)
+      .pipe(catchError(this.handleError<any>('getAdmins')));
   }
 
   private handleError<T>(operation = 'operation', result?: T) {
