@@ -44,6 +44,12 @@ export class TournamentService {
       .pipe(catchError(this.handleError<any>('updateTournament')));
   }
 
+  deleteTournament(tournament: Tournament): Observable<Tournament> {
+    const url = `${this.tournamentsUrl}${tournament.id}/`;
+    return this.http.delete<{}>(url, httpOptions)
+      .pipe(catchError(this.handleError<any>('updateTournament')));
+  }
+
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       console.error(error);

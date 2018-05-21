@@ -278,4 +278,42 @@ describe('TournamentService', () => {
           req.flush(tournament);
         }));
   });
+
+  describe("when deleteTournament is called", () => {
+    it("calls the tournaments api url",
+      inject(
+        [TournamentService, HttpTestingController],
+        (service: TournamentService,
+          backend: HttpTestingController) => {
+          service.deleteTournament(tournament)
+            .subscribe();
+          const req = backend.expectOne(
+            tournamentsUrl + `${tournament.id}/`);
+        }));
+    it("uses DELETE method",
+      inject(
+        [TournamentService, HttpTestingController],
+        (service: TournamentService,
+          backend: HttpTestingController) => {
+          service.deleteTournament(tournament)
+            .subscribe();
+          const req = backend.expectOne(
+            tournamentsUrl + `${tournament.id}/`);
+          expect(req.request.method).toBe('DELETE');
+        }));
+    it("sends request with application/json content type headers",
+      inject(
+        [TournamentService, HttpTestingController],
+        (service: TournamentService,
+          backend: HttpTestingController) => {
+          service.deleteTournament(tournament)
+            .subscribe();
+          const req = backend.expectOne(
+            tournamentsUrl + `${tournament.id}/`);
+          expect(req.request.headers.has('Content-Type'))
+            .toBe(true);
+          expect(req.request.headers.get('Content-Type'))
+            .toBe('application/json');
+        }));
+  });
 });
