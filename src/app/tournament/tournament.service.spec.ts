@@ -6,8 +6,10 @@ import { of } from 'rxjs/observable/of';
 import { TournamentService } from './tournament.service';
 import { Tournament } from './tournament';
 import { NumericConstraint } from './numeric-constraint';
-import { Rank } from '../rank';
 import { SexConstraint } from './sex-constraint';
+
+import { Rank } from '../rank';
+import { User } from '../user';
 
 import {
   IPPON_HOST,
@@ -133,6 +135,52 @@ describe('TournamentService', () => {
         }));
   });
 
+  describe("when getTournaments is called", () => {
+    it("calls the tournaments api url",
+      inject(
+        [TournamentService, HttpTestingController],
+        (service: TournamentService,
+          backend: HttpTestingController) => {
+          service.getTournaments()
+            .subscribe();
+          const req = backend.expectOne(tournamentsUrl);
+        }));
+    it("uses GET method",
+      inject(
+        [TournamentService, HttpTestingController],
+        (service: TournamentService,
+          backend: HttpTestingController) => {
+          service.getTournaments()
+            .subscribe();
+          const req = backend.expectOne(tournamentsUrl);
+          expect(req.request.method).toBe('GET');
+        }));
+    it("sends request with application/json content type headers",
+      inject(
+        [TournamentService, HttpTestingController],
+        (service: TournamentService,
+          backend: HttpTestingController) => {
+          service.getTournaments()
+            .subscribe();
+          const req = backend.expectOne(tournamentsUrl);
+          expect(req.request.headers.has('Content-Type'))
+            .toBe(true);
+          expect(req.request.headers.get('Content-Type'))
+            .toBe('application/json');
+        }));
+    it("responds with requested tournaments",
+      inject(
+        [TournamentService, HttpTestingController],
+        (service: TournamentService,
+          backend: HttpTestingController) => {
+          service.getTournaments()
+            .subscribe(response => expect(response)
+              .toBe(tournaments));
+          const req = backend.expectOne(tournamentsUrl);
+          req.flush(tournaments);
+        }));
+  });
+
   describe("when getTournament is called", () => {
     it("calls the tournaments api url",
       inject(
@@ -180,52 +228,6 @@ describe('TournamentService', () => {
           const req = backend.expectOne(
             tournamentsUrl + `${tournament.id}/`);
           req.flush(tournament);
-        }));
-  });
-
-  describe("when getTournaments is called", () => {
-    it("calls the tournaments api url",
-      inject(
-        [TournamentService, HttpTestingController],
-        (service: TournamentService,
-          backend: HttpTestingController) => {
-          service.getTournaments()
-            .subscribe();
-          const req = backend.expectOne(tournamentsUrl);
-        }));
-    it("uses GET method",
-      inject(
-        [TournamentService, HttpTestingController],
-        (service: TournamentService,
-          backend: HttpTestingController) => {
-          service.getTournaments()
-            .subscribe();
-          const req = backend.expectOne(tournamentsUrl);
-          expect(req.request.method).toBe('GET');
-        }));
-    it("sends request with application/json content type headers",
-      inject(
-        [TournamentService, HttpTestingController],
-        (service: TournamentService,
-          backend: HttpTestingController) => {
-          service.getTournaments()
-            .subscribe();
-          const req = backend.expectOne(tournamentsUrl);
-          expect(req.request.headers.has('Content-Type'))
-            .toBe(true);
-          expect(req.request.headers.get('Content-Type'))
-            .toBe('application/json');
-        }));
-    it("responds with requested tournament",
-      inject(
-        [TournamentService, HttpTestingController],
-        (service: TournamentService,
-          backend: HttpTestingController) => {
-          service.getTournaments()
-            .subscribe(response => expect(response)
-              .toBe(tournaments));
-          const req = backend.expectOne(tournamentsUrl);
-          req.flush(tournaments);
         }));
   });
 

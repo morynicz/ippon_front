@@ -18,6 +18,9 @@ const httpOptions = {
 @Injectable()
 export class TournamentService {
   private tournamentsUrl = IPPON_HOST + TOURNAMENTS_ENDPOINT;
+  private getTournamentUrl(id: number): string {
+    return `${this.tournamentsUrl}${id}/`;
+  }
 
   constructor(private http: HttpClient) { }
 
@@ -27,8 +30,8 @@ export class TournamentService {
   }
 
   getTournament(id: number): Observable<Tournament> {
-    const url = `${this.tournamentsUrl}${id}/`;
-    return this.http.get<Tournament>(url, httpOptions)
+    return this.http.get<Tournament>(
+      this.getTournamentUrl(id), httpOptions)
       .pipe(catchError(this.handleError<any>(`getTournament id=${id}`)));
   }
 
@@ -39,14 +42,14 @@ export class TournamentService {
   }
 
   updateTournament(tournament: Tournament): Observable<Tournament> {
-    const url = `${this.tournamentsUrl}${tournament.id}/`;
-    return this.http.put<Tournament>(url, tournament, httpOptions)
+    return this.http.put<Tournament>(
+      this.getTournamentUrl(tournament.id), tournament, httpOptions)
       .pipe(catchError(this.handleError<any>('updateTournament')));
   }
 
   deleteTournament(tournament: Tournament): Observable<Tournament> {
-    const url = `${this.tournamentsUrl}${tournament.id}/`;
-    return this.http.delete<{}>(url, httpOptions)
+    return this.http.delete<{}>(
+      this.getTournamentUrl(tournament.id), httpOptions)
       .pipe(catchError(this.handleError<any>('updateTournament')));
   }
 
