@@ -61,6 +61,12 @@ export class TournamentService {
       .pipe(catchError(this.handleError<any>('getAdmins')));
   }
 
+  addAdmin(id: number, admin: User): Observable<User> {
+    return this.http.post<User>(
+      this.getTournamentUrl(id) + ADMINS_ENDPOINT, admin, httpOptions)
+      .pipe(catchError(this.handleError<any>('addAdmin')));
+  }
+
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       console.error(error);

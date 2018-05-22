@@ -365,5 +365,61 @@ describe('TournamentService', () => {
             req.flush(admins);
           }));
     });
+
+    describe("when addAdmin is called", () => {
+      let admin: User = { id: 5, name: 'A5' };
+      it("calls the tournaments api url",
+        inject(
+          [TournamentService, HttpTestingController],
+          (service: TournamentService,
+            backend: HttpTestingController) => {
+            service.addAdmin(tournament.id, admin)
+              .subscribe();
+            const req = backend.expectOne(adminsUrl);
+          }));
+      it("uses POST method",
+        inject(
+          [TournamentService, HttpTestingController],
+          (service: TournamentService,
+            backend: HttpTestingController) => {
+            service.addAdmin(tournament.id, admin)
+              .subscribe();
+            const req = backend.expectOne(adminsUrl);
+            expect(req.request.method).toBe('POST');
+          }));
+      it("sends request with application/json content type headers",
+        inject(
+          [TournamentService, HttpTestingController],
+          (service: TournamentService,
+            backend: HttpTestingController) => {
+            service.addAdmin(tournament.id, admin)
+              .subscribe();
+            const req = backend.expectOne(adminsUrl);
+            expect(req.request.headers.has('Content-Type'))
+              .toBe(true);
+            expect(req.request.headers.get('Content-Type'))
+              .toBe('application/json');
+          }));
+      it("responds with newly added tournament",
+        inject(
+          [TournamentService, HttpTestingController],
+          (service: TournamentService,
+            backend: HttpTestingController) => {
+            service.addAdmin(tournament.id, admin)
+              .subscribe(response => expect(response).toBe(admin));
+            const req = backend.expectOne(adminsUrl);
+            req.flush(admin);
+          }));
+      it("sends the admin to be created in body",
+        inject(
+          [TournamentService, HttpTestingController],
+          (service: TournamentService,
+            backend: HttpTestingController) => {
+            service.addAdmin(tournament.id, admin)
+              .subscribe();
+            const req = backend.expectOne(adminsUrl);
+            expect(req.request.body).toBe(admin);
+          }));
+    });
   });
 });
