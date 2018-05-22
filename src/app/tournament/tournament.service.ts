@@ -55,28 +55,6 @@ export class TournamentService {
       .pipe(catchError(this.handleError<any>('updateTournament')));
   }
 
-  private getAdminsUrl(tournamentId: number): string {
-    return this.getTournamentUrl(tournamentId) + ADMINS_ENDPOINT;
-  }
-
-  getAdmins(id: number): Observable<User[]> {
-    return this.http.get<User[]>(
-      this.getAdminsUrl(id), httpOptions)
-      .pipe(catchError(this.handleError<any>('getAdmins')));
-  }
-
-  addAdmin(id: number, admin: User): Observable<User> {
-    return this.http.post<User>(
-      this.getAdminsUrl(id), admin, httpOptions)
-      .pipe(catchError(this.handleError<any>('addAdmin')));
-  }
-
-  deleteAdmin(tournamentId: number, adminId: number): Observable<{}> {
-    return this.http.delete<{}>(
-      this.getAdminsUrl(tournamentId) + adminId + '/', httpOptions)
-      .pipe(catchError(this.handleError<any>('deleteAdmin')));
-  }
-
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       console.error(error);
