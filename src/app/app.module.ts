@@ -27,6 +27,7 @@ import { JwtHelperWrapperService } from './authorization/jwt-helper-wrapper.serv
 import { TokenStorageService } from "./authorization/token-storage.service";
 import { AuthorizationService } from './authorization/authorization.service';
 import { KendoRankPipe } from './player/kendo-rank.pipe';
+import { TournamentLineComponent } from './tournament/tournament-line/tournament-line.component';
 
 @NgModule({
   imports: [
@@ -49,6 +50,7 @@ import { KendoRankPipe } from './player/kendo-rank.pipe';
     ClubFormComponent,
     LoginFormComponent,
     KendoRankPipe,
+    TournamentLineComponent,
   ],
   providers: [
     PlayerService,
