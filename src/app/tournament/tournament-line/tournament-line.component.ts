@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Tournament } from '../tournament';
 
 @Component({
-  selector: 'app-tournament-line',
+  selector: 'ippon-tournament-line',
   templateUrl: './tournament-line.component.html',
   styleUrls: ['./tournament-line.component.css']
 })
