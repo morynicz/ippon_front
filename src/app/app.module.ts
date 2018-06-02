@@ -30,6 +30,7 @@ import { KendoRankPipe } from './player/kendo-rank.pipe';
 import { TournamentListComponent } from './tournament/tournament-list/tournament-list.component';
 import { TournamentLineComponent } from './tournament/tournament-line/tournament-line.component';
 import { NumericConstraintPipe } from './tournament/numeric-constraint.pipe';
+import { SexConstraintPipe } from './tournament/sex-constraint.pipe';
 
 @NgModule({
   imports: [
@@ -55,6 +56,7 @@ import { NumericConstraintPipe } from './tournament/numeric-constraint.pipe';
     TournamentListComponent,
     TournamentLineComponent,
     NumericConstraintPipe,
+    SexConstraintPipe,
   ],
   providers: [
     PlayerService,
