@@ -148,7 +148,7 @@ describe('TournamentFullComponent', () => {
     });
 
     it('should display admin controls if the user is club admin', () => {
-      authorizationService.isClubAdminResult = true;
+      authorizationService.isTournamentAdminResult = true;
       fixture.whenStable().then(() => {
         fixture.detectChanges();
         const de = fixture.debugElement;
@@ -201,7 +201,7 @@ describe('TournamentFullComponent', () => {
     });
 
     it('should display admin controls if the user is club admin', () => {
-      authorizationService.isClubAdminResult = true;
+      authorizationService.isTournamentAdminResult = true;
       fixture.whenStable().then(() => {
         fixture.detectChanges();
         const de = fixture.debugElement;
