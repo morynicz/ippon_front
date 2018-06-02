@@ -22,7 +22,6 @@
     </div>
     <div>
       <ul class="list-unstyled">
-        {{players | json }}
         <li *ngFor="let player of players">
           <ippon-player-line [player]="player"></ippon-player-line>
         </li>
