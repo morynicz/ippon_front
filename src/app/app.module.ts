@@ -29,6 +29,7 @@ import { AuthorizationService } from './authorization/authorization.service';
 import { KendoRankPipe } from './player/kendo-rank.pipe';
 import { TournamentListComponent } from './tournament/tournament-list/tournament-list.component';
 import { TournamentLineComponent } from './tournament/tournament-line/tournament-line.component';
+import { TournamentService } from './tournament/tournament.service';
 import { NumericConstraintPipe } from './tournament/numeric-constraint.pipe';
 import { SexConstraintPipe } from './tournament/sex-constraint.pipe';
 
@@ -61,6 +62,7 @@ import { SexConstraintPipe } from './tournament/sex-constraint.pipe';
   providers: [
     PlayerService,
     ClubService,
+    TournamentService,
     AuthenticationService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true },
     JwtHelperWrapperService,
