@@ -16,6 +16,24 @@ export enum Rank {
   Dan_8
 }
 
+export const RANKS: Rank[] = [
+  Rank.None,
+  Rank.Kyu_6,
+  Rank.Kyu_5,
+  Rank.Kyu_4,
+  Rank.Kyu_3,
+  Rank.Kyu_2,
+  Rank.Kyu_1,
+  Rank.Dan_1,
+  Rank.Dan_2,
+  Rank.Dan_3,
+  Rank.Dan_4,
+  Rank.Dan_5,
+  Rank.Dan_6,
+  Rank.Dan_7,
+  Rank.Dan_8
+];
+
 export const RANK_STRINGS = [
   "None",
   "6 Kyu",

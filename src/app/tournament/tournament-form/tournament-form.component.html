@@ -1,0 +1,136 @@
+<form class="form-horizontal" role="form" class="edit-user" name="tournament-form" #tournamentForm="ngForm">
+  {{tournament | json}}
+  <div class="form-group">
+    <label for="name" class="col-md-2 control-label col-md-offset-2" i18n>
+      Tournament name
+    </label>
+    <div class="col-md-5">
+      <input type="text" name="name" class="form-control" placeholder="tournament name" [(ngModel)]="tournament.name">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="description" class="col-md-2 control-label col-md-offset-2" i18n>
+      Description
+    </label>
+    <div class="col-md-5">
+      <input type="text" name="description" class="form-control" placeholder="description" [(ngModel)]="tournament.description">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="address" class="col-md-2 control-label
+     col-md-offset-2" i18n>
+      Address
+    </label>
+    <div class="col-md-5">
+      <input type="text" name="address" class="form-control" placeholder="address" [(ngModel)]="tournament.address">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="city" class="col-md-2 control-label col-md-offset-2" i18n>
+      City
+    </label>
+    <div class="col-md-5">
+      <input type="text" name="city" class="form-control" placeholder="city" [(ngModel)]="tournament.city">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="webpage" class="col-md-2 control-label col-md-offset-2" i18n>
+      Webpage
+    </label>
+    <div class="col-md-5">
+      <input type="text" name="webpage" class="form-control" placeholder="webpage" [(ngModel)]="tournament.webpage">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="date" class="col-md-2 control-label col-md-offset-2" i18n>
+      Date
+    </label>
+    <div class="col-md-5">
+      <input type="date" name="date" [ngModel]="tournament.date | date:'yyyy-MM-dd'" (ngModelChange)="tournament.date = $event" required>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="rank-constraint" class="col-md-2 control-label col-md-offset-2" i18n>
+      Rank constraint
+    </label>
+    <div class="col-md-5">
+      <select id="rank-constraint-select" [(ngModel)]="tournament.rank_constraint" class="form-control" name="rank-constraint" [compareWith]="numericConstraintCompare">
+      <option *ngFor="let constraint of numericConstraints" [ngValue]=constraint>{{constraint | numericConstraint}}</option></select>
+    </div>
+    <div class="col-md-5">
+      <select id="rank-constraint-value-select" [(ngModel)]="tournament.rank_constraint_value" class="form-control" name="rank-constraint-value" [compareWith]="rankCompare">
+      <option *ngFor="let rank of ranks" [ngValue]=rank>{{rank | kendoRank}}</option></select>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="age-constraint" class="col-md-2 control-label col-md-offset-2" i18n>
+      Age constraint
+    </label>
+    <div class="col-md-5">
+      <select id="age-constraint-select" [(ngModel)]="tournament.age_constraint" class="form-control" name="age-constraint" [compareWith]="numericConstraintCompare">
+      <option *ngFor="let constraint of numericConstraints" [ngValue]=constraint>{{constraint | numericConstraint}}</option>
+    </select>
+    </div>
+    <div class="col-md-5">
+      <input type="number" name="age-constraint-value" class="form-control" placeholder="18" [(ngModel)]="tournament.age_constraint_value">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="sex-constraint" class="col-md-2 control-label col-md-offset-2" i18n>
+      Sex constraint
+    </label>
+    <div class="col-md-5">
+      <select id="sex-constraint-select" [(ngModel)]="tournament.sex_constraint" class="form-control" name="sex-constraint" [compareWith]="sexConstraintCompare">
+      <option *ngFor="let constraint of sexConstraints" [ngValue]=constraint>{{constraint | sexConstraint}}</option></select>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="team-size" class="col-md-2 control-label col-md-offset-2" i18n>
+      Team size
+    </label>
+    <div class="col-md-5">
+      <input type="number" name="team-size" class="form-control" placeholder="1" [(ngModel)]="tournament.team_size">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="finals-depth" class="col-md-2 control-label col-md-offset-2" i18n>
+      Finals depth
+    </label>
+    <div class="col-md-5">
+      <input type="number" name="finals-depth" class="form-control" placeholder="0" [(ngModel)]="tournament.finals_depth">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="group-match-length" class="col-md-2 control-label col-md-offset-2" i18n>
+      Group match length
+    </label>
+    <div class="col-md-5">
+      <input type="number" name="group-match-length" class="form-control" placeholder="3" [(ngModel)]="tournament.group_match_length">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="ko-match-length" class="col-md-2 control-label col-md-offset-2" i18n>
+      KO match length
+    </label>
+    <div class="col-md-5">
+      <input type="number" name="ko-match-length" class="form-control" placeholder="3" [(ngModel)]="tournament.ko_match_length">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="final-match-length" class="col-md-2 control-label col-md-offset-2" i18n>
+      Final match length
+    </label>
+    <div class="col-md-5">
+      <input type="number" name="final-match-length" class="form-control" placeholder="3" [(ngModel)]="tournament.final_match_length">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-md-offset-2 col-md-3">
+      <button class="btn btn-default" type="button" (click)="goBack()" id="cancel-tournament" i18n>Cancel</button>
+    </div>
+    <div class="col-md-4 text-right">
+      <button class="btn btn-primary" (click)="save()" id="save-tournament" i18n>Save</button>
+    </div>
+  </div>
+</form>

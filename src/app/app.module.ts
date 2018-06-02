@@ -33,6 +33,7 @@ import { TournamentService } from './tournament/tournament.service';
 import { TournamentFullComponent } from './tournament/tournament-full/tournament-full.component';
 import { NumericConstraintPipe } from './tournament/numeric-constraint.pipe';
 import { SexConstraintPipe } from './tournament/sex-constraint.pipe';
+import { TournamentFormComponent } from './tournament/tournament-form/tournament-form.component';
 
 @NgModule({
   imports: [
@@ -60,6 +61,7 @@ import { SexConstraintPipe } from './tournament/sex-constraint.pipe';
     TournamentFullComponent,
     NumericConstraintPipe,
     SexConstraintPipe,
+    TournamentFormComponent,
   ],
   providers: [
     PlayerService,
