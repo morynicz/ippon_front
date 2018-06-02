@@ -38,7 +38,7 @@
       Webpage
     </label>
     <div class="col-md-5">
-      <input type="text" name="webpage" class="form-control" placeholder="webpage" [(ngModel)]="tournament.webpage">
+      <input type="text" name="webpage" class="form-control" placeholder="http://www.example.com" [(ngModel)]="tournament.webpage">
     </div>
   </div>
   <div class="form-group">
@@ -53,11 +53,11 @@
     <label for="rank-constraint" class="col-md-2 control-label col-md-offset-2" i18n>
       Rank constraint
     </label>
-    <div class="col-md-5">
+    <div class="col-md-2">
       <select id="rank-constraint-select" [(ngModel)]="tournament.rank_constraint" class="form-control" name="rank-constraint" [compareWith]="numericConstraintCompare">
       <option *ngFor="let constraint of numericConstraints" [ngValue]=constraint>{{constraint | numericConstraint}}</option></select>
     </div>
-    <div class="col-md-5">
+    <div class="col-md-3">
       <select id="rank-constraint-value-select" [(ngModel)]="tournament.rank_constraint_value" class="form-control" name="rank-constraint-value" [compareWith]="rankCompare">
       <option *ngFor="let rank of ranks" [ngValue]=rank>{{rank | kendoRank}}</option></select>
     </div>
@@ -66,12 +66,12 @@
     <label for="age-constraint" class="col-md-2 control-label col-md-offset-2" i18n>
       Age constraint
     </label>
-    <div class="col-md-5">
+    <div class="col-md-2">
       <select id="age-constraint-select" [(ngModel)]="tournament.age_constraint" class="form-control" name="age-constraint" [compareWith]="numericConstraintCompare">
       <option *ngFor="let constraint of numericConstraints" [ngValue]=constraint>{{constraint | numericConstraint}}</option>
     </select>
     </div>
-    <div class="col-md-5">
+    <div class="col-md-3">
       <input type="number" name="age-constraint-value" class="form-control" placeholder="18" [(ngModel)]="tournament.age_constraint_value">
     </div>
   </div>
