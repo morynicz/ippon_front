@@ -10,6 +10,8 @@ import { ClubListComponent } from "./club/club-list/club-list.component";
 import { ClubFullComponent } from './club/club-full/club-full.component';
 import { ClubFormComponent } from './club/club-form/club-form.component';
 
+import { TournamentFullComponent } from './tournament/tournament-full/tournament-full.component';
+
 import { LoginFormComponent } from './authorization/login-form/login-form.component';
 
 const routes: Routes = [
@@ -23,7 +25,8 @@ const routes: Routes = [
   { path: 'club/:id/edit', component: ClubFormComponent },
   { path: 'club/:id', component: ClubFullComponent },
   { path: 'clubs', component: ClubListComponent },
-  { path: 'login', component: LoginFormComponent }
+  { path: 'tournament/:id', component: TournamentFullComponent },
+  { path: 'login', component: LoginFormComponent },
 ]
 
 @NgModule({

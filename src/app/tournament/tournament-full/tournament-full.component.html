@@ -1,0 +1,51 @@
+<section class="col-md-6 col-md-offset-3">
+  <article class="panel panel-info">
+    <header class="panel-heading">
+      <h1>{{tournament.name}}</h1> {{tournament.city}}
+    </header>
+    <p class="panel-body">
+      <a href="{{tournament.webpage}}">{{tournament.webpage}}</a>
+    </p>
+    <p class="panel-info">
+      {{tournament.date|date: 'yyyy-MM-dd'}}
+    </p>
+    <p class="panel-info">
+      {{tournament.address}}
+    </p>
+    <p class="panel-body">
+      {{tournament.description}}
+    </p>
+    <p class="panel-info" *ngIf="tournament.age_constraint != numericNone">
+      <span i18n>Age</span> {{tournament.age_constraint | numericConstraint}} {{tournament.age_constraint_value}}
+    </p>
+    <p class="panel-info" *ngIf="tournament.rank_constraint != numericNone">
+      <span i18n>Rank</span> {{tournament.rank_constraint | numericConstraint}} {{tournament.rank_constraint_value | kendoRank}}
+    </p>
+    <p class="panel-info" *ngIf="tournament.sex_constraint != sexNone">
+      <span i18n>{{tournament.sex_constraint | sexConstraint}}</span>
+    </p>
+    <p class="panel-info">
+      <span i18n>Team size</span>: {{tournament.team_size}}
+    </p>
+    <p class="panel-info">
+      <span i18n>Group match length</span>: {{tournament.group_match_length}}
+    </p>
+    <p class="panel-info">
+      <span i18n>KO match legth</span>: {{tournament.ko_match_length}}
+    </p>
+    <p class="panel-info">
+      <span i18n>Final match length</span>: {{tournament.final_match_length}}
+    </p>
+  </article>
+  <section>
+    <div class="col-md-9">
+      <button routerLink="/tournaments" class="btn btn-default" id="index-club" i18n>
+        &larr; Index
+      </button>
+      <div *ngIf="isAdmin" class="col-md-9 text-right btn-group">
+        <button routerLink="/tournament/{{tournament.id}}/edit" class="btn btn-info" id="edit-tournament" i18n> Edit </button>
+        <button (click)="deleteTournament()" class="btn btn-danger" id="delete-tournament" i18n> Delete </button>
+      </div>
+    </div>
+  </section>
+</section>
