@@ -8,7 +8,12 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "postinstall": "ng build --aot -prod"
+  },
+  "engines": {
+    "node": "9.11.1",
+    "npm": "6.1.0"
   },
   "private": true,
   "dependencies": {
@@ -26,9 +31,14 @@
     "auth0-js": "^9.6.0",
     "bootstrap": "^3.3.7",
     "core-js": "^2.5.7",
+    "express": "^4.16.3",
     "jquery": "^3.3.1",
+    "path": "^0.12.7",
     "rxjs": "^5.5.11",
-    "zone.js": "^0.8.26"
+    "zone.js": "^0.8.26",
+    "@angular/cli": "1.5.5",
+    "@angular/compiler-cli": "^5.2.11",
+    "typescript": "~2.4.2"
   },
   "devDependencies": {
     "@angular/cli": "1.5.5",
@@ -46,7 +56,7 @@
     "karma-coverage-istanbul-reporter": "^1.4.3",
     "karma-jasmine": "^1.1.2",
     "karma-jasmine-html-reporter": "^0.2.2",
-    "protractor": "~5.1.2",
+    "protractor": "^5.3.2",
     "ts-node": "~3.2.0",
     "tslint": "~5.7.0",
     "typescript": "~2.4.2"
