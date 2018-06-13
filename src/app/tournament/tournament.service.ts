@@ -52,7 +52,7 @@ export class TournamentService {
   deleteTournament(tournament: Tournament): Observable<Tournament> {
     return this.http.delete<{}>(
       this.getTournamentUrl(tournament.id), httpOptions)
-      .pipe(catchError(this.handleError<any>('updateTournament')));
+      .pipe(catchError(this.handleError<any>('updateParticipation')));
   }
 
   private handleError<T>(operation = 'operation', result?: T) {
