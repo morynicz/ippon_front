@@ -18,4 +18,6 @@ apt:
 before_script:
 - npm install -g angular-cli
 - npm install
-- ng build
+
+script:
+- ng test -sm=false
