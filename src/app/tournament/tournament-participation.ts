@@ -9,5 +9,6 @@ export class TournamentParticipation {
   is_sex_ok: boolean;
   is_age_ok: boolean;
   is_rank_ok: boolean;
+  is_qualified: boolean;
   notes: string;
 }

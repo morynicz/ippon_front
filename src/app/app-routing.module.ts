@@ -14,7 +14,10 @@ import { TournamentListComponent } from './tournament/tournament-list/tournament
 import { TournamentFullComponent } from './tournament/tournament-full/tournament-full.component';
 import { TournamentFormComponent } from './tournament/tournament-form/tournament-form.component';
 
+import { TournamentParticipationListComponent } from './tournament/tournament-participation-list/tournament-participation-list.component';
+
 import { LoginFormComponent } from './authorization/login-form/login-form.component';
+
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -29,9 +32,10 @@ const routes: Routes = [
   { path: 'clubs', component: ClubListComponent },
   { path: 'tournament/new', component: TournamentFormComponent },
   { path: 'tournament/:id/edit', component: TournamentFormComponent },
+  { path: 'tournament/:id/participation', component: TournamentParticipationListComponent },
   { path: 'tournament/:id', component: TournamentFullComponent },
   { path: 'tournaments', component: TournamentListComponent },
-  { path: 'login', component: LoginFormComponent },
+  { path: 'login', component: LoginFormComponent }
 ]
 
 @NgModule({

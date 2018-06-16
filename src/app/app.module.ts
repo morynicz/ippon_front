@@ -34,6 +34,9 @@ import { TournamentFullComponent } from './tournament/tournament-full/tournament
 import { NumericConstraintPipe } from './tournament/numeric-constraint.pipe';
 import { SexConstraintPipe } from './tournament/sex-constraint.pipe';
 import { TournamentFormComponent } from './tournament/tournament-form/tournament-form.component';
+import { TournamentParticipationFormComponent } from './tournament/tournament-participation-form/tournament-participation-form.component';
+import { TournamentParticipationListComponent } from './tournament/tournament-participation-list/tournament-participation-list.component';
+import { TournamentParticipantService } from './tournament/tournament-participant.service';
 
 @NgModule({
   imports: [
@@ -62,6 +65,8 @@ import { TournamentFormComponent } from './tournament/tournament-form/tournament
     NumericConstraintPipe,
     SexConstraintPipe,
     TournamentFormComponent,
+    TournamentParticipationFormComponent,
+    TournamentParticipationListComponent,
   ],
   providers: [
     PlayerService,
@@ -72,6 +77,7 @@ import { TournamentFormComponent } from './tournament/tournament-form/tournament
     JwtHelperWrapperService,
     TokenStorageService,
     AuthorizationService,
+    TournamentParticipantService
   ],
   bootstrap: [AppComponent]
 })

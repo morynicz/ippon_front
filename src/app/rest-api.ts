@@ -10,3 +10,5 @@ export const ADMINS_ENDPOINT: string = "admins/";
 export const STAFF_ENDPOINT: string = "staff/";
 export const PLAYERS_ENDPOINT: string = "players/";
 export const PARTICIPANTS_ENDPOINT: string = "participants/";
+export const NON_PARTICIPANTS_ENDPOINT: string = "non_participants";
+export const PARTICIPATIONS_ENDPOINT: string = "participations/";

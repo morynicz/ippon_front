@@ -1,0 +1,9 @@
+SPAN.constraint-ok {
+  background-color:MediumSeaGreen;
+  color:White
+}
+
+SPAN.constraint-nok {
+  background-color:Tomato;
+  color:White
+}

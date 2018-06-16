@@ -155,6 +155,7 @@ describe('TournamentFullComponent', () => {
         const html = de.nativeElement;
         expect(html.querySelector('#delete-tournament')).toBeFalsy();
         expect(html.querySelector('#edit-tournament')).toBeFalsy();
+        expect(html.querySelector('#edit-participants')).toBeFalsy();
       });
     });
   });
@@ -207,6 +208,7 @@ describe('TournamentFullComponent', () => {
         const de = fixture.debugElement;
         const html = de.nativeElement;
         expect(html.querySelector('#delete-tournament')).toBeTruthy();
+        expect(html.querySelector('#edit-participants')).toBeTruthy();
         expect(html.querySelector('#edit-tournament')).toBeTruthy();
       });
     });

@@ -12,7 +12,8 @@ import { TournamentParticipation } from './tournament-participation';
 import {
   IPPON_HOST,
   TOURNAMENTS_ENDPOINT,
-  PARTICIPANTS_ENDPOINT
+  NON_PARTICIPANTS_ENDPOINT,
+  PARTICIPATIONS_ENDPOINT
 } from '../rest-api';
 
 const httpOptions = {
@@ -22,11 +23,16 @@ const httpOptions = {
 @Injectable()
 export class TournamentParticipantService {
   private tournamentsUrl = IPPON_HOST + TOURNAMENTS_ENDPOINT;
+  private participationUrl = IPPON_HOST + PARTICIPATIONS_ENDPOINT;
+
   private getParticipationsUrl(id: number): string {
-    return `${this.tournamentsUrl}${id}/` + PARTICIPANTS_ENDPOINT;
+    return `${this.tournamentsUrl}${id}/` + PARTICIPATIONS_ENDPOINT;
   }
 
-  private participationUrl = IPPON_HOST + PARTICIPANTS_ENDPOINT;
+  private getNonParticipantsUrl(id: number): string {
+    return `${this.tournamentsUrl}${id}/` + NON_PARTICIPANTS_ENDPOINT;
+  }
+
 
   private getParticipationUrl(id: number): string {
     return `${this.participationUrl}${id}/`;
@@ -37,7 +43,7 @@ export class TournamentParticipantService {
   addParticipation(tournamentId: number, participation: TournamentParticipation):
     Observable<TournamentParticipation> {
     return this.http.post<TournamentParticipation>(
-      this.getParticipationsUrl(tournamentId), participation, httpOptions)
+      this.participationUrl, participation, httpOptions)
       .pipe(catchError(this.handleError<any>('addParticipation')));
   }
 
@@ -58,6 +64,12 @@ export class TournamentParticipantService {
     return this.http.delete<{}>(
       this.getParticipationUrl(participation.id), httpOptions)
       .pipe(catchError(this.handleError<any>('deleteParticipation')));
+  }
+
+  getNonParticipants(tournamentId: number): Observable<Player[]> {
+    return this.http.get<Player[]>(
+      this.getNonParticipantsUrl(tournamentId), httpOptions)
+      .pipe(catchError(this.handleError<any>('getNonParticipants')));
   }
 
   private handleError<T>(operation = 'operation', result?: T) {
