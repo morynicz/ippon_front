@@ -22,16 +22,13 @@ export class TournamentParticipationFormComponent implements OnInit {
   ngOnInit() {
   }
   save(): void {
-    console.log("SAVE");
     this.participationService.updateParticipation(this.participation)
       .subscribe(part => this.participation = part);
   }
   delete(): void {
-    console.log("DELETE");
     let tournamentId: number = this.participation.tournament_id;
     this.participationService.deleteParticipation(this.participation)
       .subscribe(resp => {
-        console.log("DELETE HELL");
         this.reloadRequest.emit('');
       });
   }
