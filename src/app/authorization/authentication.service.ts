@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/do';
+import { Observable } from 'rxjs';
+
 import { JwtHelperWrapperService } from "./jwt-helper-wrapper.service";
 import { TokenStorageService } from "./token-storage.service";
 import {

@@ -1,8 +1,7 @@
 import { TournamentParticipation } from './tournament-participation';
 import { Player } from '../player/player';
 
-import { Observable } from 'rxjs/Observable';
-import { of } from 'rxjs/observable/of';
+import { Observable ,  of } from 'rxjs';
 
 export class TournamentParticipantServiceSpy {
   addParticipationId: number;
