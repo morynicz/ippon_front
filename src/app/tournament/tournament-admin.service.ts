@@ -50,7 +50,6 @@ export class TournamentAdminService {
       .pipe(catchError(this.handleError<any>('addAdmin')));
   }
 
-
   deleteAdmin(id: number): Observable<{}> {
     return this.http.delete<{}>(
       this.getAdminUrl(id), httpOptions)

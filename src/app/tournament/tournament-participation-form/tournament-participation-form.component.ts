@@ -26,7 +26,6 @@ export class TournamentParticipationFormComponent implements OnInit {
       .subscribe(part => this.participation = part);
   }
   delete(): void {
-    let tournamentId: number = this.participation.tournament_id;
     this.participationService.deleteParticipation(this.participation)
       .subscribe(resp => {
         this.reloadRequest.emit('');
