@@ -63,7 +63,6 @@ describe('TournamentParticipationFormComponent', () => {
   let fixture: ComponentFixture<TournamentParticipationFormComponent>;
   let html;
   let tournamentParticipantService: TournamentParticipantServiceSpy;
-  let location: Location;
 
   beforeEach(async(() => {
     tournamentParticipantService = new TournamentParticipantServiceSpy();
