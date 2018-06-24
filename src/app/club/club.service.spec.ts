@@ -102,10 +102,10 @@ describe('ClubService', () => {
         const admins: User[] = [
           {
             id: 0,
-            name: 'N0'
+            username: 'N0'
           }, {
             id: 2,
-            name: 'N2'
+            username: 'N2'
           }
         ];
         const club: Club =
@@ -123,9 +123,9 @@ describe('ClubService', () => {
       (service: ClubService, backend: HttpTestingController) => {
         const club: Club =
           { name: 'K1', city: 'C1', description: 'D1', webpage: 'W1', id: 0 };
-        const user: User = { id: 4, name: 'u4' };
+        const user: User = { id: 4, username: 'u4' };
         const admins: User[] = [
-          { id: 4, name: 'u4' }
+          { id: 4, username: 'u4' }
         ];
         service.addClubAdmin(club, user).subscribe(resp => expect(resp).toBe(admins));
         const req = backend.expectOne(clubsUrl + `${club.id}/` + ADMINS_ENDPOINT);
@@ -141,7 +141,7 @@ describe('ClubService', () => {
       (service: ClubService, backend: HttpTestingController) => {
         const club: Club =
           { name: 'P1', city: 'F1', description: 'D1', webpage: 'W1', id: 0 };
-        const user: User = { id: 4, name: 'u4' };
+        const user: User = { id: 4, username: 'u4' };
         const admins: User[] = [];
         service.deleteClubAdmin(club, user).subscribe();
         const expectedUrl = clubsUrl + `${club.id}/` + ADMINS_ENDPOINT + user.id;

@@ -18,7 +18,7 @@ let admin: TournamentAdmin = {
   id: 3,
   user: {
     id: 5,
-    name: 'U5'
+    username: 'U5'
   },
   tournament_id: 7,
   is_master: true
@@ -28,7 +28,7 @@ let admin2: TournamentAdmin = {
   id: 4,
   user: {
     id: 7,
-    name: 'U8'
+    username: 'U8'
   },
   tournament_id: 1,
   is_master: false
@@ -78,7 +78,7 @@ describe('TournamentAdminFormComponent', () => {
 
   describe("When component is created", () => {
     it("should display user name", () => {
-      expect(html.textContent).toContain(admin.user.name);
+      expect(html.textContent).toContain(admin.user.username);
     });
 
     it("should have paid checkbox set to true", () => {

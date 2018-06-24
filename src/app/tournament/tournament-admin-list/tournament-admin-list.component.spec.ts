@@ -21,7 +21,7 @@ let admins: TournamentAdmin[] = [
     id: 3,
     user: {
       id: 5,
-      name: 'U5'
+      username: 'U5'
     },
     tournament_id: 7,
     is_master: true
@@ -30,7 +30,7 @@ let admins: TournamentAdmin[] = [
     id: 4,
     user: {
       id: 7,
-      name: 'U7'
+      username: 'U7'
     },
     tournament_id: 1,
     is_master: false
@@ -40,11 +40,11 @@ let admins: TournamentAdmin[] = [
 let users: User[] = [
   {
     id: 2,
-    name: 'U2'
+    username: 'U2'
   },
   {
     id: 7,
-    name: 'U7'
+    username: 'U7'
   }
 ];
 
@@ -140,7 +140,7 @@ describe('TournamentAdminListComponent', () => {
         id: 5,
         user: {
           id: 2,
-          name: 'U2'
+          username: 'U2'
         },
         tournament_id: tournamentId,
         is_master: false
@@ -151,7 +151,7 @@ describe('TournamentAdminListComponent', () => {
           id: 3,
           user: {
             id: 5,
-            name: 'U5'
+            username: 'U5'
           },
           tournament_id: 7,
           is_master: true
@@ -160,7 +160,7 @@ describe('TournamentAdminListComponent', () => {
           id: 4,
           user: {
             id: 7,
-            name: 'U7'
+            username: 'U7'
           },
           tournament_id: 1,
           is_master: false
@@ -171,7 +171,7 @@ describe('TournamentAdminListComponent', () => {
       let newUsers: User[] = [
         {
           id: 7,
-          name: 'U7'
+          username: 'U7'
         }
       ];
 

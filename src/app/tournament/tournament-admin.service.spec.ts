@@ -41,7 +41,7 @@ describe('TournamentAdminService', () => {
       tournament_id: tournamentId,
       user: {
         id: 1,
-        name: 'N1',
+        username: 'N1',
       },
       is_master: true,
       id: 1
@@ -51,7 +51,7 @@ describe('TournamentAdminService', () => {
       id: 2,
       user: {
         id: 2,
-        name: 'N2'
+        username: 'N2'
       },
       is_master: false
     }
@@ -61,7 +61,7 @@ describe('TournamentAdminService', () => {
     id: 3,
     user: {
       id: 5,
-      name: 'U5'
+      username: 'U5'
     },
     tournament_id: tournamentId,
     is_master: true
@@ -70,11 +70,11 @@ describe('TournamentAdminService', () => {
   let users: User[] = [
     {
       id: 9,
-      name: 'U9'
+      username: 'U9'
     },
     {
       id: 7,
-      name: 'U7'
+      username: 'U7'
     }
   ];
 
@@ -225,7 +225,7 @@ describe('TournamentAdminService', () => {
   });
 
   describe("when deleteAdmin is called", () => {
-    let admin: User = { id: 5, name: 'A5' };
+    let admin: User = { id: 5, username: 'A5' };
     it("calls the tournaments api url",
       inject(
         [TournamentAdminService, HttpTestingController],
