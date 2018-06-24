@@ -13,7 +13,8 @@ import {
   IPPON_HOST,
   TOURNAMENTS_ENDPOINT,
   ADMINS_ENDPOINT,
-  TOURNAMENT_ADMINS_ENDPOINT
+  TOURNAMENT_ADMINS_ENDPOINT,
+  NON_ADMINS_ENDPOINT
 } from '../rest-api';
 
 const tournamentId: number = 7;
@@ -33,6 +34,7 @@ describe('TournamentAdminService', () => {
       }));
 
   const adminsUrl: string = IPPON_HOST + TOURNAMENTS_ENDPOINT + `${tournamentId}/` + ADMINS_ENDPOINT;
+  const nonAdminsUrl: string = IPPON_HOST + TOURNAMENTS_ENDPOINT + `${tournamentId}/` + NON_ADMINS_ENDPOINT;
   const adminUrl: string = IPPON_HOST + TOURNAMENT_ADMINS_ENDPOINT;
   let admins: TournamentAdmin[] = [
     {
@@ -64,6 +66,17 @@ describe('TournamentAdminService', () => {
     tournament_id: tournamentId,
     is_master: true
   };
+
+  let users: User[] = [
+    {
+      id: 9,
+      name: 'U9'
+    },
+    {
+      id: 7,
+      name: 'U7'
+    }
+  ];
 
   describe("when getAdmins is called", () => {
     it("calls the tournaments api url",
@@ -244,6 +257,51 @@ describe('TournamentAdminService', () => {
             .toBe(true);
           expect(req.request.headers.get('Content-Type'))
             .toBe('application/json');
+        }));
+  });
+
+  describe("when getNonAdmins is called", () => {
+    it("calls the participations api url",
+      inject(
+        [TournamentAdminService, HttpTestingController],
+        (service: TournamentAdminService,
+          backend: HttpTestingController) => {
+          service.getNonAdmins(tournamentId)
+            .subscribe();
+          const req = backend.expectOne(nonAdminsUrl);
+        }));
+    it("uses GET method",
+      inject(
+        [TournamentAdminService, HttpTestingController],
+        (service: TournamentAdminService,
+          backend: HttpTestingController) => {
+          service.getNonAdmins(tournamentId)
+            .subscribe();
+          const req = backend.expectOne(nonAdminsUrl);
+          expect(req.request.method).toBe('GET');
+        }));
+    it("sends request with application/json content type headers",
+      inject(
+        [TournamentAdminService, HttpTestingController],
+        (service: TournamentAdminService,
+          backend: HttpTestingController) => {
+          service.getNonAdmins(tournamentId)
+            .subscribe();
+          const req = backend.expectOne(nonAdminsUrl);
+          expect(req.request.headers.has('Content-Type'))
+            .toBe(true);
+          expect(req.request.headers.get('Content-Type'))
+            .toBe('application/json');
+        }));
+    it("responds with requested non participants",
+      inject(
+        [TournamentAdminService, HttpTestingController],
+        (service: TournamentAdminService,
+          backend: HttpTestingController) => {
+          service.getNonAdmins(tournamentId)
+            .subscribe();
+          const req = backend.expectOne(nonAdminsUrl);
+          req.flush(users);
         }));
   });
 });

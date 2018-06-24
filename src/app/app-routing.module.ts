@@ -15,6 +15,7 @@ import { TournamentFullComponent } from './tournament/tournament-full/tournament
 import { TournamentFormComponent } from './tournament/tournament-form/tournament-form.component';
 
 import { TournamentParticipationListComponent } from './tournament/tournament-participation-list/tournament-participation-list.component';
+import { TournamentAdminListComponent } from './tournament/tournament-admin-list/tournament-admin-list.component';
 
 import { LoginFormComponent } from './authorization/login-form/login-form.component';
 
@@ -33,6 +34,7 @@ const routes: Routes = [
   { path: 'tournament/new', component: TournamentFormComponent },
   { path: 'tournament/:id/edit', component: TournamentFormComponent },
   { path: 'tournament/:id/participation', component: TournamentParticipationListComponent },
+  { path: 'tournament/:id/admin', component: TournamentAdminListComponent },
   { path: 'tournament/:id', component: TournamentFullComponent },
   { path: 'tournaments', component: TournamentListComponent },
   { path: 'login', component: LoginFormComponent }

@@ -7,11 +7,13 @@ import {
   IPPON_HOST,
   TOURNAMENTS_ENDPOINT,
   ADMINS_ENDPOINT,
-  TOURNAMENT_ADMINS_ENDPOINT
+  TOURNAMENT_ADMINS_ENDPOINT,
+  NON_ADMINS_ENDPOINT
 } from '../rest-api';
 
 import { Tournament } from './tournament';
 import { TournamentAdmin } from './tournament-admin';
+import { User } from '../user';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -22,6 +24,11 @@ export class TournamentAdminService {
   private getAdminsUrl(tournamentId: number): string {
     return IPPON_HOST + TOURNAMENTS_ENDPOINT +
       `${tournamentId}/` + ADMINS_ENDPOINT;
+  }
+
+  private getNonAdminsUrl(tournamentId: number): string {
+    return IPPON_HOST + TOURNAMENTS_ENDPOINT +
+      `${tournamentId}/` + NON_ADMINS_ENDPOINT;
   }
 
   private adminUrl: string = IPPON_HOST + TOURNAMENT_ADMINS_ENDPOINT;
@@ -36,6 +43,12 @@ export class TournamentAdminService {
     return this.http.get<TournamentAdmin[]>(
       this.getAdminsUrl(id), httpOptions)
       .pipe(catchError(this.handleError<any>('getAdmins')));
+  }
+
+  getNonAdmins(id: number): Observable<User[]> {
+    return this.http.get<User[]>(
+      this.getNonAdminsUrl(id), httpOptions)
+      .pipe(catchError(this.handleError<any>('getNonAdmins')));
   }
 
   addAdmin(admin: TournamentAdmin): Observable<TournamentAdmin> {
