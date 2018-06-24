@@ -1,8 +1,10 @@
-export const AUTHENTICATION_HOST: string = "https://ippon-backend.herokuapp.com/";
+import { environment } from '../environments/environment';
+
+export const AUTHENTICATION_HOST: string = environment.authHost;
 export const AUTHENTICATION_ENDPOINT: string = "auth";
 export const TOKEN_ENDPOINT: string = "/token";
 
-export const IPPON_HOST: string = "https://ippon-backend.herokuapp.com/ippon/";
+export const IPPON_HOST: string = environment.ipponHost;
 export const AUTHORIZATION_ENDPOINT: string = "authorization/";
 export const CLUBS_ENDPOINT: string = "clubs/";
 export const TOURNAMENTS_ENDPOINT: string = "tournaments/";

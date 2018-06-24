@@ -1,3 +1,5 @@
 export const environment = {
-  production: true
+  production: true,
+  authHost: "https://ippon-backend.herokuapp.com/",
+  ipponHost: "https://ippon-backend.herokuapp.com/ippon/"
 };
