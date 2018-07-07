@@ -175,6 +175,7 @@ describe('ClubFullComponent', () => {
         expect(html.querySelector('#delete-club')).toBeTruthy();
         expect(html.querySelector('#edit-club')).toBeTruthy();
         expect(html.querySelector('#new-player-club')).toBeTruthy();
+        expect(html.querySelector('#manage-admins')).toBeTruthy();
       });
     });
 

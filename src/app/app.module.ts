@@ -20,6 +20,9 @@ import { ClubFullComponent } from './club/club-full/club-full.component';
 import { ClubListComponent } from './club/club-list/club-list.component';
 import { ClubLineComponent } from './club/club-line/club-line.component';
 import { ClubFormComponent } from './club/club-form/club-form.component';
+import { ClubAdminService } from './club/club-admin.service';
+import { ClubAdminFormComponent } from './club/club-admin-form/club-admin-form.component';
+import { ClubAdminListComponent } from './club/club-admin-list/club-admin-list.component';
 import { LoginFormComponent } from './authorization/login-form/login-form.component';
 import { AuthenticationService } from './authorization/authentication.service';
 import { AuthenticationInterceptor } from './authorization/authentication-interceptor';
@@ -60,6 +63,8 @@ import { TournamentAdminService } from './tournament/tournament-admin.service';
     ClubListComponent,
     ClubLineComponent,
     ClubFormComponent,
+    ClubAdminListComponent,
+    ClubAdminFormComponent,
     LoginFormComponent,
     KendoRankPipe,
     TournamentListComponent,
@@ -76,6 +81,7 @@ import { TournamentAdminService } from './tournament/tournament-admin.service';
   providers: [
     PlayerService,
     ClubService,
+    ClubAdminService,
     TournamentService,
     AuthenticationService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true },

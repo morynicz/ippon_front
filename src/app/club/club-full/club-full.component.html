@@ -18,6 +18,8 @@
       <div *ngIf="isAdmin" class="col-md-9 text-right btn-group">
         <button routerLink="/club/{{club.id}}/edit" class="btn btn-info" id="edit-club" i18n> Edit </button>
         <button (click)="deleteClub()" class="btn btn-danger" id="delete-club" i18n> Delete </button>
+        <button routerLink="/club/{{club.id}}/admin" class="btn btn-info" id="manage-admins" i18n> Admins </button>
+
       </div>
     </div>
     <div>

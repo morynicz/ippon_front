@@ -9,6 +9,7 @@ import { PlayerFormComponent } from "./player/player-form/player-form.component"
 import { ClubListComponent } from "./club/club-list/club-list.component";
 import { ClubFullComponent } from './club/club-full/club-full.component';
 import { ClubFormComponent } from './club/club-form/club-form.component';
+import { ClubAdminListComponent } from './club/club-admin-list/club-admin-list.component';
 
 import { TournamentListComponent } from './tournament/tournament-list/tournament-list.component';
 import { TournamentFullComponent } from './tournament/tournament-full/tournament-full.component';
@@ -29,6 +30,7 @@ const routes: Routes = [
   { path: 'players', component: PlayerListComponent },
   { path: 'club/new', component: ClubFormComponent },
   { path: 'club/:id/edit', component: ClubFormComponent },
+  { path: 'club/:id/admin', component: ClubAdminListComponent },
   { path: 'club/:id', component: ClubFullComponent },
   { path: 'clubs', component: ClubListComponent },
   { path: 'tournament/new', component: TournamentFormComponent },
