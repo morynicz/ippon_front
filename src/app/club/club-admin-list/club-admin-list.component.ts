@@ -34,7 +34,12 @@ export class ClubAdminListComponent implements OnInit {
   }
 
   addAdmin(user: User): void {
-    this.adminService.addAdmin(user).subscribe(response => this.reload());
+    let admin: ClubAdmin = {
+      club_id: this.clubId,
+      user: user,
+      id: -1
+    }
+    this.adminService.addAdmin(admin).subscribe(response => this.reload());
   }
 
 }

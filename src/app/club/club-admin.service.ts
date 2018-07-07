@@ -51,8 +51,8 @@ export class ClubAdminService {
       .pipe(catchError(this.handleError<any>('getNonAdmins')));
   }
 
-  addAdmin(admin: User): Observable<User> {
-    return this.http.post<User>(
+  addAdmin(admin: ClubAdmin): Observable<ClubAdmin> {
+    return this.http.post<ClubAdmin>(
       this.adminUrl, admin, httpOptions)
       .pipe(catchError(this.handleError<any>('addAdmin')));
   }

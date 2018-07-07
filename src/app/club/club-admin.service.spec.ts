@@ -32,17 +32,30 @@ describe('ClubAdminService', () => {
   let admins: ClubAdmin[] = [
     {
       id: 1,
-      username: 'N1',
+      club_id: clubId,
+      user: {
+
+        id: 1,
+        username: 'N1',
+      }
     },
     {
-      id: 2,
-      username: 'N2'
+      id: 1,
+      club_id: clubId,
+      user: {
+        id: 2,
+        username: 'N2'
+      }
     }
   ];
 
   let admin: ClubAdmin = {
     id: 5,
-    username: 'U5'
+    club_id: clubId,
+    user: {
+      id: 5,
+      username: 'U5'
+    }
   };
 
   let users: User[] = [

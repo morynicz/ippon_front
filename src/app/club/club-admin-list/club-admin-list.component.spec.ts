@@ -18,12 +18,20 @@ const clubId: number = 4;
 
 let admins: ClubAdmin[] = [
   {
-    id: 5,
-    username: 'U5'
+    id: 1,
+    club_id: clubId,
+    user: {
+      id: 5,
+      username: 'U5'
+    }
   },
   {
-    id: 7,
-    username: 'U7'
+    id: 2,
+    club_id: clubId,
+    user: {
+      id: 7,
+      username: 'U7'
+    }
   }
 ];
 
@@ -53,8 +61,8 @@ class ClubAdminServiceSpy {
     return of(this.getNonAdminsReturnValue);
   }
 
-  addAdminValue: User;
-  addAdmin(admin: User): Observable<User> {
+  addAdminValue: ClubAdmin;
+  addAdmin(admin: ClubAdmin): Observable<ClubAdmin> {
     this.addAdminValue = admin;
     return of(admin);
   }
@@ -128,17 +136,30 @@ describe('ClubAdminListComponent', () => {
     beforeEach(() => {
       newAdmin = {
         id: 2,
-        username: 'U2'
+        club_id: clubId,
+        user: {
+          id: 2,
+          username: 'U2'
+        }
       };
 
       let newAdmins: ClubAdmin[] = [
         {
           id: 5,
-          username: 'U5'
+          club_id: clubId,
+          user: {
+            id: 5,
+            username: 'U5'
+          }
         },
         {
           id: 7,
-          username: 'U7'
+          club_id: clubId,
+          user: {
+
+            id: 7,
+            username: 'U7'
+          }
         },
         newAdmin
       ];
@@ -160,8 +181,10 @@ describe('ClubAdminListComponent', () => {
     });
 
     it('shold call the admins service with new admin', () => {
-      expect(adminService.addAdminValue)
-        .toEqual(newAdmin);
+      expect(adminService.addAdminValue.club_id)
+        .toEqual(newAdmin.club_id);
+      expect(adminService.addAdminValue.user.id)
+        .toEqual(newAdmin.user.id);
     });
 
     it('shold show the new admin', () => {

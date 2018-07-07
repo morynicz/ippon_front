@@ -18,7 +18,11 @@ import { User } from '../../user';
 
 let admin: ClubAdmin = {
   id: 5,
-  username: 'U5'
+  club_id: 3,
+  user: {
+    id: 2,
+    username: 'U5'
+  }
 };
 
 class ClubAdminServiceSpy {
@@ -57,7 +61,7 @@ describe('ClubAdminFormComponent', () => {
 
   describe("When component is created", () => {
     it("should display user name", () => {
-      expect(html.textContent).toContain(admin.username);
+      expect(html.textContent).toContain(admin.user.username);
     });
   });
 
