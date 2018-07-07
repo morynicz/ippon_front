@@ -11,6 +11,7 @@ import {
   NON_ADMINS_ENDPOINT
 } from '../rest-api';
 
+import { ClubAdmin } from './club-admin';
 import { User } from '../user';
 
 const httpOptions = {
@@ -38,8 +39,8 @@ export class ClubAdminService {
 
   constructor(private http: HttpClient) { }
 
-  getAdmins(id: number): Observable<User[]> {
-    return this.http.get<User[]>(
+  getAdmins(id: number): Observable<ClubAdmin[]> {
+    return this.http.get<ClubAdmin[]>(
       this.getAdminsUrl(id), httpOptions)
       .pipe(catchError(this.handleError<any>('getAdmins')));
   }
@@ -53,12 +54,6 @@ export class ClubAdminService {
   addAdmin(admin: User): Observable<User> {
     return this.http.post<User>(
       this.adminUrl, admin, httpOptions)
-      .pipe(catchError(this.handleError<any>('addAdmin')));
-  }
-
-  updateAdmin(admin: User): Observable<User> {
-    return this.http.put<User>(
-      this.getAdminUrl(admin.id), admin, httpOptions)
       .pipe(catchError(this.handleError<any>('addAdmin')));
   }
 

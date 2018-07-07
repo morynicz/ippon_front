@@ -15,4 +15,5 @@ export const PLAYERS_ENDPOINT: string = "players/";
 export const PARTICIPANTS_ENDPOINT: string = "participants/";
 export const NON_PARTICIPANTS_ENDPOINT: string = "non_participants";
 export const PARTICIPATIONS_ENDPOINT: string = "participations/";
+export const CLUB_ADMINS_ENDPOINT: string = "club_admins/";
 export const TOURNAMENT_ADMINS_ENDPOINT: string = "tournament_admins/";

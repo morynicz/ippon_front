@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 
 import { ClubAdminService } from './club-admin.service';
+import { ClubAdmin } from './club-admin';
 
 import { User } from '../user';
 
@@ -28,7 +29,7 @@ describe('ClubAdminService', () => {
   const adminsUrl: string = IPPON_HOST + CLUBS_ENDPOINT + `${clubId}/` + ADMINS_ENDPOINT;
   const nonAdminsUrl: string = IPPON_HOST + CLUBS_ENDPOINT + `${clubId}/` + NON_ADMINS_ENDPOINT;
   const adminUrl: string = IPPON_HOST + CLUB_ADMINS_ENDPOINT;
-  let admins: User[] = [
+  let admins: ClubAdmin[] = [
     {
       id: 1,
       username: 'N1',
@@ -39,7 +40,7 @@ describe('ClubAdminService', () => {
     }
   ];
 
-  let admin: User = {
+  let admin: ClubAdmin = {
     id: 5,
     username: 'U5'
   };
