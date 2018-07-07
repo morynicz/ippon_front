@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import { Observable ,  of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
 import { Club } from './club';
@@ -60,25 +60,6 @@ export class ClubService {
       .pipe(catchError(this.handleError(`getPlayers id=${clubId}`, new Array<Player>())));
   }
 
-  getAdmins(club: Club): Observable<User[]> {
-    const url = `${this.clubsUrl}${club.id}/${ADMINS_ENDPOINT}`;
-    return this.http.get<User[]>(url, httpOptions).pipe(
-      catchError(this.handleError<User[]>('getAdmins'))
-    );
-  }
-
-  addClubAdmin(club: Club, user: User): Observable<User[]> {
-    const url = `${this.clubsUrl}${club.id}/${ADMINS_ENDPOINT}`;
-    return this.http.post<User[]>(url, user, httpOptions)
-      .pipe(catchError(this.handleError<any>('addClubAdmin')));
-  }
-
-  deleteClubAdmin(club: Club, user: User): Observable<User[]> {
-    const url = `${this.clubsUrl}${club.id}/${ADMINS_ENDPOINT}${user.id}`;
-    return this.http.delete<User[]>(url, httpOptions).pipe(
-      catchError(this.handleError<User[]>('deleteClub'))
-    );
-  }
 
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {

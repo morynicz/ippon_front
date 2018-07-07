@@ -96,62 +96,6 @@ describe('ClubService', () => {
         expect(req.request.method).toBe('DELETE');
       })));
 
-  it('calls the clubs api url with application/json content type and get method when getAdmins called',
-    async(inject([ClubService, HttpTestingController],
-      (service: ClubService, backend: HttpTestingController) => {
-        const admins: User[] = [
-          {
-            id: 0,
-            username: 'N0'
-          }, {
-            id: 2,
-            username: 'N2'
-          }
-        ];
-        const club: Club =
-          { name: 'P1', city: 'F1', description: 'D1', webpage: 'W1', id: 0 };
-        service.getAdmins(club).subscribe(resp => expect(resp).toBe(admins));
-        const req = backend.expectOne(clubsUrl + `${club.id}/` + ADMINS_ENDPOINT);
-        expect(req.request.headers.has('Content-Type')).toBe(true);
-        expect(req.request.headers.get('Content-Type')).toBe('application/json');
-        expect(req.request.method).toBe('GET');
-        req.flush(admins);
-      })));
-
-  it('calls the api url with json content type and POST method when addClubAdmin called',
-    async(inject([ClubService, HttpTestingController],
-      (service: ClubService, backend: HttpTestingController) => {
-        const club: Club =
-          { name: 'K1', city: 'C1', description: 'D1', webpage: 'W1', id: 0 };
-        const user: User = { id: 4, username: 'u4' };
-        const admins: User[] = [
-          { id: 4, username: 'u4' }
-        ];
-        service.addClubAdmin(club, user).subscribe(resp => expect(resp).toBe(admins));
-        const req = backend.expectOne(clubsUrl + `${club.id}/` + ADMINS_ENDPOINT);
-        expect(req.request.headers.has('Content-Type')).toBe(true);
-        expect(req.request.headers.get('Content-Type')).toBe('application/json');
-        expect(req.request.method).toBe('POST');
-        expect(req.request.body).toBe(user);
-        req.flush(admins);
-      })));
-
-  it('calls the clubs api url with application/json content type and delete method when deleteClubAdmin called',
-    async(inject([ClubService, HttpTestingController],
-      (service: ClubService, backend: HttpTestingController) => {
-        const club: Club =
-          { name: 'P1', city: 'F1', description: 'D1', webpage: 'W1', id: 0 };
-        const user: User = { id: 4, username: 'u4' };
-        const admins: User[] = [];
-        service.deleteClubAdmin(club, user).subscribe();
-        const expectedUrl = clubsUrl + `${club.id}/` + ADMINS_ENDPOINT + user.id;
-        const req = backend.expectOne(expectedUrl);
-        expect(req.request.headers.has('Content-Type')).toBe(true);
-        expect(req.request.headers.get('Content-Type')).toBe('application/json');
-        expect(req.request.method).toBe('DELETE');
-        req.flush(admins);
-      })));
-
   it('calls the clubs api url with application/json content type and get method when getPlayers called',
     async(inject([ClubService, HttpTestingController],
       (service: ClubService, backend: HttpTestingController) => {
