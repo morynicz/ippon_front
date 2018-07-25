@@ -1,0 +1,19 @@
+<form class="form-horizontal" role="form" class="edit-user" name="point-form" #pointForm="ngForm">
+  <div class="col-md-5">
+    <button class="btn btn-primary" id="aka-add-point" (click)="addPoint(akaPlayer)" i18n>
+      {{akaPlayer.name}} {{akaPlayer.surname}}</button>
+  </div>
+  <div class="col-md-5">
+    <input name="point-type" type="radio" id="button-point-type-men" [checked]="0===pointType" [(ngModel)]="pointType" [value]=0 i18n/>M
+    <input name="point-type" type="radio" id="button-point-type-kote" [checked]="1===pointType" [(ngModel)]="pointType" [value]=1 i18n/>K
+    <input name="point-type" type="radio" id="button-point-type-do" [checked]="2===pointType" [(ngModel)]="pointType" [value]=2 i18n/>D
+    <input name="point-type" type="radio" id="button-point-type-tsuki" [checked]="3===pointType" [(ngModel)]="pointType" [value]=3 i18n/>T
+    <input name="point-type" type="radio" id="button-point-type-hansoku" [checked]="5===pointType" [(ngModel)]="pointType" [value]=5 i18n/>H
+    <input name="point-type" type="radio" id="button-point-type-foul" [checked]="4===pointType" [(ngModel)]="pointType" [value]=4 i18n/>&#9650;
+    <input name="point-type" type="radio" id="button-point-type-other" [checked]="6===pointType" [(ngModel)]="pointType" [value]=6 i18n/>&#9679;
+  </div>
+  <div class="col-md-5">
+    <button class="btn btn-primary" id="shiro-add-point" (click)="addPoint(shiroPlayer)" i18n>
+    {{shiroPlayer.name}} {{shiroPlayer.surname}}</button>
+  </div>
+</form>

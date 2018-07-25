@@ -43,6 +43,7 @@ import { TournamentAdminFormComponent } from './tournament/tournament-admin-form
 import { TournamentParticipantService } from './tournament/tournament-participant.service';
 import { TournamentAdminListComponent } from './tournament/tournament-admin-list/tournament-admin-list.component';
 import { TournamentAdminService } from './tournament/tournament-admin.service';
+import { PointFormComponent } from './point/point-form/point-form.component';
 
 @NgModule({
   imports: [
@@ -76,7 +77,8 @@ import { TournamentAdminService } from './tournament/tournament-admin.service';
     TournamentParticipationFormComponent,
     TournamentParticipationListComponent,
     TournamentAdminFormComponent,
-    TournamentAdminListComponent
+    TournamentAdminListComponent,
+    PointFormComponent
   ],
   providers: [
     PlayerService,
