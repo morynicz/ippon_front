@@ -17,35 +17,28 @@ import { Authorization, AuthorizationService } from '../../authorization/authori
 
 import { NumericConstraintPipe } from '../numeric-constraint.pipe';
 import { SexConstraintPipe } from '../sex-constraint.pipe';
+import { TournamentServiceSpy } from '../tournament.service.spy';
 
 const tournamentId: number = 9;
-
-class TournamentServiceSpy {
-  tournament: Tournament = {
-    id: 0,
-    name: "T1",
-    date: new Date("2020-01-01"),
-    city: "Ci1",
-    address: "A1",
-    team_size: 3,
-    group_match_length: 4,
-    ko_match_length: 5,
-    final_match_length: 6,
-    finals_depth: 7,
-    age_constraint: NumericConstraint.GreaterOrEqual,
-    age_constraint_value: 18,
-    rank_constraint: NumericConstraint.Less,
-    rank_constraint_value: Rank.Dan_1,
-    sex_constraint: SexConstraint.MenOnly,
-    description: "D1",
-    webpage: "W1"
-  };
-  getTournamentCallArgument: number;
-  getTournament(id: number): Observable<Tournament> {
-    this.getTournamentCallArgument = id;
-    return of(this.tournament);
-  }
-}
+const tournament: Tournament = {
+  id: 0,
+  name: "T1",
+  date: new Date("2020-01-01"),
+  city: "Ci1",
+  address: "A1",
+  team_size: 3,
+  group_match_length: 4,
+  ko_match_length: 5,
+  final_match_length: 6,
+  finals_depth: 7,
+  age_constraint: NumericConstraint.GreaterOrEqual,
+  age_constraint_value: 18,
+  rank_constraint: NumericConstraint.Less,
+  rank_constraint_value: Rank.Dan_1,
+  sex_constraint: SexConstraint.MenOnly,
+  description: "D1",
+  webpage: "W1"
+};
 
 class AuthorizationServiceDummy {
   isTournamentAdminResult: boolean = false;
@@ -66,6 +59,7 @@ describe('TournamentFullComponent', () => {
   describe("when user is not admin", () => {
     beforeEach(async(() => {
       tournamentService = new TournamentServiceSpy();
+      tournamentService.getReturnValue = tournament;
       authorizationService = new AuthorizationServiceDummy();
       TestBed.configureTestingModule({
         declarations: [
@@ -164,6 +158,7 @@ describe('TournamentFullComponent', () => {
   describe("when user is admin", () => {
     beforeEach(async(() => {
       tournamentService = new TournamentServiceSpy();
+      tournamentService.getReturnValue = tournament;
       authorizationService = new AuthorizationServiceDummy();
       authorizationService.isTournamentAdminResult = true;
       TestBed.configureTestingModule({
@@ -214,7 +209,5 @@ describe('TournamentFullComponent', () => {
         expect(html.querySelector('#edit-admins')).toBeTruthy();
       });
     });
-
-
   });
 });

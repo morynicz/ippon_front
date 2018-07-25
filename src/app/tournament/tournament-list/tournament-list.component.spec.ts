@@ -12,15 +12,7 @@ import { SexConstraint } from '../sex-constraint';
 import { Rank } from '../../rank';
 import { AuthenticationService } from '../../authorization/authentication.service';
 import { TournamentService } from '../tournament.service';
-
-class TournamentServiceSpy {
-  getTournamentsCalled: boolean = false;
-  getTournamentsResult: Tournament[];
-  getTournaments(): Observable<Tournament[]> {
-    this.getTournamentsCalled = true;
-    return of(this.getTournamentsResult);
-  }
-}
+import { TournamentServiceSpy } from '../tournament.service.spy';
 
 class AuthenticationServiceSpy {
   isLoggedInResult: boolean = false;
@@ -39,7 +31,7 @@ describe('TournamentListComponent', () => {
 
   beforeEach(async(() => {
     tournamentService = new TournamentServiceSpy();
-    tournamentService.getTournamentsResult = [
+    tournamentService.getListReturnValue = [
       {
         id: 0,
         name: "T1",
@@ -104,7 +96,7 @@ describe('TournamentListComponent', () => {
 
   it('should load tournaments using tournament.service on init', async(() => {
     fixture.whenStable().then(() => {
-      expect(tournamentService.getTournamentsCalled).toBeTruthy();
+      expect(tournamentService.getListValue).toBeTruthy();
     });
   }));
 

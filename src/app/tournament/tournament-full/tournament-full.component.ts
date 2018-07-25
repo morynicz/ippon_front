@@ -34,7 +34,7 @@ export class TournamentFullComponent implements OnInit {
   }
 
   getTournament(id: number): void {
-    this.tournamentService.getTournament(id).subscribe(tournament => {
+    this.tournamentService.get(id).subscribe(tournament => {
       this.tournament = tournament;
     }, error => this.handleError(error));
   }

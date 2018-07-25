@@ -77,14 +77,14 @@ describe('TournamentService', () => {
       expect(service).toBeTruthy();
     }));
 
-  describe("when addTournament is called", () => {
+  describe("when add is called", () => {
     let expected: Tournament = tournament;
     it("calls the tournaments api url",
       inject(
         [TournamentService, HttpTestingController],
         (service: TournamentService,
           backend: HttpTestingController) => {
-          service.addTournament(tournament)
+          service.add(tournament)
             .subscribe();
           const req = backend.expectOne(tournamentsUrl);
         }));
@@ -93,7 +93,7 @@ describe('TournamentService', () => {
         [TournamentService, HttpTestingController],
         (service: TournamentService,
           backend: HttpTestingController) => {
-          service.addTournament(tournament)
+          service.add(tournament)
             .subscribe();
           const req = backend.expectOne(tournamentsUrl);
           expect(req.request.method).toBe('POST');
@@ -103,7 +103,7 @@ describe('TournamentService', () => {
         [TournamentService, HttpTestingController],
         (service: TournamentService,
           backend: HttpTestingController) => {
-          service.addTournament(tournament)
+          service.add(tournament)
             .subscribe();
           const req = backend.expectOne(tournamentsUrl);
           expect(req.request.headers.has('Content-Type'))
@@ -116,7 +116,7 @@ describe('TournamentService', () => {
         [TournamentService, HttpTestingController],
         (service: TournamentService,
           backend: HttpTestingController) => {
-          service.addTournament(tournament)
+          service.add(tournament)
             .subscribe(response => expect(response).toBe(expected));
           const req = backend.expectOne(tournamentsUrl);
           req.flush(expected);
@@ -126,7 +126,7 @@ describe('TournamentService', () => {
         [TournamentService, HttpTestingController],
         (service: TournamentService,
           backend: HttpTestingController) => {
-          service.addTournament(tournament)
+          service.add(tournament)
             .subscribe();
           const req = backend.expectOne(tournamentsUrl);
           expect(req.request.body).toBe(tournament);
@@ -134,13 +134,13 @@ describe('TournamentService', () => {
         }));
   });
 
-  describe("when getTournaments is called", () => {
+  describe("when getList is called", () => {
     it("calls the tournaments api url",
       inject(
         [TournamentService, HttpTestingController],
         (service: TournamentService,
           backend: HttpTestingController) => {
-          service.getTournaments()
+          service.getList()
             .subscribe();
           const req = backend.expectOne(tournamentsUrl);
         }));
@@ -149,7 +149,7 @@ describe('TournamentService', () => {
         [TournamentService, HttpTestingController],
         (service: TournamentService,
           backend: HttpTestingController) => {
-          service.getTournaments()
+          service.getList()
             .subscribe();
           const req = backend.expectOne(tournamentsUrl);
           expect(req.request.method).toBe('GET');
@@ -159,7 +159,7 @@ describe('TournamentService', () => {
         [TournamentService, HttpTestingController],
         (service: TournamentService,
           backend: HttpTestingController) => {
-          service.getTournaments()
+          service.getList()
             .subscribe();
           const req = backend.expectOne(tournamentsUrl);
           expect(req.request.headers.has('Content-Type'))
@@ -172,7 +172,7 @@ describe('TournamentService', () => {
         [TournamentService, HttpTestingController],
         (service: TournamentService,
           backend: HttpTestingController) => {
-          service.getTournaments()
+          service.getList()
             .subscribe(response => expect(response)
               .toBe(tournaments));
           const req = backend.expectOne(tournamentsUrl);
@@ -180,13 +180,13 @@ describe('TournamentService', () => {
         }));
   });
 
-  describe("when getTournament is called", () => {
+  describe("when get is called", () => {
     it("calls the tournaments api url",
       inject(
         [TournamentService, HttpTestingController],
         (service: TournamentService,
           backend: HttpTestingController) => {
-          service.getTournament(tournament.id)
+          service.get(tournament.id)
             .subscribe();
           const req = backend.expectOne(tournamentUrl);
         }));
@@ -195,7 +195,7 @@ describe('TournamentService', () => {
         [TournamentService, HttpTestingController],
         (service: TournamentService,
           backend: HttpTestingController) => {
-          service.getTournament(tournament.id)
+          service.get(tournament.id)
             .subscribe();
           const req = backend.expectOne(tournamentUrl);
           expect(req.request.method).toBe('GET');
@@ -205,7 +205,7 @@ describe('TournamentService', () => {
         [TournamentService, HttpTestingController],
         (service: TournamentService,
           backend: HttpTestingController) => {
-          service.getTournament(tournament.id)
+          service.get(tournament.id)
             .subscribe();
           const req = backend.expectOne(tournamentUrl);
           expect(req.request.headers.has('Content-Type'))
@@ -218,7 +218,7 @@ describe('TournamentService', () => {
         [TournamentService, HttpTestingController],
         (service: TournamentService,
           backend: HttpTestingController) => {
-          service.getTournament(tournament.id)
+          service.get(tournament.id)
             .subscribe(response => expect(response)
               .toBe(tournament));
           const req = backend.expectOne(tournamentUrl);
@@ -226,13 +226,13 @@ describe('TournamentService', () => {
         }));
   });
 
-  describe("when updateTournament is called", () => {
+  describe("when update is called", () => {
     it("calls the tournaments api url",
       inject(
         [TournamentService, HttpTestingController],
         (service: TournamentService,
           backend: HttpTestingController) => {
-          service.updateTournament(tournament)
+          service.update(tournament)
             .subscribe();
           const req = backend.expectOne(tournamentUrl);
         }));
@@ -241,7 +241,7 @@ describe('TournamentService', () => {
         [TournamentService, HttpTestingController],
         (service: TournamentService,
           backend: HttpTestingController) => {
-          service.updateTournament(tournament)
+          service.update(tournament)
             .subscribe();
           const req = backend.expectOne(tournamentUrl);
           expect(req.request.method).toBe('PUT');
@@ -251,7 +251,7 @@ describe('TournamentService', () => {
         [TournamentService, HttpTestingController],
         (service: TournamentService,
           backend: HttpTestingController) => {
-          service.updateTournament(tournament)
+          service.update(tournament)
             .subscribe();
           const req = backend.expectOne(tournamentUrl);
           expect(req.request.headers.has('Content-Type'))
@@ -264,7 +264,7 @@ describe('TournamentService', () => {
         [TournamentService, HttpTestingController],
         (service: TournamentService,
           backend: HttpTestingController) => {
-          service.updateTournament(tournament)
+          service.update(tournament)
             .subscribe(response => expect(response)
               .toBe(tournament));
           const req = backend.expectOne(
@@ -273,13 +273,13 @@ describe('TournamentService', () => {
         }));
   });
 
-  describe("when deleteTournament is called", () => {
+  describe("when delete is called", () => {
     it("calls the tournaments api url",
       inject(
         [TournamentService, HttpTestingController],
         (service: TournamentService,
           backend: HttpTestingController) => {
-          service.deleteTournament(tournament)
+          service.delete(tournament)
             .subscribe();
           const req = backend.expectOne(tournamentUrl);
         }));
@@ -288,7 +288,7 @@ describe('TournamentService', () => {
         [TournamentService, HttpTestingController],
         (service: TournamentService,
           backend: HttpTestingController) => {
-          service.deleteTournament(tournament)
+          service.delete(tournament)
             .subscribe();
           const req = backend.expectOne(tournamentUrl);
           expect(req.request.method).toBe('DELETE');
@@ -298,7 +298,7 @@ describe('TournamentService', () => {
         [TournamentService, HttpTestingController],
         (service: TournamentService,
           backend: HttpTestingController) => {
-          service.deleteTournament(tournament)
+          service.delete(tournament)
             .subscribe();
           const req = backend.expectOne(tournamentUrl);
           expect(req.request.headers.has('Content-Type'))

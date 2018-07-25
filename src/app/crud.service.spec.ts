@@ -12,7 +12,7 @@ class Resource {
   id: number;
 }
 
-const resourcesUrl = "URL";
+const resourcesUrl = "http://URL";
 const resource: Resource = {
   id: 345
 }

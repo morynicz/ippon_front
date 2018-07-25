@@ -55,7 +55,7 @@ export class TournamentFormComponent implements OnInit {
 
   getTournament(): void {
     const id = +this.route.snapshot.paramMap.get('id');
-    this.tournamentService.getTournament(id)
+    this.tournamentService.get(id)
       .subscribe(tournament => this.tournament = tournament);
   }
 
@@ -73,9 +73,9 @@ export class TournamentFormComponent implements OnInit {
 
   save(): void {
     if (this.route.snapshot.paramMap.has('id')) {
-      this.tournamentService.updateTournament(this.tournament).subscribe(() => this.goBack());
+      this.tournamentService.update(this.tournament).subscribe(() => this.goBack());
     } else {
-      this.tournamentService.addTournament(this.tournament).subscribe(() => this.goBack());
+      this.tournamentService.add(this.tournament).subscribe(() => this.goBack());
     }
   }
 

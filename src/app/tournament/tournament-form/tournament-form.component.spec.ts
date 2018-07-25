@@ -8,10 +8,10 @@ import { Location, DatePipe } from '@angular/common';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 
-
 import { TournamentFormComponent } from './tournament-form.component';
 import { Tournament } from '../tournament';
 import { TournamentService } from '../tournament.service';
+import { TournamentServiceSpy } from '../tournament.service.spy';
 import { NumericConstraint } from '../numeric-constraint';
 import { SexConstraint } from '../sex-constraint';
 import { Rank } from '../../rank';
@@ -21,43 +21,25 @@ import { KendoRankPipe } from '../../player/kendo-rank.pipe';
 import { NumericConstraintPipe } from '../numeric-constraint.pipe';
 import { SexConstraintPipe } from '../sex-constraint.pipe';
 
-class TournamentServiceSpy {
-  id: number;
-  tournament: Tournament = {
-    id: 7,
-    name: "T1",
-    date: new Date("2020-01-01"),
-    city: "Ci1",
-    address: "A1",
-    team_size: 3,
-    group_match_length: 3,
-    ko_match_length: 4,
-    final_match_length: 5,
-    finals_depth: 2,
-    age_constraint: NumericConstraint.None,
-    age_constraint_value: 0,
-    rank_constraint: NumericConstraint.None,
-    rank_constraint_value: Rank.Kyu_5,
-    sex_constraint: SexConstraint.None,
-    description: "d1",
-    webpage: "w1"
-  };
-
-  updateTournamentValue: Tournament;
-  updateTournament(tournament: Tournament): Observable<any> {
-    this.updateTournamentValue = tournament;
-    return of(true);
-  }
-  getTournament(id: number): Observable<Tournament> {
-    this.id = id;
-    return of(this.tournament);
-  }
-  addTournamentValue: Tournament;
-  addTournament(tournament: Tournament): Observable<Tournament> {
-    this.addTournamentValue = tournament;
-    return of(this.addTournamentValue);
-  }
-}
+const tournament: Tournament = {
+  id: 7,
+  name: "T1",
+  date: new Date("2020-01-01"),
+  city: "Ci1",
+  address: "A1",
+  team_size: 3,
+  group_match_length: 3,
+  ko_match_length: 4,
+  final_match_length: 5,
+  finals_depth: 2,
+  age_constraint: NumericConstraint.None,
+  age_constraint_value: 0,
+  rank_constraint: NumericConstraint.None,
+  rank_constraint_value: Rank.Kyu_5,
+  sex_constraint: SexConstraint.None,
+  description: "d1",
+  webpage: "w1"
+};
 
 class LocationSpy {
   clicked: boolean = false;
@@ -98,6 +80,7 @@ describe('TournamentFormComponent', () => {
   describe('when tournament id is available', () => {
     beforeEach(async(() => {
       tournamentService = new TournamentServiceSpy();
+      tournamentService.getReturnValue = tournament;
       location = new LocationSpy();
       TestBed.configureTestingModule({
         declarations: [
@@ -112,7 +95,7 @@ describe('TournamentFormComponent', () => {
           {
             provide: ActivatedRoute, useValue: {
               snapshot: {
-                paramMap: convertToParamMap({ id: tournamentService.tournament.id })
+                paramMap: convertToParamMap({ id: tournament.id })
               }
             }
           },
@@ -133,7 +116,7 @@ describe('TournamentFormComponent', () => {
         fixture.whenStable().then(() => {
           let de = fixture.debugElement;
           expect(de.query(By.css("[name=name]")).nativeElement.value)
-            .toContain(tournamentService.tournament.name);
+            .toContain(tournament.name);
         });
       }));
 
@@ -142,7 +125,7 @@ describe('TournamentFormComponent', () => {
         fixture.whenStable().then(() => {
           let de = fixture.debugElement;
           expect(de.query(By.css("[name=description]")).nativeElement.value)
-            .toContain(tournamentService.tournament.description);
+            .toContain(tournament.description);
         });
       }));
 
@@ -151,7 +134,7 @@ describe('TournamentFormComponent', () => {
         fixture.whenStable().then(() => {
           let de = fixture.debugElement;
           expect(de.query(By.css("[name=webpage]")).nativeElement.value)
-            .toContain(tournamentService.tournament.webpage);
+            .toContain(tournament.webpage);
         });
       }));
 
@@ -160,7 +143,7 @@ describe('TournamentFormComponent', () => {
         fixture.whenStable().then(() => {
           let de = fixture.debugElement;
           expect(de.query(By.css("[name=city]")).nativeElement.value)
-            .toContain(tournamentService.tournament.city);
+            .toContain(tournament.city);
         });
       }));
     it('should load date of tournament with given id',
@@ -169,7 +152,7 @@ describe('TournamentFormComponent', () => {
           let de = fixture.debugElement;
           let pipe = new DatePipe('en');
           expect(de.query(By.css("[name=date]")).nativeElement.value)
-            .toContain(pipe.transform(tournamentService.tournament.date, 'yyyy-MM-dd'));
+            .toContain(pipe.transform(tournament.date, 'yyyy-MM-dd'));
         });
       }));
 
@@ -178,7 +161,7 @@ describe('TournamentFormComponent', () => {
         fixture.whenStable().then(() => {
           let de = fixture.debugElement;
           expect(de.query(By.css("[name=rank-constraint]")).nativeElement.value)
-            .toContain(tournamentService.tournament.rank_constraint);
+            .toContain(tournament.rank_constraint);
         });
       }));
 
@@ -187,7 +170,7 @@ describe('TournamentFormComponent', () => {
         fixture.whenStable().then(() => {
           let de = fixture.debugElement;
           expect(de.query(By.css("[name=rank-constraint-value]")).nativeElement.value)
-            .toContain(tournamentService.tournament.rank_constraint_value);
+            .toContain(tournament.rank_constraint_value);
         });
       }));
 
@@ -196,7 +179,7 @@ describe('TournamentFormComponent', () => {
         fixture.whenStable().then(() => {
           let de = fixture.debugElement;
           expect(de.query(By.css("[name=age-constraint]")).nativeElement.value)
-            .toContain(tournamentService.tournament.age_constraint);
+            .toContain(tournament.age_constraint);
         });
       }));
 
@@ -205,7 +188,7 @@ describe('TournamentFormComponent', () => {
         fixture.whenStable().then(() => {
           let de = fixture.debugElement;
           expect(de.query(By.css("[name=age-constraint-value]")).nativeElement.value)
-            .toContain(tournamentService.tournament.age_constraint_value);
+            .toContain(tournament.age_constraint_value);
         });
       }));
 
@@ -214,7 +197,7 @@ describe('TournamentFormComponent', () => {
         fixture.whenStable().then(() => {
           let de = fixture.debugElement;
           expect(de.query(By.css("[name=sex-constraint]")).nativeElement.value)
-            .toContain(tournamentService.tournament.sex_constraint);
+            .toContain(tournament.sex_constraint);
         });
       }));
 
@@ -223,7 +206,7 @@ describe('TournamentFormComponent', () => {
         fixture.whenStable().then(() => {
           let de = fixture.debugElement;
           expect(de.query(By.css("[name=team-size]")).nativeElement.value)
-            .toContain(tournamentService.tournament.team_size);
+            .toContain(tournament.team_size);
         });
       }));
 
@@ -232,7 +215,7 @@ describe('TournamentFormComponent', () => {
         fixture.whenStable().then(() => {
           let de = fixture.debugElement;
           expect(de.query(By.css("[name=ko-match-length]")).nativeElement.value)
-            .toContain(tournamentService.tournament.ko_match_length);
+            .toContain(tournament.ko_match_length);
         });
       }));
 
@@ -241,7 +224,7 @@ describe('TournamentFormComponent', () => {
         fixture.whenStable().then(() => {
           let de = fixture.debugElement;
           expect(de.query(By.css("[name=group-match-length]")).nativeElement.value)
-            .toContain(tournamentService.tournament.group_match_length);
+            .toContain(tournament.group_match_length);
         });
       }));
 
@@ -250,7 +233,7 @@ describe('TournamentFormComponent', () => {
         fixture.whenStable().then(() => {
           let de = fixture.debugElement;
           expect(de.query(By.css("[name=final-match-length]")).nativeElement.value)
-            .toContain(tournamentService.tournament.final_match_length);
+            .toContain(tournament.final_match_length);
         });
       }));
 
@@ -259,7 +242,7 @@ describe('TournamentFormComponent', () => {
         fixture.whenStable().then(() => {
           let de = fixture.debugElement;
           expect(de.query(By.css("[name=finals-depth]")).nativeElement.value)
-            .toContain(tournamentService.tournament.finals_depth);
+            .toContain(tournament.finals_depth);
         });
       }));
 
@@ -298,7 +281,7 @@ describe('TournamentFormComponent', () => {
         it('should call tournament service updateTournament with tournament values set in form',
           async(() => {
             fixture.whenStable().then(() => {
-              expectTournamentsToBeEqual(tournamentService.updateTournamentValue, expectedTournament);
+              expectTournamentsToBeEqual(tournamentService.updateValue, expectedTournament);
             });
           }));
         it('should go back to previous location', async(() => {
@@ -337,7 +320,7 @@ describe('TournamentFormComponent', () => {
 
     it('should prepare a new tournament instead of trying to get it from tournament service',
       async(() => {
-        expect(tournamentService.id).not.toBe(0);
+        expect(tournamentService.getValue).not.toBe(0);
         expectTournamentsToBeEqual(component.tournament, new Tournament());
       }));
 
@@ -375,7 +358,7 @@ describe('TournamentFormComponent', () => {
         it('should call tournament service createTournament with tournament values set in form',
           async(() => {
             fixture.whenStable().then(() => {
-              expectTournamentsToBeEqual(tournamentService.addTournamentValue, expectedTournament);
+              expectTournamentsToBeEqual(tournamentService.addValue, expectedTournament);
             });
           }));
         it('should go back to previous location', async(() => {

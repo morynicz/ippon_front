@@ -21,7 +21,7 @@ export class TournamentListComponent implements OnInit {
   }
 
   getTournaments(): void {
-    this.tournamentService.getTournaments().subscribe(
+    this.tournamentService.getList().subscribe(
       tournaments => { this.tournaments = tournaments; },
       error => this.handleError(error));
   }
