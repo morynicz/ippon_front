@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
 
 import {
   IPPON_HOST,
@@ -12,10 +10,6 @@ import {
 import { Tournament } from './tournament';
 import { User } from '../user';
 import { CrudService } from '../crud.service';
-
-const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-}
 
 @Injectable()
 export class TournamentService extends CrudService<Tournament>{
