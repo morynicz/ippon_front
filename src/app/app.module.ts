@@ -44,6 +44,7 @@ import { TournamentParticipantService } from './tournament/tournament-participan
 import { TournamentAdminListComponent } from './tournament/tournament-admin-list/tournament-admin-list.component';
 import { TournamentAdminService } from './tournament/tournament-admin.service';
 import { PointFormComponent } from './point/point-form/point-form.component';
+import { PointService } from './point/point.service';
 
 @NgModule({
   imports: [
@@ -91,7 +92,8 @@ import { PointFormComponent } from './point/point-form/point-form.component';
     TokenStorageService,
     AuthorizationService,
     TournamentParticipantService,
-    TournamentAdminService
+    TournamentAdminService,
+    PointService
   ],
   bootstrap: [AppComponent]
 })
