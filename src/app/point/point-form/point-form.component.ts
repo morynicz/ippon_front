@@ -36,7 +36,7 @@ export class PointFormComponent implements OnInit {
       fightId: this.fightId,
       id: 0
     }
-    this.pointService.addPoint(point).subscribe(() => {
+    this.pointService.add(point).subscribe(() => {
       this.reloadRequest.emit('');
     });
   }

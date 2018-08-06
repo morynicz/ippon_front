@@ -16,6 +16,7 @@ import { Rank } from '../../rank';
 import { Point, PointType } from '../point';
 import { PointService } from '../point.service';
 import { PointTypePipe } from '../point-type.pipe';
+import { PointServiceSpy } from '../point.service.spy';
 
 const akaPlayer: Player = {
   name: 'P1',
@@ -38,21 +39,6 @@ const shiroPlayer = {
 }
 
 const fightId: number = 7;
-
-class PointServiceSpy {
-  addPointValue: Point;
-  addPointReturnValue: Point;
-  addPoint(point: Point): Observable<Point> {
-    this.addPointValue = point;
-    return of(this.addPointReturnValue);
-  }
-
-  deletePointValue: number;
-  deltePoint(id: number): Observable<{}> {
-    this.deletePointValue = id;
-    return of();
-  }
-}
 
 describe('PointFormComponent', () => {
   let component: PointFormComponent;
@@ -136,7 +122,7 @@ describe('PointFormComponent', () => {
       it("sends to point service new men point for aka player",
         () => {
           fixture.whenStable().then(() => {
-            expect(pointService.addPointValue).toEqual(akaPoint);
+            expect(pointService.addValue).toEqual(akaPoint);
           });
         });
 
@@ -173,7 +159,7 @@ describe('PointFormComponent', () => {
       it("sends to point service new men point for shiro player",
         () => {
           fixture.whenStable().then(() => {
-            expect(pointService.addPointValue).toEqual(shiroPoint);
+            expect(pointService.addValue).toEqual(shiroPoint);
           });
         });
 

@@ -36,13 +36,13 @@ describe('PointService', () => {
     id: pointId
   }
 
-  describe("when addPoint is called", () => {
+  describe("when add is called", () => {
     it("calls the points api url",
       inject(
         [PointService, HttpTestingController],
         (service: PointService,
           backend: HttpTestingController) => {
-          service.addPoint(point)
+          service.add(point)
             .subscribe();
           const req = backend.expectOne(pointUrl);
         }));
@@ -51,7 +51,7 @@ describe('PointService', () => {
         [PointService, HttpTestingController],
         (service: PointService,
           backend: HttpTestingController) => {
-          service.addPoint(point)
+          service.add(point)
             .subscribe();
           const req = backend.expectOne(pointUrl);
           expect(req.request.method).toBe('POST');
@@ -61,7 +61,7 @@ describe('PointService', () => {
         [PointService, HttpTestingController],
         (service: PointService,
           backend: HttpTestingController) => {
-          service.addPoint(point)
+          service.add(point)
             .subscribe();
           const req = backend.expectOne(pointUrl);
           expect(req.request.headers.has('Content-Type'))
@@ -74,7 +74,7 @@ describe('PointService', () => {
         [PointService, HttpTestingController],
         (service: PointService,
           backend: HttpTestingController) => {
-          service.addPoint(point)
+          service.add(point)
             .subscribe(response => expect(response).toBe(point));
           const req = backend.expectOne(pointUrl);
           req.flush(point);
@@ -84,20 +84,20 @@ describe('PointService', () => {
         [PointService, HttpTestingController],
         (service: PointService,
           backend: HttpTestingController) => {
-          service.addPoint(point)
+          service.add(point)
             .subscribe();
           const req = backend.expectOne(pointUrl);
           expect(req.request.body).toBe(point);
         }));
   });
 
-  describe("when deletePoint is called", () => {
+  describe("when delete is called", () => {
     it("calls the tournaments api url",
       inject(
         [PointService, HttpTestingController],
         (service: PointService,
           backend: HttpTestingController) => {
-          service.deletePoint(point.id)
+          service.delete(point)
             .subscribe();
           const req = backend.expectOne(pointUrl + point.id + '/');
         }));
@@ -106,7 +106,7 @@ describe('PointService', () => {
         [PointService, HttpTestingController],
         (service: PointService,
           backend: HttpTestingController) => {
-          service.deletePoint(point.id)
+          service.delete(point)
             .subscribe();
           const req = backend.expectOne(pointUrl + point.id + '/');
           expect(req.request.method).toBe('DELETE');
@@ -116,7 +116,7 @@ describe('PointService', () => {
         [PointService, HttpTestingController],
         (service: PointService,
           backend: HttpTestingController) => {
-          service.deletePoint(point.id)
+          service.delete(point)
             .subscribe();
           const req = backend.expectOne(pointUrl + point.id + '/');
           expect(req.request.headers.has('Content-Type'))

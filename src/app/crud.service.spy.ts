@@ -27,4 +27,10 @@ export class CrudServiceSpy<Resource> {
     this.addValue = resource;
     return of(this.addValue);
   }
+
+  deleteValue: Resource;
+  delete(resource: Resource): Observable<{}> {
+    this.deleteValue = resource;
+    return of({});
+  }
 }
