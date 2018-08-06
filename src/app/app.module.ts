@@ -45,6 +45,7 @@ import { TournamentAdminListComponent } from './tournament/tournament-admin-list
 import { TournamentAdminService } from './tournament/tournament-admin.service';
 import { PointFormComponent } from './point/point-form/point-form.component';
 import { PointService } from './point/point.service';
+import { PointTypePipe } from './point/point-type.pipe';
 
 @NgModule({
   imports: [
@@ -79,7 +80,8 @@ import { PointService } from './point/point.service';
     TournamentParticipationListComponent,
     TournamentAdminFormComponent,
     TournamentAdminListComponent,
-    PointFormComponent
+    PointFormComponent,
+    PointTypePipe,
   ],
   providers: [
     PlayerService,

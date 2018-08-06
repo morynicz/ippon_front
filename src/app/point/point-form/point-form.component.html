@@ -5,7 +5,7 @@
       {{akaPlayer.name}} {{akaPlayer.surname}}</button>
     </div>
     <div class="col-md-3">
-      <input name="point-type" type="radio" id="button-point-type-men" [checked]="0===pointType" [(ngModel)]="pointType" [value]=0 i18n/>M
+      <input name="point-type" type="radio" id="button-point-type-men" [checked]="0===pointType" [(ngModel)]="pointType" [value]=0 i18n/>{{pointTypes[0] | pointType}}
       <input name="point-type" type="radio" id="button-point-type-kote" [checked]="1===pointType" [(ngModel)]="pointType" [value]=1 i18n/>K
       <input name="point-type" type="radio" id="button-point-type-do" [checked]="2===pointType" [(ngModel)]="pointType" [value]=2 i18n/>D
       <input name="point-type" type="radio" id="button-point-type-tsuki" [checked]="3===pointType" [(ngModel)]="pointType" [value]=3 i18n/>T

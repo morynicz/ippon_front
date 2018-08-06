@@ -15,6 +15,7 @@ import { Rank } from '../../rank';
 
 import { Point, PointType } from '../point';
 import { PointService } from '../point.service';
+import { PointTypePipe } from '../point-type.pipe';
 
 const akaPlayer: Player = {
   name: 'P1',
@@ -62,7 +63,10 @@ describe('PointFormComponent', () => {
   beforeEach(async(() => {
     pointService = new PointServiceSpy();
     TestBed.configureTestingModule({
-      declarations: [PointFormComponent],
+      declarations: [
+        PointFormComponent,
+        PointTypePipe
+      ],
       imports: [FormsModule],
       providers: [
         { provide: PointService, useValue: pointService }

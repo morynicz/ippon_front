@@ -16,6 +16,15 @@ export class PointFormComponent implements OnInit {
   @Output() reloadRequest = new EventEmitter<any>();
   constructor(private pointService: PointService) { }
   pointType: PointType;
+  pointTypes: PointType[] = [
+    PointType.Men,
+    PointType.Kote,
+    PointType.Do,
+    PointType.Tsuki,
+    PointType.Hansoku,
+    PointType.Foul,
+    PointType.Other
+  ];
 
   ngOnInit() {
   }
