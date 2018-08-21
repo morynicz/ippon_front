@@ -1,0 +1,18 @@
+<div class="row">
+  <div class="col-md-1">
+    {{akaPlayer.name}} {{akaPlayer.surname}}
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-1">
+    {{shiroPlayer.name}} {{shiroPlayer.surname}}
+  </div>
+</div>
+<div class="row">
+  <ul class="list-unstyled">
+    <li *ngFor="let point of points">
+      <ippon-point-line [akaPlayer]="akaPlayer" [shiroPlayer]="shiroPlayer" [point]="point" (reloadRequest)="reload">
+      </ippon-point-line>
+    </li>
+  </ul>
+</div>

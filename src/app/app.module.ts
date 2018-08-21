@@ -45,6 +45,7 @@ import { TournamentAdminListComponent } from './tournament/tournament-admin-list
 import { TournamentAdminService } from './tournament/tournament-admin.service';
 import { PointFormComponent } from './point/point-form/point-form.component';
 import { PointService } from './point/point.service';
+import { FightFullComponent } from './fight/fight-full/fight-full.component';
 import { PointTypePipe } from './point/point-type.pipe';
 import { PointLineComponent } from './point/point-line/point-line.component';
 
@@ -82,6 +83,7 @@ import { PointLineComponent } from './point/point-line/point-line.component';
     TournamentAdminFormComponent,
     TournamentAdminListComponent,
     PointFormComponent,
+    FightFullComponent,
     PointTypePipe,
     PointLineComponent
   ],
