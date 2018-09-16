@@ -49,6 +49,7 @@ import { FightFullComponent } from './fight/fight-full/fight-full.component';
 import { PointTypePipe } from './point/point-type.pipe';
 import { PointLineComponent } from './point/point-line/point-line.component';
 import { TestingGroundsComponent } from './testing-grounds/testing-grounds.component';
+import { FightService } from './fight/fight.service';
 
 @NgModule({
   imports: [
@@ -101,7 +102,8 @@ import { TestingGroundsComponent } from './testing-grounds/testing-grounds.compo
     AuthorizationService,
     TournamentParticipantService,
     TournamentAdminService,
-    PointService
+    PointService,
+    FightService
   ],
   bootstrap: [AppComponent]
 })

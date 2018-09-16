@@ -16,7 +16,8 @@ import { Club } from '../../club/club'
 import { ClubService } from '../../club/club.service';
 
 import { KendoRankPipe } from '../kendo-rank.pipe';
-import { Authorization, AuthorizationService } from '../../authorization/authorization.service';
+import { AuthorizationService } from '../../authorization/authorization.service';
+import { Authorization } from "../../authorization/Authorization";
 
 const playerId: number = 4;
 

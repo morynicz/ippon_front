@@ -8,7 +8,8 @@ import { Point, PointType } from './point';
 
 import {
   IPPON_HOST,
-  POINTS_ENDPOINT
+  POINTS_ENDPOINT,
+  FIGHTS_ENDPOINT
 } from '../rest-api';
 
 const fightId: number = 3;
@@ -123,6 +124,60 @@ describe('PointService', () => {
             .toBe(true);
           expect(req.request.headers.get('Content-Type'))
             .toBe('application/json');
+        }));
+  });
+
+  describe("when getList is called", () => {
+    let fightId: number = 3;
+    let filteredUrl = IPPON_HOST + FIGHTS_ENDPOINT + `${fightId}/` + POINTS_ENDPOINT;
+    let points: Point[] = [
+      point,
+      {
+        playerId: 7,
+        fightId: 8,
+        type: PointType.Kote,
+        id: 12
+      }];
+
+    it("calls the resources api url",
+      inject(
+        [PointService, HttpTestingController],
+        (service: PointService,
+          backend: HttpTestingController) => {
+          service.getList(fightId).subscribe();
+          const req = backend.expectOne(filteredUrl);
+        }));
+    it("uses GET method",
+      inject(
+        [PointService, HttpTestingController],
+        (service: PointService,
+          backend: HttpTestingController) => {
+          service.getList(fightId).subscribe();
+          const req = backend.expectOne(filteredUrl);
+          expect(req.request.method).toBe('GET');
+        }));
+    it("sends request with application/json content type headers",
+      inject(
+        [PointService, HttpTestingController],
+        (service: PointService,
+          backend: HttpTestingController) => {
+          service.getList(fightId).subscribe();
+          const req = backend.expectOne(filteredUrl);
+          expect(req.request.headers.has('Content-Type'))
+            .toBe(true);
+          expect(req.request.headers.get('Content-Type'))
+            .toBe('application/json');
+        }));
+    it("responds with requested points",
+      inject(
+        [PointService, HttpTestingController],
+        (service: PointService,
+          backend: HttpTestingController) => {
+          service.getList(fightId)
+            .subscribe(response => expect(response)
+              .toBe(points));
+          const req = backend.expectOne(filteredUrl);
+          req.flush(points);
         }));
   });
 

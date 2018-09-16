@@ -6,7 +6,8 @@ import { Tournament } from '../tournament';
 import { TournamentService } from '../tournament.service';
 import { NumericConstraint } from '../numeric-constraint';
 import { SexConstraint } from '../sex-constraint';
-import { Authorization, AuthorizationService } from '../../authorization/authorization.service';
+import { AuthorizationService } from '../../authorization/authorization.service';
+import { Authorization } from "../../authorization/Authorization";
 
 @Component({
   selector: 'ippon-tournament-full',

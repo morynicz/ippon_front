@@ -3,7 +3,8 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 
-import { AuthorizationService, Authorization } from './authorization.service';
+import { AuthorizationService } from './authorization.service';
+import { Authorization } from "./Authorization";
 import {
   IPPON_HOST,
   AUTHORIZATION_ENDPOINT,

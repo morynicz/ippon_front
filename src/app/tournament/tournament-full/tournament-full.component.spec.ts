@@ -13,7 +13,8 @@ import { NumericConstraint } from '../numeric-constraint';
 import { SexConstraint } from '../sex-constraint';
 import { Rank } from '../../rank';
 import { KendoRankPipe } from '../../player/kendo-rank.pipe';
-import { Authorization, AuthorizationService } from '../../authorization/authorization.service';
+import { AuthorizationService } from '../../authorization/authorization.service';
+import { Authorization } from "../../authorization/Authorization";
 
 import { NumericConstraintPipe } from '../numeric-constraint.pipe';
 import { SexConstraintPipe } from '../sex-constraint.pipe';

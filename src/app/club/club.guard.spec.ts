@@ -8,7 +8,8 @@ import { of } from 'rxjs/observable/of';
 
 import { ClubGuard } from './club.guard';
 
-import { AuthorizationService, Authorization } from '../authorization/authorization.service';
+import { AuthorizationService } from '../authorization/authorization.service';
+import { Authorization } from "../authorization/Authorization";
 import { AuthenticationService } from '../authorization/authentication.service';
 
 class AuthorizationServiceMock {

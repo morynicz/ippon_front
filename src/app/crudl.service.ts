@@ -16,7 +16,7 @@ export class CrudlService<Resource extends Identifiable> {
   private getUrl(id: number): string {
     return `${this.url}${id}/`;
   }
-  constructor(private http: HttpClient, private url: string) {
+  constructor(protected http: HttpClient, private url: string) {
     this.url = url;
   }
 

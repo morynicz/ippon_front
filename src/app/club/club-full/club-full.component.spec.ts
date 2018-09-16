@@ -16,7 +16,8 @@ import { Sex } from '../../sex';
 import { PlayerLineComponent } from '../../player/player-line/player-line.component';
 import { PlayerService } from '../../player/player.service';
 
-import { Authorization, AuthorizationService } from '../../authorization/authorization.service';
+import { AuthorizationService } from '../../authorization/authorization.service';
+import { Authorization } from "../../authorization/Authorization";
 
 const clubId: number = 1;
 

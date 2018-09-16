@@ -7,7 +7,8 @@ import { Player } from '../../player/player'
 import { ClubService } from '../club.service';
 import { Club } from '../club';
 
-import { Authorization, AuthorizationService } from '../../authorization/authorization.service';
+import { AuthorizationService } from '../../authorization/authorization.service';
+import { Authorization } from "../../authorization/Authorization";
 
 @Component({
   selector: 'app-club-full',

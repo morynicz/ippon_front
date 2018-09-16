@@ -8,7 +8,9 @@ import { Point } from '../point/point';
 
 import {
   IPPON_HOST,
-  FIGHTS_ENDPOINT
+  FIGHTS_ENDPOINT,
+  AUTHENTICATION_HOST,
+  AUTHORIZATION_ENDPOINT
 } from '../rest-api';
 
 const fightsUrl = IPPON_HOST + FIGHTS_ENDPOINT;
@@ -48,4 +50,36 @@ describe('FightService', () => {
           const req = backend.expectOne(fightsUrl);
         }));
   });
+
+  describe("when isAuthorized is called", () => {
+    let fightAuthUrl = IPPON_HOST + AUTHORIZATION_ENDPOINT + FIGHTS_ENDPOINT + `${fight.id}/`;
+    it("calls the fights api url",
+      inject(
+        [FightService, HttpTestingController],
+        (service: FightService,
+          backend: HttpTestingController) => {
+          service.isAuthorized(fight.id).subscribe();
+          const req = backend.expectOne(fightAuthUrl);
+        }));
+    it("uses isAuthorized method",
+      inject(
+        [FightService, HttpTestingController],
+        (service: FightService,
+          backend: HttpTestingController) => {
+          service.isAuthorized(fight.id).subscribe();
+          const req = backend.expectOne(fightAuthUrl);
+          expect(req.request.method).toBe('GET');
+        }));
+    it("responds with requested fight",
+      inject(
+        [FightService, HttpTestingController],
+        (service: FightService,
+          backend: HttpTestingController) => {
+          service.isAuthorized(fight.id)
+            .subscribe(response => expect(response)
+              .toBe(true));
+          const req = backend.expectOne(fightAuthUrl);
+          req.flush({ "isAuthorized": true });
+        }));
+  })
 });

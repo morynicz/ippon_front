@@ -16,3 +16,7 @@
     </li>
   </ul>
 </div>
+<div *ngIf="isAdmin == True">
+  <ippon-point-form id="add-point-form" [akaPlayer]="akaPlayer" [shiroPlayer]="shiroPlayer" [fightId]="fight.id" (reloadRequest)="reload()"></ippon-point-form>
+</div>
+{{fight|json}}
