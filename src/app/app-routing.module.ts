@@ -19,6 +19,7 @@ import { TournamentParticipationListComponent } from './tournament/tournament-pa
 import { TournamentAdminListComponent } from './tournament/tournament-admin-list/tournament-admin-list.component';
 
 import { LoginFormComponent } from './authorization/login-form/login-form.component';
+import { TestingGroundsComponent } from './testing-grounds/testing-grounds.component';
 
 
 const routes: Routes = [
@@ -39,7 +40,8 @@ const routes: Routes = [
   { path: 'tournament/:id/admin', component: TournamentAdminListComponent },
   { path: 'tournament/:id', component: TournamentFullComponent },
   { path: 'tournaments', component: TournamentListComponent },
-  { path: 'login', component: LoginFormComponent }
+  { path: 'login', component: LoginFormComponent },
+  { path: 'test', component: TestingGroundsComponent }
 ]
 
 @NgModule({

@@ -7,7 +7,7 @@ import { Point } from '../../point/point';
 import { Fight } from '../fight';
 
 @Component({
-  selector: 'app-fight-full',
+  selector: 'ippon-fight-full',
   templateUrl: './fight-full.component.html',
   styleUrls: ['./fight-full.component.css']
 })

@@ -130,11 +130,11 @@
   "defaultProject": "ippon-frontend",
   "schematics": {
     "@schematics/angular:component": {
-      "prefix": "app",
+      "prefix": "ippon",
       "styleext": "css"
     },
     "@schematics/angular:directive": {
-      "prefix": "app"
+      "prefix": "ippon"
     }
   }
 }
