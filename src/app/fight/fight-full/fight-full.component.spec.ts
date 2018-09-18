@@ -92,102 +92,106 @@ class AuthorizationServiceSpy {
   }
 }
 
-// describe('FightFullComponent', () => {
-//   let component: FightFullComponent;
-//   let fixture: ComponentFixture<FightFullComponent>;
-//   let fightService: FightServiceSpy;
-//   let playerService: PlayerServiceSpy;
-//   let pointService: PointServiceSpy;
-//   let authorizationService: AuthorizationServiceSpy;
-//   let html;
+describe('FightFullComponent', () => {
+  let component: FightFullComponent;
+  let fixture: ComponentFixture<FightFullComponent>;
+  let fightService: FightServiceSpy;
+  let playerService: PlayerServiceSpy;
+  let pointService: PointServiceSpy;
+  let authorizationService: AuthorizationServiceSpy;
+  let html;
 
-//   beforeEach(async(() => {
-//     fightService = new FightServiceSpy();
-//     playerService = new PlayerServiceSpy();
-//     playerService.getReturnValues = [
-//       akaPlayer,
-//       shiroPlayer
-//     ];
-//     playerService.getValues = [];
-//     pointService = new PointServiceSpy();
-//     pointService.getListReturnValue = points;
-//     authorizationService = new AuthorizationServiceSpy();
-//     authorizationService.isTournamentAdminResult = false;
-//     TestBed.configureTestingModule({
-//       declarations: [
-//         FightFullComponent,
-//         PointFormComponent,
-//         PointLineComponent,
-//         PointTypePipe
-//       ],
-//       providers: [
-//         {
-//           provide: FightService,
-//           useValue: fightService
-//         },
-//         {
-//           provide: PlayerService,
-//           useValue: playerService
-//         },
-//         {
-//           provide: PointService,
-//           useValue: pointService
-//         }
-//       ],
-//       imports: [FormsModule]
-//     })
-//       .compileComponents();
-//   }));
+  beforeEach(async(() => {
+    fightService = new FightServiceSpy();
+    playerService = new PlayerServiceSpy();
+    playerService.getReturnValues = [
+      akaPlayer,
+      shiroPlayer
+    ];
+    playerService.getValues = [];
+    pointService = new PointServiceSpy();
+    pointService.getListReturnValue = points;
+    authorizationService = new AuthorizationServiceSpy();
+    authorizationService.isTournamentAdminResult = false;
+    TestBed.configureTestingModule({
+      declarations: [
+        FightFullComponent,
+        PointFormComponent,
+        PointLineComponent,
+        PointTypePipe
+      ],
+      providers: [
+        {
+          provide: FightService,
+          useValue: fightService
+        },
+        {
+          provide: PlayerService,
+          useValue: playerService
+        },
+        {
+          provide: PointService,
+          useValue: pointService
+        }
+      ],
+      imports: [FormsModule]
+    })
+      .compileComponents();
+  }));
 
-//   describe("when created", () => {
-//     beforeEach(() => {
-//       fixture = TestBed.createComponent(FightFullComponent);
-//       component = fixture.componentInstance;
-//       component.fight = fight;
-//       fixture.detectChanges();
-//       html = fixture.debugElement.nativeElement;
-//     });
+  describe("when created", () => {
+    beforeEach(() => {
+      fixture = TestBed.createComponent(FightFullComponent);
+      component = fixture.componentInstance;
+      component.fight = fight;
+      fixture.detectChanges();
+      html = fixture.debugElement.nativeElement;
+    });
 
-//     it("should call points service to get points for it's fight", () => {
-//       fixture.whenStable().then(() => {
-//         expect(pointService.getListValue).toContain(fightId);
-//       });
-//     });
-//     it("should call player service get for both player ids", () => {
-//       fixture.whenStable().then(() => {
-//         expect(playerService.getValues).toContain(akaPlayer.id);
-//         expect(playerService.getValues).toContain(shiroPlayer.id);
-//       });
-//     });
+    it("should call points service to get points for it's fight", () => {
+      fixture.whenStable().then(() => {
+        expect(pointService.getListValue).toContain(fightId);
+      });
+    });
+    it("should call player service get for both player ids", () => {
+      fixture.whenStable().then(() => {
+        expect(playerService.getValues).toContain(akaPlayer.id);
+        expect(playerService.getValues).toContain(shiroPlayer.id);
+      });
+    });
 
-//     it("should display akaPlayer name and surname", () => {
-//       expect(html.textContent).toContain(akaPlayer.name);
-//       expect(html.textContent).toContain(akaPlayer.surname);
-//     });
+    it("should display akaPlayer name and surname", () => {
+      expect(html.textContent).toContain(akaPlayer.name);
+      expect(html.textContent).toContain(akaPlayer.surname);
+    });
 
-//     it("should display shiroPlayer name and surname", () => {
-//       expect(html.textContent).toContain(shiroPlayer.name);
-//       expect(html.textContent).toContain(shiroPlayer.surname);
-//     });
+    it("should display shiroPlayer name and surname", () => {
+      expect(html.textContent).toContain(shiroPlayer.name);
+      expect(html.textContent).toContain(shiroPlayer.surname);
+    });
 
-//     it("should display points awarded in this fight", () => {
-//       let pipe: PointTypePipe = new PointTypePipe();
-//       expect(html.textContent).toContain(pipe.transform(PointType.Other));
-//       expect(html.textContent).toContain(pipe.transform(PointType.Other));
-//     });
-//   });
-//   describe("when user is authorized", () => {
-//     beforeEach(() => {
-//       authorizationService.isTournamentAdminResult = true;
-//       fixture = TestBed.createComponent(FightFullComponent);
-//       component = fixture.componentInstance;
-//       component.fight = fight;
-//       fixture.detectChanges();
-//       html = fixture.debugElement.nativeElement;
-//     });
+    it("should display points awarded in this fight", () => {
+      let pipe: PointTypePipe = new PointTypePipe();
+      expect(html.textContent).toContain(pipe.transform(PointType.Other));
+      expect(html.textContent).toContain(pipe.transform(PointType.Other));
+    });
+    it("should display form for adding new points", () => {
+      expect(html.querySelector('#add-point-form')).toBeFalsy();
+    });
+  });
+  describe("when user is authorized", () => {
+    beforeEach(() => {
+      authorizationService.isTournamentAdminResult = true;
+      fightService.isAuthorizedReturnValue = true;
+      fixture = TestBed.createComponent(FightFullComponent);
+      component = fixture.componentInstance;
+      component.fight = fight;
+      fixture.detectChanges();
+      html = fixture.debugElement.nativeElement;
+    });
 
-//     it("should display form for adding new points", () => {
-//       expect(html.querySelector('#add-point-form')).toBeTruthy();
-//     });
-//   });
-// });
+    it("should display form for adding new points", () => {
+      expect(html.querySelector('#add-point-form')).toBeTruthy();
+    });
+  });
+});

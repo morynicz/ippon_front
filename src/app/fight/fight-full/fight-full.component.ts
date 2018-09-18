@@ -22,12 +22,9 @@ export class FightFullComponent implements OnInit {
   constructor(
     private playerService: PlayerService,
     private pointService: PointService,
-    private fightService: FightService) {
-    console.log("fight con");
-  }
+    private fightService: FightService) { }
 
   ngOnInit() {
-    console.log("fight init");
     if (this.fight != undefined) {
       this.playerService.getPlayer(this.fight.akaId).subscribe(resp => this.akaPlayer = resp);
       this.playerService.getPlayer(this.fight.shiroId).subscribe(resp => this.shiroPlayer = resp);

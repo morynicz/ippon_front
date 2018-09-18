@@ -14,9 +14,9 @@ export class TestingGroundsComponent implements OnInit {
     this.fight = {
       id: 1,
       points: [],
-      akaId: 1,
-      shiroId: 2,
-      teamFightId: 33,
+      akaId: 6,
+      shiroId: 7,
+      teamFightId: 1,
       orderingNumber: 0
     };
     console.log("tg con");
