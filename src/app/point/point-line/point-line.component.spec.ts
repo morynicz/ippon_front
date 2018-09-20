@@ -35,7 +35,6 @@ const fightId = 44;
 describe('PointLineComponent', () => {
   let component: PointLineComponent;
   let fixture: ComponentFixture<PointLineComponent>;
-  let html;
   let pipe: PointTypePipe;
   let pointService: PointServiceSpy;
 
@@ -62,32 +61,32 @@ describe('PointLineComponent', () => {
   });
 
   it("shows aka point on the aka point side", () => {
-    const point = {
+    const point: Point = {
       id: 0,
-      fightId: fightId,
-      playerId: akaPlayer.id,
+      fight: fightId,
+      player: akaPlayer.id,
       type: PointType.Men
     };
     component.point = point;
     fixture.detectChanges();
     let akaPointSide = fixture.debugElement.query(By.css("#aka-point"));
     let shiroPointSide = fixture.debugElement.query(By.css("#shiro-point"));
-    expect(akaPointSide.nativeElement.textContent).toContain(pipe.transform(PointType.Men));
+    expect(akaPointSide.nativeElement.textContent).toContain(pipe.transform(point.type));
     expect(shiroPointSide.nativeElement.textContent).toEqual("");
   });
 
   it("shows shiro point on the shiro point side", () => {
-    const point = {
+    const point: Point = {
       id: 0,
-      fightId: fightId,
-      playerId: shiroPlayer.id,
+      fight: fightId,
+      player: shiroPlayer.id,
       type: PointType.Foul
     };
     component.point = point;
     fixture.detectChanges();
     let akaPointSide = fixture.debugElement.query(By.css("#aka-point"));
     let shiroPointSide = fixture.debugElement.query(By.css("#shiro-point"));
-    expect(shiroPointSide.nativeElement.textContent).toContain(pipe.transform(PointType.Foul));
+    expect(shiroPointSide.nativeElement.textContent).toContain(pipe.transform(point.type));
     expect(akaPointSide.nativeElement.textContent).toEqual("");
   });
 
@@ -99,8 +98,8 @@ describe('PointLineComponent', () => {
     beforeEach(async(() => {
       point = {
         id: 0,
-        fightId: fightId,
-        playerId: shiroPlayer.id,
+        fight: fightId,
+        player: shiroPlayer.id,
         type: PointType.Foul
       };
       reloadRequested = false;

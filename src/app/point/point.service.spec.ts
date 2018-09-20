@@ -31,8 +31,8 @@ describe('PointService', () => {
   const pointUrl: string = IPPON_HOST + POINTS_ENDPOINT;
 
   let point: Point = {
-    playerId: playerId,
-    fightId: fightId,
+    player: playerId,
+    fight: fightId,
     type: PointType.Men,
     id: pointId
   }
@@ -133,8 +133,8 @@ describe('PointService', () => {
     let points: Point[] = [
       point,
       {
-        playerId: 7,
-        fightId: 8,
+        player: 7,
+        fight: 8,
         type: PointType.Kote,
         id: 12
       }];

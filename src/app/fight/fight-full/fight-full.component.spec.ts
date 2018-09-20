@@ -1,7 +1,4 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { By } from '@angular/platform-browser';
-import { ActivatedRoute, convertToParamMap, ParamMap } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
 import { Observable } from 'rxjs/Observable';
@@ -24,8 +21,6 @@ import { PointService } from '../../point/point.service';
 import { PointServiceSpy } from '../../point/point.service.spy';
 import { Point, PointType } from '../../point/point';
 
-import { AuthorizationService } from '../../authorization/authorization.service';
-import { Authorization } from "../../authorization/Authorization";
 
 const fightId: number = 4;
 
@@ -51,14 +46,14 @@ const shiroPlayer: Player = {
 
 const points: Point[] = [
   {
-    playerId: akaPlayer.id,
-    fightId: fightId,
+    player: akaPlayer.id,
+    fight: fightId,
     type: PointType.Foul,
     id: 9
   },
   {
-    playerId: shiroPlayer.id,
-    fightId: fightId,
+    player: shiroPlayer.id,
+    fight: fightId,
     type: PointType.Other,
     id: 10
   }
@@ -175,7 +170,7 @@ describe('FightFullComponent', () => {
       expect(html.textContent).toContain(pipe.transform(PointType.Other));
       expect(html.textContent).toContain(pipe.transform(PointType.Other));
     });
-    it("should display form for adding new points", () => {
+    it("should not display form for adding new points", () => {
       expect(html.querySelector('#add-point-form')).toBeFalsy();
     });
   });
@@ -193,5 +188,15 @@ describe('FightFullComponent', () => {
     it("should display form for adding new points", () => {
       expect(html.querySelector('#add-point-form')).toBeTruthy();
     });
+
+    describe("when reloadPoints() method is called", () => {
+      beforeEach(() => {
+        component.reload();
+      });
+      it("loads points again", () => {
+        expect(pointService.getListValue.length).toBe(2);
+        expect(pointService.getListValue[1]).toBe(fightId);
+      });
+    })
   });
 });

@@ -2,8 +2,6 @@
   <div class="col-md-1">
     {{akaPlayer.name}} {{akaPlayer.surname}}
   </div>
-</div>
-<div class="row">
   <div class="col-md-1">
     {{shiroPlayer.name}} {{shiroPlayer.surname}}
   </div>
@@ -20,4 +18,3 @@
   <ippon-point-form id="add-point-form" [akaPlayer]="akaPlayer" [shiroPlayer]="shiroPlayer" [fightId]="fight.id"
     (reloadRequest)="reload()"></ippon-point-form>
 </div>
-{{fight|json}}

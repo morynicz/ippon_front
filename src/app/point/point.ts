@@ -9,8 +9,8 @@ export enum PointType {
 }
 
 export class Point {
-  playerId: number;
-  fightId: number;
+  player: number;
+  fight: number;
   type: PointType;
   id: number;
 }

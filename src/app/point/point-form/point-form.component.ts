@@ -32,8 +32,8 @@ export class PointFormComponent implements OnInit {
   addPoint(player: Player): void {
     let point: Point = {
       type: this.pointType,
-      playerId: player.id,
-      fightId: this.fightId,
+      player: player.id,
+      fight: this.fightId,
       id: 0
     }
     this.pointService.add(point).subscribe(() => {

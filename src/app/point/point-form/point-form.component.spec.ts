@@ -105,8 +105,8 @@ describe('PointFormComponent', () => {
       beforeEach(async(() => {
         akaPoint = {
           id: 0,
-          fightId: fightId,
-          playerId: akaPlayer.id,
+          fight: fightId,
+          player: akaPlayer.id,
           type: PointType.Men
         };
         reloadRequested = false;
@@ -142,8 +142,8 @@ describe('PointFormComponent', () => {
       beforeEach(async(() => {
         shiroPoint = {
           id: 0,
-          fightId: fightId,
-          playerId: shiroPlayer.id,
+          fight: fightId,
+          player: shiroPlayer.id,
           type: PointType.Foul
         };
         reloadRequested = false;

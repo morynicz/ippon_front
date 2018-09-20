@@ -1,14 +1,14 @@
 <div class="row">
   <div class="col-md-1" id="aka-point">
-    <div *ngIf="point.playerId == akaPlayer.id">
+    <div *ngIf="point.player == akaPlayer.id">
       {{point.type | pointType}}
     </div>
   </div>
   <div class="col-md-1" id="shiro-point">
-    <div *ngIf="point.playerId == shiroPlayer.id">
+    <div *ngIf="point.player == shiroPlayer.id">
       {{point.type | pointType}}
     </div>
   </div>
-  <button class="btn btn-primary" id="delete-point" (click)="deletePoint()" i18n>
-Delete</button>
+  <button class="col-md-1 btn btn-warning" id="delete-point" (click)="deletePoint()" i18n>
+    Delete</button>
 </div>
