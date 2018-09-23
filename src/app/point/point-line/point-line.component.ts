@@ -14,6 +14,7 @@ export class PointLineComponent implements OnInit {
   @Input() shiroPlayer: Player;
   @Input() point: Point;
   @Output() reloadRequest = new EventEmitter<any>();
+  @Input() isAuthorized: boolean;
 
   constructor(private pointService: PointService) { }
 

@@ -58,6 +58,7 @@ describe('PointLineComponent', () => {
     pipe = new PointTypePipe();
     component.akaPlayer = akaPlayer;
     component.shiroPlayer = shiroPlayer;
+    component.isAuthorized = false;
   });
 
   it("shows aka point on the aka point side", () => {
@@ -90,6 +91,11 @@ describe('PointLineComponent', () => {
     expect(akaPointSide.nativeElement.textContent).toEqual("");
   });
 
+  it('does not show delete button when user not authorized', () => {
+    const html = fixture.debugElement.nativeElement;
+    expect(html.querySelector('#delete-point')).toBeFalsy();
+  });
+
   describe("when delete button is clicked", () => {
     let btn;
     let reloadRequested: boolean;
@@ -107,6 +113,8 @@ describe('PointLineComponent', () => {
       component.reloadRequest.subscribe(req => {
         reloadRequested = true;
       });
+      component.isAuthorized = true;
+      fixture.detectChanges();
       btn = fixture.debugElement.query(By.css("#delete-point"));
       btn.nativeElement.click();
 

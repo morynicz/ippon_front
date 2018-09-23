@@ -9,7 +9,7 @@
 <div class="row">
   <ul class="list-unstyled">
     <li *ngFor="let point of points">
-      <ippon-point-line [akaPlayer]="akaPlayer" [shiroPlayer]="shiroPlayer" [point]="point" (reloadRequest)="reload">
+      <ippon-point-line [akaPlayer]="akaPlayer" [shiroPlayer]="shiroPlayer" [point]="point" (reloadRequest)="reload()">
       </ippon-point-line>
     </li>
   </ul>

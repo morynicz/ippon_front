@@ -9,6 +9,8 @@
       {{point.type | pointType}}
     </div>
   </div>
-  <button class="col-md-1 btn btn-warning" id="delete-point" (click)="deletePoint()" i18n>
-    Delete</button>
+  <div class="col-md-1" *ngIf="isAuthorized">
+    <button class="col-md-1 btn btn-warning" id="delete-point" (click)="deletePoint()" i18n>
+      Delete</button>
+  </div>
 </div>
