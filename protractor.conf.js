@@ -9,7 +9,18 @@ exports.config = {
     './e2e/**/*.e2e-spec.ts'
   ],
   capabilities: {
-    'browserName': 'chrome'
+    'browserName': 'chrome',
+    chromeOptions: {
+      args: [
+        '--disable-infobars'
+      ],
+      prefs: {
+        // disable chrome's annoying password manager
+        'profile.password_manager_enabled': false,
+        'credentials_enable_service': false,
+        'password_manager_enabled': false
+      }
+    }
   },
   directConnect: true,
   baseUrl: 'http://localhost:4200/',
@@ -17,7 +28,7 @@ exports.config = {
   jasmineNodeOpts: {
     showColors: true,
     defaultTimeoutInterval: 30000,
-    print: function() {}
+    print: function () { }
   },
   onPrepare() {
     require('ts-node').register({
