@@ -1,0 +1,27 @@
+<div>
+  <form class="form-horizontal" role="form" class="edit-user" name="fight-form" #fightForm="ngForm">
+    <div class="form-group">
+      <label for="shiro-player" class="col-md-3 control-label" i18n>Shiro player</label>
+      <div class="col-md-3">
+        <select id="shiro-player-select" [(ngModel)]="fight.shiro" name="shiro-player">
+          <option *ngFor="let player of shiroPlayers" [ngValue]="player.id">
+            <ippon-player-line [player]="player"></ippon-player-line>
+          </option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="aka-player" class="col-md-3 control-label" i18n>Aka player</label>
+        <div class="col-md-3">
+          <select id="aka-player-select" [(ngModel)]="fight.aka" name="aka-player">
+            <option *ngFor="let player of akaPlayers" [ngValue]="player.id">
+              <ippon-player-line [player]="player"></ippon-player-line>
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 text-right">
+      <button class="btn btn-primary" (click)="save()" id="save-fight" i18n>Create</button>
+    </div>
+  </form>
+</div>

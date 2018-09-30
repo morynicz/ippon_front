@@ -50,6 +50,7 @@ import { PointTypePipe } from './point/point-type.pipe';
 import { PointLineComponent } from './point/point-line/point-line.component';
 import { TestingGroundsComponent } from './testing-grounds/testing-grounds.component';
 import { FightService } from './fight/fight.service';
+import { FightFormComponent } from './fight/fight-form/fight-form.component';
 
 @NgModule({
   imports: [
@@ -88,7 +89,8 @@ import { FightService } from './fight/fight.service';
     FightFullComponent,
     PointTypePipe,
     PointLineComponent,
-    TestingGroundsComponent
+    TestingGroundsComponent,
+    FightFormComponent
   ],
   providers: [
     PlayerService,
