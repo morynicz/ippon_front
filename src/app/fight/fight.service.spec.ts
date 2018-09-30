@@ -17,9 +17,9 @@ const fightsUrl = IPPON_HOST + FIGHTS_ENDPOINT;
 const fight: Fight = {
   id: 3,
   points: [],
-  akaId: 5,
-  shiroId: 7,
-  teamFightId: 33,
+  aka: 5,
+  shiro: 7,
+  team_fight: 33,
   orderingNumber: 0
 }
 

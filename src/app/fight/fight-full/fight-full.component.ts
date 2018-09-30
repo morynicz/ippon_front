@@ -5,6 +5,7 @@ import { PointService } from '../../point/point.service';
 import { Point } from '../../point/point';
 import { Fight } from '../fight';
 import { FightService } from '../fight.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'ippon-fight-full',
@@ -12,7 +13,7 @@ import { FightService } from '../fight.service';
   styleUrls: ['./fight-full.component.css']
 })
 export class FightFullComponent implements OnInit {
-  @Input() fight: Fight;
+  fight: Fight;
   akaPlayer: Player;
   shiroPlayer: Player;
   points: Point[];
@@ -20,16 +21,23 @@ export class FightFullComponent implements OnInit {
   constructor(
     private playerService: PlayerService,
     private pointService: PointService,
-    private fightService: FightService) { }
+    private fightService: FightService,
+    private route: ActivatedRoute) { }
 
   ngOnInit() {
-    if (this.fight != undefined) {
-      this.playerService.getPlayer(this.fight.akaId).subscribe(resp => this.akaPlayer = resp);
-      this.playerService.getPlayer(this.fight.shiroId).subscribe(resp => this.shiroPlayer = resp);
-      this.loadPoints();
-    }
+    const id = +this.route.snapshot.paramMap.get('id');
+    this.fightService.get(id).subscribe(response => {
+      this.fight = response;
+      this.loadPointsAndPlayers();
+    });
     this.isAdmin = false;
     this.fightService.isAuthorized(this.fight.id).subscribe(isAuthorized => this.isAdmin = isAuthorized);
+  }
+
+  private loadPointsAndPlayers() {
+    this.playerService.getPlayer(this.fight.aka).subscribe(resp => this.akaPlayer = resp);
+    this.playerService.getPlayer(this.fight.shiro).subscribe(resp => this.shiroPlayer = resp);
+    this.loadPoints();
   }
 
   private loadPoints() {

@@ -20,6 +20,7 @@ import { PointTypePipe } from '../../point/point-type.pipe';
 import { PointService } from '../../point/point.service';
 import { PointServiceSpy } from '../../point/point.service.spy';
 import { Point, PointType } from '../../point/point';
+import { ActivatedRoute, convertToParamMap } from '@angular/router';
 
 
 const fightId: number = 4;
@@ -62,9 +63,9 @@ const points: Point[] = [
 const fight: Fight = {
   id: fightId,
   points: [],
-  akaId: akaPlayer.id,
-  shiroId: shiroPlayer.id,
-  teamFightId: 33,
+  aka: akaPlayer.id,
+  shiro: shiroPlayer.id,
+  team_fight: 33,
   orderingNumber: 0
 }
 
@@ -108,6 +109,7 @@ describe('FightFullComponent', () => {
     pointService.getListReturnValue = points;
     authorizationService = new AuthorizationServiceSpy();
     authorizationService.isTournamentAdminResult = false;
+    fightService.getReturnValue = fight;
     TestBed.configureTestingModule({
       declarations: [
         FightFullComponent,
@@ -127,6 +129,13 @@ describe('FightFullComponent', () => {
         {
           provide: PointService,
           useValue: pointService
+        },
+        {
+          provide: ActivatedRoute, useValue: {
+            snapshot: {
+              paramMap: convertToParamMap({ id: fightId })
+            }
+          }
         }
       ],
       imports: [FormsModule]
@@ -138,9 +147,12 @@ describe('FightFullComponent', () => {
     beforeEach(() => {
       fixture = TestBed.createComponent(FightFullComponent);
       component = fixture.componentInstance;
-      component.fight = fight;
       fixture.detectChanges();
       html = fixture.debugElement.nativeElement;
+    });
+
+    it("should call fightService to get the fight", () => {
+      expect(fightService.getValue).toBe(fightId);
     });
 
     it("should call points service to get points for it's fight", () => {

@@ -1,6 +1,6 @@
 export class TeamFight {
   id: number;
-  tournamentId: number;
-  akaTeamId: number;
-  shiroTeamId: number;
+  tournament: number;
+  aka_team: number;
+  shiro_team: number;
 }
