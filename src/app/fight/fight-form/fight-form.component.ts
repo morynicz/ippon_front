@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Player } from '../../player/player';
 import { Fight } from '../fight';
 import { FightService } from '../fight.service';
@@ -13,6 +13,7 @@ export class FightFormComponent implements OnInit {
   @Input() shiroPlayers: Player[];
   @Input() akaPlayers: Player[];
   @Input() teamFight: number;
+  @Output() reloadRequest = new EventEmitter<any>();
   fight: Fight;
   constructor(private fightService: FightService) { }
 
@@ -29,7 +30,9 @@ export class FightFormComponent implements OnInit {
 
   save(): void {
     this.fillFight();
-    this.fightService.add(this.fight).subscribe();
+    this.fightService.add(this.fight).subscribe(resp => {
+      this.reloadRequest.emit('');
+    });
   }
 
 }

@@ -91,9 +91,11 @@ describe('FightFormComponent', () => {
   let component: FightFormComponent;
   let fixture: ComponentFixture<FightFormComponent>;
   let fightService: FightServiceSpy;
+  let reloadRequested: boolean;
 
   beforeEach(async(() => {
     fightService = new FightServiceSpy();
+    reloadRequested = false;
     TestBed.configureTestingModule({
       declarations: [
         FightFormComponent,
@@ -117,6 +119,9 @@ describe('FightFormComponent', () => {
     component.shiroPlayers = shiroPlayers;
     component.akaPlayers = akaPlayers;
     component.teamFight = teamFight.id;
+    component.reloadRequest.subscribe(req => {
+      reloadRequested = true;
+    });
     fixture.detectChanges();
   });
 
@@ -163,6 +168,10 @@ describe('FightFormComponent', () => {
 
     it("should create a fight with set players and teamFight id", () => {
       expectFightsToEqual(expectedFight, fightService.addValue);
+    });
+
+    it("should call reload callback", () => {
+      expect(reloadRequested).toBeTruthy();
     });
   });
 
