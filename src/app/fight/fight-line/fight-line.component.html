@@ -1,0 +1,16 @@
+<div class="row">
+  <a class="col-md-5" routerLink="/fight/{{fight.id}}">
+    <div class="col-md-3" id="aka-player">
+      <div class="col-md-1">
+        {{akaPlayer.name}} {{akaPlayer.surname}}
+      </div>
+      <div class="col-sm-1" *ngFor="let point of akaPoints">{{point.type|pointType}}</div>
+    </div>
+    <div class="col-md-3" id="shiro-player">
+      <div class="col-md-1">
+        {{shiroPlayer.name}} {{shiroPlayer.surname}}
+      </div>
+      <div class="col-sm-1" *ngFor="let point of shiroPoints">{{point.type|pointType}}</div>
+    </div>
+  </a>
+</div>
