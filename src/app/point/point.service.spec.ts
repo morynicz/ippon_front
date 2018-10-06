@@ -180,6 +180,4 @@ describe('PointService', () => {
           req.flush(points);
         }));
   });
-
-
 });
