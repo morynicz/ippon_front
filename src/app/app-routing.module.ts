@@ -21,6 +21,7 @@ import { TournamentAdminListComponent } from './tournament/tournament-admin-list
 import { LoginFormComponent } from './authorization/login-form/login-form.component';
 import { TestingGroundsComponent } from './testing-grounds/testing-grounds.component';
 import { FightFullComponent } from './fight/fight-full/fight-full.component';
+import { TeamFightFullComponent } from './team-fight/team-fight-full/team-fight-full.component';
 
 
 const routes: Routes = [
@@ -43,6 +44,7 @@ const routes: Routes = [
   { path: 'tournaments', component: TournamentListComponent },
   { path: 'login', component: LoginFormComponent },
   { path: 'fights/:id', component: FightFullComponent },
+  { path: 'team-fights/:id', component: TeamFightFullComponent },
   { path: 'test', component: TestingGroundsComponent }
 ]
 

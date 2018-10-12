@@ -52,6 +52,9 @@ import { TestingGroundsComponent } from './testing-grounds/testing-grounds.compo
 import { FightService } from './fight/fight.service';
 import { FightFormComponent } from './fight/fight-form/fight-form.component';
 import { FightLineComponent } from './fight/fight-line/fight-line.component';
+import { TeamFightFullComponent } from './team-fight/team-fight-full/team-fight-full.component';
+import { TeamFightService } from './team-fight/team-fight.service';
+import { TeamService } from './team/team.service';
 
 @NgModule({
   imports: [
@@ -92,7 +95,8 @@ import { FightLineComponent } from './fight/fight-line/fight-line.component';
     PointLineComponent,
     TestingGroundsComponent,
     FightFormComponent,
-    FightLineComponent
+    FightLineComponent,
+    TeamFightFullComponent
   ],
   providers: [
     PlayerService,
@@ -107,7 +111,9 @@ import { FightLineComponent } from './fight/fight-line/fight-line.component';
     TournamentParticipantService,
     TournamentAdminService,
     PointService,
-    FightService
+    FightService,
+    TeamFightService,
+    TeamService
   ],
   bootstrap: [AppComponent]
 })

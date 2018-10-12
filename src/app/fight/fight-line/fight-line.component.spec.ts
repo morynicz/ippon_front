@@ -151,6 +151,6 @@ describe('FightLineComponent', () => {
   it('should provide link to the fight', () => {
     const link = fixture.debugElement.query(By.css('a'));
     expect(link.nativeElement.getAttribute('ng-reflect-router-link'))
-      .toBe('/fight/' + fight.id);
+      .toBe('/fights/' + fight.id);
   })
 });

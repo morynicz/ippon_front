@@ -17,7 +17,7 @@ export class CrudfService<Resource extends Identifiable> {
     return `${this.url}${id}/`;
   }
   constructor(
-    private http: HttpClient,
+    protected http: HttpClient,
     private url: string,
     private filterUrlPrefix: string,
     private filterUrlSuffix: string) {

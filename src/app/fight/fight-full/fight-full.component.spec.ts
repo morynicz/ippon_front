@@ -109,7 +109,7 @@ describe('FightFullComponent', () => {
     pointService.getListReturnValue = points;
     authorizationService = new AuthorizationServiceSpy();
     authorizationService.isTournamentAdminResult = false;
-    fightService.getReturnValue = fight;
+    fightService.getReturnValues.push(fight);
     TestBed.configureTestingModule({
       declarations: [
         FightFullComponent,
@@ -152,7 +152,7 @@ describe('FightFullComponent', () => {
     });
 
     it("should call fightService to get the fight", () => {
-      expect(fightService.getValue).toBe(fightId);
+      expect(fightService.getValues).toContain(fightId);
     });
 
     it("should call points service to get points for it's fight", () => {

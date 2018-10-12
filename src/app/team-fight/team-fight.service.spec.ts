@@ -2,10 +2,11 @@ import { TestBed, inject } from '@angular/core/testing';
 
 import { TeamFightService } from './team-fight.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { 
+import {
   IPPON_HOST,
   TEAM_FIGHTS_ENDPOINT,
-  TOURNAMENTS_ENDPOINT
+  TOURNAMENTS_ENDPOINT,
+  AUTHORIZATION_ENDPOINT
 } from '../rest-api';
 import { TeamFight } from './team-fight';
 import { Player } from '../player/player';
@@ -229,4 +230,37 @@ describe('TeamFightService', () => {
           req.flush(teamFights);
         }));
   });
+
+  describe("when isAuthorized is called", () => {
+    let fightAuthUrl = IPPON_HOST + AUTHORIZATION_ENDPOINT + TEAM_FIGHTS_ENDPOINT + `${teamFight.id}/`;
+    it("calls the fights api url",
+      inject(
+        [TeamFightService, HttpTestingController],
+        (service: TeamFightService,
+          backend: HttpTestingController) => {
+          service.isAuthorized(teamFight.id).subscribe();
+          const req = backend.expectOne(fightAuthUrl);
+        }));
+    it("uses isAuthorized method",
+      inject(
+        [TeamFightService, HttpTestingController],
+        (service: TeamFightService,
+          backend: HttpTestingController) => {
+          service.isAuthorized(teamFight.id).subscribe();
+          const req = backend.expectOne(fightAuthUrl);
+          expect(req.request.method).toBe('GET');
+        }));
+    it("responds with requested fight",
+      inject(
+        [TeamFightService, HttpTestingController],
+        (service: TeamFightService,
+          backend: HttpTestingController) => {
+          service.isAuthorized(teamFight.id)
+            .subscribe(response => expect(response)
+              .toBe(true));
+          const req = backend.expectOne(fightAuthUrl);
+          req.flush({ "isAuthorized": true });
+        }));
+  })
+
 });
