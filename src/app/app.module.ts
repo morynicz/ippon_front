@@ -56,6 +56,7 @@ import { TeamFightFullComponent } from './team-fight/team-fight-full/team-fight-
 import { TeamFightService } from './team-fight/team-fight.service';
 import { TeamService } from './team/team.service';
 import { TeamMemberService } from './team/team-member.service';
+import { TeamLineComponent } from './team/team-line/team-line.component';
 
 @NgModule({
   imports: [
@@ -97,7 +98,8 @@ import { TeamMemberService } from './team/team-member.service';
     TestingGroundsComponent,
     FightFormComponent,
     FightLineComponent,
-    TeamFightFullComponent
+    TeamFightFullComponent,
+    TeamLineComponent
   ],
   providers: [
     PlayerService,
