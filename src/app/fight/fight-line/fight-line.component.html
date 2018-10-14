@@ -1,16 +1,16 @@
-<div class="row">
-  <a class="col-md-5" routerLink="/fights/{{fight.id}}">
-    <div class="col-md-3" id="aka-player">
-      <div class="col-md-1">
+<div class="col-md-9">
+  <a class="col-md-8" routerLink="/fights/{{fight.id}}">
+    <div class="col-md-4" id="aka-player">
+      <div class="col-md-2">
         {{akaPlayer.name}} {{akaPlayer.surname}}
       </div>
-      <div class="col-sm-1" *ngFor="let point of akaPoints">{{point.type|pointType}}</div>
+      <div class="col-sm-2" *ngFor="let point of akaPoints">{{point.type|pointType}}</div>
     </div>
-    <div class="col-md-3" id="shiro-player">
-      <div class="col-md-1">
+    <div class="col-md-4" id="shiro-player">
+      <div class="col-sm-2" *ngFor="let point of shiroPoints">{{point.type|pointType}}</div>
+      <div class="col-md-2">
         {{shiroPlayer.name}} {{shiroPlayer.surname}}
       </div>
-      <div class="col-sm-1" *ngFor="let point of shiroPoints">{{point.type|pointType}}</div>
     </div>
   </a>
   <div class="col-md-1" *ngIf="isAuthorized">

@@ -24,6 +24,8 @@ import { Observable, of } from 'rxjs';
 import { FightFormComponent } from '../../fight/fight-form/fight-form.component';
 import { FormsModule } from '@angular/forms';
 import { PlayerLineComponent } from '../../player/player-line/player-line.component';
+import { TeamMemberServiceSpy } from '../../team/team-member.service.spy';
+import { TeamMemberService } from '../../team/team-member.service';
 
 const teamFightId: number = 13;
 const akaTeamId: number = 15;
@@ -140,6 +142,7 @@ describe('TeamFightFullComponent', () => {
   let teamFightService: TeamFightServiceSpy;
   let fightService: FightServiceSpy;
   let playerService: PlayerServiceSpy;
+  let teamMemberService: TeamMemberServiceSpy;
   let html;
 
   beforeEach(async(() => {
@@ -155,6 +158,9 @@ describe('TeamFightFullComponent', () => {
     playerService.getReturnValues.push(shiroPlayers[0]);
     playerService.getReturnValues.push(akaPlayers[1]);
     playerService.getReturnValues.push(shiroPlayers[1]);
+    teamMemberService = new TeamMemberServiceSpy();
+    teamMemberService.getListReturnValue.push(akaPlayers);
+    teamMemberService.getListReturnValue.push(shiroPlayers);
     TestBed.configureTestingModule({
       declarations: [
         TeamFightFullComponent,
@@ -175,7 +181,8 @@ describe('TeamFightFullComponent', () => {
           }
         },
         { provide: PointService, useClass: PointServiceSpy },
-        { provide: PlayerService, useValue: playerService }
+        { provide: PlayerService, useValue: playerService },
+        { provide: TeamMemberService, useValue: teamMemberService }
       ],
       imports: [
         RouterTestingModule,
@@ -206,6 +213,11 @@ describe('TeamFightFullComponent', () => {
 
     it("should call fightService to get the fights", () => {
       expect(fightService.getListValue).toContain(teamFightId);
+    });
+
+    it("should call teamMembersService to get teammembers of both teams", () => {
+      expect(teamMemberService.getListValues).toContain(akaTeamId);
+      expect(teamMemberService.getListValues).toContain(shiroTeamId);
     });
 
     it("should show team names", () => {
@@ -247,14 +259,14 @@ describe('TeamFightFullComponent', () => {
       expect(html.querySelector('#add-fight-form')).toBeTruthy();
     });
 
-    describe("when reloadPoints() method is called", () => {
+    describe("when reloadFights() method is called", () => {
       beforeEach(() => {
         component.reload();
       });
-      it("loads points again", () => {
+      it("loads fights again", () => {
         expect(fightService.getListValue.length).toBe(2);
         expect(fightService.getListValue[1]).toBe(teamFightId);
       });
-    })
+    });
   });
 });

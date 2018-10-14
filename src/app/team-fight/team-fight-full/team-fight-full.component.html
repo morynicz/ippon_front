@@ -1,20 +1,18 @@
 <div class="row">
-  <div class="col-md-1">
+  <div class="col-md-4">
     {{akaTeam.name}}
   </div>
-  <div class="col-md-1">
+  <div class="col-md-4">
     {{shiroTeam.name}}
   </div>
 </div>
-<div class="row">
-  <ul class="list-unstyled">
-    <li *ngFor="let fight of fights">
-      <ippon-fight-line [fight]="fight">
-      </ippon-fight-line>
-    </li>
-  </ul>
-</div>
+<ul class="list-unstyled">
+  <li *ngFor="let fight of fights">
+    <ippon-fight-line [fight]="fight" [isAuthorized]="isAdmin" (reloadRequest)="reload()">
+    </ippon-fight-line>
+  </li>
+</ul>
 <div *ngIf="isAdmin == true">
-  <ippon-fight-form id="add-fight-form" [akaPlayers]="akaTeam.members" [shiroPlayers]="shiroTeam.members" [teamFight]="teamFight.id"
+  <ippon-fight-form id="add-fight-form" [akaPlayers]="akaTeamMembers" [shiroPlayers]="shiroTeamMembers" [teamFight]="teamFight.id"
     (reloadRequest)="reload()"></ippon-fight-form>
 </div>

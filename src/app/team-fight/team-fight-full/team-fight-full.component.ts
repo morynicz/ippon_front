@@ -6,6 +6,8 @@ import { TeamFight } from '../team-fight';
 import { Team } from '../../team/team';
 import { FightService } from '../../fight/fight.service';
 import { Fight } from '../../fight/fight';
+import { TeamMemberService } from '../../team/team-member.service';
+import { Player } from '../../player/player';
 
 @Component({
   selector: 'ippon-team-fight-full',
@@ -19,10 +21,14 @@ export class TeamFightFullComponent implements OnInit {
   fights: Fight[];
   isAdmin: boolean;
 
+  akaTeamMembers: Player[];
+  shiroTeamMembers: Player[];
+
   constructor(private route: ActivatedRoute,
     private teamService: TeamService,
     private teamfightService: TeamFightService,
-    private fightService: FightService) { }
+    private fightService: FightService,
+    private teamMemberService: TeamMemberService) { }
 
   ngOnInit() {
     this.isAdmin = false;
@@ -31,6 +37,8 @@ export class TeamFightFullComponent implements OnInit {
       this.teamFight = response;
       this.teamService.get(this.teamFight.aka_team).subscribe(response => this.akaTeam = response);
       this.teamService.get(this.teamFight.shiro_team).subscribe(response => this.shiroTeam = response);
+      this.teamMemberService.getList(this.teamFight.aka_team).subscribe(response => this.akaTeamMembers = response);
+      this.teamMemberService.getList(this.teamFight.shiro_team).subscribe(response => this.shiroTeamMembers = response);
       this.loadFights();
     });
     this.teamfightService.isAuthorized(id).subscribe(response => this.isAdmin = response);
