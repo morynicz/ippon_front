@@ -21,3 +21,4 @@ export const POINTS_ENDPOINT: string = "points/";
 export const FIGHTS_ENDPOINT: string = "fights/";
 export const TEAMS_ENDPOINT: string = "teams/";
 export const TEAM_FIGHTS_ENDPOINT: string = "team_fights/";
+export const MEMBERS_ENDPOINT: string = "members/";

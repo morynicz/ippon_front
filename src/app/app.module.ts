@@ -55,6 +55,7 @@ import { FightLineComponent } from './fight/fight-line/fight-line.component';
 import { TeamFightFullComponent } from './team-fight/team-fight-full/team-fight-full.component';
 import { TeamFightService } from './team-fight/team-fight.service';
 import { TeamService } from './team/team.service';
+import { TeamMemberService } from './team/team-member.service';
 
 @NgModule({
   imports: [
@@ -113,7 +114,8 @@ import { TeamService } from './team/team.service';
     PointService,
     FightService,
     TeamFightService,
-    TeamService
+    TeamService,
+    TeamMemberService
   ],
   bootstrap: [AppComponent]
 })
