@@ -1,5 +1,7 @@
-<section class="well col-md-6 col-md-offset-3">
-  <h1 class="h3" style="margin-top: 0">
-    <a class="col-md-4" routerLink="/team/{{team.id}}"> {{team.name}}</a>
-  </h1>
-</section>
+<div class="col-md-9">
+  <a class="col-md-4" routerLink="/team/{{team.id}}"> {{team.name}}</a>
+  <div class="col-md-1" *ngIf="isAuthorized">
+    <button class="col-md-1 btn btn-warning" id="delete-team" (click)="deleteTeam()" i18n>
+      Delete</button>
+  </div>
+</div>>

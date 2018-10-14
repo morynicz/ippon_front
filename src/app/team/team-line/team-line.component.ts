@@ -1,5 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { Team } from '../team';
+import { TeamService } from '../team.service';
 
 @Component({
   selector: 'ippon-team-line',
@@ -8,9 +9,15 @@ import { Team } from '../team';
 })
 export class TeamLineComponent implements OnInit {
   @Input() team: Team;
-  constructor() { }
+  @Input() isAuthorized: boolean;
+  @Output() reloadRequest = new EventEmitter<any>();
+  constructor(private teamService: TeamService) { }
 
   ngOnInit() {
   }
 
+  deleteTeam(): void {
+    this.teamService.delete(this.team).subscribe(resp => this.reloadRequest.emit(''));
+
+  }
 }
