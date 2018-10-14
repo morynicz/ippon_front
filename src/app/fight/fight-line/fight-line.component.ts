@@ -1,9 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Fight } from '../fight';
 import { PlayerService } from '../../player/player.service';
 import { PointService } from '../../point/point.service';
 import { Player } from '../../player/player';
 import { Point } from '../../point/point';
+import { FightService } from '../fight.service';
 
 @Component({
   selector: 'ippon-fight-line',
@@ -16,7 +17,13 @@ export class FightLineComponent implements OnInit {
   shiroPlayer: Player;
   akaPoints: Point[];
   shiroPoints: Point[];
-  constructor(private pointsService: PointService, private playerService: PlayerService) {
+  @Output() reloadRequest = new EventEmitter<any>();
+  @Input() isAuthorized: boolean;
+
+  constructor(
+    private pointsService: PointService,
+    private playerService: PlayerService,
+    private fightService: FightService) {
     this.akaPoints = new Array<Point>();
     this.shiroPoints = new Array<Point>();
   }
@@ -40,4 +47,7 @@ export class FightLineComponent implements OnInit {
     this.playerService.getPlayer(this.fight.shiro).subscribe(result => this.shiroPlayer = result);
   }
 
+  deleteFight(): void {
+    this.fightService.delete(this.fight).subscribe(resp => this.reloadRequest.emit(''));
+  }
 }

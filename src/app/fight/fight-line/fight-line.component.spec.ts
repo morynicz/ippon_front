@@ -13,6 +13,8 @@ import { PointService } from '../../point/point.service';
 import { Fight } from '../fight';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
+import { FightServiceSpy } from '../fight.service.spy';
+import { FightService } from '../fight.service';
 
 const fightId: number = 4;
 
@@ -75,6 +77,7 @@ describe('FightLineComponent', () => {
   let fixture: ComponentFixture<FightLineComponent>;
   let playerService: PlayerServiceSpy;
   let pointService: PointServiceSpy;
+  let fightService: FightServiceSpy;
   let html;
 
   beforeEach(async(() => {
@@ -86,7 +89,7 @@ describe('FightLineComponent', () => {
     playerService.getValues = [];
     pointService = new PointServiceSpy();
     pointService.getListReturnValue = points;
-
+    fightService = new FightServiceSpy();
     TestBed.configureTestingModule({
       declarations: [
         FightLineComponent,
@@ -101,6 +104,10 @@ describe('FightLineComponent', () => {
           provide: PointService,
           useValue: pointService
         },
+        {
+          provide: FightService,
+          useValue: fightService
+        }
       ],
       imports: [RouterTestingModule]
     })
@@ -152,5 +159,43 @@ describe('FightLineComponent', () => {
     const link = fixture.debugElement.query(By.css('a'));
     expect(link.nativeElement.getAttribute('ng-reflect-router-link'))
       .toBe('/fights/' + fight.id);
-  })
+  });
+
+  it('does not show delete button when user not authorized', () => {
+    const html = fixture.debugElement.nativeElement;
+    expect(html.querySelector('#delete-fight')).toBeFalsy();
+  });
+
+  describe("when delete button is clicked", () => {
+    let btn;
+    let reloadRequested: boolean;
+
+    beforeEach(async(() => {
+      reloadRequested = false;
+      component.fight = fight;
+      component.reloadRequest.subscribe(req => {
+        reloadRequested = true;
+      });
+      component.isAuthorized = true;
+      fixture.detectChanges();
+      btn = fixture.debugElement.query(By.css("#delete-fight"));
+      btn.nativeElement.click();
+
+    }));
+
+    it("sends to delete request for point to fight.service",
+      () => {
+        fixture.whenStable().then(() => {
+          expect(fightService.deleteValue).toEqual(fight);
+        });
+      });
+
+    it("triggers reload request in parent component", () => {
+      fixture.whenStable().then(() => {
+        expect(reloadRequested).toBe(true);
+      });
+    });
+
+  });
+
 });

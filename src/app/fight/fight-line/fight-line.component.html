@@ -13,4 +13,8 @@
       <div class="col-sm-1" *ngFor="let point of shiroPoints">{{point.type|pointType}}</div>
     </div>
   </a>
+  <div class="col-md-1" *ngIf="isAuthorized">
+    <button class="col-md-1 btn btn-warning" id="delete-fight" (click)="deleteFight()" i18n>
+      Delete</button>
+  </div>
 </div>
