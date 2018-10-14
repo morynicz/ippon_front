@@ -1,0 +1,15 @@
+<div>
+  <form class="form-horizontal" role="form" class="edit-user" name="team-form" #teamForm="ngForm">
+    <div class="form-group">
+      <label for="name" class="col-md-2 control-label col-md-offset-2" i18n>
+        Team name
+      </label>
+      <div class="col-md-5">
+        <input type="text" name="name" class="form-control" placeholder="team name" [(ngModel)]="team.name">
+      </div>
+    </div>
+  </form>
+  <div class="col-md-3 text-right">
+    <button class="btn btn-primary" (click)="save()" id="save-team" i18n>Create</button>
+  </div>
+</div>
