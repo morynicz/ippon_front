@@ -31,7 +31,7 @@ export class FightFullComponent implements OnInit {
       this.loadPointsAndPlayers();
     });
     this.isAdmin = false;
-    this.fightService.isAuthorized(this.fight.id).subscribe(isAuthorized => this.isAdmin = isAuthorized);
+    this.fightService.isAuthorized(id).subscribe(isAuthorized => this.isAdmin = isAuthorized);
   }
 
   private loadPointsAndPlayers() {

@@ -70,7 +70,7 @@ describe('FightService', () => {
           const req = backend.expectOne(fightAuthUrl);
           expect(req.request.method).toBe('GET');
         }));
-    it("responds with requested fight",
+    it("responds with requested fight authorization",
       inject(
         [FightService, HttpTestingController],
         (service: FightService,
@@ -81,5 +81,5 @@ describe('FightService', () => {
           const req = backend.expectOne(fightAuthUrl);
           req.flush({ "isAuthorized": true });
         }));
-  })
+  });
 });

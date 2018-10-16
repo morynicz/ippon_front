@@ -5,7 +5,6 @@ import { TeamServiceSpy } from '../team.service.spy';
 import { FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TeamService } from '../team.service';
-import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { By } from '@angular/platform-browser';
 import { Team } from '../team';
 
