@@ -5,7 +5,7 @@ import { Player } from '../player/player';
 import { Sex } from '../sex';
 import { Rank } from '../rank';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { IPPON_HOST, TEAMS_ENDPOINT, MEMBERS_ENDPOINT } from '../rest-api';
+import { IPPON_HOST, TEAMS_ENDPOINT, MEMBERS_ENDPOINT, NOT_ASSIGNED_ENDPOINT } from '../rest-api';
 import { TeamMember } from './team-member';
 
 const teamId: number = 14;
@@ -146,6 +146,50 @@ describe('TeamMemberService', () => {
             .subscribe(response => expect(response)
               .toBe(players));
           const req = backend.expectOne(resourcesUrl);
+          req.flush(players);
+        }));
+  });
+
+  describe("when getUnassigned is called", () => {
+    const unassignedUrl: string = IPPON_HOST + TEAMS_ENDPOINT + `${teamId}/` + NOT_ASSIGNED_ENDPOINT;
+    it("calls the resources api url",
+      inject(
+        [TeamMemberService, HttpTestingController],
+        (service: TeamMemberService,
+          backend: HttpTestingController) => {
+          service.getNotAssigned(teamId).subscribe();
+          const req = backend.expectOne(unassignedUrl);
+        }));
+    it("uses GET method",
+      inject(
+        [TeamMemberService, HttpTestingController],
+        (service: TeamMemberService,
+          backend: HttpTestingController) => {
+          service.getNotAssigned(teamId).subscribe();
+          const req = backend.expectOne(unassignedUrl);
+          expect(req.request.method).toBe('GET');
+        }));
+    it("sends request with application/json content type headers",
+      inject(
+        [TeamMemberService, HttpTestingController],
+        (service: TeamMemberService,
+          backend: HttpTestingController) => {
+          service.getNotAssigned(teamId).subscribe();
+          const req = backend.expectOne(unassignedUrl);
+          expect(req.request.headers.has('Content-Type'))
+            .toBe(true);
+          expect(req.request.headers.get('Content-Type'))
+            .toBe('application/json');
+        }));
+    it("responds with requested resources",
+      inject(
+        [TeamMemberService, HttpTestingController],
+        (service: TeamMemberService,
+          backend: HttpTestingController) => {
+          service.getNotAssigned(teamId)
+            .subscribe(response => expect(response)
+              .toBe(players));
+          const req = backend.expectOne(unassignedUrl);
           req.flush(players);
         }));
   });

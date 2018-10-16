@@ -3,7 +3,7 @@ import { TeamMember } from './team-member';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
-import { IPPON_HOST, TEAMS_ENDPOINT, MEMBERS_ENDPOINT } from '../rest-api';
+import { IPPON_HOST, TEAMS_ENDPOINT, MEMBERS_ENDPOINT, NOT_ASSIGNED_ENDPOINT } from '../rest-api';
 import { Player } from '../player/player';
 
 const httpOptions = {
@@ -29,6 +29,13 @@ export class TeamMemberService {
       this.getUrl(id), httpOptions)
       .pipe(catchError(this.handleError('getList', [])));
   }
+
+  getNotAssigned(id: number): Observable<Player[]> {
+    return this.http.get<Player[]>(
+      IPPON_HOST + TEAMS_ENDPOINT + `${id}/` + NOT_ASSIGNED_ENDPOINT, httpOptions)
+      .pipe(catchError(this.handleError('getList', [])));
+  }
+
 
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
