@@ -6,7 +6,8 @@ import { TeamService } from './team.service';
 import {
   IPPON_HOST,
   TEAMS_ENDPOINT,
-  TOURNAMENTS_ENDPOINT
+  TOURNAMENTS_ENDPOINT,
+  AUTHORIZATION_ENDPOINT
 } from '../rest-api';
 import { Player } from '../player/player';
 import { Sex } from '../sex';
@@ -189,6 +190,38 @@ describe('TeamService', () => {
               .toBe(teams));
           const req = backend.expectOne(filteredUrl);
           req.flush(teams);
+        }));
+  });
+
+  describe("when isAuthorized is called", () => {
+    let fightAuthUrl = IPPON_HOST + AUTHORIZATION_ENDPOINT + TEAMS_ENDPOINT + `${team.id}/`;
+    it("calls the teams api url",
+      inject(
+        [TeamService, HttpTestingController],
+        (service: TeamService,
+          backend: HttpTestingController) => {
+          service.isAuthorized(team.id).subscribe();
+          const req = backend.expectOne(fightAuthUrl);
+        }));
+    it("uses isAuthorized method",
+      inject(
+        [TeamService, HttpTestingController],
+        (service: TeamService,
+          backend: HttpTestingController) => {
+          service.isAuthorized(team.id).subscribe();
+          const req = backend.expectOne(fightAuthUrl);
+          expect(req.request.method).toBe('GET');
+        }));
+    it("responds with requested team authorization",
+      inject(
+        [TeamService, HttpTestingController],
+        (service: TeamService,
+          backend: HttpTestingController) => {
+          service.isAuthorized(team.id)
+            .subscribe(response => expect(response)
+              .toBe(true));
+          const req = backend.expectOne(fightAuthUrl);
+          req.flush({ "isAuthorized": true });
         }));
   });
 });
