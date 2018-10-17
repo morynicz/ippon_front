@@ -23,4 +23,10 @@ export class TeamMemberServiceSpy {
         this.addValue = resource;
         return of(this.addValue);
     }
+
+    deleteValue: TeamMember;
+    delete(resource: TeamMember): Observable<{}> {
+        this.deleteValue = resource;
+        return of({});
+    }
 }

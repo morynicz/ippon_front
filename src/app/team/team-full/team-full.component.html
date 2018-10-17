@@ -1,0 +1,32 @@
+<div class="row">
+  <div class="col-md-4">
+    {{team.name}}
+  </div>
+  <div id="members">
+    <h3 i18n>Members</h3>
+    <ul>
+      <li *ngFor="let member of members">
+        <div>
+          <ippon-player-line [player]="member"></ippon-player-line>
+          <div class="col-md-1" *ngIf="isAuthorized">
+            <button class="col-md-1 btn btn-warning" id="remove-member-{{member.id}}" (click)="removeMember(member)"
+              i18n>
+              Delete</button>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div *ngIf="isAuthorized == true">
+    <h3 i18n>Not assigned players</h3>
+    <ul>
+      <li *ngFor="let player of notAssigned">
+        <div>
+          <ippon-player-line [player]="player"></ippon-player-line>
+          <button class="col-md-1 btn btn-primary" id="add-member-{{player.id}}" (click)="addMember(player)" i18n>
+            Add</button>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
