@@ -12,22 +12,33 @@ const httpOptions = {
 
 @Injectable()
 export class TeamMemberService {
-  private getUrl(id: number): string {
+  private getTeamsUrl(id: number): string {
     return IPPON_HOST + TEAMS_ENDPOINT + `${id}/` + MEMBERS_ENDPOINT;
+  }
+
+  private getMemberUrl(teamMember: TeamMember): string {
+    return this.getTeamsUrl(teamMember.team) + `${teamMember.player}/`;
   }
 
   constructor(
     protected http: HttpClient
   ) { }
-  add(resource: TeamMember): Observable<TeamMember> {
-    return this.http.post(this.getUrl(resource.team), resource, httpOptions)
+  add(resource: TeamMember): Observable<{}> {
+    return this.http.post(this.getMemberUrl(resource), {}, httpOptions)
       .pipe(catchError(this.handleError<any>('add id=${resource.id}')));
   }
 
   getList(id: number): Observable<Player[]> {
     return this.http.get<Player[]>(
-      this.getUrl(id), httpOptions)
+      this.getTeamsUrl(id), httpOptions)
       .pipe(catchError(this.handleError('getList', [])));
+  }
+
+  delete(resource: TeamMember): Observable<{}> {
+    return this.http.delete<{}>(this.getMemberUrl(resource), httpOptions)
+      .pipe(
+        catchError(this.handleError<{}>('delete id=${resource}'))
+      );
   }
 
   getNotAssigned(id: number): Observable<Player[]> {

@@ -32,6 +32,11 @@ const players: Player[] = [{
 
 const memberId: number = 17;
 
+const resource: TeamMember = {
+  'team': teamId,
+  'player': memberId
+};
+
 describe('TeamMemberService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -40,6 +45,7 @@ describe('TeamMemberService', () => {
   });
 
   const resourcesUrl: string = IPPON_HOST + TEAMS_ENDPOINT + `${teamId}/` + MEMBERS_ENDPOINT;
+  const resourceUrl: string = resourcesUrl + `${memberId}/`;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -53,17 +59,13 @@ describe('TeamMemberService', () => {
   }));
 
   describe("when add is called", () => {
-    let resource: TeamMember = {
-      'team': teamId,
-      'player': memberId
-    };
     it("calls the resources api url",
       inject(
         [TeamMemberService, HttpTestingController],
         (service: TeamMemberService,
           backend: HttpTestingController) => {
           service.add(resource).subscribe();
-          const req = backend.expectOne(resourcesUrl);
+          const req = backend.expectOne(resourceUrl);
         }));
     it("uses POST method",
       inject(
@@ -71,7 +73,7 @@ describe('TeamMemberService', () => {
         (service: TeamMemberService,
           backend: HttpTestingController) => {
           service.add(resource).subscribe();
-          const req = backend.expectOne(resourcesUrl);
+          const req = backend.expectOne(resourceUrl);
           expect(req.request.method).toBe('POST');
         }));
     it("sends request with application/json content type headers",
@@ -80,30 +82,21 @@ describe('TeamMemberService', () => {
         (service: TeamMemberService,
           backend: HttpTestingController) => {
           service.add(resource).subscribe();
-          const req = backend.expectOne(resourcesUrl);
+          const req = backend.expectOne(resourceUrl);
           expect(req.request.headers.has('Content-Type'))
             .toBe(true);
           expect(req.request.headers.get('Content-Type'))
             .toBe('application/json');
         }));
-    it("responds with newly added resource",
+    it("sends empty body",
       inject(
         [TeamMemberService, HttpTestingController],
         (service: TeamMemberService,
           backend: HttpTestingController) => {
           service.add(resource).subscribe();
-          const req = backend.expectOne(resourcesUrl);
-          req.flush(resource);
-        }));
-    it("sends the resource to be created in body",
-      inject(
-        [TeamMemberService, HttpTestingController],
-        (service: TeamMemberService,
-          backend: HttpTestingController) => {
-          service.add(resource).subscribe();
-          const req = backend.expectOne(resourcesUrl);
-          expect(req.request.body).toBe(resource);
-          req.flush(resource);
+          const req = backend.expectOne(resourceUrl);
+          expect(req.request.body).toEqual({});
+          req.flush({});
         }));
   });
 
@@ -191,6 +184,38 @@ describe('TeamMemberService', () => {
               .toBe(players));
           const req = backend.expectOne(unassignedUrl);
           req.flush(players);
+        }));
+  });
+
+  describe("when delete is called", () => {
+    it("calls the resources api url",
+      inject(
+        [TeamMemberService, HttpTestingController],
+        (service: TeamMemberService,
+          backend: HttpTestingController) => {
+          service.delete(resource).subscribe();
+          const req = backend.expectOne(resourceUrl);
+        }));
+    it("uses DELETE method",
+      inject(
+        [TeamMemberService, HttpTestingController],
+        (service: TeamMemberService,
+          backend: HttpTestingController) => {
+          service.delete(resource).subscribe();
+          const req = backend.expectOne(resourceUrl);
+          expect(req.request.method).toBe('DELETE');
+        }));
+    it("sends request with application/json content type headers",
+      inject(
+        [TeamMemberService, HttpTestingController],
+        (service: TeamMemberService,
+          backend: HttpTestingController) => {
+          service.delete(resource).subscribe();
+          const req = backend.expectOne(resourceUrl);
+          expect(req.request.headers.has('Content-Type'))
+            .toBe(true);
+          expect(req.request.headers.get('Content-Type'))
+            .toBe('application/json');
         }));
   });
 });
