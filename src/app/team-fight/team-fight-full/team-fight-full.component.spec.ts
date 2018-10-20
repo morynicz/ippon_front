@@ -143,6 +143,7 @@ describe('TeamFightFullComponent', () => {
   let fightService: FightServiceSpy;
   let playerService: PlayerServiceSpy;
   let teamMemberService: TeamMemberServiceSpy;
+  let pointService: PointServiceSpy;
   let html;
 
   beforeEach(async(() => {
@@ -152,7 +153,7 @@ describe('TeamFightFullComponent', () => {
     teamFightService.getReturnValues.push(teamFight);
     teamService.getReturnValues.push(akaTeam);
     teamService.getReturnValues.push(shiroTeam);
-    fightService.getListReturnValue = fights;
+    fightService.getListReturnValues.push(fights);
     playerService = new PlayerServiceSpy();
     playerService.getReturnValues.push(akaPlayers[0]);
     playerService.getReturnValues.push(shiroPlayers[0]);
@@ -161,6 +162,10 @@ describe('TeamFightFullComponent', () => {
     teamMemberService = new TeamMemberServiceSpy();
     teamMemberService.getListReturnValue.push(akaPlayers);
     teamMemberService.getListReturnValue.push(shiroPlayers);
+    pointService = new PointServiceSpy();
+    pointService.getListReturnValues.push([]);
+    pointService.getListReturnValues.push([]);
+    pointService.getListReturnValues.push([]);
     TestBed.configureTestingModule({
       declarations: [
         TeamFightFullComponent,
@@ -180,7 +185,7 @@ describe('TeamFightFullComponent', () => {
             }
           }
         },
-        { provide: PointService, useClass: PointServiceSpy },
+        { provide: PointService, useValue: pointService },
         { provide: PlayerService, useValue: playerService },
         { provide: TeamMemberService, useValue: teamMemberService }
       ],

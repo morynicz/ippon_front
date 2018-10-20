@@ -8,11 +8,11 @@ export class CrudfServiceSpy<Resource> {
     return of(true);
   }
 
-  getListReturnValue: Resource[] = [];
+  getListReturnValues: Resource[][] = [];
   getListValue: number[] = [];
   getList(id: number): Observable<Resource[]> {
     this.getListValue.push(id);
-    return of(this.getListReturnValue);
+    return of(this.getListReturnValues.shift());
   }
 
   getReturnValues: Resource[] = [];

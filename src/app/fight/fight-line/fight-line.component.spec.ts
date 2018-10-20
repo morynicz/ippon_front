@@ -88,7 +88,7 @@ describe('FightLineComponent', () => {
     ];
     playerService.getValues = [];
     pointService = new PointServiceSpy();
-    pointService.getListReturnValue = points;
+    pointService.getListReturnValues.push(points);
     fightService = new FightServiceSpy();
     TestBed.configureTestingModule({
       declarations: [

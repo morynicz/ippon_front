@@ -106,7 +106,7 @@ describe('FightFullComponent', () => {
     ];
     playerService.getValues = [];
     pointService = new PointServiceSpy();
-    pointService.getListReturnValue = points;
+    pointService.getListReturnValues.push(points);
     authorizationService = new AuthorizationServiceSpy();
     authorizationService.isTournamentAdminResult = false;
     fightService.getReturnValues.push(fight);
