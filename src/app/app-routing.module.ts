@@ -42,7 +42,7 @@ const routes: Routes = [
   { path: 'tournament/:id/edit', component: TournamentFormComponent },
   { path: 'tournament/:id/participation', component: TournamentParticipationListComponent },
   { path: 'tournament/:id/admin', component: TournamentAdminListComponent },
-  { path: 'tournament/:id/team', component: TournamentTeamListComponent },
+  { path: 'tournament/:id/teams', component: TournamentTeamListComponent },
   { path: 'tournament/:id', component: TournamentFullComponent },
   { path: 'tournaments', component: TournamentListComponent },
   { path: 'login', component: LoginFormComponent },

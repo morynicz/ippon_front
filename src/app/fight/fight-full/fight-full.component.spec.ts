@@ -196,6 +196,6 @@ describe('FightFullComponent', () => {
         expect(pointService.getListValue.length).toBe(2);
         expect(pointService.getListValue[1]).toBe(fightId);
       });
-    })
+    });
   });
 });

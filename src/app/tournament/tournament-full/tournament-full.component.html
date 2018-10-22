@@ -19,7 +19,8 @@
       <span i18n>Age</span> {{tournament.age_constraint | numericConstraint}} {{tournament.age_constraint_value}}
     </p>
     <p class="panel-info" *ngIf="tournament.rank_constraint != numericNone">
-      <span i18n>Rank</span> {{tournament.rank_constraint | numericConstraint}} {{tournament.rank_constraint_value | kendoRank}}
+      <span i18n>Rank</span> {{tournament.rank_constraint | numericConstraint}} {{tournament.rank_constraint_value |
+      kendoRank}}
     </p>
     <p class="panel-info" *ngIf="tournament.sex_constraint != sexNone">
       <span i18n>{{tournament.sex_constraint | sexConstraint}}</span>
@@ -42,11 +43,16 @@
       <button routerLink="/tournaments" class="btn btn-default" id="index-club" i18n>
         &larr; Index
       </button>
+      <button routerLink="/tournament/{{tournament.id}}/teams" class="btn btn-info" id="view-teams" i18n> Teams
+      </button>
       <div *ngIf="isAdmin" class="col-md-9 text-right btn-group">
-        <button routerLink="/tournament/{{tournament.id}}/edit" class="btn btn-info" id="edit-tournament" i18n> Edit </button>
+        <button routerLink="/tournament/{{tournament.id}}/edit" class="btn btn-info" id="edit-tournament" i18n> Edit
+        </button>
         <button (click)="deleteTournament()" class="btn btn-danger" id="delete-tournament" i18n> Delete </button>
-        <button routerLink="/tournament/{{tournament.id}}/participation" class="btn btn-info" id="edit-participants" i18n> Registration </button>
-        <button routerLink="/tournament/{{tournament.id}}/admin" class="btn btn-info" id="edit-admins" i18n> Admins </button>
+        <button routerLink="/tournament/{{tournament.id}}/participation" class="btn btn-info" id="edit-participants"
+          i18n> Registration </button>
+        <button routerLink="/tournament/{{tournament.id}}/admin" class="btn btn-info" id="edit-admins" i18n> Admins
+        </button>
       </div>
     </div>
   </section>

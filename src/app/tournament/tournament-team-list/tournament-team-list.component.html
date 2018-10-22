@@ -1,7 +1,7 @@
 <div class="row">
   <ul class="list-unstyled">
     <li *ngFor="let team of teams">
-      <ippon-team-line [team]="team" [isAuthorized]="isAuthorized"></ippon-team-line>
+      <ippon-team-line [team]="team" [isAuthorized]="isAuthorized" (reloadRequest)="reload()"></ippon-team-line>
     </li>
   </ul>
 </div>

@@ -154,6 +154,12 @@ describe('TournamentFullComponent', () => {
         expect(html.querySelector('#edit-admins')).toBeFalsy();
       });
     });
+
+    it("should display link to teams", () => {
+      const link = fixture.debugElement.query(By.css('#view-teams'));
+      expect(link.nativeElement.getAttribute('ng-reflect-router-link'))
+        .toBe('/tournament/' + tournament.id + '/teams');
+    });
   });
 
   describe("when user is admin", () => {

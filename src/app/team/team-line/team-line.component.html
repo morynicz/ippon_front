@@ -1,7 +1,7 @@
 <div class="col-md-9">
-  <a class="col-md-4" routerLink="/team/{{team.id}}"> {{team.name}}</a>
+  <a class="col-md-4" routerLink="/teams/{{team.id}}"> {{team.name}}</a>
   <div class="col-md-1" *ngIf="isAuthorized">
     <button class="col-md-1 btn btn-warning" id="delete-team" (click)="deleteTeam()" i18n>
       Delete</button>
   </div>
-</div>>
+</div>

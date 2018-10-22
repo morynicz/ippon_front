@@ -52,7 +52,7 @@ describe('TeamLineComponent', () => {
   it('should provide link to the team', () => {
     const link = fixture.debugElement.query(By.css('a'));
     expect(link.nativeElement.getAttribute('ng-reflect-router-link'))
-      .toBe('/team/' + team.id);
+      .toBe('/teams/' + team.id);
   });
 
   it('does not show delete button when user not authorized', () => {

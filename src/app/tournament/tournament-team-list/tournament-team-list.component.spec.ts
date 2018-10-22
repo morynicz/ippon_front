@@ -9,6 +9,9 @@ import { TeamService } from '../../team/team.service';
 import { Team } from '../../team/team';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { TeamFormComponent } from '../../team/team-form/team-form.component';
+import { Observable, of } from 'rxjs';
+import { AuthenticationService } from '../../authorization/authentication.service';
+import { AuthorizationService } from '../../authorization/authorization.service';
 
 const tournamentId: number = 4;
 const teams: Team[] = [
@@ -30,16 +33,28 @@ const teams: Team[] = [
   }
 ]
 
+class AuthorizationServiceSpy {
+  isTournamentStaffReturnValue: boolean = false;
+  isTournamentStaffValue: number = -1;
+  isTournamentStaff(tournamentId: number): Observable<boolean> {
+    this.isTournamentStaffValue = tournamentId;
+    return of(this.isTournamentStaffReturnValue);
+  }
+}
+
 describe('TournamentTeamListComponent', () => {
   let component: TournamentTeamListComponent;
   let fixture: ComponentFixture<TournamentTeamListComponent>;
   let teamService: TeamServiceSpy;
+  let authorizationService: AuthorizationServiceSpy;
   let html;
 
   beforeEach(async(() => {
     teamService = new TeamServiceSpy();
     teamService.getListReturnValues.push(teams);
     teamService.isAuthorizedReturnValue = false;
+    authorizationService = new AuthorizationServiceSpy();
+    authorizationService.isTournamentStaffReturnValue = false;
     TestBed.configureTestingModule({
       declarations: [
         TournamentTeamListComponent,
@@ -50,6 +65,10 @@ describe('TournamentTeamListComponent', () => {
         {
           provide: TeamService,
           useValue: teamService
+        },
+        {
+          provide: AuthorizationService,
+          useValue: authorizationService
         },
         {
           provide: ActivatedRoute, useValue: {
@@ -92,7 +111,8 @@ describe('TournamentTeamListComponent', () => {
 
   describe("when user is authorized", () => {
     beforeEach(() => {
-      teamService.isAuthorizedReturnValue = true;
+      authorizationService.isTournamentStaffReturnValue = true;
+      teamService.isAuthorizedReturnValue = false;
       fixture = TestBed.createComponent(TournamentTeamListComponent);
       component = fixture.componentInstance;
       fixture.detectChanges();
