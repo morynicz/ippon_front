@@ -1,0 +1,10 @@
+<div class="row">
+  <ul class="list-unstyled">
+    <li *ngFor="let team of teams">
+      <ippon-team-line [team]="team" [isAuthorized]="isAuthorized"></ippon-team-line>
+    </li>
+  </ul>
+</div>
+<div *ngIf="isAuthorized == true">
+  <ippon-team-form id="add-team-form" [tournamentId]="tournamentId" (reloadRequest)="reload()"></ippon-team-form>
+</div>

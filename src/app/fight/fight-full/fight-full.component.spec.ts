@@ -79,22 +79,12 @@ class PlayerServiceSpy {
   }
 }
 
-class AuthorizationServiceSpy {
-  isTournamentAdminResult: boolean = false;
-  isTournamentAdminCallArgument: number = -1;
-  isTournamentAdmin(tournamentId: number): Observable<boolean> {
-    this.isTournamentAdminCallArgument = tournamentId;
-    return of(this.isTournamentAdminResult);
-  }
-}
-
 describe('FightFullComponent', () => {
   let component: FightFullComponent;
   let fixture: ComponentFixture<FightFullComponent>;
   let fightService: FightServiceSpy;
   let playerService: PlayerServiceSpy;
   let pointService: PointServiceSpy;
-  let authorizationService: AuthorizationServiceSpy;
   let html;
 
   beforeEach(async(() => {
@@ -107,8 +97,6 @@ describe('FightFullComponent', () => {
     playerService.getValues = [];
     pointService = new PointServiceSpy();
     pointService.getListReturnValues.push(points);
-    authorizationService = new AuthorizationServiceSpy();
-    authorizationService.isTournamentAdminResult = false;
     fightService.getReturnValues.push(fight);
     TestBed.configureTestingModule({
       declarations: [
@@ -188,7 +176,6 @@ describe('FightFullComponent', () => {
   });
   describe("when user is authorized", () => {
     beforeEach(() => {
-      authorizationService.isTournamentAdminResult = true;
       fightService.isAuthorizedReturnValue = true;
       fixture = TestBed.createComponent(FightFullComponent);
       component = fixture.componentInstance;

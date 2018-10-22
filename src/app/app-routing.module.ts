@@ -23,6 +23,7 @@ import { TestingGroundsComponent } from './testing-grounds/testing-grounds.compo
 import { FightFullComponent } from './fight/fight-full/fight-full.component';
 import { TeamFightFullComponent } from './team-fight/team-fight-full/team-fight-full.component';
 import { TeamFullComponent } from './team/team-full/team-full.component';
+import { TournamentTeamListComponent } from './tournament/tournament-team-list/tournament-team-list.component';
 
 
 const routes: Routes = [
@@ -41,6 +42,7 @@ const routes: Routes = [
   { path: 'tournament/:id/edit', component: TournamentFormComponent },
   { path: 'tournament/:id/participation', component: TournamentParticipationListComponent },
   { path: 'tournament/:id/admin', component: TournamentAdminListComponent },
+  { path: 'tournament/:id/team', component: TournamentTeamListComponent },
   { path: 'tournament/:id', component: TournamentFullComponent },
   { path: 'tournaments', component: TournamentListComponent },
   { path: 'login', component: LoginFormComponent },
