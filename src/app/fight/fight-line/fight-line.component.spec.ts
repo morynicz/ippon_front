@@ -15,6 +15,7 @@ import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FightServiceSpy } from '../fight.service.spy';
 import { FightService } from '../fight.service';
+import { PlayerServiceSpy } from '../../player/player.service.spy';
 
 const fightId: number = 4;
 
@@ -61,16 +62,6 @@ const fight: Fight = {
   team_fight: 33,
   orderingNumber: 0
 }
-
-class PlayerServiceSpy {
-  getValues: number[];
-  getReturnValues: Player[];
-  getPlayer(id: number): Observable<Player> {
-    this.getValues.push(id);
-    return of(this.getReturnValues.shift());
-  }
-}
-
 
 describe('FightLineComponent', () => {
   let component: FightLineComponent;

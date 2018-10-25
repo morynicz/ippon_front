@@ -8,18 +8,18 @@ export class CrudlServiceSpy<Resource> {
     return of(true);
   }
 
-  getListReturnValue: Resource[];
+  getListReturnValues: Resource[][] = [];
   getListValue: number = 0;
   getList(): Observable<Resource[]> {
     this.getListValue += 1;
-    return of(this.getListReturnValue);
+    return of(this.getListReturnValues.shift());
   }
 
-  getReturnValue: Resource;
-  getValue: number;
+  getReturnValues: Resource[] = [];
+  getValues: number[] = [];
   get(id: number): Observable<Resource> {
-    this.getValue = id;
-    return of(this.getReturnValue);
+    this.getValues.push(id);
+    return of(this.getReturnValues.shift());
   }
   addValue: Resource;
   addReturnValue: Resource;

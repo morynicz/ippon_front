@@ -18,6 +18,7 @@ import { ClubService } from '../../club/club.service';
 import { KendoRankPipe } from '../kendo-rank.pipe';
 import { AuthorizationService } from '../../authorization/authorization.service';
 import { Authorization } from "../../authorization/Authorization";
+import { PlayerServiceSpy } from '../player.service.spy';
 
 const playerId: number = 4;
 
@@ -30,19 +31,6 @@ const expectedPlayer: Player = {
   club_id: 0,
   id: playerId
 };
-
-class PlayerServiceSpy {
-  id: number;
-  deletePlayerCallValue: Player = new Player();;
-  getPlayer(id: number) {
-    this.id = id;
-    return of(expectedPlayer);
-  }
-  deletePlayer(player: Player): Observable<Player> {
-    this.deletePlayerCallValue = player;
-    return of(new Player());
-  }
-}
 
 class ClubServiceSpy {
   id: number;
@@ -77,6 +65,7 @@ describe('PlayerFullComponent', () => {
 
   beforeEach(async(() => {
     playerService = new PlayerServiceSpy();
+    playerService.getReturnValues.push(expectedPlayer);
     clubService = new ClubServiceSpy();
     authorizationService = new AuthorizationServiceDummy();
   }));
@@ -185,7 +174,7 @@ describe('PlayerFullComponent', () => {
           fixture.detectChanges();
           const btn = fixture.debugElement.query(By.css('#delete-player'));
           btn.triggerEventHandler('click', null);
-          expect(playerService.deletePlayerCallValue).toEqual(expectedPlayer);
+          expect(playerService.deleteValue).toEqual(expectedPlayer);
         });
       }));
     it('should provide link to editing player', () => {

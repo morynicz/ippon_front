@@ -35,8 +35,8 @@ export class FightFullComponent implements OnInit {
   }
 
   private loadPointsAndPlayers() {
-    this.playerService.getPlayer(this.fight.aka).subscribe(resp => this.akaPlayer = resp);
-    this.playerService.getPlayer(this.fight.shiro).subscribe(resp => this.shiroPlayer = resp);
+    this.playerService.get(this.fight.aka).subscribe(resp => this.akaPlayer = resp);
+    this.playerService.get(this.fight.shiro).subscribe(resp => this.shiroPlayer = resp);
     this.loadPoints();
   }
 

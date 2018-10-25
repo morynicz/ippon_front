@@ -21,6 +21,7 @@ import { PointService } from '../../point/point.service';
 import { PointServiceSpy } from '../../point/point.service.spy';
 import { Point, PointType } from '../../point/point';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
+import { PlayerServiceSpy } from '../../player/player.service.spy';
 
 
 const fightId: number = 4;
@@ -67,16 +68,6 @@ const fight: Fight = {
   shiro: shiroPlayer.id,
   team_fight: 33,
   orderingNumber: 0
-}
-
-
-class PlayerServiceSpy {
-  getValues: number[];
-  getReturnValues: Player[];
-  getPlayer(id: number): Observable<Player> {
-    this.getValues.push(id);
-    return of(this.getReturnValues.shift());
-  }
 }
 
 describe('FightFullComponent', () => {

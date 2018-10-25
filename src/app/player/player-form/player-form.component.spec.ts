@@ -17,33 +17,16 @@ import { Sex } from '../../sex';
 
 import { Club } from '../../club/club'
 import { ClubService } from '../../club/club.service';
+import { PlayerServiceSpy } from '../player.service.spy';
 
-class PlayerServiceSpy {
-  id: number;
-  player: Player = {
-    name: 'P1',
-    surname: 'S1',
-    sex: Sex.Male,
-    birthday: new Date("2001-01-01"),
-    rank: Rank.Kyu_5,
-    club_id: 0,
-    id: 0
-  }
-  updatePalyerValue: Player;
-  updatePlayer(player: Player): Observable<any> {
-    this.updatePalyerValue = player;
-    return of(true);
-  }
-  getPlayer(id: number): Observable<Player> {
-    this.id = id;
-    return of(this.player);
-  }
-  addPalyerValue: Player;
-  addPlayer(player: Player): Observable<Player> {
-    this.addPalyerValue = player;
-    return of(this.addPalyerValue);
-  }
-
+const player: Player = {
+  name: 'P1',
+  surname: 'S1',
+  sex: Sex.Male,
+  birthday: new Date("2001-01-01"),
+  rank: Rank.Kyu_5,
+  club_id: 0,
+  id: 0
 }
 
 class ClubServiceSpy {
@@ -96,6 +79,7 @@ describe('PlayerFormComponent', () => {
   describe('when playerId is available', () => {
     beforeEach(async(() => {
       playerService = new PlayerServiceSpy();
+      playerService.getReturnValues.push(player);
       clubService = new ClubServiceSpy();
       location = new LocationSpy();
       TestBed.configureTestingModule({
@@ -107,7 +91,7 @@ describe('PlayerFormComponent', () => {
           {
             provide: ActivatedRoute, useValue: {
               snapshot: {
-                paramMap: convertToParamMap({ id: playerService.player.id })
+                paramMap: convertToParamMap({ id: player.id })
               }
             }
           },
@@ -129,7 +113,7 @@ describe('PlayerFormComponent', () => {
           let de = fixture.debugElement;
           let clubInput = de.query(By.css("[name=club]")).nativeElement.value;
           expect(de.query(By.css("[name=name]")).nativeElement.value)
-            .toContain(playerService.player.name);
+            .toContain(player.name);
         });
       }));
 
@@ -138,7 +122,7 @@ describe('PlayerFormComponent', () => {
         fixture.whenStable().then(() => {
           let de = fixture.debugElement;
           expect(de.query(By.css("[name=surname]")).nativeElement.value)
-            .toContain(playerService.player.surname);
+            .toContain(player.surname);
         });
       }));
     it('should load rank of player with given id',
@@ -146,7 +130,7 @@ describe('PlayerFormComponent', () => {
         fixture.whenStable().then(() => {
           let de = fixture.debugElement;
           expect(de.query(By.css("[name=rank]")).nativeElement.value)
-            .toContain(playerService.player.rank);
+            .toContain(player.rank);
         });
       }));
     it('should load sex of player with given id',
@@ -183,7 +167,7 @@ describe('PlayerFormComponent', () => {
             birthday: new Date("2002-03-04"),
             rank: Rank.Dan_8,
             club_id: 2,
-            id: playerService.player.id
+            id: player.id
           };
           component.player = expectedPlayer;
           fixture.detectChanges();
@@ -193,7 +177,7 @@ describe('PlayerFormComponent', () => {
         it('should call player service updatePlayer with player values set in form',
           async(() => {
             fixture.whenStable().then(() => {
-              expectPlayersToBeEqual(playerService.updatePalyerValue, expectedPlayer);
+              expectPlayersToBeEqual(playerService.updateValue, expectedPlayer);
             });
           }));
         it('should go back to previous location', async(() => {
@@ -240,7 +224,7 @@ describe('PlayerFormComponent', () => {
             birthday: new Date("2002-03-04"),
             rank: Rank.Dan_8,
             club_id: 2,
-            id: playerService.player.id
+            id: player.id
           };
           component.player = expectedPlayer;
           fixture.detectChanges();
@@ -249,7 +233,7 @@ describe('PlayerFormComponent', () => {
         it('should call player service updatePlayer with player values set in form',
           async(() => {
             fixture.whenStable().then(() => {
-              expectPlayersToBeEqual(playerService.addPalyerValue, expectedPlayer);
+              expectPlayersToBeEqual(playerService.addValue, expectedPlayer);
             });
           }));
         it('should go back to previous location', async(() => {

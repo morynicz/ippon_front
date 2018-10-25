@@ -10,6 +10,7 @@ import { Player } from '../player';
 import { Rank } from '../../rank';
 import { Sex } from '../../sex';
 import { PlayerService } from '../player.service';
+import { PlayerServiceSpy } from '../player.service.spy';
 
 const dummyPlayers: Player[] = [{
   name: 'P1',
@@ -30,22 +31,14 @@ const dummyPlayers: Player[] = [{
   id: 1
 }];
 
-
-class PlayerServiceSpy {
-  getPlayersCalled: boolean = false;
-  getPlayers(): Observable<Player[]> {
-    this.getPlayersCalled = true;
-    return of(dummyPlayers);
-  }
-}
-
 describe('PlayersListComponent', () => {
   let component: PlayerListComponent;
   let fixture: ComponentFixture<PlayerListComponent>;
-  let playerService;
+  let playerService: PlayerServiceSpy;
 
   beforeEach(async(() => {
     playerService = new PlayerServiceSpy();
+    playerService.getListReturnValues.push(dummyPlayers);
     TestBed.configureTestingModule({
       declarations: [PlayerListComponent, PlayerLineComponent],
       imports: [RouterTestingModule],
@@ -67,7 +60,7 @@ describe('PlayersListComponent', () => {
 
   it('should load players using player.service.getPlayers() on init', async(() => {
     fixture.whenStable().then(() => {
-      expect(playerService.getPlayersCalled).toBeTruthy();
+      expect(playerService.getListValue).toBeTruthy();
     });
   }));
 

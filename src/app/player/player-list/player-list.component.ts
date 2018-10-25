@@ -18,6 +18,6 @@ export class PlayerListComponent implements OnInit {
   }
 
   getPlayers(): void {
-    this.playerService.getPlayers().subscribe(players => this.players = players);
+    this.playerService.getList().subscribe(players => this.players = players);
   }
 }

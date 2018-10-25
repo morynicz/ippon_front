@@ -43,8 +43,8 @@ export class FightLineComponent implements OnInit {
         }
       }
     });
-    this.playerService.getPlayer(this.fight.aka).subscribe(result => this.akaPlayer = result);
-    this.playerService.getPlayer(this.fight.shiro).subscribe(result => this.shiroPlayer = result);
+    this.playerService.get(this.fight.aka).subscribe(result => this.akaPlayer = result);
+    this.playerService.get(this.fight.shiro).subscribe(result => this.shiroPlayer = result);
   }
 
   deleteFight(): void {

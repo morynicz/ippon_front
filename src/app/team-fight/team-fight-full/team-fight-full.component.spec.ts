@@ -26,6 +26,7 @@ import { FormsModule } from '@angular/forms';
 import { PlayerLineComponent } from '../../player/player-line/player-line.component';
 import { TeamMemberServiceSpy } from '../../team/team-member.service.spy';
 import { TeamMemberService } from '../../team/team-member.service';
+import { PlayerServiceSpy } from '../../player/player.service.spy';
 
 const teamFightId: number = 13;
 const akaTeamId: number = 15;
@@ -125,15 +126,6 @@ const fights: Fight[] = [{
   team_fight: teamFightId,
   orderingNumber: 1
 }];
-
-class PlayerServiceSpy {
-  getValues: number[] = [];
-  getReturnValues: Player[] = [];
-  getPlayer(id: number): Observable<Player> {
-    this.getValues.push(id);
-    return of(this.getReturnValues.shift());
-  }
-}
 
 describe('TeamFightFullComponent', () => {
   let component: TeamFightFullComponent;

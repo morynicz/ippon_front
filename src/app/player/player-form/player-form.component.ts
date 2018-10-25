@@ -45,7 +45,7 @@ export class PlayerFormComponent implements OnInit {
 
   getPlayer(): void {
     const id = +this.route.snapshot.paramMap.get('id');
-    this.playerService.getPlayer(id).subscribe(player => this.player = player);
+    this.playerService.get(id).subscribe(player => this.player = player);
   }
 
   handleQueryParams(): void {
@@ -70,9 +70,9 @@ export class PlayerFormComponent implements OnInit {
 
   save(): void {
     if (this.route.snapshot.paramMap.has('id')) {
-      this.playerService.updatePlayer(this.player).subscribe(() => this.goBack());
+      this.playerService.update(this.player).subscribe(() => this.goBack());
     } else {
-      this.playerService.addPlayer(this.player).subscribe(() => this.goBack());
+      this.playerService.add(this.player).subscribe(() => this.goBack());
     }
   }
 

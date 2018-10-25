@@ -39,7 +39,7 @@ export class PlayerFullComponent implements OnInit {
 
   getPlayer(): void {
     const id = +this.route.snapshot.paramMap.get('id');
-    this.playerService.getPlayer(id).subscribe(player => {
+    this.playerService.get(id).subscribe(player => {
       this.player = player;
       this.getClub(player.club_id);
       this.getAuthorization(player.club_id);
@@ -64,6 +64,6 @@ export class PlayerFullComponent implements OnInit {
   }
 
   deletePlayer(): void {
-    this.playerService.deletePlayer(this.player).subscribe(() => this.location.back());
+    this.playerService.delete(this.player).subscribe(() => this.location.back());
   }
 }

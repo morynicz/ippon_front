@@ -1,7 +1,5 @@
 import { TestBed, inject, async } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { Observable } from 'rxjs/Observable';
-import { of } from 'rxjs/observable/of';
 
 import { PlayerService } from './player.service';
 import { Player } from './player'
@@ -16,7 +14,6 @@ import {
 const playersUrl = IPPON_HOST + PLAYERS_ENDPOINT;
 
 describe('PlayerService', () => {
-  let injector: TestBed;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -50,7 +47,7 @@ describe('PlayerService', () => {
         id: 1
       }
     ];
-    service.getPlayers().subscribe(players => {
+    service.getList().subscribe(players => {
       expect(players).toBe(dummyPlayers);
     });
     const req = backend.expectOne(`${playersUrl}`);
@@ -64,16 +61,16 @@ describe('PlayerService', () => {
     inject([PlayerService, HttpTestingController],
       (service: PlayerService, backend: HttpTestingController) => {
         const player =
-          {
-            name: 'P1',
-            surname: 'S1',
-            sex: Sex.Male,
-            birthday: new Date("2001-01-01"),
-            rank: Rank.Kyu_5,
-            club_id: 0,
-            id: 0
-          };
-        service.addPlayer(player).subscribe(resp => expect(resp).toBe(player));
+        {
+          name: 'P1',
+          surname: 'S1',
+          sex: Sex.Male,
+          birthday: new Date("2001-01-01"),
+          rank: Rank.Kyu_5,
+          club_id: 0,
+          id: 0
+        };
+        service.add(player).subscribe(resp => expect(resp).toBe(player));
         const req = backend.expectOne(playersUrl);
         expect(req.request.headers.has('Content-Type')).toBe(true);
         expect(req.request.headers.get('Content-Type')).toBe('application/json');
@@ -94,7 +91,7 @@ describe('PlayerService', () => {
           club_id: 0,
           id: 0
         };
-        service.getPlayer(player.id).subscribe(resp => expect(resp).toBe(player));
+        service.get(player.id).subscribe(resp => expect(resp).toBe(player));
         const req = backend.expectOne(playersUrl + `${player.id}/`);
         expect(req.request.headers.has('Content-Type')).toBe(true);
         expect(req.request.headers.get('Content-Type')).toBe('application/json');
@@ -114,7 +111,7 @@ describe('PlayerService', () => {
           club_id: 0,
           id: 0
         };
-        service.updatePlayer(player).subscribe(resp => expect(resp).toBe(player));
+        service.update(player).subscribe(resp => expect(resp).toBe(player));
         const req = backend.expectOne(playersUrl + `${player.id}/`);
         expect(req.request.headers.has('Content-Type')).toBe(true);
         expect(req.request.headers.get('Content-Type')).toBe('application/json');
@@ -135,7 +132,7 @@ describe('PlayerService', () => {
           club_id: 0,
           id: 0
         };
-        service.deletePlayer(player).subscribe();
+        service.delete(player).subscribe();
         const req = backend.expectOne(playersUrl + `${player.id}/`);
         expect(req.request.headers.has('Content-Type')).toBe(true);
         expect(req.request.headers.get('Content-Type')).toBe('application/json');
