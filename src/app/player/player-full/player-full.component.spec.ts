@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { ActivatedRoute, convertToParamMap, ParamMap } from '@angular/router';
+import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { By } from '@angular/platform-browser';
 
 import { Observable } from 'rxjs/Observable';
@@ -17,8 +17,8 @@ import { ClubService } from '../../club/club.service';
 
 import { KendoRankPipe } from '../kendo-rank.pipe';
 import { AuthorizationService } from '../../authorization/authorization.service';
-import { Authorization } from "../../authorization/Authorization";
 import { PlayerServiceSpy } from '../player.service.spy';
+import { ClubServiceSpy } from '../../club/club.service.spy';
 
 const playerId: number = 4;
 
@@ -32,19 +32,13 @@ const expectedPlayer: Player = {
   id: playerId
 };
 
-class ClubServiceSpy {
-  id: number;
-  club: Club = {
-    id: 1,
-    name: 'C4',
-    description: 'D',
-    city: 'Ci',
-    webpage: 'W'
-  }
-  getClub(id: number): Observable<Club> {
-    return of(this.club);
-  }
-}
+const club: Club = {
+  id: 1,
+  name: 'C4',
+  description: 'D',
+  city: 'Ci',
+  webpage: 'W'
+};
 
 class AuthorizationServiceDummy {
   isClubAdminResult: boolean = false;
@@ -67,6 +61,7 @@ describe('PlayerFullComponent', () => {
     playerService = new PlayerServiceSpy();
     playerService.getReturnValues.push(expectedPlayer);
     clubService = new ClubServiceSpy();
+    clubService.getReturnValues.push(club);
     authorizationService = new AuthorizationServiceDummy();
   }));
 

@@ -37,7 +37,7 @@ export class ClubFullComponent implements OnInit {
   }
 
   getClub(id: number): void {
-    this.clubService.getClub(id).subscribe(club => {
+    this.clubService.get(id).subscribe(club => {
       this.club = club;
     });
   }
@@ -55,6 +55,6 @@ export class ClubFullComponent implements OnInit {
   }
 
   deleteClub(): void {
-    this.clubService.deleteClub(this.club);
+    this.clubService.delete(this.club);
   }
 }

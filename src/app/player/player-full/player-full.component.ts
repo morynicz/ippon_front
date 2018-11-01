@@ -47,7 +47,7 @@ export class PlayerFullComponent implements OnInit {
   }
 
   getClub(clubId: number): void {
-    this.clubService.getClub(clubId).subscribe(club => this.club = club);
+    this.clubService.get(clubId).subscribe(club => this.club = club);
   }
 
   getAuthorization(clubId: number): void {

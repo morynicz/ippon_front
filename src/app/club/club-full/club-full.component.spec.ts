@@ -18,52 +18,35 @@ import { PlayerService } from '../../player/player.service';
 
 import { AuthorizationService } from '../../authorization/authorization.service';
 import { Authorization } from "../../authorization/Authorization";
+import { ClubServiceSpy } from '../club.service.spy';
 
 const clubId: number = 1;
+const club: Club = {
+  id: clubId,
+  name: 'C1',
+  description: 'D1',
+  city: 'Ci1',
+  webpage: 'W1'
+};
 
-class ClubServiceSpy {
-  id: number;
-  deleteClubCallId: number = -1;
-  getPlayersClubId: number = -1;
-  club: Club = {
-    id: clubId,
-    name: 'C1',
-    description: 'D1',
-    city: 'Ci1',
-    webpage: 'W1'
-  };
-  getClub(id: number): Observable<Club> {
-    this.id = id;
-    return of(this.club);
-  }
-  deleteClub(club: Club): Observable<Club> {
-    this.deleteClubCallId = club.id;
-    return of(this.club);
-  }
-
-  players: Player[] = [{
-    name: 'P1',
-    surname: 'S1',
-    sex: Sex.Male,
-    birthday: new Date("2001-01-01"),
-    rank: Rank.Kyu_5,
-    club_id: clubId,
-    id: 0
-  },
-  {
-    name: 'P3',
-    surname: 'S3',
-    sex: Sex.Female,
-    birthday: new Date("2002-02-02"),
-    rank: Rank.Kyu_4,
-    club_id: clubId,
-    id: 2
-  }];
-  getPlayers(clubId: number): Observable<Player[]> {
-    this.getPlayersClubId = clubId;
-    return of(this.players);
-  }
-}
+const players: Player[] = [{
+  name: 'P1',
+  surname: 'S1',
+  sex: Sex.Male,
+  birthday: new Date("2001-01-01"),
+  rank: Rank.Kyu_5,
+  club_id: clubId,
+  id: 0
+},
+{
+  name: 'P3',
+  surname: 'S3',
+  sex: Sex.Female,
+  birthday: new Date("2002-02-02"),
+  rank: Rank.Kyu_4,
+  club_id: clubId,
+  id: 2
+}];
 
 class AuthorizationServiceDummy {
   isClubAdminResult: boolean = false;
@@ -84,6 +67,8 @@ describe('ClubFullComponent', () => {
     beforeEach(async(() => {
       authorizationService = new AuthorizationServiceDummy();
       clubService = new ClubServiceSpy();
+      clubService.getPlayersReturnValues.push(players);
+      clubService.getReturnValues.push(club);
       TestBed.configureTestingModule({
         providers: [
           { provide: ClubService, useValue: clubService },
@@ -130,7 +115,7 @@ describe('ClubFullComponent', () => {
         expect(playerLines[0].textContent).toContain('S1');
         expect(playerLines[1].textContent).toContain('P3');
         expect(playerLines[1].textContent).toContain('S3');
-        expect(clubService.getPlayersClubId).toEqual(clubId);
+        expect(clubService.getPlayersValues).toContain(clubId);
       });
     }));
 
@@ -150,13 +135,16 @@ describe('ClubFullComponent', () => {
       authorizationService = new AuthorizationServiceDummy();
       authorizationService.isClubAdminResult = true;
       clubService = new ClubServiceSpy();
+      clubService.getReturnValues.push(club);
       TestBed.configureTestingModule({
         providers: [
           { provide: ClubService, useValue: clubService },
           { provide: AuthorizationService, useValue: authorizationService }
         ],
         imports: [RouterTestingModule],
-        declarations: [ClubFullComponent, PlayerLineComponent]
+        declarations: [
+          ClubFullComponent,
+          PlayerLineComponent]
       })
         .compileComponents();
     }));
@@ -186,7 +174,7 @@ describe('ClubFullComponent', () => {
           fixture.detectChanges();
           const btn = fixture.debugElement.query(By.css('#delete-club'));
           btn.triggerEventHandler('click', null);
-          expect(clubService.deleteClubCallId).toEqual(clubId);
+          expect(clubService.deleteValue).toEqual(club);
         });
       }));
 

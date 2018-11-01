@@ -20,7 +20,7 @@ export class ClubListComponent implements OnInit {
   }
 
   getClubs(): void {
-    this.clubService.getClubs().subscribe(clubs => this.clubs = clubs);
+    this.clubService.getList().subscribe(clubs => this.clubs = clubs);
   }
 
   signedIn(): boolean {

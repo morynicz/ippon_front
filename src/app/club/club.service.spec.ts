@@ -32,7 +32,7 @@ describe('ClubService', () => {
       (service: ClubService, backend: HttpTestingController) => {
         const club =
           { name: 'K1', city: 'C1', description: 'D1', webpage: 'W1', id: 0 };
-        service.addClub(club).subscribe(resp => expect(resp).toBe(club));
+        service.add(club).subscribe(resp => expect(resp).toBe(club));
         const req = backend.expectOne(clubsUrl);
         expect(req.request.headers.has('Content-Type')).toBe(true);
         expect(req.request.headers.get('Content-Type')).toBe('application/json');
@@ -49,7 +49,7 @@ describe('ClubService', () => {
           { name: 'K1', city: 'C1', description: 'D1', webpage: 'W1', id: 0 },
           { name: 'K2', city: 'C2', description: 'D2', webpage: 'W2', id: 1 },
         ];
-        service.getClubs().subscribe(resp => expect(resp).toBe(clubs));
+        service.getList().subscribe(resp => expect(resp).toBe(clubs));
         const req = backend.expectOne(clubsUrl);
         expect(req.request.headers.has('Content-Type')).toBe(true);
         expect(req.request.headers.get('Content-Type')).toBe('application/json');
@@ -62,7 +62,7 @@ describe('ClubService', () => {
       (service: ClubService, backend: HttpTestingController) => {
         const club =
           { name: 'K1', city: 'C1', description: 'D1', webpage: 'W1', id: 0 };
-        service.getClub(club.id).subscribe(resp => expect(resp).toBe(club));
+        service.get(club.id).subscribe(resp => expect(resp).toBe(club));
         const req = backend.expectOne(clubsUrl + `${club.id}/`);
         expect(req.request.headers.has('Content-Type')).toBe(true);
         expect(req.request.headers.get('Content-Type')).toBe('application/json');
@@ -75,7 +75,7 @@ describe('ClubService', () => {
       (service: ClubService, backend: HttpTestingController) => {
         const club: Club =
           { name: 'P1', city: 'F1', description: 'D1', webpage: 'W1', id: 0 };
-        service.updateClub(club).subscribe(resp => expect(resp).toBe(club));
+        service.update(club).subscribe(resp => expect(resp).toBe(club));
         const req = backend.expectOne(clubsUrl + `${club.id}/`);
         expect(req.request.headers.has('Content-Type')).toBe(true);
         expect(req.request.headers.get('Content-Type')).toBe('application/json');
@@ -89,7 +89,7 @@ describe('ClubService', () => {
       (service: ClubService, backend: HttpTestingController) => {
         const club: Club =
           { name: 'P1', city: 'F1', description: 'D1', webpage: 'W1', id: 0 };
-        service.deleteClub(club).subscribe();
+        service.delete(club).subscribe();
         const req = backend.expectOne(clubsUrl + `${club.id}/`);
         expect(req.request.headers.has('Content-Type')).toBe(true);
         expect(req.request.headers.get('Content-Type')).toBe('application/json');

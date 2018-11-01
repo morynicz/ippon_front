@@ -18,6 +18,7 @@ import { Sex } from '../../sex';
 import { Club } from '../../club/club'
 import { ClubService } from '../../club/club.service';
 import { PlayerServiceSpy } from '../player.service.spy';
+import { ClubServiceSpy } from '../../club/club.service.spy';
 
 const player: Player = {
   name: 'P1',
@@ -29,25 +30,19 @@ const player: Player = {
   id: 0
 }
 
-class ClubServiceSpy {
-  id: number;
-  clubs: Club[] = [{
-    id: 0,
-    name: 'C4',
-    description: 'D',
-    city: 'Ci',
-    webpage: 'W'
-  }, {
-    id: 1,
-    name: 'C8',
-    description: 'D5',
-    city: 'Ci12',
-    webpage: 'W7'
-  }];
-  getClubs(): Observable<Club[]> {
-    return of(this.clubs);
-  }
-}
+const clubs: Club[] = [{
+  id: 0,
+  name: 'C4',
+  description: 'D',
+  city: 'Ci',
+  webpage: 'W'
+}, {
+  id: 1,
+  name: 'C8',
+  description: 'D5',
+  city: 'Ci12',
+  webpage: 'W7'
+}];
 
 class LocationSpy {
   clicked: boolean = false;
@@ -81,6 +76,7 @@ describe('PlayerFormComponent', () => {
       playerService = new PlayerServiceSpy();
       playerService.getReturnValues.push(player);
       clubService = new ClubServiceSpy();
+      clubService.getListReturnValues.push(clubs);
       location = new LocationSpy();
       TestBed.configureTestingModule({
         declarations: [PlayerFormComponent],
@@ -148,7 +144,7 @@ describe('PlayerFormComponent', () => {
           let de = fixture.debugElement;
           expect(de.query(By.css("[name=club]")).nativeElement
             .selectedOptions[0].label)
-            .toContain(clubService.clubs[0].name);
+            .toContain(clubs[0].name);
         });
       }));
 
@@ -192,6 +188,7 @@ describe('PlayerFormComponent', () => {
     beforeEach(async(() => {
       playerService = new PlayerServiceSpy();
       clubService = new ClubServiceSpy();
+      clubService.getListReturnValues.push(clubs);
       location = new LocationSpy();
       TestBed.configureTestingModule({
         declarations: [PlayerFormComponent],

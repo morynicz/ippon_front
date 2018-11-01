@@ -9,16 +9,24 @@ import { ClubLineComponent } from './../club-line/club-line.component';
 import { Club } from '../club';
 import { ClubService } from './../club.service';
 import { AuthenticationService } from '../../authorization/authentication.service';
+import { ClubServiceSpy } from '../club.service.spy';
 
-
-class ClubServiceSpy {
-  getClubsCalled: boolean = false;
-  getClubsResult: Club[];
-  getClubs(): Observable<Club[]> {
-    this.getClubsCalled = true;
-    return of(this.getClubsResult);
+const clubs: Club[] = [
+  {
+    id: 1,
+    name: 'C1',
+    description: 'D1',
+    city: 'Ci1',
+    webpage: 'W1'
+  },
+  {
+    id: 2,
+    name: 'C2',
+    description: 'D2',
+    city: 'Ci2',
+    webpage: 'W2'
   }
-}
+];
 
 class AuthenticationServiceSpy {
   isLoggedInResult: boolean = false;
@@ -29,6 +37,8 @@ class AuthenticationServiceSpy {
   }
 }
 
+
+
 describe('ClubListComponent', () => {
   let component: ClubListComponent;
   let fixture: ComponentFixture<ClubListComponent>;
@@ -37,22 +47,7 @@ describe('ClubListComponent', () => {
 
   beforeEach(async(() => {
     clubService = new ClubServiceSpy();
-    clubService.getClubsResult = [
-      {
-        id: 1,
-        name: 'C1',
-        description: 'D1',
-        city: 'Ci1',
-        webpage: 'W1'
-      },
-      {
-        id: 2,
-        name: 'C2',
-        description: 'D2',
-        city: 'Ci2',
-        webpage: 'W2'
-      }
-    ];
+    clubService.getListReturnValues.push(clubs);
     authenticationService = new AuthenticationServiceSpy();
 
     TestBed.configureTestingModule({
@@ -78,7 +73,7 @@ describe('ClubListComponent', () => {
 
   it('should load clubs using club.service.getClubs() on init', async(() => {
     fixture.whenStable().then(() => {
-      expect(clubService.getClubsCalled).toBeTruthy();
+      expect(clubService.getListValue).toBeTruthy();
     });
   }));
 

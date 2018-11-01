@@ -11,36 +11,16 @@ import { Club } from '../club'
 
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
+import { ClubServiceSpy } from '../club.service.spy';
 
 const clubId: number = 1;
-
-class ClubServiceSpy {
-  id: number = -1;
-  club: Club = {
-    id: clubId,
-    name: 'C4',
-    description: 'D',
-    city: 'Ci',
-    webpage: 'W'
-  }
-  addClubValue: Club;
-  updateClubValue: Club;
-
-  getClub(id: number) {
-    this.id = id;
-    return of(this.club);
-  }
-
-  addClub(club: Club): Observable<Club> {
-    this.addClubValue = club;
-    return of(club);
-  }
-
-  updateClub(club: Club): Observable<Club> {
-    this.updateClubValue = club;
-    return of(club);
-  }
-}
+const club: Club = {
+  id: clubId,
+  name: 'C4',
+  description: 'D',
+  city: 'Ci',
+  webpage: 'W'
+};
 
 class LocationSpy {
   clicked: boolean = false;
@@ -86,6 +66,7 @@ describe('ClubFormComponent', () => {
   describe('when clubId is available', () => {
     beforeEach(async(() => {
       clubService = new ClubServiceSpy();
+      clubService.getReturnValues.push(club);
       location = new LocationSpy();
       TestBed.configureTestingModule({
         declarations: [ClubFormComponent],
@@ -120,13 +101,13 @@ describe('ClubFormComponent', () => {
         fixture.whenStable().then(() => {
           let de = fixture.debugElement;
           expect(de.query(By.css("[name=name]")).nativeElement.value)
-            .toContain(clubService.club.name);
+            .toContain(club.name);
           expect(de.query(By.css("[name=city]")).nativeElement.value)
-            .toContain(clubService.club.city);
+            .toContain(club.city);
           expect(de.query(By.css("[name=description]")).nativeElement.value)
-            .toContain(clubService.club.description);
+            .toContain(club.description);
           expect(de.query(By.css("[name=webpage]")).nativeElement.value)
-            .toContain(clubService.club.webpage);
+            .toContain(club.webpage);
         });
       }));
 
@@ -150,7 +131,7 @@ describe('ClubFormComponent', () => {
             btn.nativeElement.click();
             fixture.detectChanges();
             fixture.whenStable().then(() => {
-              expectClubsToBeEqual(clubService.updateClubValue, expectedClub);
+              expectClubsToBeEqual(clubService.updateValue, expectedClub);
             });
           }));
         it('should go back to previous location', async(() => {
@@ -221,7 +202,7 @@ describe('ClubFormComponent', () => {
             fillForm(expectedClub, fixture);
             btn.nativeElement.click();
             fixture.detectChanges();
-            expectClubsToBeEqual(clubService.addClubValue, expectedClub);
+            expectClubsToBeEqual(clubService.addValue, expectedClub);
           });
         }));
       it('should go back to previous location', async(() => {

@@ -30,14 +30,14 @@ export class ClubFormComponent implements OnInit {
 
   getClub(): void {
     const id = +this.route.snapshot.paramMap.get('id');
-    this.clubService.getClub(id).subscribe(club => this.club = club);
+    this.clubService.get(id).subscribe(club => this.club = club);
   }
 
   save(): void {
     if (this.route.snapshot.paramMap.get('id')) {
-      this.clubService.updateClub(this.club).subscribe(() => this.goBack());
+      this.clubService.update(this.club).subscribe(() => this.goBack());
     } else {
-      this.clubService.addClub(this.club).subscribe(() => this.goBack());
+      this.clubService.add(this.club).subscribe(() => this.goBack());
     }
   }
 
