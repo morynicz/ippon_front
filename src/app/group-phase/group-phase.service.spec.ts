@@ -10,7 +10,8 @@ const groupPhaseId: number = 567;
 const groupPhase: GroupPhase = {
   tournament: tournamentId,
   id: groupPhaseId,
-  fight_length: 4
+  fight_length: 4,
+  name: "gp1"
 }
 const groupPhaseUrl = IPPON_HOST + GROUP_PHASES_ENDPOINT;
 let filteredUrl = IPPON_HOST + TOURNAMENTS_ENDPOINT + `${tournamentId}/` + GROUP_PHASES_ENDPOINT;
@@ -19,7 +20,8 @@ let groupPhases: GroupPhase[] = [
   {
     id: 22,
     tournament: tournamentId,
-    fight_length: 5
+    fight_length: 5,
+    name: "gp2"
   }];
 
 describe('GroupPhaseService', () => {
