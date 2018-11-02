@@ -19,7 +19,7 @@ export class GroupPhaseLineComponent implements OnInit {
 
   deleteGroupPhase(): void {
     this.groupPhaseService.delete(this.groupPhase)
-    .subscribe(resp => this.reloadRequest.emit(''));
+      .subscribe(resp => this.reloadRequest.emit(''));
   }
 
 }

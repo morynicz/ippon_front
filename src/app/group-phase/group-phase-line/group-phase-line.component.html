@@ -1,5 +1,5 @@
 <div class="col-md-9">
-  <a class="col-md-4" routerLink="/teams/{{team.id}}"> {{groupPhase.name}} {{groupPhase.fight_length}}</a>
+  <a class="col-md-4" routerLink="/group-phases/{{groupPhase.id}}"> {{groupPhase.name}} {{groupPhase.fight_length}}</a>
   <div class="col-md-1" *ngIf="isAuthorized">
     <button class="col-md-1 btn btn-warning" id="delete-group-phase" (click)="deleteGroupPhase()" i18n>
       Delete</button>

@@ -15,7 +15,7 @@ const groupPhase: GroupPhase = {
   fight_length: 5,
   name: "gp1"
 }
-/*
+
 describe('GroupPhaseLineComponent', () => {
   let component: GroupPhaseLineComponent;
   let fixture: ComponentFixture<GroupPhaseLineComponent>;
@@ -23,8 +23,9 @@ describe('GroupPhaseLineComponent', () => {
   let html;
 
   beforeEach(async(() => {
+    groupPhaseService = new GroupPhaseServiceSpy();
     TestBed.configureTestingModule({
-      declarations: [ GroupPhaseLineComponent ],
+      declarations: [GroupPhaseLineComponent],
       providers: [
         {
           provide: GroupPhaseService, useValue: groupPhaseService
@@ -32,7 +33,7 @@ describe('GroupPhaseLineComponent', () => {
       ],
       imports: [RouterTestingModule]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -93,4 +94,3 @@ describe('GroupPhaseLineComponent', () => {
     });
   });
 });
-*/
