@@ -13,7 +13,6 @@ import { Fight } from '../fight';
 import { By } from '@angular/platform-browser';
 import { FightService } from '../fight.service';
 import { FightServiceSpy } from '../fight.service.spy';
-import { Point } from '../../point/point';
 
 const akaTeamId: number = 15;
 const shiroTeamId: number = 74;
