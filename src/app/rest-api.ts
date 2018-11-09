@@ -24,3 +24,4 @@ export const TEAM_FIGHTS_ENDPOINT: string = "team_fights/";
 export const MEMBERS_ENDPOINT: string = "members/";
 export const NOT_ASSIGNED_ENDPOINT: string = "not_assigned/";
 export const GROUP_PHASES_ENDPOINT: string = "group_phases/";
+export const GROUPS_ENDPOINT: string = "groups/";
