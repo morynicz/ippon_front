@@ -261,6 +261,5 @@ describe('TeamFightService', () => {
           const req = backend.expectOne(fightAuthUrl);
           req.flush({ "isAuthorized": true });
         }));
-  })
-
+  });
 });
