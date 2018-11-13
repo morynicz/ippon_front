@@ -1,12 +1,5 @@
-import { CrudfServiceSpy } from "../crudf.service.spy";
-import { of, Observable } from "rxjs";
 import { Group } from "./group";
+import { CrudfaServiceSpy } from "../crudfa.service.spy";
 
-export class GroupServiceSpy extends CrudfServiceSpy<Group>{
-    isAuthorizedValue: number;
-    isAuthorizedReturnValue: boolean = false;
-    isAuthorized(id: number): Observable<boolean> {
-        this.isAuthorizedValue = id;
-        return of(this.isAuthorizedReturnValue);
-    }
+export class GroupServiceSpy extends CrudfaServiceSpy<Group>{
 }
