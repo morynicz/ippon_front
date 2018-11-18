@@ -62,6 +62,7 @@ import { TeamFullComponent } from './team/team-full/team-full.component';
 import { TournamentTeamListComponent } from './tournament/tournament-team-list/tournament-team-list.component';
 import { GroupPhaseLineComponent } from './group-phase/group-phase-line/group-phase-line.component';
 import { TeamFightFormComponent } from './team-fight/team-fight-form/team-fight-form.component';
+import { TeamFightLineComponent } from './team-fight/team-fight-line/team-fight-line.component';
 
 @NgModule({
   imports: [
@@ -109,7 +110,8 @@ import { TeamFightFormComponent } from './team-fight/team-fight-form/team-fight-
     TeamFullComponent,
     TournamentTeamListComponent,
     GroupPhaseLineComponent,
-    TeamFightFormComponent
+    TeamFightFormComponent,
+    TeamFightLineComponent
   ],
   providers: [
     PlayerService,

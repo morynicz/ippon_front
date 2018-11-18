@@ -1,0 +1,14 @@
+<div class="row">
+  <a class="col-md-4" routerLink="/team-fights/{{teamFight.id}}">
+    <div class="col-md" id="aka-team">
+      {{akaTeam.name}}
+    </div>
+    <div class="col-md" id="shiro-team">
+      {{shiroTeam.name}}
+    </div>
+  </a>
+  <div class="col-md" *ngIf="isAuthorized">
+    <button class="col-md-1 btn btn-warning" id="delete-team-fight" (click)="deleteTeamFight()" i18n>
+      Delete</button>
+  </div>
+</div>
