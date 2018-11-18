@@ -1,16 +1,22 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TeamFightLineComponent } from './team-fight-line.component';
-import { TeamFight } from '../team-fight';
+import { GroupFightLineComponent } from './group-fight-line.component';
+import { TeamFight } from '../../team-fight/team-fight';
 import { Team } from '../../team/team';
+import { GroupFightServiceSpy } from '../group-fight.service.spy';
+import { GroupFight } from '../group-fight';
 import { TeamServiceSpy } from '../../team/team.service.spy';
-import { TeamFightServiceSpy } from '../team-fight.service.spy';
+import { TeamFightServiceSpy } from '../../team-fight/team-fight.service.spy';
 import { DebugElement } from '@angular/core';
-import { By } from '@angular/platform-browser';
+import { TeamFightLineComponent } from '../../team-fight/team-fight-line/team-fight-line.component';
 import { TeamService } from '../../team/team.service';
-import { TeamFightService } from '../team-fight.service';
+import { TeamFightService } from '../../team-fight/team-fight.service';
 import { RouterTestingModule } from '@angular/router/testing';
+import { GroupFightService } from '../group-fight.service';
+import { By } from '@angular/platform-browser';
 
+const groupFightId: number = 768;
+const groupId: number = 231;
 const teamFightId: number = 13;
 const akaTeamId: number = 15;
 const shiroTeamId: number = 74;
@@ -37,9 +43,16 @@ const akaTeam: Team = {
   tournament: tournamentId
 }
 
-describe('TeamFightLineComponent', () => {
-  let component: TeamFightLineComponent;
-  let fixture: ComponentFixture<TeamFightLineComponent>;
+const groupFight: GroupFight = {
+  id: groupFightId,
+  group: groupId,
+  team_fight: teamFightId
+}
+
+describe('GroupFightLineComponent', () => {
+  let component: GroupFightLineComponent;
+  let fixture: ComponentFixture<GroupFightLineComponent>;
+  let groupFightService: GroupFightServiceSpy;
   let teamService: TeamServiceSpy;
   let teamFightService: TeamFightServiceSpy;
   let de: DebugElement;
@@ -50,14 +63,17 @@ describe('TeamFightLineComponent', () => {
     teamFightService.getReturnValues.push(teamFight);
     teamService.getReturnValues.push(akaTeam);
     teamService.getReturnValues.push(shiroTeam);
-
+    groupFightService = new GroupFightServiceSpy();
+    groupFightService.getReturnValues.push()
     TestBed.configureTestingModule({
       declarations: [
+        GroupFightLineComponent,
         TeamFightLineComponent
       ],
       providers: [
         { provide: TeamService, useValue: teamService },
         { provide: TeamFightService, useValue: teamFightService },
+        { provide: GroupFightService, useValue: groupFightService }
       ],
       imports: [RouterTestingModule]
     })
@@ -65,9 +81,10 @@ describe('TeamFightLineComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TeamFightLineComponent);
+    fixture = TestBed.createComponent(GroupFightLineComponent);
     component = fixture.componentInstance;
-    component.teamFight = teamFight;
+    component.groupFight = groupFight;
+    fixture.detectChanges();
     component.isAuthorized = false;
     fixture.detectChanges();
     de = fixture.debugElement;
@@ -122,6 +139,5 @@ describe('TeamFightLineComponent', () => {
         expect(reloadRequested).toBe(true);
       });
     });
-
   });
 });
