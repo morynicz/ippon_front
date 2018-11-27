@@ -11,7 +11,7 @@ import { TeamFightService } from '../team-fight.service';
 export class TeamFightFormComponent implements OnInit {
   @Input() teams: Team[];
   @Input() tournament: number;
-  @Output() reloadRequest = new EventEmitter<any>();
+  @Output() reloadRequest = new EventEmitter<TeamFight>();
 
   teamFight: TeamFight;
   constructor(private teamFightService: TeamFightService) {
@@ -25,7 +25,7 @@ export class TeamFightFormComponent implements OnInit {
     this.teamFight.id = 0;
     this.teamFight.tournament = this.tournament;
     this.teamFightService.add(this.teamFight).subscribe(resp => {
-      this.reloadRequest.emit('');
+      this.reloadRequest.emit(resp);
     });
   }
 }

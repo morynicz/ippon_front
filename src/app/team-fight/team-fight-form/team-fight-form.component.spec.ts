@@ -45,6 +45,7 @@ describe('TeamFightFormComponent', () => {
   let fixture: ComponentFixture<TeamFightFormComponent>;
   let teamFightService: TeamFightServiceSpy;
   let reloadRequested: boolean;
+  let createdTeamFight: TeamFight;
   let html;
 
   beforeEach(async(() => {
@@ -73,6 +74,7 @@ describe('TeamFightFormComponent', () => {
     component.tournament = tournamentId;
     component.reloadRequest.subscribe(req => {
       reloadRequested = true;
+      createdTeamFight = req;
     });
     fixture.detectChanges();
     html = fixture.debugElement.nativeElement.textContent;
@@ -105,8 +107,11 @@ describe('TeamFightFormComponent', () => {
       expect(teamFightService.addValue.tournament).toEqual(tournamentId);
     });
 
-    it("should call reload callback", () => {
+    it("should call reload callback with created team", () => {
       expect(reloadRequested).toBeTruthy();
+      expect(createdTeamFight.aka_team).toEqual(teams[0].id);
+      expect(createdTeamFight.shiro_team).toEqual(teams[2].id);
+      expect(createdTeamFight.tournament).toEqual(tournamentId);
     });
   });
 });
