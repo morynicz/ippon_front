@@ -12,6 +12,7 @@ import { TeamFight } from '../team-fight';
 import { By } from '@angular/platform-browser';
 
 const tournamentId: number = 32;
+const teamFightId: number = 87;
 const teams: Team[] = [
   {
     id: 22,
@@ -36,7 +37,7 @@ const teams: Team[] = [
 const teamFight: TeamFight = {
   aka_team: teams[0].id,
   shiro_team: teams[2].id,
-  id: 0,
+  id: teamFightId,
   tournament: tournamentId
 }
 
@@ -50,6 +51,7 @@ describe('TeamFightFormComponent', () => {
 
   beforeEach(async(() => {
     teamFightService = new TeamFightServiceSpy();
+    teamFightService.addReturnValue = teamFight;
     TestBed.configureTestingModule({
       declarations: [
         TeamFightFormComponent,
@@ -80,10 +82,6 @@ describe('TeamFightFormComponent', () => {
     html = fixture.debugElement.nativeElement.textContent;
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-
   it("should provide possibility to select any team from input", () => {
     expect(html).toContain(teams[0].name);
     expect(html).toContain(teams[1].name);
@@ -112,6 +110,7 @@ describe('TeamFightFormComponent', () => {
       expect(createdTeamFight.aka_team).toEqual(teams[0].id);
       expect(createdTeamFight.shiro_team).toEqual(teams[2].id);
       expect(createdTeamFight.tournament).toEqual(tournamentId);
+      expect(createdTeamFight.id).toEqual(teamFightId);
     });
   });
 });

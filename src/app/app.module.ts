@@ -64,6 +64,7 @@ import { GroupPhaseLineComponent } from './group-phase/group-phase-line/group-ph
 import { TeamFightFormComponent } from './team-fight/team-fight-form/team-fight-form.component';
 import { TeamFightLineComponent } from './team-fight/team-fight-line/team-fight-line.component';
 import { GroupFightLineComponent } from './group-fight/group-fight-line/group-fight-line.component';
+import { GroupFightFormComponent } from './group-fight/group-fight-form/group-fight-form.component';
 
 @NgModule({
   imports: [
@@ -113,7 +114,8 @@ import { GroupFightLineComponent } from './group-fight/group-fight-line/group-fi
     GroupPhaseLineComponent,
     TeamFightFormComponent,
     TeamFightLineComponent,
-    GroupFightLineComponent
+    GroupFightLineComponent,
+    GroupFightFormComponent
   ],
   providers: [
     PlayerService,

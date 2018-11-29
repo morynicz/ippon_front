@@ -26,7 +26,7 @@ export class CrudfaServiceSpy<Resource> {
   addReturnValue: Resource;
   add(resource: Resource): Observable<Resource> {
     this.addValue = resource;
-    return of(this.addValue);
+    return of(this.addReturnValue);
   }
 
   deleteValue: Resource;
