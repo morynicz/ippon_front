@@ -1,50 +1,49 @@
 import { TestBed, inject } from '@angular/core/testing';
 
-import { TeamMemberService } from './team-member.service';
-import { Player } from '../player/player';
-import { Sex } from '../sex';
-import { Rank } from '../rank';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { IPPON_HOST, TEAMS_ENDPOINT, MEMBERS_ENDPOINT, NOT_ASSIGNED_ENDPOINT } from '../rest-api';
-import { TeamMember } from './team-member';
+import { GroupMemberService } from './group-member.service';
+import { Team } from '../team/team';
+import { IPPON_HOST, GROUPS_ENDPOINT, MEMBERS_ENDPOINT, NOT_ASSIGNED_ENDPOINT } from '../rest-api';
+import { HttpTestingController, HttpClientTestingModule } from '@angular/common/http/testing';
+import { GroupMember } from './group-member';
 
-const teamId: number = 14;
-
-const players: Player[] = [{
-  name: 'P1',
-  surname: 'S1',
-  sex: Sex.Male,
-  birthday: new Date("2001-01-01"),
-  rank: Rank.Kyu_5,
-  club_id: 0,
-  id: 0
-},
-{
-  name: 'P2',
-  surname: 'S2',
-  sex: Sex.Female,
-  birthday: new Date("2002-02-02"),
-  rank: Rank.Kyu_2,
-  club_id: 2,
-  id: 1
-}
+const groupId: number = 687;
+const tournamentId: number = 32;
+const teams: Team[] = [
+  {
+    id: 22,
+    name: "T1",
+    members: [],
+    tournament: tournamentId
+  },
+  {
+    id: 27,
+    name: "T2",
+    members: [],
+    tournament: tournamentId
+  },
+  {
+    id: 27,
+    name: "T2",
+    members: [],
+    tournament: tournamentId
+  }
 ]
 
-const memberId: number = 17;
+const memberId: number = 132;
 
-const resource: TeamMember = {
-  'team': teamId,
-  'player': memberId
-};
+const resourcesUrl: string = IPPON_HOST + GROUPS_ENDPOINT + `${groupId}/` + MEMBERS_ENDPOINT;
+const resourceUrl: string = resourcesUrl + `${memberId}/`;
 
-describe('TeamMemberService', () => {
-  const resourcesUrl: string = IPPON_HOST + TEAMS_ENDPOINT + `${teamId}/` + MEMBERS_ENDPOINT;
-  const resourceUrl: string = resourcesUrl + `${memberId}/`;
+const resource: GroupMember = {
+  'group': groupId,
+  'team': memberId
+}
 
+describe('GroupMemberService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [TeamMemberService]
+      providers: [GroupMemberService]
     });
   });
 
@@ -55,16 +54,16 @@ describe('TeamMemberService', () => {
   describe("when add is called", () => {
     it("calls the resources api url",
       inject(
-        [TeamMemberService, HttpTestingController],
-        (service: TeamMemberService,
+        [GroupMemberService, HttpTestingController],
+        (service: GroupMemberService,
           backend: HttpTestingController) => {
           service.add(resource).subscribe();
           const req = backend.expectOne(resourceUrl);
         }));
     it("uses POST method",
       inject(
-        [TeamMemberService, HttpTestingController],
-        (service: TeamMemberService,
+        [GroupMemberService, HttpTestingController],
+        (service: GroupMemberService,
           backend: HttpTestingController) => {
           service.add(resource).subscribe();
           const req = backend.expectOne(resourceUrl);
@@ -72,8 +71,8 @@ describe('TeamMemberService', () => {
         }));
     it("sends request with application/json content type headers",
       inject(
-        [TeamMemberService, HttpTestingController],
-        (service: TeamMemberService,
+        [GroupMemberService, HttpTestingController],
+        (service: GroupMemberService,
           backend: HttpTestingController) => {
           service.add(resource).subscribe();
           const req = backend.expectOne(resourceUrl);
@@ -84,8 +83,8 @@ describe('TeamMemberService', () => {
         }));
     it("sends empty body",
       inject(
-        [TeamMemberService, HttpTestingController],
-        (service: TeamMemberService,
+        [GroupMemberService, HttpTestingController],
+        (service: GroupMemberService,
           backend: HttpTestingController) => {
           service.add(resource).subscribe();
           const req = backend.expectOne(resourceUrl);
@@ -97,27 +96,27 @@ describe('TeamMemberService', () => {
   describe("when getList is called", () => {
     it("calls the resources api url",
       inject(
-        [TeamMemberService, HttpTestingController],
-        (service: TeamMemberService,
+        [GroupMemberService, HttpTestingController],
+        (service: GroupMemberService,
           backend: HttpTestingController) => {
-          service.getList(teamId).subscribe();
+          service.getList(groupId).subscribe();
           const req = backend.expectOne(resourcesUrl);
         }));
     it("uses GET method",
       inject(
-        [TeamMemberService, HttpTestingController],
-        (service: TeamMemberService,
+        [GroupMemberService, HttpTestingController],
+        (service: GroupMemberService,
           backend: HttpTestingController) => {
-          service.getList(teamId).subscribe();
+          service.getList(groupId).subscribe();
           const req = backend.expectOne(resourcesUrl);
           expect(req.request.method).toBe('GET');
         }));
     it("sends request with application/json content type headers",
       inject(
-        [TeamMemberService, HttpTestingController],
-        (service: TeamMemberService,
+        [GroupMemberService, HttpTestingController],
+        (service: GroupMemberService,
           backend: HttpTestingController) => {
-          service.getList(teamId).subscribe();
+          service.getList(groupId).subscribe();
           const req = backend.expectOne(resourcesUrl);
           expect(req.request.headers.has('Content-Type'))
             .toBe(true);
@@ -126,42 +125,42 @@ describe('TeamMemberService', () => {
         }));
     it("responds with requested resources",
       inject(
-        [TeamMemberService, HttpTestingController],
-        (service: TeamMemberService,
+        [GroupMemberService, HttpTestingController],
+        (service: GroupMemberService,
           backend: HttpTestingController) => {
-          service.getList(teamId)
+          service.getList(groupId)
             .subscribe(response => expect(response)
-              .toBe(players));
+              .toBe(teams));
           const req = backend.expectOne(resourcesUrl);
-          req.flush(players);
+          req.flush(teams);
         }));
   });
 
   describe("when getUnassigned is called", () => {
-    const unassignedUrl: string = IPPON_HOST + TEAMS_ENDPOINT + `${teamId}/` + NOT_ASSIGNED_ENDPOINT;
+    const unassignedUrl: string = IPPON_HOST + GROUPS_ENDPOINT + `${groupId}/` + NOT_ASSIGNED_ENDPOINT;
     it("calls the resources api url",
       inject(
-        [TeamMemberService, HttpTestingController],
-        (service: TeamMemberService,
+        [GroupMemberService, HttpTestingController],
+        (service: GroupMemberService,
           backend: HttpTestingController) => {
-          service.getNotAssigned(teamId).subscribe();
+          service.getNotAssigned(groupId).subscribe();
           const req = backend.expectOne(unassignedUrl);
         }));
     it("uses GET method",
       inject(
-        [TeamMemberService, HttpTestingController],
-        (service: TeamMemberService,
+        [GroupMemberService, HttpTestingController],
+        (service: GroupMemberService,
           backend: HttpTestingController) => {
-          service.getNotAssigned(teamId).subscribe();
+          service.getNotAssigned(groupId).subscribe();
           const req = backend.expectOne(unassignedUrl);
           expect(req.request.method).toBe('GET');
         }));
     it("sends request with application/json content type headers",
       inject(
-        [TeamMemberService, HttpTestingController],
-        (service: TeamMemberService,
+        [GroupMemberService, HttpTestingController],
+        (service: GroupMemberService,
           backend: HttpTestingController) => {
-          service.getNotAssigned(teamId).subscribe();
+          service.getNotAssigned(groupId).subscribe();
           const req = backend.expectOne(unassignedUrl);
           expect(req.request.headers.has('Content-Type'))
             .toBe(true);
@@ -170,30 +169,30 @@ describe('TeamMemberService', () => {
         }));
     it("responds with requested resources",
       inject(
-        [TeamMemberService, HttpTestingController],
-        (service: TeamMemberService,
+        [GroupMemberService, HttpTestingController],
+        (service: GroupMemberService,
           backend: HttpTestingController) => {
-          service.getNotAssigned(teamId)
+          service.getNotAssigned(groupId)
             .subscribe(response => expect(response)
-              .toBe(players));
+              .toBe(teams));
           const req = backend.expectOne(unassignedUrl);
-          req.flush(players);
+          req.flush(teams);
         }));
   });
 
   describe("when delete is called", () => {
     it("calls the resources api url",
       inject(
-        [TeamMemberService, HttpTestingController],
-        (service: TeamMemberService,
+        [GroupMemberService, HttpTestingController],
+        (service: GroupMemberService,
           backend: HttpTestingController) => {
           service.delete(resource).subscribe();
           const req = backend.expectOne(resourceUrl);
         }));
     it("uses DELETE method",
       inject(
-        [TeamMemberService, HttpTestingController],
-        (service: TeamMemberService,
+        [GroupMemberService, HttpTestingController],
+        (service: GroupMemberService,
           backend: HttpTestingController) => {
           service.delete(resource).subscribe();
           const req = backend.expectOne(resourceUrl);
@@ -201,8 +200,8 @@ describe('TeamMemberService', () => {
         }));
     it("sends request with application/json content type headers",
       inject(
-        [TeamMemberService, HttpTestingController],
-        (service: TeamMemberService,
+        [GroupMemberService, HttpTestingController],
+        (service: GroupMemberService,
           backend: HttpTestingController) => {
           service.delete(resource).subscribe();
           const req = backend.expectOne(resourceUrl);
