@@ -24,6 +24,7 @@ import { FightFullComponent } from './fight/fight-full/fight-full.component';
 import { TeamFightFullComponent } from './team-fight/team-fight-full/team-fight-full.component';
 import { TeamFullComponent } from './team/team-full/team-full.component';
 import { TournamentTeamListComponent } from './tournament/tournament-team-list/tournament-team-list.component';
+import { GroupFullComponent } from './group/group-full/group-full.component';
 
 
 const routes: Routes = [
@@ -49,7 +50,8 @@ const routes: Routes = [
   { path: 'fights/:id', component: FightFullComponent },
   { path: 'team-fights/:id', component: TeamFightFullComponent },
   { path: 'teams/:id', component: TeamFullComponent },
-  { path: 'test', component: TestingGroundsComponent }
+  { path: 'groups/:id', component: GroupFullComponent },
+  { path: 'test', component: TestingGroundsComponent },
 ]
 
 @NgModule({
