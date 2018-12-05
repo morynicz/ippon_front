@@ -61,6 +61,7 @@ import { TeamFormComponent } from './team/team-form/team-form.component';
 import { TeamFullComponent } from './team/team-full/team-full.component';
 import { TournamentTeamListComponent } from './tournament/tournament-team-list/tournament-team-list.component';
 import { GroupPhaseLineComponent } from './group-phase/group-phase-line/group-phase-line.component';
+import { GroupPhaseFullComponent } from './group-phase/group-phase-full/group-phase-full.component';
 import { TeamFightFormComponent } from './team-fight/team-fight-form/team-fight-form.component';
 import { GroupFullComponent } from './group/group-full/group-full.component';
 import { TeamFightLineComponent } from './team-fight/team-fight-line/team-fight-line.component';
@@ -113,6 +114,7 @@ import { GroupFightFormComponent } from './group-fight/group-fight-form/group-fi
     TeamFullComponent,
     TournamentTeamListComponent,
     GroupPhaseLineComponent,
+    GroupPhaseFullComponent,
     TeamFightFormComponent,
     GroupFullComponent,
     TeamFightLineComponent,
