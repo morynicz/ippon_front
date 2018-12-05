@@ -17,7 +17,7 @@ export class TeamLineComponent implements OnInit {
   }
 
   deleteTeam(): void {
-    this.teamService.delete(this.team).subscribe(resp => this.reloadRequest.emit(''));
-
+    this.teamService.delete(this.team)
+      .subscribe(resp => this.reloadRequest.emit(''));
   }
 }

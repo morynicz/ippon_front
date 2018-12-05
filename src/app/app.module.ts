@@ -67,6 +67,7 @@ import { GroupFullComponent } from './group/group-full/group-full.component';
 import { TeamFightLineComponent } from './team-fight/team-fight-line/team-fight-line.component';
 import { GroupFightLineComponent } from './group-fight/group-fight-line/group-fight-line.component';
 import { GroupFightFormComponent } from './group-fight/group-fight-form/group-fight-form.component';
+import { GroupMemberLineComponent } from './group/group-member-line/group-member-line.component';
 
 @NgModule({
   imports: [
@@ -119,7 +120,8 @@ import { GroupFightFormComponent } from './group-fight/group-fight-form/group-fi
     GroupFullComponent,
     TeamFightLineComponent,
     GroupFightLineComponent,
-    GroupFightFormComponent
+    GroupFightFormComponent,
+    GroupMemberLineComponent
   ],
   providers: [
     PlayerService,
