@@ -21,4 +21,7 @@ export class GroupFullComponent implements OnInit {
   ngOnInit() {
   }
 
+  reload(): void {
+
+  }
 }

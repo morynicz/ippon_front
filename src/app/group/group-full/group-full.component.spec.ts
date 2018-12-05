@@ -23,6 +23,7 @@ import { By } from '@angular/platform-browser';
 import { GroupMemberServiceSpy } from '../group-member.service.spy';
 import { GroupMemberService } from '../group-member.service';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
+import { GroupMemberLineComponent } from '../group-member-line/group-member-line.component';
 
 const tournamentId: number = 32;
 const teamFightId: number = 87;
@@ -86,7 +87,8 @@ describe('GroupFullComponent', () => {
         GroupFightLineComponent,
         TeamFightLineComponent,
         TeamFightFormComponent,
-        TeamLineComponent
+        TeamLineComponent,
+        GroupMemberLineComponent
       ],
       providers: [
         { provide: GroupService, useValue: groupService },
