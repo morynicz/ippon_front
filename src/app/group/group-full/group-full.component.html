@@ -1,8 +1,17 @@
 <div id="teams">
   <ul class="list-unstyled">
     <li *ngFor="let team of  teams">
-      <ippon-group-member-line [team]="team" [isAuthorized]="false" [group]="0" (reloadRequest)=reload()>
+      <ippon-group-member-line [team]="team" [isAuthorized]="false" [group]="0" (reloadRequest)="reloadTeams()">
       </ippon-group-member-line>
+    </li>
+  </ul>
+</div>
+<div id="group-fights">
+  <ul class="list-unstyled">
+    <li *ngFor="let fight of groupFights">
+      <ippon-group-fight-line [groupFight]="fight" [isAuthorized]="fase" (reloadRequest)="reloadFights()">
+
+      </ippon-group-fight-line>
     </li>
   </ul>
 </div>

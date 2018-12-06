@@ -42,7 +42,7 @@ const teams: Team[] = [
   },
   {
     id: 27,
-    name: "T2",
+    name: "T3",
     members: [],
     tournament: tournamentId
   }
@@ -76,8 +76,12 @@ describe('GroupFullComponent', () => {
   beforeEach(async(() => {
     groupService = new GroupServiceSpy();
     teamFightService = new TeamFightServiceSpy();
+    teamFightService.getReturnValues.push(teamFight);
     groupFightService = new GroupFightServiceSpy();
+    groupFightService.getListReturnValues.push([groupFight]);
     teamService = new TeamServiceSpy();
+    teamService.getReturnValues.push(teams[0]);
+    teamService.getReturnValues.push(teams[2]);
     groupMemberService = new GroupMemberServiceSpy();
     groupMemberService.getListReturnValue.push(teams);
     TestBed.configureTestingModule({
@@ -112,20 +116,33 @@ describe('GroupFullComponent', () => {
       .compileComponents();
   }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(GroupFullComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+  describe("when user is not authorized", () => {
+    beforeEach(() => {
+      fixture = TestBed.createComponent(GroupFullComponent);
+      component = fixture.componentInstance;
+      fixture.detectChanges();
+    });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    it('should create', () => {
+      expect(component).toBeTruthy();
+    });
 
-  it("should show names of all teams in group inside designated area", () => {
-    let teamsArea = fixture.debugElement.query(By.css("#teams"));
-    expect(teamsArea.nativeElement.textContent).toContain(teams[0].name);
-    expect(teamsArea.nativeElement.textContent).toContain(teams[1].name);
-    expect(teamsArea.nativeElement.textContent).toContain(teams[2].name);
+    it("should show names of all teams in group inside designated area", () => {
+      let teamsArea = fixture.debugElement.query(By.css("#teams"));
+      expect(teamsArea.nativeElement.textContent).toContain(teams[0].name);
+      expect(teamsArea.nativeElement.textContent).toContain(teams[1].name);
+      expect(teamsArea.nativeElement.textContent).toContain(teams[2].name);
+    });
+
+    it("should call group service to get rest of group data", () => {
+      expect(groupService.getValues).toEqual([groupId]);
+    });
+
+    it("should show all the group fights of this group", () => {
+      let groupFightsArea = fixture.debugElement.query(By.css("#group-fights"));
+      expect(groupFightsArea.nativeElement.textContent).toContain(teams[0].name);
+      expect(groupFightsArea.nativeElement.textContent).toContain(teams[2].name);
+      expect(groupFightsArea.nativeElement.textContent).not.toContain(teams[1].name);
+    });
   });
 });
