@@ -1,0 +1,24 @@
+<div class="row" id="unassigned-teams">
+  <ul class="list-unstyled">
+    <li *ngFor="let team of unassignedTeams">
+      <div>
+        <div>
+          {{team.name}}
+        </div>
+        <button class="btn btn-primary" (click)="addMember(team)" id="add-member-{{team.id}}"></button>
+      </div>
+    </li>
+  </ul>
+</div>
+<div class="row" id="assigned-teams">
+  <ul class="list-unstyled">
+    <li *ngFor="let team of assignedTeams">
+      <div>
+        <div>
+          {{team.name}}
+        </div>
+        <button class="btn btn-primary" (click)="removeMember(team)" id="remove-member-{{team.id}}"></button>
+      </div>
+    </li>
+  </ul>
+</div>
