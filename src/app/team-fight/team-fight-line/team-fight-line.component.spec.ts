@@ -64,63 +64,88 @@ describe('TeamFightLineComponent', () => {
       .compileComponents();
   }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(TeamFightLineComponent);
-    component = fixture.componentInstance;
-    component.teamFight = teamFight;
-    component.isAuthorized = false;
-    fixture.detectChanges();
-    de = fixture.debugElement;
-  });
-
-  it('shows aka team name on aka team side', () => {
-    let akaTeamSide = de.query(By.css("#aka-team"));
-    expect(akaTeamSide.nativeElement.textContent).toContain(akaTeam.name);
-  });
-
-  it('shows shiro team name on shiro team side', () => {
-    let akaTeamSide = de.query(By.css("#shiro-team"));
-    expect(akaTeamSide.nativeElement.textContent).toContain(shiroTeam.name);
-  });
-
-  it('does not show delete button when user not authorized', () => {
-    const html = fixture.debugElement.nativeElement;
-    expect(html.querySelector('#delete-team-fight')).toBeFalsy();
-  });
-
-  it('should provide link to the group phase', () => {
-    const link = fixture.debugElement.query(By.css('a'));
-    expect(link.nativeElement.getAttribute('ng-reflect-router-link'))
-      .toBe('/team-fights/' + teamFight.id);
-  });
-
-  describe("when delete button is clicked", () => {
-    let btn;
-    let reloadRequested: boolean;
-
-    beforeEach(async(() => {
-      reloadRequested = false;
-      component.reloadRequest.subscribe(req => {
-        reloadRequested = true;
-      });
-      component.isAuthorized = true;
+  describe("when everything is properly initialized from the beginning", () => {
+    beforeEach(() => {
+      fixture = TestBed.createComponent(TeamFightLineComponent);
+      component = fixture.componentInstance;
+      component.teamFight = teamFight;
+      component.isAuthorized = false;
       fixture.detectChanges();
-      btn = fixture.debugElement.query(By.css("#delete-team-fight"));
-      btn.nativeElement.click();
+      de = fixture.debugElement;
+    });
 
-    }));
+    it('shows aka team name on aka team side', () => {
+      let akaTeamSide = de.query(By.css("#aka-team"));
+      expect(akaTeamSide.nativeElement.textContent).toContain(akaTeam.name);
+    });
 
-    it("sends to delete request for teamFight to teamFight.service",
-      () => {
+    it('shows shiro team name on shiro team side', () => {
+      let akaTeamSide = de.query(By.css("#shiro-team"));
+      expect(akaTeamSide.nativeElement.textContent).toContain(shiroTeam.name);
+    });
+
+    it('does not show delete button when user not authorized', () => {
+      const html = fixture.debugElement.nativeElement;
+      expect(html.querySelector('#delete-team-fight')).toBeFalsy();
+    });
+
+    it('should provide link to the group phase', () => {
+      const link = fixture.debugElement.query(By.css('a'));
+      expect(link.nativeElement.getAttribute('ng-reflect-router-link'))
+        .toBe('/team-fights/' + teamFight.id);
+    });
+
+    describe("when delete button is clicked", () => {
+      let btn;
+      let reloadRequested: boolean;
+
+      beforeEach(async(() => {
+        reloadRequested = false;
+        component.reloadRequest.subscribe(req => {
+          reloadRequested = true;
+        });
+        component.isAuthorized = true;
+        fixture.detectChanges();
+        btn = fixture.debugElement.query(By.css("#delete-team-fight"));
+        btn.nativeElement.click();
+
+      }));
+
+      it("sends to delete request for teamFight to teamFight.service",
+        () => {
+          fixture.whenStable().then(() => {
+            expect(teamFightService.deleteValue).toEqual(teamFight);
+          });
+        });
+
+      it("triggers reload request in parent component", () => {
         fixture.whenStable().then(() => {
-          expect(teamFightService.deleteValue).toEqual(teamFight);
+          expect(reloadRequested).toBe(true);
         });
       });
 
-    it("triggers reload request in parent component", () => {
-      fixture.whenStable().then(() => {
-        expect(reloadRequested).toBe(true);
-      });
+    });
+  });
+  describe("when some vital information are missing on the beginning", () => {
+    beforeEach(() => {
+      fixture = TestBed.createComponent(TeamFightLineComponent);
+      component = fixture.componentInstance;
+      fixture.detectChanges();
+      de = fixture.debugElement;
+    });
+
+    it('shows aka team name on aka team side', () => {
+      component.teamFight = teamFight;
+      fixture.detectChanges();
+      let akaTeamSide = de.query(By.css("#aka-team"));
+      expect(akaTeamSide.nativeElement.textContent).toContain(akaTeam.name);
+    });
+
+    it('shows shiro team name on shiro team side', () => {
+      component.teamFight = teamFight;
+      fixture.detectChanges();
+      let akaTeamSide = de.query(By.css("#shiro-team"));
+      expect(akaTeamSide.nativeElement.textContent).toContain(shiroTeam.name);
     });
 
   });

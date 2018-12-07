@@ -21,7 +21,9 @@ export class TeamFightLineComponent implements OnInit {
     private teamFightService: TeamFightService) { }
 
   ngOnInit() {
-    this.loadTeams();
+    if (this.teamFight != null) {
+      this.loadTeams();
+    }
   }
 
   private loadTeams() {
@@ -30,11 +32,6 @@ export class TeamFightLineComponent implements OnInit {
     this.teamService.get(this.teamFight.shiro_team)
       .subscribe(response => this.shiroTeam = response);
     this.loaded = true;
-  }
-
-  ngOnChange() {
-    console.log("On change" + this.teamFight);
-    this.loadTeams()
   }
 
   ngDoCheck() {
