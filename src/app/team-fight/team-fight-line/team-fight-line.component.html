@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row" *ngIf="teamFight != null">
   <a class="col-md-4" routerLink="/team-fights/{{teamFight.id}}">
     <div class="col-md" id="aka-team">
       {{akaTeam.name}}

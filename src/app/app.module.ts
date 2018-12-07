@@ -67,10 +67,10 @@ import { GroupFullComponent } from './group/group-full/group-full.component';
 import { TeamFightLineComponent } from './team-fight/team-fight-line/team-fight-line.component';
 import { GroupFightLineComponent } from './group-fight/group-fight-line/group-fight-line.component';
 import { GroupFightFormComponent } from './group-fight/group-fight-form/group-fight-form.component';
-import { GroupMemberLineComponent } from './group/group-member-line/group-member-line.component';
-import { GroupMemberService } from './group/group-member.service';
+import { GroupMemberService } from './group-member/group-member.service';
 import { GroupService } from './group/group.service';
 import { GroupFightService } from './group-fight/group-fight.service';
+import { GroupMemberLineComponent } from './group-member/group-member-line/group-member-line.component';
 
 @NgModule({
   imports: [

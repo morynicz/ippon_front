@@ -15,16 +15,31 @@ export class TeamFightLineComponent implements OnInit {
   @Output() reloadRequest = new EventEmitter<any>();
   akaTeam: Team;
   shiroTeam: Team;
+  loaded: boolean = false;
   constructor(
     private teamService: TeamService,
     private teamFightService: TeamFightService) { }
 
   ngOnInit() {
-    if (this.teamFight != null) {
-      this.teamService.get(this.teamFight.aka_team)
-        .subscribe(response => this.akaTeam = response);
-      this.teamService.get(this.teamFight.shiro_team)
-        .subscribe(response => this.shiroTeam = response);
+    this.loadTeams();
+  }
+
+  private loadTeams() {
+    this.teamService.get(this.teamFight.aka_team)
+      .subscribe(response => this.akaTeam = response);
+    this.teamService.get(this.teamFight.shiro_team)
+      .subscribe(response => this.shiroTeam = response);
+    this.loaded = true;
+  }
+
+  ngOnChange() {
+    console.log("On change" + this.teamFight);
+    this.loadTeams()
+  }
+
+  ngDoCheck() {
+    if (!this.loaded && this.teamFight != null) {
+      this.loadTeams();
     }
   }
 

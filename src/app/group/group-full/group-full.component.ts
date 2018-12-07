@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { GroupMemberService } from '../group-member.service';
+import { GroupMemberService } from '../../group-member/group-member.service';
 import { ActivatedRoute } from '@angular/router';
 import { Team } from '../../team/team';
 import { GroupService } from '../group.service';
