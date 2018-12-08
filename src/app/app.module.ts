@@ -74,6 +74,7 @@ import { GroupMemberLineComponent } from './group-member/group-member-line/group
 import { GroupMemberFormComponent } from './group-member/group-member-form/group-member-form.component';
 import { GroupLineComponent } from './group/group-line/group-line.component';
 import { GroupFormComponent } from './group/group-form/group-form.component';
+import { GroupPhaseService } from './group-phase/group-phase.service';
 
 @NgModule({
   imports: [
@@ -151,7 +152,8 @@ import { GroupFormComponent } from './group/group-form/group-form.component';
     TeamMemberService,
     GroupMemberService,
     GroupService,
-    GroupFightService
+    GroupFightService,
+    GroupPhaseService
   ],
   bootstrap: [AppComponent]
 })

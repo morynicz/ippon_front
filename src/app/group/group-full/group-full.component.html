@@ -4,7 +4,7 @@
 <div *ngIf="isAuthorized == false" id="group-members-list">
   <ul class="list-unstyled">
     <li *ngFor="let team of  teams">
-      <ippon-group-member-line [team]="team" [isAuthorized]="false" [group]="0" (reloadRequest)="reloadTeams()">
+      <ippon-group-member-line [team]="team" [isAuthorized]="false" [group]="group.id" (reloadRequest)="reloadTeams()">
       </ippon-group-member-line>
     </li>
   </ul>

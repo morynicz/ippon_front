@@ -25,6 +25,7 @@ import { TeamFightFullComponent } from './team-fight/team-fight-full/team-fight-
 import { TeamFullComponent } from './team/team-full/team-full.component';
 import { TournamentTeamListComponent } from './tournament/tournament-team-list/tournament-team-list.component';
 import { GroupFullComponent } from './group/group-full/group-full.component';
+import { GroupPhaseFullComponent } from './group-phase/group-phase-full/group-phase-full.component';
 
 
 const routes: Routes = [
@@ -51,6 +52,7 @@ const routes: Routes = [
   { path: 'team-fights/:id', component: TeamFightFullComponent },
   { path: 'teams/:id', component: TeamFullComponent },
   { path: 'groups/:id', component: GroupFullComponent },
+  { path: 'group-phases/:id', component: GroupPhaseFullComponent },
   { path: 'test', component: TestingGroundsComponent },
 ]
 
