@@ -73,6 +73,7 @@ import { GroupFightService } from './group-fight/group-fight.service';
 import { GroupMemberLineComponent } from './group-member/group-member-line/group-member-line.component';
 import { GroupMemberFormComponent } from './group-member/group-member-form/group-member-form.component';
 import { GroupLineComponent } from './group/group-line/group-line.component';
+import { GroupFormComponent } from './group/group-form/group-form.component';
 
 @NgModule({
   imports: [
@@ -128,7 +129,8 @@ import { GroupLineComponent } from './group/group-line/group-line.component';
     GroupFightFormComponent,
     GroupMemberLineComponent,
     GroupMemberFormComponent,
-    GroupLineComponent
+    GroupLineComponent,
+    GroupFormComponent
   ],
   providers: [
     PlayerService,

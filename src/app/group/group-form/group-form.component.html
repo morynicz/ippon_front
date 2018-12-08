@@ -1,0 +1,15 @@
+<div>
+  <form class="form-horizontal" role="form" class="edit-user" name="group-form" #groupForm="ngForm">
+    <div class="form-group">
+      <label for="name" class="col-md-2 control-label col-md-offset-2" i18n>
+        Group name
+      </label>
+      <div class="col-md-5">
+        <input type="text" name="name" class="form-control" placeholder="group name" [(ngModel)]="group.name">
+      </div>
+    </div>
+  </form>
+  <div class="col-md-3 text-right">
+    <button class="btn btn-primary" (click)="save()" id="save-group" i18n>Create</button>
+  </div>
+</div>
