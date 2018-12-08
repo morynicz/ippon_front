@@ -1,4 +1,7 @@
-<div id="teams">
+<div id="group-name">
+  {{group.name}}
+</div>
+<div *ngIf="isAuthorized == false" id="group-members-list">
   <ul class="list-unstyled">
     <li *ngFor="let team of  teams">
       <ippon-group-member-line [team]="team" [isAuthorized]="false" [group]="0" (reloadRequest)="reloadTeams()">
@@ -6,12 +9,18 @@
     </li>
   </ul>
 </div>
+<div *ngIf="isAuthorized==true" id="group-member-management">
+  <ippon-group-member-form [group]="group.id" (reloadRequest)="reloadTeams()"></ippon-group-member-form>
+</div>
 <div id="group-fights">
   <ul class="list-unstyled">
     <li *ngFor="let fight of groupFights">
-      <ippon-group-fight-line [groupFight]="fight" [isAuthorized]="fase" (reloadRequest)="reloadFights()">
+      <ippon-group-fight-line [groupFight]="fight" [isAuthorized]="isAuthorized" (reloadRequest)="reloadFights()">
 
       </ippon-group-fight-line>
     </li>
   </ul>
+</div>
+<div id="group-fight-management" *ngIf="isAuthorized == true">
+  <ippon-group-fight-form [group]="group.id" [tournament]="tournament" [teams]="teams" (reloadRequest)="reloadFights()"></ippon-group-fight-form>
 </div>

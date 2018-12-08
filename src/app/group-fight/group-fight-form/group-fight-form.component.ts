@@ -26,6 +26,8 @@ export class GroupFightFormComponent implements OnInit {
       group: this.group,
       team_fight: teamFight.id
     }
-    this.groupFightService.add(groupFight).subscribe();
+    this.groupFightService.add(groupFight).subscribe(
+      () => this.reloadRequest.emit('')
+    );
   }
 }

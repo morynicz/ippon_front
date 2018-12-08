@@ -130,5 +130,11 @@ describe('GroupFightFormComponent', () => {
         expect(groupFightService.addValue.group).toEqual(groupId);
       });
     });
+
+    it("should request reload from parent component", () => {
+      fixture.whenStable().then(() => {
+        expect(reloadRequested).toBe(true);
+      });
+    });
   });
 });

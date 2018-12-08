@@ -16,32 +16,42 @@ export class GroupFullComponent implements OnInit {
   teams: Team[];
   group: Group;
   groupFights: GroupFight[];
+  isAuthorized: boolean = false;
+  tournament: number;
   constructor(private route: ActivatedRoute,
     private groupMemberService: GroupMemberService,
     private groupService: GroupService,
     private groupFightService: GroupFightService,
   ) {
     const id = +this.route.snapshot.paramMap.get('id');
-    this.groupMemberService.getList(id).subscribe(
-      resp => this.teams = resp
-    );
+    this.loadTeams(id);
     this.groupService.get(id).subscribe(
       resp => this.group = resp
     );
-    this.groupFightService.getList(id).subscribe(
-      resp => {
-        this.groupFights = resp;
-      }
-    );
+    this.loadFights(id);
+    this.groupService.isAuthorized(id).subscribe(
+      response => this.isAuthorized = response
+    )
+  }
+
+  private loadFights(id: number) {
+    this.groupFightService.getList(id).subscribe(resp => {
+      this.groupFights = resp;
+    });
+  }
+
+  private loadTeams(id: number) {
+    this.groupMemberService.getList(id).subscribe(
+      resp => this.teams = resp);
   }
 
   ngOnInit() {
   }
 
   reloadTeams(): void {
-
+    this.loadTeams(this.group.id);
   }
   reloadFights(): void {
-
+    this.loadFights(this.group.id);
   }
 }
