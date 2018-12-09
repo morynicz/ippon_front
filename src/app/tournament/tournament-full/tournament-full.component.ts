@@ -22,6 +22,7 @@ export class TournamentFullComponent implements OnInit {
   sexNone: SexConstraint = SexConstraint.None;
   isAdmin: boolean = false;
   groupPhases: GroupPhase[];
+  newGroupPhase: GroupPhase;
 
   constructor(
     private route: ActivatedRoute,
@@ -37,6 +38,12 @@ export class TournamentFullComponent implements OnInit {
     this.getTournament(id);
     this.getAuthorization(id);
     this.loadGroupPhases(id);
+    this.prepareNewGroupPhase(id);
+  }
+
+  private prepareNewGroupPhase(id: number) {
+    this.newGroupPhase = new GroupPhase();
+    this.newGroupPhase.tournament = id;
   }
 
   private loadGroupPhases(id: number) {
@@ -59,6 +66,11 @@ export class TournamentFullComponent implements OnInit {
 
   reloadGroupPhases(): void {
     this.loadGroupPhases(this.tournament.id);
+  }
+
+  reloadGroupPhasesAfterCreation(): void {
+    this.reloadGroupPhases();
+    this.prepareNewGroupPhase(this.tournament.id);
   }
 
   handleError(error): void {

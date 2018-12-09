@@ -22,6 +22,8 @@ import { GroupPhase } from '../../group-phase/group-phase';
 import { GroupPhaseService } from '../../group-phase/group-phase.service';
 import { GroupPhaseServiceSpy } from '../../group-phase/group-phase.service.spy';
 import { GroupPhaseLineComponent } from '../../group-phase/group-phase-line/group-phase-line.component';
+import { GroupPhaseFormComponent } from '../../group-phase/group-phase-form/group-phase-form.component';
+import { FormsModule } from '@angular/forms';
 
 const tournamentId: number = 9;
 const tournament: Tournament = {
@@ -87,7 +89,8 @@ describe('TournamentFullComponent', () => {
           GroupPhaseLineComponent,
           NumericConstraintPipe,
           KendoRankPipe,
-          SexConstraintPipe
+          SexConstraintPipe,
+          GroupPhaseFormComponent
         ],
         providers: [
           {
@@ -110,7 +113,7 @@ describe('TournamentFullComponent', () => {
             }
           }
         ],
-        imports: [RouterTestingModule],
+        imports: [RouterTestingModule, FormsModule],
       })
         .compileComponents();
     }));
@@ -191,7 +194,11 @@ describe('TournamentFullComponent', () => {
     });
 
     it("should not display group phase destruction buttons", () => {
-      expect(fixture.debugElement.query(By.css("#delete-group-phase")) === null).toBeTruthy();
+      expect(fixture.debugElement.query(By.css("#delete-group-phase")) == null).toBeTruthy();
+    });
+
+    it("should not display group phase creation form", () => {
+      expect(fixture.debugElement.query(By.css("#create-group-phase")) == null).toBeTruthy();
     });
   });
 
@@ -209,7 +216,8 @@ describe('TournamentFullComponent', () => {
           GroupPhaseLineComponent,
           NumericConstraintPipe,
           KendoRankPipe,
-          SexConstraintPipe
+          SexConstraintPipe,
+          GroupPhaseFormComponent
         ],
         providers: [
           {
@@ -232,7 +240,7 @@ describe('TournamentFullComponent', () => {
             }
           }
         ],
-        imports: [RouterTestingModule],
+        imports: [RouterTestingModule, FormsModule],
       })
         .compileComponents();
     }));
@@ -268,6 +276,18 @@ describe('TournamentFullComponent', () => {
       it("should reload group phases through groupPhase service", () => {
         expect(groupPhaseService.getListValue).toEqual([tournamentId]);
       })
+    });
+
+    describe("when groupPhase creation button is pressed", () => {
+      let btn;
+      beforeEach(() => {
+        btn = fixture.debugElement.query(By.css("#save-group-phase"));
+        groupPhaseService.getListValue = [];
+        btn.nativeElement.click();
+      });
+      it("should reload group phases through groupPhase service", () => {
+        expect(groupPhaseService.getListValue).toEqual([tournamentId]);
+      });
     });
   });
 });

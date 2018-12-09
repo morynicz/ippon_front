@@ -52,6 +52,11 @@
           </li>
         </ul>
       </div>
+      <div class="panel-info" id="create-group-phase" *ngIf="isAdmin">
+        <ippon-group-phase-form [groupPhase]="newGroupPhase" (reloadRequest)="reloadGroupPhases()">
+
+        </ippon-group-phase-form>
+      </div>
     </article>
   </section>
   <section>
