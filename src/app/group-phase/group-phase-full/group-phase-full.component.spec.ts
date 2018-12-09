@@ -17,7 +17,7 @@ import { By } from '@angular/platform-browser';
 const tournamentId: number = 32;
 const groupId: number = 231;
 const groupPhaseId: number = 98;
-const groups: Group[] =[ {
+const groups: Group[] = [{
   name: "G1",
   group_phase: groupPhaseId,
   id: 765
@@ -56,10 +56,10 @@ describe('GroupPhaseFullComponent', () => {
       declarations: [
         GroupPhaseFullComponent,
         GroupLineComponent,
-        GroupFormComponent ],
+        GroupFormComponent],
       providers: [
-        {provide: GroupPhaseService, useValue: groupPhaseService},
-        {provide: GroupService, useValue: groupService},
+        { provide: GroupPhaseService, useValue: groupPhaseService },
+        { provide: GroupService, useValue: groupService },
         {
           provide: ActivatedRoute, useValue: {
             snapshot: {
@@ -73,7 +73,7 @@ describe('GroupPhaseFullComponent', () => {
         RouterTestingModule
       ],
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   describe("when user is not authorized", () => {
@@ -115,6 +115,7 @@ describe('GroupPhaseFullComponent', () => {
       fixture = TestBed.createComponent(GroupPhaseFullComponent);
       component = fixture.componentInstance;
       fixture.detectChanges();
+      fixture.detectChanges();
       html = fixture.debugElement.nativeElement.textContent;
     });
 
@@ -140,7 +141,7 @@ describe('GroupPhaseFullComponent', () => {
       btn = fixture.debugElement.query(By.css("#save-group"));
       btn.nativeElement.click();
       expect(groupService.getListValue).toEqual([groupPhaseId]);
-    });  
+    });
   });
 
 });

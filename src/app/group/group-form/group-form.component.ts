@@ -11,16 +11,10 @@ export class GroupFormComponent implements OnInit {
   @Input() group: Group;
   @Output() reloadRequest = new EventEmitter<any>();
   constructor(private groupService: GroupService) {
-    if(this.group == undefined){
-      this.group = new Group();
-    }
 
-   }
+  }
 
   ngOnInit() {
-    if(this.group == undefined){
-      this.group = new Group();
-    }
   }
 
   save(): void {

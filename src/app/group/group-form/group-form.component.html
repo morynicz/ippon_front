@@ -1,5 +1,5 @@
 <div>
-  <form class="form-horizontal" role="form" class="edit-user" name="group-form" #groupForm="ngForm">
+  <form *ngIf="group != undefined" class="form-horizontal" role="form" class="edit-user" name="group-form" #groupForm="ngForm">
     <div class="form-group">
       <label for="name" class="col-md-2 control-label col-md-offset-2" i18n>
         Group name

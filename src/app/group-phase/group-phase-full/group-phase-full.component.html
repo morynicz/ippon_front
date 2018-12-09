@@ -1,4 +1,4 @@
-<div id="group-phase-name" >
+<div id="group-phase-name">
   {{groupPhase.name}}
 </div>
 <div id="group-phase-members-list">
@@ -10,6 +10,5 @@
   </ul>
 </div>
 <div id="group-phase-creation" *ngIf="isAuthorized == true">
-  <ippon-group-form [group]="group" (reloadRequest)="onGroupCreation()"></ippon-group-form>
+  <ippon-group-form [group]="newGroup" (reloadRequest)="onGroupCreation()"></ippon-group-form>
 </div>
-
