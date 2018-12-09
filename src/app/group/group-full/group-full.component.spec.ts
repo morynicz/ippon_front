@@ -166,9 +166,11 @@ describe('GroupFullComponent', () => {
     });
 
     it("should not show form for creating group fights", () => {
-      expect(true).toBeTruthy();
-      let bomb = fixture.debugElement.query(By.css("#group-fight-management"));
-      expect(fixture.debugElement.query(By.css("#group-fight-management"))).toBeNull();
+      expect(fixture.debugElement.query(By.css("#group-fight-management")) == null).toBeTruthy();
+    });
+
+    it("should get the tournament id", () => {
+      expect(component.tournament).toEqual(tournamentId);
     });
   });
 

@@ -42,7 +42,12 @@ export class GroupFullComponent implements OnInit {
 
   private loadTeams(id: number) {
     this.groupMemberService.getList(id).subscribe(
-      resp => this.teams = resp);
+      resp => {
+        this.teams = resp;
+        if (this.teams.length > 0) {
+          this.tournament = this.teams[0].tournament;
+        }
+      });
   }
 
   ngOnInit() {
