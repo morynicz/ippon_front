@@ -30,7 +30,6 @@
     "@angular/platform-browser-dynamic": "6.0.6",
     "@angular/router": "6.0.6",
     "@auth0/angular-jwt": "^1.2.0",
-    "angular-in-memory-web-api": "^0.5.4",
     "auth0-js": "^9.6.1",
     "bootstrap": "^3.3.7",
     "core-js": "^2.5.7",
