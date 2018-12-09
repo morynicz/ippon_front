@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
-import { ActivatedRoute, convertToParamMap, ParamMap } from '@angular/router';
+import { ActivatedRoute, convertToParamMap } from '@angular/router';
 
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
@@ -14,15 +14,18 @@ import { SexConstraint } from '../sex-constraint';
 import { Rank } from '../../rank';
 import { KendoRankPipe } from '../../player/kendo-rank.pipe';
 import { AuthorizationService } from '../../authorization/authorization.service';
-import { Authorization } from "../../authorization/Authorization";
 
 import { NumericConstraintPipe } from '../numeric-constraint.pipe';
 import { SexConstraintPipe } from '../sex-constraint.pipe';
 import { TournamentServiceSpy } from '../tournament.service.spy';
+import { GroupPhase } from '../../group-phase/group-phase';
+import { GroupPhaseService } from '../../group-phase/group-phase.service';
+import { GroupPhaseServiceSpy } from '../../group-phase/group-phase.service.spy';
+import { GroupPhaseLineComponent } from '../../group-phase/group-phase-line/group-phase-line.component';
 
 const tournamentId: number = 9;
 const tournament: Tournament = {
-  id: 0,
+  id: tournamentId,
   name: "T1",
   date: new Date("2020-01-01"),
   city: "Ci1",
@@ -44,17 +47,31 @@ const tournament: Tournament = {
 class AuthorizationServiceDummy {
   isTournamentAdminResult: boolean = false;
   isTournamentAdminCallArgument: number = -1;
-  isTournamentAdmin(clubId: number): Observable<boolean> {
+  isTournamentAdmin(): Observable<boolean> {
     this.isTournamentAdminCallArgument = tournamentId;
     return of(this.isTournamentAdminResult);
   }
 }
+
+const groupPhases: GroupPhase[] = [{
+  id: 89,
+  name: "GP1",
+  fight_length: 4,
+  tournament: tournament.id
+},
+{
+  id: 90,
+  name: "GP2",
+  fight_length: 3,
+  tournament: tournament.id
+}];
 
 describe('TournamentFullComponent', () => {
   let component: TournamentFullComponent;
   let fixture: ComponentFixture<TournamentFullComponent>;
   let authorizationService: AuthorizationServiceDummy;
   let tournamentService: TournamentServiceSpy;
+  let groupPhaseService: GroupPhaseServiceSpy;
   let html;
 
   describe("when user is not admin", () => {
@@ -62,9 +79,12 @@ describe('TournamentFullComponent', () => {
       tournamentService = new TournamentServiceSpy();
       tournamentService.getReturnValue = tournament;
       authorizationService = new AuthorizationServiceDummy();
+      groupPhaseService = new GroupPhaseServiceSpy();
+      groupPhaseService.getListReturnValues.push(groupPhases);
       TestBed.configureTestingModule({
         declarations: [
           TournamentFullComponent,
+          GroupPhaseLineComponent,
           NumericConstraintPipe,
           KendoRankPipe,
           SexConstraintPipe
@@ -77,6 +97,10 @@ describe('TournamentFullComponent', () => {
           {
             provide: AuthorizationService,
             useValue: authorizationService
+          },
+          {
+            provide: GroupPhaseService,
+            useValue: groupPhaseService
           },
           {
             provide: ActivatedRoute, useValue: {
@@ -160,6 +184,15 @@ describe('TournamentFullComponent', () => {
       expect(link.nativeElement.getAttribute('ng-reflect-router-link'))
         .toBe('/tournament/' + tournament.id + '/teams');
     });
+
+    it("should display list of group phases", () => {
+      expect(html.textContent).toContain(groupPhases[0].name);
+      expect(html.textContent).toContain(groupPhases[1].name);
+    });
+
+    it("should not display group phase destruction buttons", () => {
+      expect(fixture.debugElement.query(By.css("#delete-group-phase")) === null).toBeTruthy();
+    });
   });
 
   describe("when user is admin", () => {
@@ -168,9 +201,12 @@ describe('TournamentFullComponent', () => {
       tournamentService.getReturnValue = tournament;
       authorizationService = new AuthorizationServiceDummy();
       authorizationService.isTournamentAdminResult = true;
+      groupPhaseService = new GroupPhaseServiceSpy();
+      groupPhaseService.getListReturnValues.push(groupPhases);
       TestBed.configureTestingModule({
         declarations: [
           TournamentFullComponent,
+          GroupPhaseLineComponent,
           NumericConstraintPipe,
           KendoRankPipe,
           SexConstraintPipe
@@ -183,6 +219,10 @@ describe('TournamentFullComponent', () => {
           {
             provide: AuthorizationService,
             useValue: authorizationService
+          },
+          {
+            provide: GroupPhaseService,
+            useValue: groupPhaseService
           },
           {
             provide: ActivatedRoute, useValue: {
@@ -215,6 +255,19 @@ describe('TournamentFullComponent', () => {
         expect(html.querySelector('#edit-tournament')).toBeTruthy();
         expect(html.querySelector('#edit-admins')).toBeTruthy();
       });
+    });
+
+    describe("when group phase deletion button is clicked", () => {
+      let btn;
+      beforeEach(() => {
+        btn = fixture.debugElement.query(By.css("#delete-group-phase"));
+        groupPhaseService.getListValue = [];
+        btn.nativeElement.click();
+      });
+
+      it("should reload group phases through groupPhase service", () => {
+        expect(groupPhaseService.getListValue).toEqual([tournamentId]);
+      })
     });
   });
 });

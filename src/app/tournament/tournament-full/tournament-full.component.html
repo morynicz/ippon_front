@@ -39,6 +39,22 @@
     </p>
   </article>
   <section>
+    <article class="panel panel-info">
+      <header class="panel-heading">
+        <h2 i18n>Group phases</h2>
+      </header>
+      <div class="panel-info">
+        <ul class="list-unstyled">
+          <li *ngFor="let groupPhase of groupPhases">
+            <ippon-group-phase-line [groupPhase]="groupPhase" [isAuthorized]="isAdmin" (reloadRequest)="reloadGroupPhases()">
+
+            </ippon-group-phase-line>
+          </li>
+        </ul>
+      </div>
+    </article>
+  </section>
+  <section>
     <div class="col-md-9">
       <button routerLink="/tournaments" class="btn btn-default" id="index-club" i18n>
         &larr; Index
