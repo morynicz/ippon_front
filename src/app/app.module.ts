@@ -75,6 +75,7 @@ import { GroupMemberFormComponent } from './group-member/group-member-form/group
 import { GroupLineComponent } from './group/group-line/group-line.component';
 import { GroupFormComponent } from './group/group-form/group-form.component';
 import { GroupPhaseService } from './group-phase/group-phase.service';
+import { GroupPhaseFormComponent } from './group-phase/group-phase-form/group-phase-form.component';
 
 @NgModule({
   imports: [
@@ -131,7 +132,8 @@ import { GroupPhaseService } from './group-phase/group-phase.service';
     GroupMemberLineComponent,
     GroupMemberFormComponent,
     GroupLineComponent,
-    GroupFormComponent
+    GroupFormComponent,
+    GroupPhaseFormComponent
   ],
   providers: [
     PlayerService,

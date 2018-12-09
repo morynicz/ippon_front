@@ -42,6 +42,7 @@ describe('GroupFormComponent', () => {
     injectedGroup = new Group();
     injectedGroup.id=groupId;
     injectedGroup.group_phase = groupPhaseId;
+    injectedGroup.name = "G2";
     fixture.detectChanges();
   });
 
@@ -61,7 +62,7 @@ describe('GroupFormComponent', () => {
 
     });
 
-    it("should create a group with given name and tournament id", () => {
+    it("should create a group with given name and group phase id", () => {
       expect(groupService.addValue.name).toBe(group.name);
       expect(groupService.addValue.group_phase).toBe(group.group_phase);
       expect(groupService.addValue.id).toBe(group.id);

@@ -1,0 +1,21 @@
+<div>
+  <form class="form-horizontal" role="form" class="edit-user" name="group-phase-form" #groupPhaseForm="ngForm">
+    <div class="form-group">
+      <label for="name" class="col-md-2 control-label col-md-offset-2" i18n>
+        Group phase name
+      </label>
+      <div class="col-md-5">
+        <input type="text" name="name" class="form-control" placeholder="group name" [(ngModel)]="groupPhase.name">
+      </div>
+      <label for="fight_length" class="col-md-2 control-label col-md-offset-2" i18n>
+        Fight length
+      </label>
+      <div class="col-md-5">
+        <input type="number" name="fight_length" class="form-control" placeholder="group name" [(ngModel)]="groupPhase.fight_length">
+      </div>
+    </div>
+  </form>
+  <div class="col-md-3 text-right">
+    <button class="btn btn-primary" (click)="save()" id="save-group-phase" i18n>Create</button>
+  </div>
+</div>
