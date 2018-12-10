@@ -1,32 +1,40 @@
 <div class="row">
-  <span class="col-sm-1" i18n>
+  <div class="col" i18n>
     Username
-  </span>
-  <span class="col-sm-1" i18n>
+  </div>
+  <div class="col" i18n>
     Admin
-  </span>
+  </div>
 </div>
-<section id='admins' class="row" ng-if="admins.length">
-  <ul class="list-unstyled">
-    <li *ngFor="let admin of admins">
+<div id='admins' class="row" ng-if="admins.length">
+  <ul class="list-group col">
+    <li *ngFor="let admin of admins" class="list-group-item">
       <ippon-club-admin-form [admin]="admin" (reloadRequest)="reload()">
       </ippon-club-admin-form>
     </li>
   </ul>
-</section>
-<section id='non_admins'>
-  <p i18n>
-    Not admins
-  </p>
-  <ul class="list-unstyled">
-    <li *ngFor="let nonAdmin of nonAdmins">
-      <div class="row non-participant">
-        {{nonAdmin.username}}
-        <button class="btn btn-primary" id="add-admin" (click)="addAdmin(nonAdmin)" i18n>Add</button>
+</div>
+<div id='non_admins' class="row">
+  <div class="col">
+    <div class="row">
+      <div class="col" i18n>
+        Not admins
       </div>
-    </li>
-  </ul>
-</section>
-<section class='row'>
-  <button routerLink="/club/{{clubId}}" class="btn btn-info" id="back-to-club" i18n> &larr club </button>
-</section>
+    </div>
+    <div class="row">
+      <ul class="list-group col">
+        <li *ngFor="let nonAdmin of nonAdmins" class="list-group-item">
+          <div class="row non-participant">
+            <div class="col">
+              {{nonAdmin.username}}
+            </div>
+            <button class="btn btn-primary col" id="add-admin" (click)="addAdmin(nonAdmin)" i18n>Add</button>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div class='row'>
+  <button routerLink="/club/{{clubId}}" class="btn btn-info" id="back-to-club" i18n> &larr; club </button>
+</div>

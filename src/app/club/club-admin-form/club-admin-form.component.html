@@ -1,10 +1,6 @@
 <div class="row">
-  <form role="form" name="admin-form" class="edit-user" #adminForm="ngForm">
-    <span class="col-sm-1">
-      {{admin.user.username}}
-    </span>
-    <span class="btn-group col-md-5">
-    <button class="btn btn-danger col-md-4" (click)="delete()" id="delete-admin" i18n>Remove admin</button>
-  </span>
-  </form>
+  <div class="col">
+    {{admin.user.username}}
+  </div>
+  <button class="btn btn-danger col" (click)="delete()" id="delete-admin" i18n>Remove admin</button>
 </div>
