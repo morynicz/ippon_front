@@ -195,18 +195,18 @@ describe('ClubFormComponent', () => {
       beforeEach(async(() => {
         fixture.detectChanges();
         btn = fixture.debugElement.query(By.css("#save-club"));
+        component.club = expectedClub;
+        fixture.detectChanges();
       }));
       it('should call club service addClub with club values set in form',
         async(() => {
           fixture.whenStable().then(() => {
-            fillForm(expectedClub, fixture);
             btn.nativeElement.click();
             fixture.detectChanges();
             expectClubsToBeEqual(clubService.addValue, expectedClub);
           });
         }));
       it('should go back to previous location', async(() => {
-        fillForm(expectedClub, fixture);
         btn.nativeElement.click();
         fixture.detectChanges();
         fixture.whenStable().then(() => {
