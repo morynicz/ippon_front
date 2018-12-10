@@ -52,8 +52,9 @@ describe('NavbarComponent', () => {
   it('should call authentiicationService to logOut', () => {
     authService.isLoggedInResult = true;
     fixture.detectChanges();
-    let btn = fixture.debugElement.query(By.css("a.logOut"));
-    btn.triggerEventHandler('click', null);
+    let btn = fixture.debugElement.query(By.css("#logout"));
+    btn.nativeElement.click();
+    fixture.detectChanges();
     expect(authService.logOutCalled).toBeTruthy();
   });
 });
