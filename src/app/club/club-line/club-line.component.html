@@ -1,7 +1,14 @@
-<section class="well col-md-6 col-md-offset-3">
-  <h1 class="h3" style="margin-top: 0">
-  <a
-   class="col-md-4"
-   routerLink="/club/{{club.id}}"> {{club.name}} {{club.city}}</a>
- </h1>
+<section class="row">
+  <h1 class="h3 col text-center">
+    <a routerLink="/club/{{club.id}}">
+      <div class="row">
+        <div class="col">
+          {{club.name}}
+        </div>
+        <div class="col">
+          {{club.city}}
+        </div>
+      </div>
+    </a>
+  </h1>
 </section>

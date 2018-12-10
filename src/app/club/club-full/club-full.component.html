@@ -1,36 +1,40 @@
-<section class="col-md-6 col-md-offset-3">
-  <article class="panel panel-info">
-    <header class="panel-heading">
-      <h1>{{club.name}}</h1> {{club.city}}
-    </header>
-    <p class="panel-body">
-      <a href="{{club.webpage}}">{{club.webpage}}</a>
-    </p>
-    <p class="panel-body">
-      {{club.description}}
-    </p>
-  </article>
-  <section>
-    <div class="col-md-9">
-      <button routerLink="/clubs" class="btn btn-default" id="index-club" i18n>
-        &larr; Index
-      </button>
-      <div *ngIf="isAdmin" class="col-md-9 text-right btn-group">
-        <button routerLink="/club/{{club.id}}/edit" class="btn btn-info" id="edit-club" i18n> Edit </button>
-        <button (click)="deleteClub()" class="btn btn-danger" id="delete-club" i18n> Delete </button>
-        <button routerLink="/club/{{club.id}}/admin" class="btn btn-info" id="manage-admins" i18n> Admins </button>
-
-      </div>
-    </div>
-    <div>
-      <ul class="list-unstyled">
-        <li *ngFor="let player of players">
+<section class="jumbotron">
+  <h1 class="display-4">{{club.name}}</h1>
+  <p class="lead">{{club.city}}</p>
+  <p>
+    <a href="{{club.webpage}}">{{club.webpage}}</a>
+  </p>
+  <p>
+    {{club.description}}
+  </p>
+</section>
+<div *ngIf="isAdmin" class="text-right btn-group">
+  <button routerLink="/club/{{club.id}}/edit" class="btn btn-info" id="edit-club" i18n> Edit </button>
+  <button (click)="deleteClub()" class="btn btn-danger" id="delete-club" i18n> Delete </button>
+  <button routerLink="/club/{{club.id}}/admin" class="btn btn-info" id="manage-admins" i18n> Admins </button>
+</div>
+<div class="row">
+  <div class="col">
+    <div class="row">
+      <ul class="list-group col">
+        <li *ngFor="let player of players" class="list-group-item">
           <ippon-player-line [player]="player"></ippon-player-line>
         </li>
       </ul>
-      <div *ngIf="isAdmin" class="col-md-9 text-right btn-group">
-        <button routerLink="/player/new" [queryParams]="{clubId: club.id}" class="btn btn-info" id="new-player-club" i18n> Add Player </button>
-      </div>
     </div>
-  </section>
-</section>
+    <div *ngIf="isAdmin" class="row text-right btn-group">
+      <button routerLink="/player/new" [queryParams]="{clubId: club.id}" class="btn btn-info col" id="new-player-club"
+        i18n>
+        Add Player
+      </button>
+    </div>
+  </div>
+
+</div>
+<div class="row">
+  <div class="col-md-9">
+    <button routerLink="/clubs" class="btn btn-default" id="index-club" i18n>
+      &larr; Index
+    </button>
+  </div>
+</div>

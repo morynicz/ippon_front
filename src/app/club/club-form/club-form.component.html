@@ -1,48 +1,39 @@
 <form class="form-horizontal" role="form" class="edit-user" #clubForm (ngSubmit)="save()">
   <div class="form-group" ng-class="{'has-warning has-feedback':errors.name}">
-    <label for="name" class="col-md-2 control-label col-md-offset-2" i18n>
+    <label for="name" class="control-label" i18n>
       Name
     </label>
-    <div class="col-md-5">
-      <input type="text" name="name" class="form-control" placeholder="club name" [(ngModel)]="club.name" required #name=ngModel>
-      <!-- <div [hidden]="name.valid || name.pristine" class="alert alert-danger" i18n>
+    <input type="text" name="name" class="form-control" placeholder="club name" [(ngModel)]="club.name" required #name=ngModel>
+    <!-- <div [hidden]="name.valid || name.pristine" class="alert alert-danger" i18n>
         Name is required
       </div> -->
-    </div>
   </div>
   <div class="form-group" ng-class="{'has-warning has-feedback':errors.name}">
-    <label for="city" class="col-md-2 control-label col-md-offset-2">
+    <label for="city" class="control-label">
       City
     </label>
-    <div class="col-md-5">
-      <textarea type="text" name="city" class="form-control" [(ngModel)]='club.city' placeholder="city" required #name=ngModel>
+    <textarea type="text" name="city" class="form-control" [(ngModel)]='club.city' placeholder="city" required #name=ngModel>
       </textarea>
-    </div>
   </div>
   <div class="form-group" ng-class="{'has-warning has-feedback':errors.name}">
-    <label for="webpage" class="col-md-2 control-label col-md-offset-2" i18n>
+    <label for="webpage" class=" control-label" i18n>
       Webpage
     </label>
-    <div class="col-md-5">
-      <textarea name="webpage" type="url" class="form-control" [(ngModel)]='club.webpage' placeholder="Webpage" required>
+    <textarea name="webpage" type="url" class="form-control" [(ngModel)]='club.webpage' placeholder="Webpage" required>
       </textarea>
-    </div>
   </div>
   <div class="form-group" ng-class="{'has-warning has-feedback':errors.name}">
-    <label for="description" class="col-md-2 control-label col-md-offset-2" i18n>
+    <label for="description" class=" control-label" i18n>
       Description
     </label>
-    <div class="col-md-5">
-      <textarea name="description" type="text" class="form-control" [(ngModel)]='club.description' placeholder="Description" required>
+    <textarea name="description" type="text" class="form-control" [(ngModel)]='club.description' placeholder="Description"
+      required>
       </textarea>
-    </div>
   </div>
   <div class="form-group">
-    <div class="col-md-offset-2 col-md-3">
-      <button class="btn btn-default" routerLink="/club/{{club.id}}" id="cancel-club" i18n>Cancel</button>
-    </div>
-    <div class="col-md-4 text-right">
-      <button class="btn btn-success" type="submit" id="save-club" i18n>Save</button>
+    <div class="row">
+      <button class="btn btn-default col" routerLink="/club/{{club.id}}" id="cancel-club" i18n>Cancel</button>
+      <button class="btn btn-success col" type="submit" id="save-club" i18n>Save</button>
     </div>
   </div>
 </form>

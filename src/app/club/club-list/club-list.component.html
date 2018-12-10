@@ -1,5 +1,5 @@
 <header class="row">
-  <h1 class="text-center col-md-6 col-md-offset-3" i18n>Clubs</h1>
+  <h1 class="text-center col" i18n>Clubs</h1>
 </header>
 
 <section class="row">
@@ -9,8 +9,8 @@
 </section>
 
 <section class="row" ng-if="clubs.length">
-  <ul class="list-unstyled">
-    <li *ngFor="let club of clubs">
+  <ul class="list-group col">
+    <li *ngFor="let club of clubs" class="list-group-item">
       <ippon-club-line [club]="club">
       </ippon-club-line>
     </li>
