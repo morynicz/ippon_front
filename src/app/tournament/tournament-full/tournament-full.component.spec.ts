@@ -79,7 +79,7 @@ describe('TournamentFullComponent', () => {
   describe("when user is not admin", () => {
     beforeEach(async(() => {
       tournamentService = new TournamentServiceSpy();
-      tournamentService.getReturnValue = tournament;
+      tournamentService.getReturnValue = { ...tournament };
       authorizationService = new AuthorizationServiceDummy();
       groupPhaseService = new GroupPhaseServiceSpy();
       groupPhaseService.getListReturnValues.push(groupPhases);
