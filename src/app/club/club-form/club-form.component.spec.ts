@@ -2,15 +2,13 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute, convertToParamMap, ParamMap } from '@angular/router';
+import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { Location } from '@angular/common';
 
 import { ClubFormComponent } from './club-form.component';
 import { ClubService } from '../club.service';
 import { Club } from '../club'
 
-import { Observable } from 'rxjs/Observable';
-import { of } from 'rxjs/observable/of';
 import { ClubServiceSpy } from '../club.service.spy';
 
 const clubId: number = 1;
@@ -60,7 +58,6 @@ describe('ClubFormComponent', () => {
   let component: ClubFormComponent;
   let fixture: ComponentFixture<ClubFormComponent>;
   let clubService: ClubServiceSpy;
-  let el: HTMLElement;
   let location: LocationSpy;
 
   describe('when clubId is available', () => {
@@ -148,11 +145,13 @@ describe('ClubFormComponent', () => {
   describe('when clubId is not available', () => {
     beforeEach(async(() => {
       clubService = new ClubServiceSpy();
+      location = new LocationSpy();
       TestBed.configureTestingModule({
         declarations: [ClubFormComponent],
         imports: [FormsModule, RouterTestingModule],
         providers: [
           { provide: ClubService, useValue: clubService },
+          { provide: Location, useValue: location }
         ]
       })
         .compileComponents();
