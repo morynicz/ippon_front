@@ -7,17 +7,17 @@ import { By } from '@angular/platform-browser';
 import { TeamServiceSpy } from '../team.service.spy';
 import { TeamService } from '../team.service';
 
-const tournamentId: number = 4;
-const teamId: number = 32;
-
-const team: Team = {
-  id: teamId,
-  name: "T1",
-  members: [],
-  tournament: tournamentId
-}
-
 describe('TeamLineComponent', () => {
+  const tournamentId: number = 4;
+  const teamId: number = 32;
+
+  const team: Team = {
+    id: teamId,
+    name: "T1",
+    members: [],
+    tournament: tournamentId
+  }
+
   let component: TeamLineComponent;
   let fixture: ComponentFixture<TeamLineComponent>;
   let teamService: TeamServiceSpy;
