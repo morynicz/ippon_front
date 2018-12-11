@@ -27,53 +27,53 @@ import { GroupMemberLineComponent } from '../../group-member/group-member-line/g
 import { Group } from '../group';
 import { GroupMemberFormComponent } from '../../group-member/group-member-form/group-member-form.component';
 
-const tournamentId: number = 32;
-const teamFightId: number = 87;
-const teams: Team[] = [
-  {
-    id: 22,
-    name: "T1",
-    members: [],
-    tournament: tournamentId
-  },
-  {
-    id: 27,
-    name: "T2",
-    members: [],
-    tournament: tournamentId
-  },
-  {
-    id: 27,
-    name: "T3",
-    members: [],
+describe('GroupFullComponent', () => {
+  const tournamentId: number = 32;
+  const teamFightId: number = 87;
+  const teams: Team[] = [
+    {
+      id: 22,
+      name: "T1",
+      members: [],
+      tournament: tournamentId
+    },
+    {
+      id: 27,
+      name: "T2",
+      members: [],
+      tournament: tournamentId
+    },
+    {
+      id: 27,
+      name: "T3",
+      members: [],
+      tournament: tournamentId
+    }
+  ]
+
+  const teamFight: TeamFight = {
+    aka_team: teams[0].id,
+    shiro_team: teams[2].id,
+    id: teamFightId,
     tournament: tournamentId
   }
-]
 
-const teamFight: TeamFight = {
-  aka_team: teams[0].id,
-  shiro_team: teams[2].id,
-  id: teamFightId,
-  tournament: tournamentId
-}
+  const groupFightId: number = 768;
+  const groupId: number = 231;
+  const groupPhaseId: number = 98;
 
-const groupFightId: number = 768;
-const groupId: number = 231;
-const groupPhaseId: number = 98;
+  const groupFight: GroupFight = {
+    id: groupFightId,
+    group: groupId,
+    team_fight: teamFightId
+  }
 
-const groupFight: GroupFight = {
-  id: groupFightId,
-  group: groupId,
-  team_fight: teamFightId
-}
+  const group: Group = {
+    name: "G1",
+    group_phase: groupPhaseId,
+    id: groupId
+  }
 
-const group: Group = {
-  name: "G1",
-  group_phase: groupPhaseId,
-  id: groupId
-}
-
-describe('GroupFullComponent', () => {
   let component: GroupFullComponent;
   let fixture: ComponentFixture<GroupFullComponent>;
   let groupService: GroupServiceSpy;
