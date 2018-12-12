@@ -79,15 +79,11 @@ describe('TeamLineComponent', () => {
 
     it("sends to delete request for point to team.service",
       () => {
-        fixture.whenStable().then(() => {
-          expect(teamService.deleteValue).toEqual(team);
-        });
+        expect(teamService.deleteValue).toEqual(team);
       });
 
     it("triggers reload request in parent component", () => {
-      fixture.whenStable().then(() => {
-        expect(reloadRequested).toBe(true);
-      });
+      expect(reloadRequested).toBe(true);
     });
 
   });
