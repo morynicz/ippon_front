@@ -13,45 +13,48 @@ import { FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { GroupFightService } from '../group-fight.service';
 import { By } from '@angular/platform-browser';
+import { TeamServiceSpy } from '../../team/team.service.spy';
 
-const tournamentId: number = 32;
-const groupId: number = 87;
-
-const teams: Team[] = [
-  {
-    id: 22,
-    name: "T1",
-    members: [],
-    tournament: tournamentId
-  },
-  {
-    id: 27,
-    name: "T2",
-    members: [],
-    tournament: tournamentId
-  },
-  {
-    id: 27,
-    name: "T2",
-    members: [],
-    tournament: tournamentId
-  }
-]
-
-const teamFightId: number = 345;
-
-const teamFight: TeamFight = {
-  aka_team: teams[0].id,
-  shiro_team: teams[2].id,
-  id: teamFightId,
-  tournament: tournamentId
-}
 
 describe('GroupFightFormComponent', () => {
+  const tournamentId: number = 32;
+  const groupId: number = 87;
+
+  const teams: Team[] = [
+    {
+      id: 22,
+      name: "T1",
+      members: [],
+      tournament: tournamentId
+    },
+    {
+      id: 27,
+      name: "T2",
+      members: [],
+      tournament: tournamentId
+    },
+    {
+      id: 27,
+      name: "T2",
+      members: [],
+      tournament: tournamentId
+    }
+  ]
+
+  const teamFightId: number = 345;
+
+  const teamFight: TeamFight = {
+    aka_team: teams[0].id,
+    shiro_team: teams[2].id,
+    id: teamFightId,
+    tournament: tournamentId
+  }
+
   let component: GroupFightFormComponent;
   let fixture: ComponentFixture<GroupFightFormComponent>;
   let groupFightService: GroupFightServiceSpy;
   let teamFightService: TeamFightServiceSpy;
+  let teamService: TeamServiceSpy;
   let reloadRequested: boolean;
   let html;
 
@@ -59,6 +62,7 @@ describe('GroupFightFormComponent', () => {
     teamFightService = new TeamFightServiceSpy();
     teamFightService.addReturnValue = teamFight;
     groupFightService = new GroupFightServiceSpy();
+    teamService = new TeamServiceSpy();
     TestBed.configureTestingModule({
       declarations: [
         GroupFightFormComponent,
@@ -116,24 +120,27 @@ describe('GroupFightFormComponent', () => {
       });
     });
 
-    it("should create teamFight between selected teams", () => {
+    it("should create teamFight between selected teams", (done) => {
       fixture.whenStable().then(() => {
         expect(teamFightService.addValue.aka_team).toEqual(teams[0].id);
         expect(teamFightService.addValue.shiro_team).toEqual(teams[2].id);
         expect(teamFightService.addValue.tournament).toEqual(tournamentId);
+        done();
       });
     });
 
-    it("should create groupFight from created TeamFight", () => {
+    it("should create groupFight from created TeamFight", (done) => {
       fixture.whenStable().then(() => {
         expect(groupFightService.addValue.team_fight).toEqual(teamFightId);
         expect(groupFightService.addValue.group).toEqual(groupId);
+        done();
       });
     });
 
-    it("should request reload from parent component", () => {
+    it("should request reload from parent component", (done) => {
       fixture.whenStable().then(() => {
         expect(reloadRequested).toBe(true);
+        done();
       });
     });
   });
