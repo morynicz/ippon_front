@@ -26,4 +26,5 @@ before_script:
 # - npm install
 
 script:
-- node_modules/@angular/cli/bin/ng test -sm=false --single-run --progress false --browser ChromeHeadless
+- node_modules/@angular/cli/bin/ng test --source-map false  --watch false --browsers ChromeHeadless
+
