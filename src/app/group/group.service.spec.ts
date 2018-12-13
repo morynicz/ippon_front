@@ -17,101 +17,55 @@ const group: Group = {
 const groupUrl: string = IPPON_HOST + GROUPS_ENDPOINT;
 
 describe('GroupService', () => {
+  let service: GroupService;
+  let backend: HttpTestingController;
+
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [GroupService],
       imports: [HttpClientTestingModule]
     });
+    service = TestBed.get(GroupService);
+    backend = TestBed.get(HttpTestingController);
+  });
+
+  afterEach(() => {
+    backend.verify();
   });
 
   describe("when add is called", () => {
-    it("calls the team fights api url",
-      inject(
-        [GroupService, HttpTestingController],
-        (service: GroupService,
-          backend: HttpTestingController) => {
-          service.add(group)
-            .subscribe();
-          const req = backend.expectOne(groupUrl);
-        }));
-    it("uses POST method",
-      inject(
-        [GroupService, HttpTestingController],
-        (service: GroupService,
-          backend: HttpTestingController) => {
-          service.add(group)
-            .subscribe();
-          const req = backend.expectOne(groupUrl);
-          expect(req.request.method).toBe('POST');
-        }));
-    it("sends request with application/json content type headers",
-      inject(
-        [GroupService, HttpTestingController],
-        (service: GroupService,
-          backend: HttpTestingController) => {
-          service.add(group)
-            .subscribe();
-          const req = backend.expectOne(groupUrl);
-          expect(req.request.headers.has('Content-Type'))
-            .toBe(true);
-          expect(req.request.headers.get('Content-Type'))
-            .toBe('application/json');
-        }));
-    it("responds with newly added team fight",
-      inject(
-        [GroupService, HttpTestingController],
-        (service: GroupService,
-          backend: HttpTestingController) => {
-          service.add(group)
-            .subscribe(response => expect(response).toBe(group));
-          const req = backend.expectOne(groupUrl);
-          req.flush(group);
-        }));
-    it("sends the team fight to be created in body",
-      inject(
-        [GroupService, HttpTestingController],
-        (service: GroupService,
-          backend: HttpTestingController) => {
-          service.add(group)
-            .subscribe();
-          const req = backend.expectOne(groupUrl);
-          expect(req.request.body).toBe(group);
-        }));
+    it("calls the groups api url, \
+    uses POST method, \
+    sends request with application/json content type headers\
+    sends the group to be created in body \
+    returns newly added group",
+      () => {
+        service.add(group)
+          .subscribe(response => expect(response).toBe(group));
+        const req = backend.expectOne(groupUrl);
+        expect(req.request.method).toBe('POST');
+        expect(req.request.headers.has('Content-Type'))
+          .toBe(true);
+        expect(req.request.headers.get('Content-Type'))
+          .toBe('application/json');
+        expect(req.request.body).toBe(group);
+        req.flush(group);
+      });
   });
 
   describe("when delete is called", () => {
-    it("calls the team fight api url",
-      inject(
-        [GroupService, HttpTestingController],
-        (service: GroupService,
-          backend: HttpTestingController) => {
-          service.delete(group)
-            .subscribe();
-          const req = backend.expectOne(groupUrl + group.id + '/');
-        }));
-    it("uses DELETE method",
-      inject(
-        [GroupService, HttpTestingController],
-        (service: GroupService,
-          backend: HttpTestingController) => {
-          service.delete(group)
-            .subscribe();
-          const req = backend.expectOne(groupUrl + group.id + '/');
-          expect(req.request.method).toBe('DELETE');
-        }));
-    it("sends request with application/json content type headers",
-      inject(
-        [GroupService, HttpTestingController],
-        (service: GroupService,
-          backend: HttpTestingController) => {
-          service.delete(group)
-            .subscribe();
-          const req = backend.expectOne(groupUrl + group.id + '/');
-          expect(req.request.headers.has('Content-Type'))
-            .toBe(true);
-          expect(req.request.headers.get('Content-Type'))
-            .toBe('application/json');
-        }));
+    it("calls the group api url, uses DELETE method and \
+    sends request with application/json content type headers",
+      () => {
+        service.delete(group)
+          .subscribe();
+        const req = backend.expectOne(groupUrl + group.id + '/');
+        expect(req.request.method).toBe('DELETE');
+        expect(req.request.headers.has('Content-Type'))
+          .toBe(true);
+        expect(req.request.headers.get('Content-Type'))
+          .toBe('application/json');
+      });
   });
 
   describe("when getList is called", () => {
@@ -125,77 +79,37 @@ describe('GroupService', () => {
         group_phase: groupPhaseId
       }];
 
-    it("calls the resources api url",
-      inject(
-        [GroupService, HttpTestingController],
-        (service: GroupService,
-          backend: HttpTestingController) => {
-          service.getList(tournamentId).subscribe();
-          const req = backend.expectOne(filteredUrl);
-        }));
-    it("uses GET method",
-      inject(
-        [GroupService, HttpTestingController],
-        (service: GroupService,
-          backend: HttpTestingController) => {
-          service.getList(tournamentId).subscribe();
-          const req = backend.expectOne(filteredUrl);
-          expect(req.request.method).toBe('GET');
-        }));
-    it("sends request with application/json content type headers",
-      inject(
-        [GroupService, HttpTestingController],
-        (service: GroupService,
-          backend: HttpTestingController) => {
-          service.getList(tournamentId).subscribe();
-          const req = backend.expectOne(filteredUrl);
-          expect(req.request.headers.has('Content-Type'))
-            .toBe(true);
-          expect(req.request.headers.get('Content-Type'))
-            .toBe('application/json');
-        }));
-    it("responds with requested teams",
-      inject(
-        [GroupService, HttpTestingController],
-        (service: GroupService,
-          backend: HttpTestingController) => {
-          service.getList(tournamentId)
-            .subscribe(response => expect(response)
-              .toBe(groups));
-          const req = backend.expectOne(filteredUrl);
-          req.flush(groups);
-        }));
+    it("calls the groups api url, uses GET method, \
+    sends request with application/json content type headers \
+    and responds with requested teams",
+      () => {
+        service.getList(tournamentId)
+          .subscribe(response => expect(response)
+            .toBe(groups));
+        const req = backend.expectOne(filteredUrl);
+        req.flush(groups);
+        expect(req.request.method).toBe('GET');
+        expect(req.request.headers.has('Content-Type'))
+          .toBe(true);
+        expect(req.request.headers.get('Content-Type'))
+          .toBe('application/json');
+      });
   });
 
   describe("when isAuthorized is called", () => {
     let fightAuthUrl = IPPON_HOST + AUTHORIZATION_ENDPOINT + GROUPS_ENDPOINT + `${group.id}/`;
-    it("calls the fights api url",
-      inject(
-        [GroupService, HttpTestingController],
-        (service: GroupService,
-          backend: HttpTestingController) => {
-          service.isAuthorized(group.id).subscribe();
-          const req = backend.expectOne(fightAuthUrl);
-        }));
-    it("uses isAuthorized method",
-      inject(
-        [GroupService, HttpTestingController],
-        (service: GroupService,
-          backend: HttpTestingController) => {
-          service.isAuthorized(group.id).subscribe();
-          const req = backend.expectOne(fightAuthUrl);
-          expect(req.request.method).toBe('GET');
-        }));
-    it("responds with requested fight",
-      inject(
-        [GroupService, HttpTestingController],
-        (service: GroupService,
-          backend: HttpTestingController) => {
-          service.isAuthorized(group.id)
-            .subscribe(response => expect(response)
-              .toBe(true));
-          const req = backend.expectOne(fightAuthUrl);
-          req.flush({ "isAuthorized": true });
-        }));
-  })
+    it("calls the fights api url, uses GET method \
+    and returns authorization",
+      () => {
+        service.isAuthorized(group.id)
+          .subscribe(response => {
+            expect(response).toBe(true)
+          });
+        const req = backend.expectOne(fightAuthUrl);
+        req.flush({ "isAuthorized": true });
+        expect(req.request.method).toBe('GET');
+        expect(req.request.headers.has('Content-Type')).toBe(true);
+        expect(req.request.headers.get('Content-Type')).toBe('application/json');
+      });
+  });
 });

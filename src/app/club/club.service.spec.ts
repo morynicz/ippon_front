@@ -27,6 +27,10 @@ describe('ClubService', () => {
     backend = TestBed.get(HttpTestingController);
   });
 
+  afterEach(() => {
+    backend.verify();
+  });
+
   it('calls the clubs api url with application/json content type and POST method when addClub called',
     () => {
       const club =

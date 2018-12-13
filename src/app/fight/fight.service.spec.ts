@@ -4,12 +4,10 @@ import { HttpClient } from '@angular/common/http';
 
 import { FightService } from './fight.service';
 import { Fight } from './fight';
-import { Point } from '../point/point';
 
 import {
   IPPON_HOST,
   FIGHTS_ENDPOINT,
-  AUTHENTICATION_HOST,
   AUTHORIZATION_ENDPOINT
 } from '../rest-api';
 
@@ -25,61 +23,45 @@ const fight: Fight = {
 
 
 describe('FightService', () => {
+  let service: FightService;
+  let backend: HttpTestingController;
+
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
       providers: [FightService]
     });
+
+    service = TestBed.get(FightService);
+    backend = TestBed.get(HttpTestingController);
   });
 
-  it('should be created', inject([FightService], (service: FightService) => {
-    expect(service).toBeTruthy();
-  }));
-
-  afterEach(inject([HttpTestingController], (backend: HttpTestingController) => {
+  afterEach(() => {
     backend.verify();
-  }));
+  });
 
   describe("when add is called", () => {
     it("calls the fights api url",
-      inject(
-        [FightService, HttpTestingController],
-        (service: FightService,
-          backend: HttpTestingController) => {
-          service.add(fight).subscribe();
-          const req = backend.expectOne(fightsUrl);
-        }));
+      () => {
+        service.add(fight).subscribe();
+        const req = backend.expectOne(fightsUrl);
+        expect(req.request.method).toBe('POST');
+        expect(req.request.headers.has('Content-Type')).toBe(true);
+        expect(req.request.headers.get('Content-Type')).toBe('application/json');
+        req.flush(fight);
+      });
   });
 
   describe("when isAuthorized is called", () => {
     let fightAuthUrl = IPPON_HOST + AUTHORIZATION_ENDPOINT + FIGHTS_ENDPOINT + `${fight.id}/`;
-    it("calls the fights api url",
-      inject(
-        [FightService, HttpTestingController],
-        (service: FightService,
-          backend: HttpTestingController) => {
-          service.isAuthorized(fight.id).subscribe();
-          const req = backend.expectOne(fightAuthUrl);
-        }));
-    it("uses isAuthorized method",
-      inject(
-        [FightService, HttpTestingController],
-        (service: FightService,
-          backend: HttpTestingController) => {
-          service.isAuthorized(fight.id).subscribe();
-          const req = backend.expectOne(fightAuthUrl);
-          expect(req.request.method).toBe('GET');
-        }));
-    it("responds with requested fight authorization",
-      inject(
-        [FightService, HttpTestingController],
-        (service: FightService,
-          backend: HttpTestingController) => {
-          service.isAuthorized(fight.id)
-            .subscribe(response => expect(response)
-              .toBe(true));
-          const req = backend.expectOne(fightAuthUrl);
-          req.flush({ "isAuthorized": true });
-        }));
+    it("calls the fights api url and returns requested authorization",
+      () => {
+        service.isAuthorized(fight.id)
+          .subscribe(response => expect(response)
+            .toBe(true));
+        const req = backend.expectOne(fightAuthUrl);
+        req.flush({ "isAuthorized": true });
+        expect(req.request.method).toBe('GET');
+      });
   });
 });

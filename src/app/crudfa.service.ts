@@ -54,11 +54,11 @@ export class CrudfaService<Resource extends Identifiable> {
 
   isAuthorized(id: number): Observable<boolean> {
     return new Observable<boolean>((observer) => {
-      this.http.get<Authorization>(this.authorizationUrl + `${id}/`)
+      this.http.get<Authorization>(this.authorizationUrl + `${id}/`, httpOptions)
         .subscribe(result => {
           observer.next(result.isAuthorized);
         }, error => {
-          console.log(error);
+          console.log("isAuthorizedError" + error);
           observer.next(false);
         });
     });
