@@ -118,16 +118,12 @@ describe('FightLineComponent', () => {
   });
 
   it("should call points service to get points for it's fight", () => {
-    fixture.whenStable().then(() => {
-      expect(pointService.getListValue).toContain(fightId);
-    });
+    expect(pointService.getListValue).toContain(fightId);
   });
 
   it("should call player service get for both player ids", () => {
-    fixture.whenStable().then(() => {
-      expect(playerService.getValues).toContain(akaPlayer.id);
-      expect(playerService.getValues).toContain(shiroPlayer.id);
-    });
+    expect(playerService.getValues).toContain(akaPlayer.id);
+    expect(playerService.getValues).toContain(shiroPlayer.id);
   });
 
   it("should display akaPlayer name and surname", () => {
