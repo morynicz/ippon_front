@@ -1,7 +1,16 @@
-<div class="col-md-9">
-  <a class="col-md-4" routerLink="/group-phases/{{groupPhase.id}}"> {{groupPhase.name}} {{groupPhase.fight_length}}</a>
-  <div class="col-md-1" *ngIf="isAuthorized">
-    <button class="col-md-1 btn btn-warning" id="delete-group-phase" (click)="deleteGroupPhase()" i18n>
-      Delete</button>
-  </div>
+<div class="row">
+  <h1 class="h3 col text-center">
+    <a routerLink="/group-phases/{{groupPhase.id}}">
+      <div class="row">
+        <div class="col">
+          {{groupPhase.name}}
+        </div>
+        <div class="col">
+          {{groupPhase.fight_length}}
+        </div>
+      </div>
+    </a>
+  </h1>
+  <button *ngIf="isAuthorized" class="col btn btn-danger" id="delete-group-phase" (click)="deleteGroupPhase()" i18n>
+    Delete</button>
 </div>

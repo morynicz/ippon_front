@@ -1,7 +1,17 @@
-<section class="well col-md-6 col-md-offset-3">
-  <h1 class="h3" style="margin-top: 0">
-  <a
-   class="col-md-4"
-   routerLink="/tournament/{{tournament.id}}"> {{tournament.name}} {{tournament.city}} {{tournament.date | date: 'yyyy-MM-dd'}}</a>
- </h1>
+<section class="row">
+  <h1 class="h3 col text-center">
+    <a routerLink="/tournament/{{tournament.id}}">
+      <div class="row">
+        <div class="col">
+          {{tournament.name}}
+        </div>
+        <div class="col">
+          {{tournament.city}}
+        </div>
+        <div class="col">
+          {{tournament.date | date: 'yyyy-MM-dd'}}
+        </div>
+      </div>
+    </a>
+  </h1>
 </section>

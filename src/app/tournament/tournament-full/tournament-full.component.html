@@ -1,80 +1,111 @@
-<section class="col-md-6 col-md-offset-3">
-  <article class="panel panel-info">
-    <header class="panel-heading">
-      <h1>{{tournament.name}}</h1> {{tournament.city}}
-    </header>
-    <p class="panel-body">
-      <a href="{{tournament.webpage}}">{{tournament.webpage}}</a>
-    </p>
-    <p class="panel-info">
-      {{tournament.date|date: 'yyyy-MM-dd'}}
-    </p>
-    <p class="panel-info">
-      {{tournament.address}}
-    </p>
-    <p class="panel-body">
-      {{tournament.description}}
-    </p>
-    <p class="panel-info" *ngIf="tournament.age_constraint != numericNone">
-      <span i18n>Age</span> {{tournament.age_constraint | numericConstraint}} {{tournament.age_constraint_value}}
-    </p>
-    <p class="panel-info" *ngIf="tournament.rank_constraint != numericNone">
-      <span i18n>Rank</span> {{tournament.rank_constraint | numericConstraint}} {{tournament.rank_constraint_value |
-      kendoRank}}
-    </p>
-    <p class="panel-info" *ngIf="tournament.sex_constraint != sexNone">
-      <span i18n>{{tournament.sex_constraint | sexConstraint}}</span>
-    </p>
-    <p class="panel-info">
-      <span i18n>Team size</span>: {{tournament.team_size}}
-    </p>
-    <p class="panel-info">
-      <span i18n>Group match length</span>: {{tournament.group_match_length}}
-    </p>
-    <p class="panel-info">
-      <span i18n>KO match legth</span>: {{tournament.ko_match_length}}
-    </p>
-    <p class="panel-info">
-      <span i18n>Final match length</span>: {{tournament.final_match_length}}
-    </p>
-  </article>
-  <section>
-    <article class="panel panel-info">
-      <header class="panel-heading">
-        <h2 i18n>Group phases</h2>
-      </header>
-      <div class="panel-info">
-        <ul class="list-unstyled">
-          <li *ngFor="let groupPhase of groupPhases">
+<section class="card">
+  <h1 class="card-title text-center">{{tournament.name}}</h1>
+  <div class="card-body">
+    <div class="card">
+      <h3 class="card-title" i18n>When and where</h3>
+      <div class="card-body">
+        <p class="lead">{{tournament.city}}</p>
+        <p>
+          <a href="{{tournament.webpage}}">{{tournament.webpage}}</a>
+        </p>
+        <p>
+          {{tournament.date|date: 'yyyy-MM-dd'}}
+        </p>
+        <p>
+          {{tournament.address}}
+        </p>
+        <p>
+          {{tournament.description}}
+        </p>
+      </div>
+    </div>
+    <div class="card">
+      <h3 class="card-title" i18n>Rules</h3>
+      <div class="card-body">
+        <ul class="list-group">
+          <li class="list-group-item" *ngIf="tournament.age_constraint != numericNone">
+            <span i18n>Age</span> {{tournament.age_constraint | numericConstraint}} {{tournament.age_constraint_value}}
+          </li>
+          <li class="list-group-item" *ngIf="tournament.rank_constraint != numericNone">
+            <span i18n>Rank</span> {{tournament.rank_constraint | numericConstraint}}
+            {{tournament.rank_constraint_value |
+            kendoRank}}
+          </li>
+          <li class="list-group-item" *ngIf="tournament.sex_constraint != sexNone">
+            <span i18n>{{tournament.sex_constraint | sexConstraint}}</span>
+          </li>
+          <li class="list-group-item">
+            <span i18n>Team size</span>: {{tournament.team_size}}
+          </li>
+          <li class="list-group-item">
+            <span i18n>Group match length</span>: {{tournament.group_match_length}}
+          </li>
+          <li class="list-group-item">
+            <span i18n>KO match legth</span>: {{tournament.ko_match_length}}
+          </li>
+          <li class="list-group-item">
+            <span i18n>Final match length</span>: {{tournament.final_match_length}}
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="card">
+      <h2 class="card-title text-center" i18n>Group phases</h2>
+      <div class="card-body">
+        <ul class="list-group">
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col">
+                <div class="row text-center">
+                  <div class="col" i18n>
+                    Name
+                  </div>
+                  <div class="col" i18n>
+                    Fight length
+                  </div>
+                </div>
+              </div>
+              <div class="col" *ngIf="isAdmin">
+                &nbsp;
+              </div>
+            </div>
+          </li>
+          <li *ngFor="let groupPhase of groupPhases" class="list-group-item">
             <ippon-group-phase-line [groupPhase]="groupPhase" [isAuthorized]="isAdmin" (reloadRequest)="reloadGroupPhases()">
 
             </ippon-group-phase-line>
           </li>
         </ul>
       </div>
-      <div class="panel-info" id="create-group-phase" *ngIf="isAdmin">
-        <ippon-group-phase-form [groupPhase]="newGroupPhase" (reloadRequest)="reloadGroupPhases()">
+      <div class="card" id="create-group-phase" *ngIf="isAdmin">
+        <div class="row card-body">
+          <div class="col">
+            <ippon-group-phase-form [groupPhase]="newGroupPhase" (reloadRequest)="reloadGroupPhases()">
 
-        </ippon-group-phase-form>
-      </div>
-    </article>
-  </section>
-  <section>
-    <div class="col-md-9">
-      <button routerLink="/tournaments" class="btn btn-default" id="index-club" i18n>
-        &larr; Index
-      </button>
-      <button routerLink="/tournament/{{tournament.id}}/teams" class="btn btn-info" id="view-teams" i18n> Teams
-      </button>
-      <div *ngIf="isAdmin" class="col-md-9 text-right btn-group">
-        <button routerLink="/tournament/{{tournament.id}}/edit" class="btn btn-info" id="edit-tournament" i18n> Edit
-        </button>
-        <button (click)="deleteTournament()" class="btn btn-danger" id="delete-tournament" i18n> Delete </button>
-        <button routerLink="/tournament/{{tournament.id}}/participation" class="btn btn-info" id="edit-participants"
-          i18n> Registration </button>
-        <button routerLink="/tournament/{{tournament.id}}/admin" class="btn btn-info" id="edit-admins" i18n> Admins
-        </button>
+            </ippon-group-phase-form>
+          </div>
+        </div>
       </div>
     </div>
-  </section>
+    <section>
+      <div class="row">
+        <button routerLink="/tournaments" class="btn btn-default col" id="index-club" i18n>
+          &larr; Index
+        </button>
+        <button routerLink="/tournament/{{tournament.id}}/teams" class="btn btn-info col" id="view-teams" i18n> Teams
+        </button>
+        <div *ngIf="isAdmin" class="col text-right btn-group">
+          <button routerLink="/tournament/{{tournament.id}}/edit" class="btn btn-warning" id="edit-tournament" i18n>
+            Edit
+          </button>
+          <button (click)="deleteTournament()" class="btn btn-danger col" id="delete-tournament" i18n> Delete </button>
+          <button routerLink="/tournament/{{tournament.id}}/participation" class="btn btn-primary" id="edit-participants"
+            i18n> Registration </button>
+          <button routerLink="/tournament/{{tournament.id}}/admin" class="btn btn-secondary" id="edit-admins" i18n>
+            Admins
+          </button>
+        </div>
+      </div>
+    </section>
+  </div>
 </section>

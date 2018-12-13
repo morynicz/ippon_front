@@ -1,7 +1,15 @@
-<div class="col-md-9">
-  <a class="col-md-4" routerLink="/groups/{{group.id}}">{{group.name}}</a>
-  <div class="col-md-1" *ngIf="isAuthorized">
-    <button class="col-md-1 btn btn-warning" id="delete-group" (click)="deleteGroup()" i18n>
+<div class="row">
+  <h1 class="h3 col text-center">
+    <a routerLink="/groups/{{group.id}}">
+      <div class="row">
+        <div class="col">
+          {{group.name}}
+        </div>
+      </div>
+    </a>
+  </h1>
+  <div class="col" *ngIf="isAuthorized">
+    <button class="btn btn-warning" id="delete-group" (click)="deleteGroup()" i18n>
       Delete</button>
   </div>
 </div>

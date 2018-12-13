@@ -1,16 +1,16 @@
 <header class="row">
-  <h1 class="text-center col-md-6 col-md-offset-3" i18n>Tournaments</h1>
+  <h1 class="text-center col" i18n>Tournaments</h1>
 </header>
 
 <section class="row">
-  <div *ngIf="signedIn()" class="form-group col-md-6 col-md-offset-3 text-center">
+  <div *ngIf="signedIn()" class="form-group col text-center">
     <button routerLink="/tournament/new" class="btn btn-info btn-lg" id="new-tournament" i18n>Add</button>
   </div>
 </section>
 
 <section class="row" ng-if="tournaments.length">
-  <ul class="list-unstyled">
-    <li *ngFor="let tournament of tournaments">
+  <ul class="list-group col">
+    <li *ngFor="let tournament of tournaments" class="list-group-item">
       <ippon-tournament-line [tournament]="tournament">
       </ippon-tournament-line>
     </li>
