@@ -1,10 +1,10 @@
 <header class="row">
-  <h1 class="text-center col-md-6 col-md-offset-3" i18n>Players</h1>
+  <h1 class="text-center col" i18n>Players</h1>
 </header>
 
 <section class="row" *ngIf="players && players.length > 0">
-  <ul class="list-unstyled">
-    <li *ngFor="let player of players">
+  <ul class="list-group col">
+    <li *ngFor="let player of players" class="list-group-item">
       <ippon-player-line [player]="player"></ippon-player-line>
     </li>
   </ul>

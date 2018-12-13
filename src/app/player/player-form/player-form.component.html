@@ -1,125 +1,56 @@
 <form class="form-horizontal" role="form" class="edit-user" name="player-form" #playerForm="ngForm">
   <div class="form-group">
-    <label for="name" class="col-md-2 control-label col-md-offset-2" i18n>
+    <label for="name" class="control-label" i18n>
       Player name
     </label>
-    <div class="col-md-5">
-      <input type="text" name="name" class="form-control" placeholder="player name" [(ngModel)]="player.name">
-    </div>
+    <input type="text" name="name" class="form-control" placeholder="player name" [(ngModel)]="player.name">
   </div>
   <div class="form-group">
-    <label for="surname" class="col-md-2 control-label col-md-offset-2" i18n>
+    <label for="surname" class="control-label" i18n>
       Surname
     </label>
-    <div class="col-md-5">
-      <input type="text" name="surname" class="form-control" placeholder="player surname" [(ngModel)]="player.surname">
-    </div>
+    <input type="text" name="surname" class="form-control" placeholder="player surname" [(ngModel)]="player.surname">
   </div>
-  <div class="form-group">
-    <label for="sex" class="col-md-2 control-label col-md-offset-2" i18n>
+  <div class="form-group row">
+    <label for="sex" class="col-2 control-label col-md-offset-2" i18n>
       Sex
     </label>
-    <div class="col-md-5">
-      <input name="sex" type="radio" id="button-sex-man" [checked]="0===player.sex" [(ngModel)]="player.sex" [value]=0 i18n/>Man
-      <input name="sex" type="radio" id="button-sex-woman" [checked]="1===player.sex" [(ngModel)]="player.sex" [value]=1 i18n/>Woman<br/>
+    <div class="col">
+      <input name="sex" type="radio" id="button-sex-man" [checked]="0===player.sex" [(ngModel)]="player.sex" [value]=0
+        i18n />Man
+    </div>
+    <div class="col">
+      <input name="sex" type="radio" id="button-sex-woman" [checked]="1===player.sex" [(ngModel)]="player.sex" [value]=1
+        i18n />Woman<br />
     </div>
   </div>
-  <div class="form-group">
-    <label for="birthday" class="col-md-2 control-label col-md-offset-2" i18n>
+  <div class="form-group row">
+    <label for="birthday" class="control-label col" i18n>
       Birthday
     </label>
-    <div class="col-md-5">
-      <input type="date" name="birthday" [ngModel]="player.birthday | date:'yyyy-MM-dd'" (ngModelChange)="player.birthday = $event" required>
+    <div class="col">
+      <input type="date" name="birthday" [ngModel]="player.birthday | date:'yyyy-MM-dd'" (ngModelChange)="player.birthday = $event"
+        required>
     </div>
   </div>
   <div class="form-group">
-    <label for="rank" class="col-md-2 control-label col-md-offset-2" i18n>
+    <label for="rank" class="control-label" i18n>
       Rank
     </label>
-    <div class="col-md-5">
-      <select id="rank-select" [(ngModel)]="player.rank" class="form-control" name="rank" [compareWith]="rankCompare">
-      <option *ngFor="let rank of ranks" [ngValue]=rank>{{rank_strings[rank]}}</option></select>
-    </div>
-    {{player.rank}}
+    <select id="rank-select" [(ngModel)]="player.rank" class="form-control" name="rank" [compareWith]="rankCompare">
+      <option *ngFor="let rank of ranks" [ngValue]=rank>{{rank_strings[rank]}}</option>
+    </select>
   </div>
   <div class="form-group" ng-class="{'has-warning has-feedback':errors.name}">
-    <label for="club" class="col-md-2 control-label col-md-offset-2" i18n>
+    <label for="club" class="control-label" i18n>
       Club
     </label>
-    <div class="col-md-5">
-      <select id="club-select" [(ngModel)]="player.club_id" class="form-control" name="club">
-      <option *ngFor="let club of clubs" [ngValue]=club.id>{{club.name}}</option></select>
-    </div>
+    <select id="club-select" [(ngModel)]="player.club_id" class="form-control" name="club">
+      <option *ngFor="let club of clubs" [ngValue]=club.id>{{club.name}}</option>
+    </select>
   </div>
-  <div class="form-group">
-    <div class="col-md-offset-2 col-md-3">
-      <button class="btn btn-default" type="button" (click)="goBack()" id="cancel-player" i18n>Cancel</button>
-    </div>
-    <div class="col-md-4 text-right">
-      <button class="btn btn-primary" (click)="save()" id="save-player" i18n>Save</button>
-    </div>
+  <div class="form-group row">
+    <button class="btn btn-default col" type="button" (click)="goBack()" id="cancel-player" i18n>Cancel</button>
+    <button class="btn btn-primary col" (click)="save()" id="save-player" i18n>Save</button>
   </div>
 </form>
-<!-- <section class="row">
-  <div class="col-md-6 col-md-offset-3"
-  <article class="pnael panel-info">
-    <div>
-  <label><span i18n>name:</span>
-    <input [(ngModel)]="player.name" placeholder="name">
-  </label>
-</div>
-<div>
-  <label><span i18n>surname:</span>
-    <input [(ngModel)]="player.surname" placeholder="surname">
-  </label>
-</div>
-<div>
-  <label><span i18n>age:</span>
-    <input type="number" [(ngModel)]="player.age" placeholder="age">
-  </label>
-</div>
-<div>
-  <span i18n>sex:</span>
-  <mat-radio-group name="playerSex" [(ngModel)]="player">
-    <mat-radio-button [value]=0><span i18n>Male</span>
-    </mat-radio-button>
-    <mat-radio-button [value]=1><span i18n>Female</span>
-    </mat-radio-button>
-  </mat-radio-group>
-</div>
-<div>
-  <span i18n>level:</span>
-  <mat-radio-group name="playerRank" [(ngModel)]="player.rank">
-    <div *ngFor="let rank of ranks">
-    <mat-radio-button [value]="rank" [checked]="player.rank == rank">{{rank_strings[rank]}}
-    </mat-radio-button>
-  </div>
-  </mat-radio-group>
-</div>
-</article>
-</div>
-</section> -->
-<!-- <section class="col-md-6 col-md-offset-3">
-  <article class="panel panel-info">
-    <header class="panel-heading"><h1>{{player.name}} {{player.surname}}</h1>
-    </header>
-    <p class="panel-body">
-      <div class="h3" i18n>RANK: {{mapRanks(player.rank)}}</div>
-      <div class="h3" i18n>CLUB: <a href="" ng-click="viewPlayersClub()" > {{player.club.name}}</a></div>
-    </p>
-  </article>
-  <section>
-    <div class="col-md-9">
-      <button ng-click="index()" class="btn btn-default" id="index-player" i18n>
-        &larr; INDEX
-      </button>
-      <button ng-click="back()" class="btn btn-default" id="back-player" i18n>
-        &larr; BACK
-      </button>
-      <div ng-show="isAdmin" class="col-md-9 text-right btn-group">
-        <button (click)="edit()" class="btn btn-info" id="edit-player" i18n> EDIT </button>
-        <button (click)="delete()" class="btn btn-danger" id="delete-player"i18n> DELETE </button>
-      </div>
-    </div>
-  </section>
-</section> -->
