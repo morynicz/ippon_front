@@ -169,17 +169,15 @@ describe('TournamentFullComponent', () => {
       expect(html.textContent).not.toContain('team size');
     });
 
-    it('should display admin controls if the user is club admin', () => {
+    it('should not display admin controls if the user is not tournament admin', () => {
       authorizationService.isTournamentAdminResult = true;
-      fixture.whenStable().then(() => {
-        fixture.detectChanges();
-        const de = fixture.debugElement;
-        const html = de.nativeElement;
-        expect(html.querySelector('#delete-tournament')).toBeFalsy();
-        expect(html.querySelector('#edit-tournament')).toBeFalsy();
-        expect(html.querySelector('#edit-participants')).toBeFalsy();
-        expect(html.querySelector('#edit-admins')).toBeFalsy();
-      });
+      fixture.detectChanges();
+      const de = fixture.debugElement;
+      const html = de.nativeElement;
+      expect(html.querySelector('#delete-tournament')).toBeFalsy();
+      expect(html.querySelector('#edit-tournament')).toBeFalsy();
+      expect(html.querySelector('#edit-participants')).toBeFalsy();
+      expect(html.querySelector('#edit-admins')).toBeFalsy();
     });
 
     it("should display link to teams", () => {
@@ -252,17 +250,15 @@ describe('TournamentFullComponent', () => {
       html = fixture.debugElement.nativeElement;
     });
 
-    it('should display admin controls if the user is club admin', () => {
+    it('should display admin controls if the user is tournament admin', () => {
       authorizationService.isTournamentAdminResult = true;
-      fixture.whenStable().then(() => {
-        fixture.detectChanges();
-        const de = fixture.debugElement;
-        const html = de.nativeElement;
-        expect(html.querySelector('#delete-tournament')).toBeTruthy();
-        expect(html.querySelector('#edit-participants')).toBeTruthy();
-        expect(html.querySelector('#edit-tournament')).toBeTruthy();
-        expect(html.querySelector('#edit-admins')).toBeTruthy();
-      });
+      fixture.detectChanges();
+      const de = fixture.debugElement;
+      const html = de.nativeElement;
+      expect(html.querySelector('#delete-tournament')).toBeTruthy();
+      expect(html.querySelector('#edit-participants')).toBeTruthy();
+      expect(html.querySelector('#edit-tournament')).toBeTruthy();
+      expect(html.querySelector('#edit-admins')).toBeTruthy();
     });
 
     describe("when group phase deletion button is clicked", () => {

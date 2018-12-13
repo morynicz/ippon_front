@@ -1,7 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { ActivatedRoute, convertToParamMap, ParamMap } from '@angular/router';
-import { Location } from '@angular/common';
+import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 
@@ -16,74 +15,74 @@ import { TournamentParticipation } from '../tournament-participation';
 import { TournamentParticipantService } from '../tournament-participant.service';
 import { TournamentParticipantServiceSpy } from '../tournament-participant.service.spy';
 
-import { PlayerService } from '../../player/player.service';
 import { PlayerLineComponent } from '../../player/player-line/player-line.component';
 
-const tournamentId = 1;
-
-const participations: TournamentParticipation[] = [{
-  id: 1,
-  tournament_id: tournamentId,
-  player: {
-    name: 'P1',
-    surname: 'S1',
-    sex: Sex.Male,
-    birthday: new Date("2001-01-01"),
-    rank: Rank.Kyu_5,
-    club_id: 1,
-    id: 1
-  },
-  is_paid: true,
-  is_registered: false,
-  is_sex_ok: true,
-  is_age_ok: false,
-  is_rank_ok: true,
-  is_qualified: false,
-  notes: "N1"
-},
-{
-  id: 2,
-  tournament_id: tournamentId,
-  player: {
-    name: 'P2',
-    surname: 'S2',
-    sex: Sex.Female,
-    birthday: new Date("2002-02-02"),
-    rank: Rank.Kyu_1,
-    club_id: 2,
-    id: 2
-  },
-  is_paid: true,
-  is_registered: false,
-  is_sex_ok: true,
-  is_age_ok: false,
-  is_rank_ok: true,
-  is_qualified: false,
-  notes: "N2"
-}];
-
-const players: Player[] = [
-  {
-    name: 'P3',
-    surname: 'S3',
-    sex: Sex.Female,
-    birthday: new Date("2003-03-03"),
-    rank: Rank.Dan_3,
-    club_id: 3,
-    id: 3
-  },
-  {
-    name: 'P4',
-    surname: 'S4',
-    sex: Sex.Male,
-    birthday: new Date("2004-04-04"),
-    rank: Rank.Kyu_2,
-    club_id: 4,
-    id: 4
-  }
-];
 
 describe('TournamentParticipationListComponent', () => {
+  const tournamentId = 1;
+
+  const participations: TournamentParticipation[] = [{
+    id: 1,
+    tournament_id: tournamentId,
+    player: {
+      name: 'P1',
+      surname: 'S1',
+      sex: Sex.Male,
+      birthday: new Date("2001-01-01"),
+      rank: Rank.Kyu_5,
+      club_id: 1,
+      id: 1
+    },
+    is_paid: true,
+    is_registered: false,
+    is_sex_ok: true,
+    is_age_ok: false,
+    is_rank_ok: true,
+    is_qualified: false,
+    notes: "N1"
+  },
+  {
+    id: 2,
+    tournament_id: tournamentId,
+    player: {
+      name: 'P2',
+      surname: 'S2',
+      sex: Sex.Female,
+      birthday: new Date("2002-02-02"),
+      rank: Rank.Kyu_1,
+      club_id: 2,
+      id: 2
+    },
+    is_paid: true,
+    is_registered: false,
+    is_sex_ok: true,
+    is_age_ok: false,
+    is_rank_ok: true,
+    is_qualified: false,
+    notes: "N2"
+  }];
+
+  const players: Player[] = [
+    {
+      name: 'P3',
+      surname: 'S3',
+      sex: Sex.Female,
+      birthday: new Date("2003-03-03"),
+      rank: Rank.Dan_3,
+      club_id: 3,
+      id: 3
+    },
+    {
+      name: 'P4',
+      surname: 'S4',
+      sex: Sex.Male,
+      birthday: new Date("2004-04-04"),
+      rank: Rank.Kyu_2,
+      club_id: 4,
+      id: 4
+    }
+  ];
+
   let component: TournamentParticipationListComponent;
   let fixture: ComponentFixture<TournamentParticipationListComponent>;
   let tournamentParticipantService: TournamentParticipantServiceSpy;
@@ -125,9 +124,7 @@ describe('TournamentParticipationListComponent', () => {
 
   describe('when created', () => {
     it('should call participations api to get participations for current tournament', () => {
-      fixture.whenStable().then(() => {
-        expect(tournamentParticipantService.getParticipationsValue).toBe(tournamentId);
-      });
+      expect(tournamentParticipantService.getParticipationsValue).toBe(tournamentId);
     });
 
     it("should display all participations it received", () => {
@@ -149,7 +146,6 @@ describe('TournamentParticipationListComponent', () => {
   });
 
   describe("when add participant button is pushed", () => {
-    let btn;
     let participation: TournamentParticipation;
     beforeEach(() => {
       participation = {
@@ -239,25 +235,17 @@ describe('TournamentParticipationListComponent', () => {
 
     it('shold show the new participation', () => {
       fixture.detectChanges();
-      fixture.whenStable().then(() => {
-        expect(html.textContent).toContain('S3');
-        expect(html.textContent).toContain('P3');
-      });
+      expect(html.textContent).toContain('S3');
+      expect(html.textContent).toContain('P3');
     });
 
     it('should remove the participant from non-participant section', () => {
       fixture.detectChanges();
-      fixture.whenStable().then(() => {
-        let playersHtml = fixture.debugElement.query(By.css('#non_participants')).nativeElement;
-        expect(playersHtml.textContent).not.toContain('P3');
-        expect(playersHtml.textContent).not.toContain('S3');
-        expect(playersHtml.textContent).toContain('P4');
-        expect(playersHtml.textContent).toContain('S4');
-      });
+      let playersHtml = fixture.debugElement.query(By.css('#non_participants')).nativeElement;
+      expect(playersHtml.textContent).not.toContain('P3');
+      expect(playersHtml.textContent).not.toContain('S3');
+      expect(playersHtml.textContent).toContain('P4');
+      expect(playersHtml.textContent).toContain('S4');
     });
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
   });
 });

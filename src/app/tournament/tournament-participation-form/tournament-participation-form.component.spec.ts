@@ -1,16 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute, convertToParamMap, ParamMap } from '@angular/router';
 import { TournamentParticipationFormComponent } from './tournament-participation-form.component';
-import { Location } from '@angular/common';
 
-import { Observable } from 'rxjs/Observable';
-import { of } from 'rxjs/observable/of';
 
 import { TournamentParticipantService } from '../tournament-participant.service';
-import { Player } from '../../player/player';
 import { Rank } from '../../rank';
 import { Sex } from '../../sex';
 import { TournamentParticipation } from '../tournament-participation';
@@ -92,96 +86,78 @@ describe('TournamentParticipationFormComponent', () => {
       expect(html.textContent).toContain(participation.player.surname);
     });
     it("should display notes", () => {
+      expect(html.innerHTML).toContain(participation.notes);
       fixture.whenStable().then(() => {
-        expect(html.innerHTML).toContain(participation.notes);
       });
     });
-    it("should have paid checkbox set to true", () => {
+    it("should have paid checkbox set to true", async(() => {
       fixture.whenStable().then(() => {
         let de = fixture.debugElement;
         expect(de.query(By.css('[name=is_paid]')).nativeElement.checked).toBe(true);
       });
-    });
-    it("should have registered checkbox set to false", () => {
+    }));
+    it("should have registered checkbox set to false", async(() => {
       fixture.whenStable().then(() => {
         let de = fixture.debugElement;
         expect(de.query(By.css('[name=is_registered]')).nativeElement.checked).toBe(false);
       });
-    });
-    it("should have qualified checkbox set to false", () => {
+    }));
+    it("should have qualified checkbox set to false", async(() => {
       fixture.whenStable().then(() => {
         let de = fixture.debugElement;
         expect(de.query(By.css('[name=is_qualified]')).nativeElement.checked).toBe(false);
       });
-    });
+    }));
     it("should display age X", () => {
-      fixture.whenStable().then(() => {
-        let de = fixture.debugElement;
-        expect(de.query(By.css('#is_age_ok')).nativeElement.textContent).toContain('X');
-      });
+      let de = fixture.debugElement;
+      expect(de.query(By.css('#is_age_ok')).nativeElement.textContent).toContain('X');
     });
     it("should display sex OK", () => {
-      fixture.whenStable().then(() => {
-        let de = fixture.debugElement;
-        expect(de.query(By.css('#is_sex_ok')).nativeElement.textContent).toContain('OK');
-      });
+      let de = fixture.debugElement;
+      expect(de.query(By.css('#is_sex_ok')).nativeElement.textContent).toContain('OK');
     });
     it("should display rank OK", () => {
-      fixture.whenStable().then(() => {
-        let de = fixture.debugElement;
-        expect(de.query(By.css('#is_rank_ok')).nativeElement.textContent).toContain('OK');
-      });
+      let de = fixture.debugElement;
+      expect(de.query(By.css('#is_rank_ok')).nativeElement.textContent).toContain('OK');
     });
   });
 
   describe("when update button is clicked", () => {
     let btn;
-    beforeEach(async(() => {
+    beforeEach(() => {
       component.participation = participation2;
       fixture.detectChanges();
       btn = fixture.debugElement.query(By.css("#save-participation"));
       btn.nativeElement.click();
-    }));
+    });
     it("should call participation service update with set participation", () => {
-      fixture.whenStable().then(() => {
-        expect(tournamentParticipantService.updateParticiaptionValue).toBe(participation2);
-      });
+      expect(tournamentParticipantService.updateParticiaptionValue).toBe(participation2);
     });
     it("should set the participation to value returned from update call",
       () => {
-        fixture.whenStable().then(() => {
-          expect(component.participation).toBe(participation);
-        });
+        expect(component.participation).toBe(participation);
       });
   });
 
   describe("when delete button is clicked", () => {
     let btn;
     let requested: boolean;
-    beforeEach(async(() => {
+    beforeEach(() => {
       component.participation = participation2;
       requested = false;
       fixture.detectChanges();
-      component.reloadRequest.subscribe(req => {
+      component.reloadRequest.subscribe(() => {
         requested = true;
       });
       btn = fixture.debugElement.query(By.css("#delete-participation"));
       btn.nativeElement.click();
-    }));
+    });
     it("should call participation service delete with set participation", () => {
-      fixture.whenStable().then(() => {
-        expect(tournamentParticipantService.deleteParticipationValue).toBe(participation2);
-      });
+      expect(tournamentParticipantService.deleteParticipationValue).toBe(participation2);
     });
     it("should request reloading participations",
-      async(() => {
-        fixture.whenStable().then(() => {
-          expect(requested).toBe(true);
-        });
-      }));
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
+      () => {
+        expect(requested).toBe(true);
+      });
   });
 });
