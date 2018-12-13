@@ -184,15 +184,15 @@ describe('GroupFullComponent', () => {
     });
 
     it("should not show member list area", () => {
-      expect(fixture.debugElement.query(By.css("#group-member-list"))).toBeNull();
+      expect(fixture.debugElement.query(By.css("#group-member-list")) == null).toBeTruthy();
     });
 
     it("should show member management area", () => {
-      expect(fixture.debugElement.query(By.css("#group-member-management"))).toBeTruthy();
+      expect(fixture.debugElement.query(By.css("#group-member-management")) == null).toBeFalsy();
     });
 
     it("should show form for creating group fights", () => {
-      expect(fixture.debugElement.query(By.css("#group-fight-management"))).toBeTruthy();
+      expect(fixture.debugElement.query(By.css("#group-fight-management")) == null).toBeFalsy();
     });
 
     it("reloads teams when team reload is requested", () => {
@@ -203,7 +203,7 @@ describe('GroupFullComponent', () => {
       expect(groupMemberService.getListValues).toEqual([groupId]);
     });
 
-    it("reloads fights when fights reload is requested", () => {
+    it("reloads fights when fights reload is requested", (done) => {
       fixture.whenStable().then(() => {
         let btn;
         groupFightService.getListValue = [];
@@ -220,6 +220,7 @@ describe('GroupFullComponent', () => {
         fixture.detectChanges();
 
         expect(groupFightService.getListValue).toEqual([groupId]);
+        done();
       });
     });
 
