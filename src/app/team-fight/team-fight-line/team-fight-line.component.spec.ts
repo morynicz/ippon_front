@@ -113,15 +113,11 @@ describe('TeamFightLineComponent', () => {
 
       it("sends to delete request for teamFight to teamFight.service",
         () => {
-          fixture.whenStable().then(() => {
-            expect(teamFightService.deleteValue).toEqual(teamFight);
-          });
+          expect(teamFightService.deleteValue).toEqual(teamFight);
         });
 
       it("triggers reload request in parent component", () => {
-        fixture.whenStable().then(() => {
-          expect(reloadRequested).toBe(true);
-        });
+        expect(reloadRequested).toBe(true);
       });
 
     });

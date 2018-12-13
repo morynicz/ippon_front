@@ -121,15 +121,11 @@ describe('PointFormComponent', () => {
 
       it("sends to point service new men point for aka player",
         () => {
-          fixture.whenStable().then(() => {
-            expect(pointService.addValue).toEqual(akaPoint);
-          });
+          expect(pointService.addValue).toEqual(akaPoint);
         });
 
       it("triggers reload request in parent component", () => {
-        fixture.whenStable().then(() => {
-          expect(reloadRequested).toBe(true);
-        });
+        expect(reloadRequested).toBe(true);
       });
     });
 
@@ -158,15 +154,11 @@ describe('PointFormComponent', () => {
 
       it("sends to point service new men point for shiro player",
         () => {
-          fixture.whenStable().then(() => {
-            expect(pointService.addValue).toEqual(shiroPoint);
-          });
+          expect(pointService.addValue).toEqual(shiroPoint);
         });
 
       it("triggers reload request in parent component", () => {
-        fixture.whenStable().then(() => {
-          expect(reloadRequested).toBe(true);
-        });
+        expect(reloadRequested).toBe(true);
       });
     });
 

@@ -20,7 +20,6 @@ import { PointTypePipe } from '../../point/point-type.pipe';
 import { PointService } from '../../point/point.service';
 import { PointServiceSpy } from '../../point/point.service.spy';
 import { PlayerService } from '../../player/player.service';
-import { Observable, of } from 'rxjs';
 import { FightFormComponent } from '../../fight/fight-form/fight-form.component';
 import { FormsModule } from '@angular/forms';
 import { PlayerLineComponent } from '../../player/player-line/player-line.component';
@@ -202,10 +201,8 @@ describe('TeamFightFullComponent', () => {
     });
 
     it("should call team service get for both team ids", () => {
-      fixture.whenStable().then(() => {
-        expect(teamService.getValues).toContain(akaTeam.id);
-        expect(teamService.getValues).toContain(shiroTeam.id);
-      });
+      expect(teamService.getValues).toContain(akaTeam.id);
+      expect(teamService.getValues).toContain(shiroTeam.id);
     });
 
     it("should call fightService to get the fights", () => {

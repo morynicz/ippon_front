@@ -155,13 +155,11 @@ describe('PlayerFullComponent', () => {
     });
     it('should display admin controls if the user is club admin', () => {
       authorizationService.isClubAdminResult = true;
-      fixture.whenStable().then(() => {
-        fixture.detectChanges();
-        const de = fixture.debugElement;
-        const html = de.nativeElement;
-        expect(html.querySelector('#delete-player')).toBeTruthy();
-        expect(html.querySelector('#edit-player')).toBeTruthy();
-      });
+      fixture.detectChanges();
+      const de = fixture.debugElement;
+      const html = de.nativeElement;
+      expect(html.querySelector('#delete-player')).toBeTruthy();
+      expect(html.querySelector('#edit-player')).toBeTruthy();
     });
     it('should call deletePlayer from player service with correct id when delete player button clicked',
       async(() => {
