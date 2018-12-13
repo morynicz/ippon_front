@@ -78,9 +78,10 @@ describe('ClubAdminFormComponent', () => {
       btn = fixture.debugElement.query(By.css("#delete-admin"));
       btn.nativeElement.click();
     }));
-    it("should call admin service delete with set admin", () => {
+    it("should call admin service delete with set admin", (done) => {
       fixture.whenStable().then(() => {
         expect(adminService.deleteAdminValue).toBe(admin.id);
+        done();
       });
     });
     it("should request reloading admins",
