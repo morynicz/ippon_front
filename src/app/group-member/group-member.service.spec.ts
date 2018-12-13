@@ -40,11 +40,16 @@ const resource: GroupMember = {
 }
 
 describe('GroupMemberService', () => {
+  let service: GroupMemberService;
+  let backend: HttpTestingController;
+
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
       providers: [GroupMemberService]
     });
+    service = TestBed.get(GroupMemberService);
+    backend = TestBed.get(HttpTestingController);
   });
 
   afterEach(inject([HttpTestingController], (backend: HttpTestingController) => {
@@ -52,163 +57,71 @@ describe('GroupMemberService', () => {
   }));
 
   describe("when add is called", () => {
-    it("calls the resources api url",
-      inject(
-        [GroupMemberService, HttpTestingController],
-        (service: GroupMemberService,
-          backend: HttpTestingController) => {
-          service.add(resource).subscribe();
-          const req = backend.expectOne(resourceUrl);
-        }));
-    it("uses POST method",
-      inject(
-        [GroupMemberService, HttpTestingController],
-        (service: GroupMemberService,
-          backend: HttpTestingController) => {
-          service.add(resource).subscribe();
-          const req = backend.expectOne(resourceUrl);
-          expect(req.request.method).toBe('POST');
-        }));
-    it("sends request with application/json content type headers",
-      inject(
-        [GroupMemberService, HttpTestingController],
-        (service: GroupMemberService,
-          backend: HttpTestingController) => {
-          service.add(resource).subscribe();
-          const req = backend.expectOne(resourceUrl);
-          expect(req.request.headers.has('Content-Type'))
-            .toBe(true);
-          expect(req.request.headers.get('Content-Type'))
-            .toBe('application/json');
-        }));
-    it("sends empty body",
-      inject(
-        [GroupMemberService, HttpTestingController],
-        (service: GroupMemberService,
-          backend: HttpTestingController) => {
-          service.add(resource).subscribe();
-          const req = backend.expectOne(resourceUrl);
-          expect(req.request.body).toEqual({});
-          req.flush({});
-        }));
+    it("calls the resources api url, uses POST method, \
+    sends request with application/json content type headers, \
+    sends empty body and returns nothing",
+      () => {
+        service.add(resource).subscribe(
+          response => expect(response).toEqual({}));
+        const req = backend.expectOne(resourceUrl);
+        req.flush({});
+        expect(req.request.method).toBe('POST');
+        expect(req.request.headers.has('Content-Type'))
+          .toBe(true);
+        expect(req.request.headers.get('Content-Type'))
+          .toBe('application/json');
+        expect(req.request.body).toEqual({});
+      });
   });
 
   describe("when getList is called", () => {
-    it("calls the resources api url",
-      inject(
-        [GroupMemberService, HttpTestingController],
-        (service: GroupMemberService,
-          backend: HttpTestingController) => {
-          service.getList(groupId).subscribe();
-          const req = backend.expectOne(resourcesUrl);
-        }));
-    it("uses GET method",
-      inject(
-        [GroupMemberService, HttpTestingController],
-        (service: GroupMemberService,
-          backend: HttpTestingController) => {
-          service.getList(groupId).subscribe();
-          const req = backend.expectOne(resourcesUrl);
-          expect(req.request.method).toBe('GET');
-        }));
-    it("sends request with application/json content type headers",
-      inject(
-        [GroupMemberService, HttpTestingController],
-        (service: GroupMemberService,
-          backend: HttpTestingController) => {
-          service.getList(groupId).subscribe();
-          const req = backend.expectOne(resourcesUrl);
-          expect(req.request.headers.has('Content-Type'))
-            .toBe(true);
-          expect(req.request.headers.get('Content-Type'))
-            .toBe('application/json');
-        }));
-    it("responds with requested resources",
-      inject(
-        [GroupMemberService, HttpTestingController],
-        (service: GroupMemberService,
-          backend: HttpTestingController) => {
-          service.getList(groupId)
-            .subscribe(response => expect(response)
-              .toBe(teams));
-          const req = backend.expectOne(resourcesUrl);
-          req.flush(teams);
-        }));
+    it("calls the resources api url, uses GET method, \
+    sends request with application/json content type headers \
+    and returns requested resources",
+      () => {
+        service.getList(groupId)
+          .subscribe(response => expect(response)
+            .toBe(teams));
+        const req = backend.expectOne(resourcesUrl);
+        req.flush(teams);
+        expect(req.request.method).toBe('GET');
+        expect(req.request.headers.has('Content-Type'))
+          .toBe(true);
+        expect(req.request.headers.get('Content-Type'))
+          .toBe('application/json');
+      });
   });
 
   describe("when getUnassigned is called", () => {
     const unassignedUrl: string = IPPON_HOST + GROUPS_ENDPOINT + `${groupId}/` + NOT_ASSIGNED_ENDPOINT;
-    it("calls the resources api url",
-      inject(
-        [GroupMemberService, HttpTestingController],
-        (service: GroupMemberService,
-          backend: HttpTestingController) => {
-          service.getNotAssigned(groupId).subscribe();
-          const req = backend.expectOne(unassignedUrl);
-        }));
-    it("uses GET method",
-      inject(
-        [GroupMemberService, HttpTestingController],
-        (service: GroupMemberService,
-          backend: HttpTestingController) => {
-          service.getNotAssigned(groupId).subscribe();
-          const req = backend.expectOne(unassignedUrl);
-          expect(req.request.method).toBe('GET');
-        }));
-    it("sends request with application/json content type headers",
-      inject(
-        [GroupMemberService, HttpTestingController],
-        (service: GroupMemberService,
-          backend: HttpTestingController) => {
-          service.getNotAssigned(groupId).subscribe();
-          const req = backend.expectOne(unassignedUrl);
-          expect(req.request.headers.has('Content-Type'))
-            .toBe(true);
-          expect(req.request.headers.get('Content-Type'))
-            .toBe('application/json');
-        }));
-    it("responds with requested resources",
-      inject(
-        [GroupMemberService, HttpTestingController],
-        (service: GroupMemberService,
-          backend: HttpTestingController) => {
-          service.getNotAssigned(groupId)
-            .subscribe(response => expect(response)
-              .toBe(teams));
-          const req = backend.expectOne(unassignedUrl);
-          req.flush(teams);
-        }));
+    it("calls the resources api url, uses GET method, \
+    sends request with application/json content type headers \
+    and requested resource",
+      () => {
+        service.getNotAssigned(groupId)
+          .subscribe(response => expect(response)
+            .toBe(teams));
+        const req = backend.expectOne(unassignedUrl);
+        req.flush(teams);
+        expect(req.request.method).toBe('GET');
+        expect(req.request.headers.has('Content-Type'))
+          .toBe(true);
+        expect(req.request.headers.get('Content-Type'))
+          .toBe('application/json');
+      });
   });
 
   describe("when delete is called", () => {
-    it("calls the resources api url",
-      inject(
-        [GroupMemberService, HttpTestingController],
-        (service: GroupMemberService,
-          backend: HttpTestingController) => {
-          service.delete(resource).subscribe();
-          const req = backend.expectOne(resourceUrl);
-        }));
-    it("uses DELETE method",
-      inject(
-        [GroupMemberService, HttpTestingController],
-        (service: GroupMemberService,
-          backend: HttpTestingController) => {
-          service.delete(resource).subscribe();
-          const req = backend.expectOne(resourceUrl);
-          expect(req.request.method).toBe('DELETE');
-        }));
-    it("sends request with application/json content type headers",
-      inject(
-        [GroupMemberService, HttpTestingController],
-        (service: GroupMemberService,
-          backend: HttpTestingController) => {
-          service.delete(resource).subscribe();
-          const req = backend.expectOne(resourceUrl);
-          expect(req.request.headers.has('Content-Type'))
-            .toBe(true);
-          expect(req.request.headers.get('Content-Type'))
-            .toBe('application/json');
-        }));
+    it("calls the resources api url, uses DELETE method and \
+    sends request with application/json content type headers",
+      () => {
+        service.delete(resource).subscribe();
+        const req = backend.expectOne(resourceUrl);
+        expect(req.request.headers.has('Content-Type'))
+          .toBe(true);
+        expect(req.request.headers.get('Content-Type'))
+          .toBe('application/json');
+        expect(req.request.method).toBe('DELETE');
+      });
   });
 });

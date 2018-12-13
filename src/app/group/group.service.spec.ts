@@ -81,7 +81,7 @@ describe('GroupService', () => {
 
     it("calls the groups api url, uses GET method, \
     sends request with application/json content type headers \
-    and responds with requested teams",
+    and responds with requested groups",
       () => {
         service.getList(tournamentId)
           .subscribe(response => expect(response)
@@ -96,9 +96,30 @@ describe('GroupService', () => {
       });
   });
 
+  describe("when update is called", () => {
+    it("calls the groups api url, uses PUT method, \
+    sends request with application/json content type headers \
+    sends the group to be updated in body \
+    and returns updated group",
+      () => {
+        service.update(group)
+          .subscribe(response => expect(response)
+            .toBe(group));
+        const req = backend.expectOne(
+          groupUrl + group.id + '/');
+        req.flush(group);
+        expect(req.request.body).toBe(group);
+        expect(req.request.method).toBe('PUT');
+        expect(req.request.headers.has('Content-Type'))
+          .toBe(true);
+        expect(req.request.headers.get('Content-Type'))
+          .toBe('application/json');
+      });
+  });
+
   describe("when isAuthorized is called", () => {
     let fightAuthUrl = IPPON_HOST + AUTHORIZATION_ENDPOINT + GROUPS_ENDPOINT + `${group.id}/`;
-    it("calls the fights api url, uses GET method \
+    it("calls the groups api url, uses GET method \
     and returns authorization",
       () => {
         service.isAuthorized(group.id)
