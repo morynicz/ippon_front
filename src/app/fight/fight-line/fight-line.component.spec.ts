@@ -170,17 +170,13 @@ describe('FightLineComponent', () => {
 
     }));
 
-    it("sends to delete request for point to fight.service",
+    it("sends to delete request for fight to fight.service",
       () => {
-        fixture.whenStable().then(() => {
-          expect(fightService.deleteValue).toEqual(fight);
-        });
+        expect(fightService.deleteValue).toEqual(fight);
       });
 
     it("triggers reload request in parent component", () => {
-      fixture.whenStable().then(() => {
-        expect(reloadRequested).toBe(true);
-      });
+      expect(reloadRequested).toBe(true);
     });
 
   });
