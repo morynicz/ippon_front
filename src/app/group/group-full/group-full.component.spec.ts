@@ -97,6 +97,7 @@ describe('GroupFullComponent', () => {
     groupMemberService = new GroupMemberServiceSpy();
     groupMemberService.getListReturnValue.push(teams);
     groupMemberService.getListReturnValue.push(teams);
+    groupMemberService.getListReturnValue.push(teams);
     TestBed.configureTestingModule({
       declarations: [
         GroupFullComponent,
