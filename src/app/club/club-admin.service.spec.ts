@@ -19,11 +19,15 @@ import {
 const clubId: number = 9;
 
 describe('ClubAdminService', () => {
+  let service: ClubAdminService;
+  let backend: HttpTestingController;
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
       providers: [ClubAdminService]
     });
+    service = TestBed.get(ClubAdminService);
+    backend = TestBed.get(HttpTestingController);
   });
 
   const adminsUrl: string = IPPON_HOST + CLUBS_ENDPOINT + `${clubId}/` + ADMINS_ENDPOINT;
@@ -70,191 +74,71 @@ describe('ClubAdminService', () => {
   ];
 
   describe("when getAdmins is called", () => {
-    it("calls the clubs api url",
-      inject(
-        [ClubAdminService, HttpTestingController],
-        (service: ClubAdminService,
-          backend: HttpTestingController) => {
-          service.getAdmins(clubId)
-            .subscribe();
-          const req = backend.expectOne(adminsUrl);
-        }));
-    it("uses GET method",
-      inject(
-        [ClubAdminService, HttpTestingController],
-        (service: ClubAdminService,
-          backend: HttpTestingController) => {
-          service.getAdmins(clubId)
-            .subscribe();
-          const req = backend.expectOne(adminsUrl);
-          expect(req.request.method).toBe('GET');
-        }));
-    it("sends request with application/json content type headers",
-      inject(
-        [ClubAdminService, HttpTestingController],
-        (service: ClubAdminService,
-          backend: HttpTestingController) => {
-          service.getAdmins(clubId)
-            .subscribe();
-          const req = backend.expectOne(adminsUrl);
-          expect(req.request.headers.has('Content-Type'))
-            .toBe(true);
-          expect(req.request.headers.get('Content-Type'))
-            .toBe('application/json');
-        }));
-    it("responds with requested club admins",
-      inject(
-        [ClubAdminService, HttpTestingController],
-        (service: ClubAdminService,
-          backend: HttpTestingController) => {
-          service.getAdmins(clubId)
-            .subscribe(response => expect(response)
-              .toBe(admins));
-          const req = backend.expectOne(adminsUrl);
-          req.flush(admins);
-        }));
+    it("calls the clubs api url with get method, \
+     application/json content type headers \
+     and returns requested clubs",
+      () => {
+        service.getAdmins(clubId)
+          .subscribe(response => expect(response)
+            .toBe(admins));
+        const req = backend.expectOne(adminsUrl);
+        req.flush(admins);
+        expect(req.request.method).toBe('GET');
+        expect(req.request.headers.has('Content-Type'))
+          .toBe(true);
+        expect(req.request.headers.get('Content-Type'))
+          .toBe('application/json');
+      });
   });
 
   describe("when addAdmin is called", () => {
-    it("calls the clubs api url",
-      inject(
-        [ClubAdminService, HttpTestingController],
-        (service: ClubAdminService,
-          backend: HttpTestingController) => {
-          service.addAdmin(admin)
-            .subscribe();
-          const req = backend.expectOne(adminUrl);
-        }));
-    it("uses POST method",
-      inject(
-        [ClubAdminService, HttpTestingController],
-        (service: ClubAdminService,
-          backend: HttpTestingController) => {
-          service.addAdmin(admin)
-            .subscribe();
-          const req = backend.expectOne(adminUrl);
-          expect(req.request.method).toBe('POST');
-        }));
-
-    it("sends request with application/json content type headers",
-      inject(
-        [ClubAdminService, HttpTestingController],
-        (service: ClubAdminService,
-          backend: HttpTestingController) => {
-          service.addAdmin(admin)
-            .subscribe();
-          const req = backend.expectOne(adminUrl);
-          expect(req.request.headers.has('Content-Type'))
-            .toBe(true);
-          expect(req.request.headers.get('Content-Type'))
-            .toBe('application/json');
-        }));
-
-    it("responds with newly added admin",
-      inject(
-        [ClubAdminService, HttpTestingController],
-        (service: ClubAdminService,
-          backend: HttpTestingController) => {
-          service.addAdmin(admin)
-            .subscribe(response => expect(response).toBe(admin));
-          const req = backend.expectOne(adminUrl);
-          req.flush(admin);
-        }));
-
-    it("sends the admin to be created in body",
-      inject(
-        [ClubAdminService, HttpTestingController],
-        (service: ClubAdminService,
-          backend: HttpTestingController) => {
-          service.addAdmin(admin)
-            .subscribe();
-          const req = backend.expectOne(adminUrl);
-          expect(req.request.body).toBe(admin);
-        }));
+    it("calls the clubs api url, uses POST method, \
+    sends request with application/json content type headers, \
+    sends the admin to be created in body \
+    and responds with newly added admin",
+      () => {
+        service.addAdmin(admin)
+          .subscribe(response => expect(response).toBe(admin));
+        const req = backend.expectOne(adminUrl);
+        expect(req.request.headers.has('Content-Type'))
+          .toBe(true);
+        expect(req.request.headers.get('Content-Type'))
+          .toBe('application/json');
+        req.flush(admin);
+        expect(req.request.body).toBe(admin);
+      });
   });
 
   describe("when deleteAdmin is called", () => {
     let admin: User = { id: 5, username: 'A5' };
-    it("calls the clubs api url",
-      inject(
-        [ClubAdminService, HttpTestingController],
-        (service: ClubAdminService,
-          backend: HttpTestingController) => {
-          service.deleteAdmin(admin.id)
-            .subscribe();
-          const req = backend.expectOne(adminUrl + admin.id + '/');
-        }));
-    it("uses DELETE method",
-      inject(
-        [ClubAdminService, HttpTestingController],
-        (service: ClubAdminService,
-          backend: HttpTestingController) => {
-          service.deleteAdmin(admin.id)
-            .subscribe();
-          const req = backend.expectOne(adminUrl + admin.id + '/');
-          expect(req.request.method).toBe('DELETE');
-        }));
-    it("sends request with application/json content type headers",
-      inject(
-        [ClubAdminService, HttpTestingController],
-        (service: ClubAdminService,
-          backend: HttpTestingController) => {
-          service.deleteAdmin(admin.id)
-            .subscribe();
-          const req = backend.expectOne(adminUrl + admin.id + '/');
-          expect(req.request.headers.has('Content-Type'))
-            .toBe(true);
-          expect(req.request.headers.get('Content-Type'))
-            .toBe('application/json');
-        }));
+    it("calls the clubs api url, uses DELETE method and \
+    sends request with application/json content type headers",
+      () => {
+        service.deleteAdmin(admin.id)
+          .subscribe();
+        const req = backend.expectOne(adminUrl + admin.id + '/');
+        expect(req.request.method).toBe('DELETE');
+        expect(req.request.headers.has('Content-Type'))
+          .toBe(true);
+        expect(req.request.headers.get('Content-Type'))
+          .toBe('application/json');
+      });
   });
 
   describe("when getNonAdmins is called", () => {
-    it("calls the participations api url",
-      inject(
-        [ClubAdminService, HttpTestingController],
-        (service: ClubAdminService,
-          backend: HttpTestingController) => {
-          service.getNonAdmins(clubId)
-            .subscribe();
-          const req = backend.expectOne(nonAdminsUrl);
-        }));
-    it("uses GET method",
-      inject(
-        [ClubAdminService, HttpTestingController],
-        (service: ClubAdminService,
-          backend: HttpTestingController) => {
-          service.getNonAdmins(clubId)
-            .subscribe();
-          const req = backend.expectOne(nonAdminsUrl);
-          expect(req.request.method).toBe('GET');
-        }));
-    it("sends request with application/json content type headers",
-      inject(
-        [ClubAdminService, HttpTestingController],
-        (service: ClubAdminService,
-          backend: HttpTestingController) => {
-          service.getNonAdmins(clubId)
-            .subscribe();
-          const req = backend.expectOne(nonAdminsUrl);
-          expect(req.request.headers.has('Content-Type'))
-            .toBe(true);
-          expect(req.request.headers.get('Content-Type'))
-            .toBe('application/json');
-        }));
-    it("responds with requested non participants",
-      inject(
-        [ClubAdminService, HttpTestingController],
-        (service: ClubAdminService,
-          backend: HttpTestingController) => {
-          service.getNonAdmins(clubId)
-            .subscribe();
-          const req = backend.expectOne(nonAdminsUrl);
-          req.flush(users);
-        }));
+    it("calls the admins api url, uses GET method, \
+    with application/json content type headers and \
+    returns  requested non admins",
+      () => {
+        service.getNonAdmins(clubId)
+          .subscribe(response => expect(response).toBe(users));
+        const req = backend.expectOne(nonAdminsUrl);
+        expect(req.request.method).toBe('GET');
+        expect(req.request.headers.has('Content-Type'))
+          .toBe(true);
+        expect(req.request.headers.get('Content-Type'))
+          .toBe('application/json');
+        req.flush(users);
+      });
   });
-
-  it('should be created', inject([ClubAdminService], (service: ClubAdminService) => {
-    expect(service).toBeTruthy();
-  }));
 });
