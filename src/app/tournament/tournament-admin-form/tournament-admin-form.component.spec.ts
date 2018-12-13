@@ -1,9 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute, convertToParamMap, ParamMap } from '@angular/router';
-import { Location } from '@angular/common';
 
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
@@ -81,10 +78,11 @@ describe('TournamentAdminFormComponent', () => {
       expect(html.textContent).toContain(admin.user.username);
     });
 
-    it("should have paid checkbox set to true", () => {
+    it("should have paid checkbox set to true", (done) => {
       fixture.whenStable().then(() => {
         let de = fixture.debugElement;
         expect(de.query(By.css('[name=is_master]')).nativeElement.checked).toBe(true);
+        done();
       });
     });
   });
@@ -98,15 +96,11 @@ describe('TournamentAdminFormComponent', () => {
       btn.nativeElement.click();
     }));
     it("should call admin service update with set admin", () => {
-      fixture.whenStable().then(() => {
-        expect(adminService.updateAdminValue).toBe(admin);
-      });
+      expect(adminService.updateAdminValue).toBe(admin);
     });
     it("should set the admin to value returned from update call",
       () => {
-        fixture.whenStable().then(() => {
-          expect(component.admin).toBe(admin2);
-        });
+        expect(component.admin).toBe(admin2);
       });
   });
 
@@ -117,22 +111,18 @@ describe('TournamentAdminFormComponent', () => {
       component.admin = admin;
       requested = false;
       fixture.detectChanges();
-      component.reloadRequest.subscribe(req => {
+      component.reloadRequest.subscribe(() => {
         requested = true;
       });
       btn = fixture.debugElement.query(By.css("#delete-admin"));
       btn.nativeElement.click();
     }));
     it("should call admin service delete with set admin", () => {
-      fixture.whenStable().then(() => {
-        expect(adminService.deleteAdminValue).toBe(admin.id);
-      });
+      expect(adminService.deleteAdminValue).toBe(admin.id);
     });
     it("should request reloading admins",
       async(() => {
-        fixture.whenStable().then(() => {
-          expect(requested).toBe(true);
-        });
+        expect(requested).toBe(true);
       }));
   });
 });

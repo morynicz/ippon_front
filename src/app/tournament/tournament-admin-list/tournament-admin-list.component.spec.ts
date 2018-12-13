@@ -1,7 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { ActivatedRoute, convertToParamMap, ParamMap } from '@angular/router';
-import { Location } from '@angular/common';
+import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 
@@ -71,7 +70,6 @@ class TournamentAdminServiceSpy {
 }
 
 describe('TournamentAdminListComponent', () => {
-  let component: TournamentAdminListComponent;
   let fixture: ComponentFixture<TournamentAdminListComponent>;
   let adminService: TournamentAdminServiceSpy;
   let html;
@@ -107,16 +105,13 @@ describe('TournamentAdminListComponent', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(TournamentAdminListComponent);
-    component = fixture.componentInstance;
     fixture.detectChanges();
     html = fixture.debugElement.nativeElement;
   });
 
   describe('when created', () => {
     it('should call admins api to get admins for current tournament', () => {
-      fixture.whenStable().then(() => {
-        expect(adminService.getAdminsValue).toBe(tournamentId);
-      });
+      expect(adminService.getAdminsValue).toBe(tournamentId);
     });
 
     it("should display all admins it received", () => {
@@ -133,7 +128,6 @@ describe('TournamentAdminListComponent', () => {
   });
 
   describe("when add participant button is pushed", () => {
-    let btn;
     let newAdmin: TournamentAdmin;
     beforeEach(() => {
       newAdmin = {
@@ -193,19 +187,15 @@ describe('TournamentAdminListComponent', () => {
 
     it('shold show the new admin', () => {
       fixture.detectChanges();
-      fixture.whenStable().then(() => {
-        let adminsHtml = fixture.debugElement.query(By.css('#admins')).nativeElement;
-        expect(adminsHtml.textContent).toContain('U2');
-      });
+      let adminsHtml = fixture.debugElement.query(By.css('#admins')).nativeElement;
+      expect(adminsHtml.textContent).toContain('U2');
     });
 
     it('should remove the participant from non-participant section', () => {
       fixture.detectChanges();
-      fixture.whenStable().then(() => {
-        let usersHtml = fixture.debugElement.query(By.css('#non_admins')).nativeElement;
-        expect(usersHtml.textContent).not.toContain('U2');
-        expect(usersHtml.textContent).toContain('U7');
-      });
+      let usersHtml = fixture.debugElement.query(By.css('#non_admins')).nativeElement;
+      expect(usersHtml.textContent).not.toContain('U2');
+      expect(usersHtml.textContent).toContain('U7');
     });
   });
 
