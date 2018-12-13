@@ -112,9 +112,7 @@ describe('ClubAdminListComponent', () => {
 
   describe('when created', () => {
     it('should call admins api to get admins for current club', () => {
-      fixture.whenStable().then(() => {
-        expect(adminService.getAdminsValue).toBe(clubId);
-      });
+      expect(adminService.getAdminsValue).toBe(clubId);
     });
 
     it("should display all admins it received", () => {
@@ -189,19 +187,15 @@ describe('ClubAdminListComponent', () => {
 
     it('shold show the new admin', () => {
       fixture.detectChanges();
-      fixture.whenStable().then(() => {
-        let adminsHtml = fixture.debugElement.query(By.css('#admins')).nativeElement;
-        expect(adminsHtml.textContent).toContain('U2');
-      });
+      let adminsHtml = fixture.debugElement.query(By.css('#admins')).nativeElement;
+      expect(adminsHtml.textContent).toContain('U2');
     });
 
     it('should remove the participant from non-participant section', () => {
       fixture.detectChanges();
-      fixture.whenStable().then(() => {
-        let usersHtml = fixture.debugElement.query(By.css('#non_admins')).nativeElement;
-        expect(usersHtml.textContent).not.toContain('U2');
-        expect(usersHtml.textContent).toContain('U7');
-      });
+      let usersHtml = fixture.debugElement.query(By.css('#non_admins')).nativeElement;
+      expect(usersHtml.textContent).not.toContain('U2');
+      expect(usersHtml.textContent).toContain('U7');
     });
   });
 
