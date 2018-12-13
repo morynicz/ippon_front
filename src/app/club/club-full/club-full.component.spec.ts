@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
-import { ActivatedRoute, convertToParamMap, ParamMap } from '@angular/router';
+import { ActivatedRoute, convertToParamMap } from '@angular/router';
 
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
@@ -14,10 +14,8 @@ import { Player } from '../../player/player';
 import { Rank } from '../../rank';
 import { Sex } from '../../sex';
 import { PlayerLineComponent } from '../../player/player-line/player-line.component';
-import { PlayerService } from '../../player/player.service';
 
 import { AuthorizationService } from '../../authorization/authorization.service';
-import { Authorization } from "../../authorization/Authorization";
 import { ClubServiceSpy } from '../club.service.spy';
 
 const clubId: number = 1;
@@ -157,15 +155,13 @@ describe('ClubFullComponent', () => {
 
     it('should display admin controls if the user is club admin', () => {
       authorizationService.isClubAdminResult = true;
-      fixture.whenStable().then(() => {
-        fixture.detectChanges();
-        const de = fixture.debugElement;
-        const html = de.nativeElement;
-        expect(html.querySelector('#delete-club')).toBeTruthy();
-        expect(html.querySelector('#edit-club')).toBeTruthy();
-        expect(html.querySelector('#new-player-club')).toBeTruthy();
-        expect(html.querySelector('#manage-admins')).toBeTruthy();
-      });
+      fixture.detectChanges();
+      const de = fixture.debugElement;
+      const html = de.nativeElement;
+      expect(html.querySelector('#delete-club')).toBeTruthy();
+      expect(html.querySelector('#edit-club')).toBeTruthy();
+      expect(html.querySelector('#new-player-club')).toBeTruthy();
+      expect(html.querySelector('#manage-admins')).toBeTruthy();
     });
 
     it('should call deleteClub from club service with correct id when delete club button clicked',
