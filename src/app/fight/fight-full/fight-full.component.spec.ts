@@ -23,54 +23,53 @@ import { Point, PointType } from '../../point/point';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { PlayerServiceSpy } from '../../player/player.service.spy';
 
-
-const fightId: number = 4;
-
-const akaPlayer: Player = {
-  name: 'P1',
-  surname: 'S1',
-  sex: Sex.Male,
-  birthday: new Date("2001-01-01"),
-  rank: Rank.Kyu_5,
-  club_id: 0,
-  id: 0
-}
-
-const shiroPlayer: Player = {
-  name: 'P2',
-  surname: 'S2',
-  sex: Sex.Female,
-  birthday: new Date("2002-02-02"),
-  rank: Rank.Kyu_2,
-  club_id: 2,
-  id: 1
-}
-
-const points: Point[] = [
-  {
-    player: akaPlayer.id,
-    fight: fightId,
-    type: PointType.Foul,
-    id: 9
-  },
-  {
-    player: shiroPlayer.id,
-    fight: fightId,
-    type: PointType.Other,
-    id: 10
-  }
-]
-
-const fight: Fight = {
-  id: fightId,
-  points: [],
-  aka: akaPlayer.id,
-  shiro: shiroPlayer.id,
-  team_fight: 33,
-  orderingNumber: 0
-}
-
 describe('FightFullComponent', () => {
+  const fightId: number = 4;
+
+  const akaPlayer: Player = {
+    name: 'P1',
+    surname: 'S1',
+    sex: Sex.Male,
+    birthday: new Date("2001-01-01"),
+    rank: Rank.Kyu_5,
+    club_id: 0,
+    id: 0
+  }
+
+  const shiroPlayer: Player = {
+    name: 'P2',
+    surname: 'S2',
+    sex: Sex.Female,
+    birthday: new Date("2002-02-02"),
+    rank: Rank.Kyu_2,
+    club_id: 2,
+    id: 1
+  }
+
+  const points: Point[] = [
+    {
+      player: akaPlayer.id,
+      fight: fightId,
+      type: PointType.Foul,
+      id: 9
+    },
+    {
+      player: shiroPlayer.id,
+      fight: fightId,
+      type: PointType.Other,
+      id: 10
+    }
+  ]
+
+  const fight: Fight = {
+    id: fightId,
+    points: [],
+    aka: akaPlayer.id,
+    shiro: shiroPlayer.id,
+    team_fight: 33,
+    orderingNumber: 0
+  }
+
   let component: FightFullComponent;
   let fixture: ComponentFixture<FightFullComponent>;
   let fightService: FightServiceSpy;
@@ -135,15 +134,11 @@ describe('FightFullComponent', () => {
     });
 
     it("should call points service to get points for it's fight", () => {
-      fixture.whenStable().then(() => {
-        expect(pointService.getListValue).toContain(fightId);
-      });
+      expect(pointService.getListValue).toContain(fightId);
     });
     it("should call player service get for both player ids", () => {
-      fixture.whenStable().then(() => {
-        expect(playerService.getValues).toContain(akaPlayer.id);
-        expect(playerService.getValues).toContain(shiroPlayer.id);
-      });
+      expect(playerService.getValues).toContain(akaPlayer.id);
+      expect(playerService.getValues).toContain(shiroPlayer.id);
     });
 
     it("should display akaPlayer name and surname", () => {
