@@ -86,15 +86,11 @@ describe('GroupMemberLineComponent', () => {
 
     it("sends to delete request for member to GroupMember.service",
       () => {
-        fixture.whenStable().then(() => {
-          expect(groupMemberService.deleteValue).toEqual(member);
-        });
+        expect(groupMemberService.deleteValue).toEqual(member);
       });
 
     it("triggers reload request in parent component", () => {
-      fixture.whenStable().then(() => {
-        expect(reloadRequested).toBe(true);
-      });
+      expect(reloadRequested).toBe(true);
     });
 
   });

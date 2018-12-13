@@ -127,9 +127,7 @@ describe('GroupMemberFormComponent', () => {
     });
 
     it("triggers reload request in parent component", () => {
-      fixture.whenStable().then(() => {
-        expect(reloadRequested).toBe(true);
-      });
+      expect(reloadRequested).toBe(true);
     });
   });
 
@@ -156,9 +154,7 @@ describe('GroupMemberFormComponent', () => {
     });
 
     it("triggers reload request in parent component", () => {
-      fixture.whenStable().then(() => {
-        expect(reloadRequested).toBe(true);
-      });
+      expect(reloadRequested).toBe(true);
     });
 
   });

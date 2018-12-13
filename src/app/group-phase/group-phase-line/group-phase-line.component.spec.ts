@@ -82,15 +82,11 @@ describe('GroupPhaseLineComponent', () => {
 
     it("sends to delete request for point to groupPhase.service",
       () => {
-        fixture.whenStable().then(() => {
-          expect(groupPhaseService.deleteValue).toEqual(groupPhase);
-        });
+        expect(groupPhaseService.deleteValue).toEqual(groupPhase);
       });
 
     it("triggers reload request in parent component", () => {
-      fixture.whenStable().then(() => {
-        expect(reloadRequested).toBe(true);
-      });
+      expect(reloadRequested).toBe(true);
     });
   });
 });

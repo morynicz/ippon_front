@@ -77,15 +77,11 @@ describe('GroupLineComponent', () => {
 
     it("sends to delete request for group to group.service",
       () => {
-        fixture.whenStable().then(() => {
-          expect(groupService.deleteValue).toEqual(group);
-        });
+        expect(groupService.deleteValue).toEqual(group);
       });
 
     it("triggers reload request in parent component", () => {
-      fixture.whenStable().then(() => {
-        expect(reloadRequested).toBe(true);
-      });
+      expect(reloadRequested).toBe(true);
     });
   });
 
