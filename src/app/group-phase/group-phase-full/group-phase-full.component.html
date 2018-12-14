@@ -1,14 +1,19 @@
-<div id="group-phase-name">
-  {{groupPhase.name}}
-</div>
-<div id="group-phase-members-list">
-  <ul class="list-unstyled">
-    <li *ngFor="let group of groups">
-      <ippon-group-line [group]="group" [isAuthorized]="isAuthorized" (reloadRequest)="onGroupDeletion()">
-      </ippon-group-line>
-    </li>
-  </ul>
-</div>
-<div id="group-phase-creation" *ngIf="isAuthorized == true">
-  <ippon-group-form [group]="newGroup" (reloadRequest)="onGroupCreation()"></ippon-group-form>
+<div class="card">
+
+  <div id="group-phase-name" class="card-title text-center display-4">
+    {{groupPhase.name}}
+  </div>
+  <div class="card-body">
+    <div id="group-phase-members-list">
+      <ul class="list-group">
+        <li *ngFor="let group of groups" class="list-group-item">
+          <ippon-group-line [group]="group" [isAuthorized]="isAuthorized" (reloadRequest)="onGroupDeletion()">
+          </ippon-group-line>
+        </li>
+      </ul>
+    </div>
+    <div id="group-phase-creation" *ngIf="isAuthorized == true">
+      <ippon-group-form [group]="newGroup" (reloadRequest)="onGroupCreation()"></ippon-group-form>
+    </div>
+  </div>
 </div>

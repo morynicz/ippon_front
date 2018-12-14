@@ -1,5 +1,5 @@
 <div class="row">
-  <h1 class="h3 col text-center">
+  <h1 class="h3 col-8 text-center">
     <a routerLink="/groups/{{group.id}}">
       <div class="row">
         <div class="col">
@@ -8,8 +8,6 @@
       </div>
     </a>
   </h1>
-  <div class="col" *ngIf="isAuthorized">
-    <button class="btn btn-warning" id="delete-group" (click)="deleteGroup()" i18n>
-      Delete</button>
-  </div>
+  <button *ngIf="isAuthorized" class="btn btn-danger col" id="delete-group" (click)="deleteGroup()" i18n>
+    Delete</button>
 </div>

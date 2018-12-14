@@ -1,15 +1,13 @@
-<div>
-  <form *ngIf="group != undefined" class="form-horizontal" role="form" class="edit-user" name="group-form" #groupForm="ngForm">
-    <div class="form-group">
-      <label for="name" class="col-md-2 control-label col-md-offset-2" i18n>
+<form *ngIf="group != undefined" class="form-horizontal row" role="form" name="group-form" #groupForm="ngForm">
+  <div class="form-group col-8">
+    <div class="row">
+      <label for="name" class="control-label col" i18n>
         Group name
       </label>
-      <div class="col-md-5">
-        <input type="text" name="name" class="form-control" placeholder="group name" [(ngModel)]="group.name">
-      </div>
+      <input type="text" name="name" class="form-control col" placeholder="group name" [(ngModel)]="group.name">
     </div>
-  </form>
-  <div class="col-md-3 text-right">
+  </div>
+  <div class="col text-right">
     <button class="btn btn-primary" (click)="save()" id="save-group" i18n>Create</button>
   </div>
-</div>
+</form>
