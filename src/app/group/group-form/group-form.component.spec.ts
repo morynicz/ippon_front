@@ -25,13 +25,13 @@ describe('GroupFormComponent', () => {
   beforeEach(async(() => {
     groupService = new GroupServiceSpy();
     TestBed.configureTestingModule({
-      declarations: [ GroupFormComponent ],
+      declarations: [GroupFormComponent],
       providers: [
-        {provide: GroupService, useValue: groupService}
+        { provide: GroupService, useValue: groupService }
       ],
       imports: [FormsModule, RouterTestingModule],
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -40,7 +40,7 @@ describe('GroupFormComponent', () => {
     //This form is both for creation
     // of new groups and for editing old
     injectedGroup = new Group();
-    injectedGroup.id=groupId;
+    injectedGroup.id = groupId;
     injectedGroup.group_phase = groupPhaseId;
     injectedGroup.name = "G2";
     fixture.detectChanges();
@@ -55,9 +55,10 @@ describe('GroupFormComponent', () => {
       component.reloadRequest.subscribe(req => {
         reloadRequested = true;
       });
-      btn = fixture.debugElement.query(By.css("#save-group"));
       component.group = injectedGroup;
       component.group.name = group.name;
+      fixture.detectChanges();
+      btn = fixture.debugElement.query(By.css("#save-group"));
       btn.nativeElement.click();
 
     });
@@ -71,8 +72,5 @@ describe('GroupFormComponent', () => {
     it("should call reload callback", () => {
       expect(reloadRequested).toBeTruthy();
     });
-  });
-  it('should create', () => {
-    expect(component).toBeTruthy();
   });
 });
