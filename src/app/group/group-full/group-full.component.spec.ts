@@ -81,7 +81,7 @@ describe('GroupFullComponent', () => {
   let teamFightService: TeamFightServiceSpy;
   let teamService: TeamServiceSpy;
   let groupMemberService: GroupMemberServiceSpy;
-  let html;
+  let html: any;
 
   beforeEach(async(() => {
     groupService = new GroupServiceSpy();

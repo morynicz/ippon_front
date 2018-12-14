@@ -3,7 +3,7 @@
     {{group.name}}
   </div>
   <div class="card-body">
-    <div *ngIf="isAuthorized == false" id="group-members-list row">
+    <div *ngIf="isAuthorized == false" id="group-members-list" class="row">
       <ul class="list-group col">
         <li *ngFor="let team of  teams" class="list-group-item">
           <ippon-group-member-line [team]="team" [isAuthorized]="false" [group]="group.id" (reloadRequest)="reloadTeams()">
