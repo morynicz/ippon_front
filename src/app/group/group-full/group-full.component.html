@@ -1,26 +1,34 @@
-<div id="group-name">
-  {{group.name}}
-</div>
-<div *ngIf="isAuthorized == false" id="group-members-list">
-  <ul class="list-unstyled">
-    <li *ngFor="let team of  teams">
-      <ippon-group-member-line [team]="team" [isAuthorized]="false" [group]="group.id" (reloadRequest)="reloadTeams()">
-      </ippon-group-member-line>
-    </li>
-  </ul>
-</div>
-<div *ngIf="isAuthorized==true" id="group-member-management">
-  <ippon-group-member-form [group]="group.id" (reloadRequest)="reloadTeams()"></ippon-group-member-form>
-</div>
-<div id="group-fights">
-  <ul class="list-unstyled">
-    <li *ngFor="let fight of groupFights">
-      <ippon-group-fight-line [groupFight]="fight" [isAuthorized]="isAuthorized" (reloadRequest)="reloadFights()">
+<div class="card">
+  <div id="group-name" class="card-title text-center display-4">
+    {{group.name}}
+  </div>
+  <div class="card-body">
+    <div *ngIf="isAuthorized == false" id="group-members-list row">
+      <ul class="list-group col">
+        <li *ngFor="let team of  teams" class="list-group-item">
+          <ippon-group-member-line [team]="team" [isAuthorized]="false" [group]="group.id" (reloadRequest)="reloadTeams()">
+          </ippon-group-member-line>
+        </li>
+      </ul>
+    </div>
+    <div *ngIf="isAuthorized==true" id="group-member-management" class="row">
+      <div class="col">
+        <ippon-group-member-form [group]="group.id" (reloadRequest)="reloadTeams()"></ippon-group-member-form>
+      </div>
+    </div>
+    <div id="group-fights" class="row">
+      <ul class="list-group col">
+        <li *ngFor="let fight of groupFights" class="list-group-item">
+          <ippon-group-fight-line [groupFight]="fight" [isAuthorized]="isAuthorized" (reloadRequest)="reloadFights()">
 
-      </ippon-group-fight-line>
-    </li>
-  </ul>
-</div>
-<div id="group-fight-management" *ngIf="isAuthorized == true">
-  <ippon-group-fight-form [group]="group.id" [tournament]="tournament" [teams]="teams" (reloadRequest)="reloadFights()"></ippon-group-fight-form>
+          </ippon-group-fight-line>
+        </li>
+      </ul>
+    </div>
+    <div id="group-fight-management" *ngIf="isAuthorized == true" class="row">
+      <div class="col">
+        <ippon-group-fight-form [group]="group.id" [tournament]="tournament" [teams]="teams" (reloadRequest)="reloadFights()"></ippon-group-fight-form>
+      </div>
+    </div>
+  </div>
 </div>
