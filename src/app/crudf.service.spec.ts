@@ -142,23 +142,4 @@ describe('CrudfService', () => {
         expect(req.request.method).toBe('DELETE');
       });
   });
-
-  describe("when isAuthorized is called", () => {
-    it("calls the resources api url, uses GET method, \
-    sends request with application/json content type headers \
-    and returns authorization",
-      () => {
-        service.isAuthorized(resource.id)
-          .subscribe(response => expect(response)
-            .toBe(true));
-        const req = backend.expectOne(resourceAuthUrl);
-        req.flush({ "isAuthorized": true });
-        expect(req.request.method).toBe('GET');
-        expect(req.request.headers.has('Content-Type'))
-          .toBe(true);
-        expect(req.request.headers.get('Content-Type'))
-          .toBe('application/json');
-      });
-  });
-
 });
