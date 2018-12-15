@@ -80,7 +80,7 @@ describe('TournamentFormComponent', () => {
   describe('when tournament id is available', () => {
     beforeEach(async(() => {
       tournamentService = new TournamentServiceSpy();
-      tournamentService.getReturnValue = tournament;
+      tournamentService.getReturnValues.push(tournament);
       location = new LocationSpy();
       TestBed.configureTestingModule({
         declarations: [
@@ -320,7 +320,7 @@ describe('TournamentFormComponent', () => {
 
     it('should prepare a new tournament instead of trying to get it from tournament service',
       async(() => {
-        expect(tournamentService.getValue).not.toBe(0);
+        expect(tournamentService.getValues).not.toEqual([0]);
         expectTournamentsToBeEqual(component.tournament, new Tournament());
       }));
 

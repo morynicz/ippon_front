@@ -24,6 +24,47 @@ class AuthenticationServiceSpy {
 }
 
 describe('TournamentListComponent', () => {
+  const tournaments: Tournament[] = [
+    {
+      id: 0,
+      name: "T1",
+      date: new Date("2020-01-01"),
+      city: "Ci1",
+      address: "A1",
+      team_size: 3,
+      group_match_length: 3,
+      ko_match_length: 4,
+      final_match_length: 5,
+      finals_depth: 2,
+      age_constraint: NumericConstraint.None,
+      age_constraint_value: 0,
+      rank_constraint: NumericConstraint.None,
+      rank_constraint_value: Rank.Kyu_5,
+      sex_constraint: SexConstraint.None,
+      description: "d1",
+      webpage: "w1"
+    },
+    {
+      id: 1,
+      name: "T2",
+      date: new Date("2022-02-02"),
+      city: "Ci2",
+      address: "A2",
+      team_size: 4,
+      group_match_length: 5,
+      ko_match_length: 6,
+      final_match_length: 7,
+      finals_depth: 1,
+      age_constraint: NumericConstraint.None,
+      age_constraint_value: 0,
+      rank_constraint: NumericConstraint.None,
+      rank_constraint_value: Rank.Kyu_5,
+      sex_constraint: SexConstraint.None,
+      description: "d3",
+      webpage: "w5"
+    }
+  ];
+
   let component: TournamentListComponent;
   let fixture: ComponentFixture<TournamentListComponent>;
   let tournamentService: TournamentServiceSpy;
@@ -31,46 +72,7 @@ describe('TournamentListComponent', () => {
 
   beforeEach(async(() => {
     tournamentService = new TournamentServiceSpy();
-    tournamentService.getListReturnValue = [
-      {
-        id: 0,
-        name: "T1",
-        date: new Date("2020-01-01"),
-        city: "Ci1",
-        address: "A1",
-        team_size: 3,
-        group_match_length: 3,
-        ko_match_length: 4,
-        final_match_length: 5,
-        finals_depth: 2,
-        age_constraint: NumericConstraint.None,
-        age_constraint_value: 0,
-        rank_constraint: NumericConstraint.None,
-        rank_constraint_value: Rank.Kyu_5,
-        sex_constraint: SexConstraint.None,
-        description: "d1",
-        webpage: "w1"
-      },
-      {
-        id: 1,
-        name: "T2",
-        date: new Date("2022-02-02"),
-        city: "Ci2",
-        address: "A2",
-        team_size: 4,
-        group_match_length: 5,
-        ko_match_length: 6,
-        final_match_length: 7,
-        finals_depth: 1,
-        age_constraint: NumericConstraint.None,
-        age_constraint_value: 0,
-        rank_constraint: NumericConstraint.None,
-        rank_constraint_value: Rank.Kyu_5,
-        sex_constraint: SexConstraint.None,
-        description: "d3",
-        webpage: "w5"
-      }
-    ];
+    tournamentService.getListReturnValues.push(tournaments);
     authenticationService = new AuthenticationServiceSpy();
 
     TestBed.configureTestingModule({

@@ -79,7 +79,7 @@ describe('TournamentFullComponent', () => {
   describe("when user is not admin", () => {
     beforeEach(async(() => {
       tournamentService = new TournamentServiceSpy();
-      tournamentService.getReturnValue = { ...tournament };
+      tournamentService.getReturnValues.push({ ...tournament });
       authorizationService = new AuthorizationServiceDummy();
       groupPhaseService = new GroupPhaseServiceSpy();
       groupPhaseService.getListReturnValues.push(groupPhases);
@@ -203,7 +203,7 @@ describe('TournamentFullComponent', () => {
   describe("when user is admin", () => {
     beforeEach(async(() => {
       tournamentService = new TournamentServiceSpy();
-      tournamentService.getReturnValue = tournament;
+      tournamentService.getReturnValues.push(tournament);
       authorizationService = new AuthorizationServiceDummy();
       authorizationService.isTournamentAdminResult = true;
       groupPhaseService = new GroupPhaseServiceSpy();

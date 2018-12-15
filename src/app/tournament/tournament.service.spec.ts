@@ -1,7 +1,5 @@
-import { TestBed, inject, async } from '@angular/core/testing';
+import { TestBed, inject } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { Observable } from 'rxjs/Observable';
-import { of } from 'rxjs/observable/of';
 
 import { TournamentService } from './tournament.service';
 import { Tournament } from './tournament';
@@ -9,12 +7,10 @@ import { NumericConstraint } from './numeric-constraint';
 import { SexConstraint } from './sex-constraint';
 
 import { Rank } from '../rank';
-import { User } from '../user';
 
 import {
   IPPON_HOST,
-  TOURNAMENTS_ENDPOINT,
-  ADMINS_ENDPOINT
+  TOURNAMENTS_ENDPOINT
 } from '../rest-api';
 
 const tournamentsUrl = IPPON_HOST + TOURNAMENTS_ENDPOINT;
@@ -86,7 +82,6 @@ describe('TournamentService', () => {
           backend: HttpTestingController) => {
           service.add(tournament)
             .subscribe();
-          const req = backend.expectOne(tournamentsUrl);
         }));
     it("uses POST method",
       inject(
@@ -142,7 +137,6 @@ describe('TournamentService', () => {
           backend: HttpTestingController) => {
           service.getList()
             .subscribe();
-          const req = backend.expectOne(tournamentsUrl);
         }));
     it("uses GET method",
       inject(
@@ -188,7 +182,6 @@ describe('TournamentService', () => {
           backend: HttpTestingController) => {
           service.get(tournament.id)
             .subscribe();
-          const req = backend.expectOne(tournamentUrl);
         }));
     it("uses GET method",
       inject(
@@ -234,7 +227,6 @@ describe('TournamentService', () => {
           backend: HttpTestingController) => {
           service.update(tournament)
             .subscribe();
-          const req = backend.expectOne(tournamentUrl);
         }));
     it("uses PUT method",
       inject(
@@ -281,7 +273,6 @@ describe('TournamentService', () => {
           backend: HttpTestingController) => {
           service.delete(tournament)
             .subscribe();
-          const req = backend.expectOne(tournamentUrl);
         }));
     it("uses DELETE method",
       inject(

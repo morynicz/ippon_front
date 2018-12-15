@@ -3,16 +3,14 @@ import { HttpClient } from '@angular/common/http';
 
 import {
   IPPON_HOST,
-  TOURNAMENTS_ENDPOINT,
-  ADMINS_ENDPOINT
+  TOURNAMENTS_ENDPOINT
 } from '../rest-api';
 
 import { Tournament } from './tournament';
-import { User } from '../user';
-import { CrudService } from '../crud.service';
+import { CrudlService } from '../crudl.service';
 
 @Injectable()
-export class TournamentService extends CrudService<Tournament>{
+export class TournamentService extends CrudlService<Tournament>{
   constructor(http: HttpClient) {
     super(http, IPPON_HOST + TOURNAMENTS_ENDPOINT)
   }
