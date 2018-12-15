@@ -17,16 +17,17 @@ const playerId: number = 8;
 const pointId: number = 13;
 
 describe('PointService', () => {
+  let service: PointService;
+  let backend: HttpTestingController;
+
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [PointService],
       imports: [HttpClientTestingModule]
     });
+    service = TestBed.get(PointService);
+    backend = TestBed.get(HttpTestingController);
   });
-
-  it('should be created', inject([PointService], (service: PointService) => {
-    expect(service).toBeTruthy();
-  }));
 
   const pointUrl: string = IPPON_HOST + POINTS_ENDPOINT;
 
@@ -38,93 +39,41 @@ describe('PointService', () => {
   }
 
   describe("when add is called", () => {
-    it("calls the points api url",
-      inject(
-        [PointService, HttpTestingController],
-        (service: PointService,
-          backend: HttpTestingController) => {
-          service.add(point)
-            .subscribe();
-          const req = backend.expectOne(pointUrl);
-        }));
-    it("uses POST method",
-      inject(
-        [PointService, HttpTestingController],
-        (service: PointService,
-          backend: HttpTestingController) => {
-          service.add(point)
-            .subscribe();
-          const req = backend.expectOne(pointUrl);
-          expect(req.request.method).toBe('POST');
-        }));
-    it("sends request with application/json content type headers",
-      inject(
-        [PointService, HttpTestingController],
-        (service: PointService,
-          backend: HttpTestingController) => {
-          service.add(point)
-            .subscribe();
-          const req = backend.expectOne(pointUrl);
-          expect(req.request.headers.has('Content-Type'))
-            .toBe(true);
-          expect(req.request.headers.get('Content-Type'))
-            .toBe('application/json');
-        }));
-    it("responds with newly added point",
-      inject(
-        [PointService, HttpTestingController],
-        (service: PointService,
-          backend: HttpTestingController) => {
-          service.add(point)
-            .subscribe(response => expect(response).toBe(point));
-          const req = backend.expectOne(pointUrl);
-          req.flush(point);
-        }));
-    it("sends the point to be created in body",
-      inject(
-        [PointService, HttpTestingController],
-        (service: PointService,
-          backend: HttpTestingController) => {
-          service.add(point)
-            .subscribe();
-          const req = backend.expectOne(pointUrl);
-          expect(req.request.body).toBe(point);
-        }));
+    it("calls the points api url, uses POST method, \
+    sends request with application/json content type headers, \
+    sends the point to be created in body and \
+    returns newly added point",
+      () => {
+        service.add(point)
+          .subscribe(response => expect(response).toBe(point));
+        const req = backend.expectOne(pointUrl);
+        req.flush(point);
+        expect(req.request.method).toBe('POST');
+        expect(req.request.headers.has('Content-Type'))
+          .toBe(true);
+        expect(req.request.headers.get('Content-Type'))
+          .toBe('application/json');
+        expect(req.request.body).toBe(point);
+      });
   });
 
   describe("when delete is called", () => {
-    it("calls the tournaments api url",
-      inject(
-        [PointService, HttpTestingController],
-        (service: PointService,
-          backend: HttpTestingController) => {
-          service.delete(point)
-            .subscribe();
-          const req = backend.expectOne(pointUrl + point.id + '/');
-        }));
-    it("uses DELETE method",
-      inject(
-        [PointService, HttpTestingController],
-        (service: PointService,
-          backend: HttpTestingController) => {
-          service.delete(point)
-            .subscribe();
-          const req = backend.expectOne(pointUrl + point.id + '/');
-          expect(req.request.method).toBe('DELETE');
-        }));
-    it("sends request with application/json content type headers",
-      inject(
-        [PointService, HttpTestingController],
-        (service: PointService,
-          backend: HttpTestingController) => {
-          service.delete(point)
-            .subscribe();
-          const req = backend.expectOne(pointUrl + point.id + '/');
-          expect(req.request.headers.has('Content-Type'))
-            .toBe(true);
-          expect(req.request.headers.get('Content-Type'))
-            .toBe('application/json');
-        }));
+    it("calls the tournaments api url, uses DELETE method and \
+    sends request with application/json content type headers",
+      () => {
+        service.delete(point)
+          .subscribe();
+        const req = backend.expectOne(pointUrl + point.id + '/');
+        expect(req.request.headers.has('Content-Type'))
+          .toBe(true);
+        expect(req.request.headers.get('Content-Type'))
+          .toBe('application/json');
+        expect(req.request.method).toBe('DELETE');
+        expect(req.request.headers.has('Content-Type'))
+          .toBe(true);
+        expect(req.request.headers.get('Content-Type'))
+          .toBe('application/json');
+      });
   });
 
   describe("when getList is called", () => {
@@ -139,45 +88,20 @@ describe('PointService', () => {
         id: 12
       }];
 
-    it("calls the resources api url",
-      inject(
-        [PointService, HttpTestingController],
-        (service: PointService,
-          backend: HttpTestingController) => {
-          service.getList(fightId).subscribe();
-          const req = backend.expectOne(filteredUrl);
-        }));
-    it("uses GET method",
-      inject(
-        [PointService, HttpTestingController],
-        (service: PointService,
-          backend: HttpTestingController) => {
-          service.getList(fightId).subscribe();
-          const req = backend.expectOne(filteredUrl);
-          expect(req.request.method).toBe('GET');
-        }));
-    it("sends request with application/json content type headers",
-      inject(
-        [PointService, HttpTestingController],
-        (service: PointService,
-          backend: HttpTestingController) => {
-          service.getList(fightId).subscribe();
-          const req = backend.expectOne(filteredUrl);
-          expect(req.request.headers.has('Content-Type'))
-            .toBe(true);
-          expect(req.request.headers.get('Content-Type'))
-            .toBe('application/json');
-        }));
-    it("responds with requested points",
-      inject(
-        [PointService, HttpTestingController],
-        (service: PointService,
-          backend: HttpTestingController) => {
-          service.getList(fightId)
-            .subscribe(response => expect(response)
-              .toBe(points));
-          const req = backend.expectOne(filteredUrl);
-          req.flush(points);
-        }));
+    it("calls the resources api url, uses GET method, \
+    sends request with application/json content type headers \
+    and returns requested points",
+      () => {
+        service.getList(fightId)
+          .subscribe(response => expect(response)
+            .toBe(points));
+        const req = backend.expectOne(filteredUrl);
+        req.flush(points);
+        expect(req.request.method).toBe('GET');
+        expect(req.request.headers.has('Content-Type'))
+          .toBe(true);
+        expect(req.request.headers.get('Content-Type'))
+          .toBe('application/json');
+      });
   });
 });
