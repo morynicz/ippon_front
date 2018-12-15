@@ -3,6 +3,7 @@
     {{group.name}}
   </div>
   <div class="card-body">
+    <h4 class="display-4 text-center" i18n>Members</h4>
     <div *ngIf="isAuthorized == false" id="group-members-list" class="row">
       <ul class="list-group col">
         <li *ngFor="let team of  teams" class="list-group-item">
@@ -16,6 +17,7 @@
         <ippon-group-member-form [group]="group.id" (reloadRequest)="reloadTeams()"></ippon-group-member-form>
       </div>
     </div>
+    <h4 class="display-4 text-center" i18n>Fights</h4>
     <div id="group-fights" class="row">
       <ul class="list-group col">
         <li *ngFor="let fight of groupFights" class="list-group-item">

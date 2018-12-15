@@ -79,7 +79,7 @@ describe('GroupMemberLineComponent', () => {
       });
       component.isAuthorized = true;
       fixture.detectChanges();
-      btn = fixture.debugElement.query(By.css("#delete-group-member"));
+      btn = fixture.debugElement.query(By.css(`#delete-group-member-${team.id}`));
       btn.nativeElement.click();
 
     }));

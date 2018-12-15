@@ -1,27 +1,27 @@
-<div>
-  <form class="form-horizontal" role="form" class="edit-user" name="fight-form" #fightForm="ngForm">
-    <div class="form-group">
-      <label for="shiro-team" class="col-md-3 control-label" i18n>Shiro team</label>
-      <div class="col-md-3">
+<form class="form-horizontal row" role="form" name="fight-form" #fightForm="ngForm">
+  <div class="form-group col-5">
+    <div class="row">
+      <label for="shiro-team" class="col control-label" i18n>Shiro team</label>
+      <div class="col">
         <select id="shiro-team-select" [(ngModel)]="teamFight.shiro_team" name="shiro-team">
           <option *ngFor="let team of teams" [ngValue]="team.id">
             <ippon-team-line [team]="team"></ippon-team-line>
           </option>
         </select>
       </div>
-      <div class="form-group">
-        <label for="aka-team" class="col-md-3 control-label" i18n>Aka team</label>
-        <div class="col-md-3">
-          <select id="aka-team-select" [(ngModel)]="teamFight.aka_team" name="aka-team">
-            <option *ngFor="let team of teams" [ngValue]="team.id">
-              <ippon-team-line [team]="team"></ippon-team-line>
-            </option>
-          </select>
-        </div>
+    </div>
+  </div>
+  <div class="form-group col-5">
+    <div class="row">
+      <label for="aka-team" class="col control-label" i18n>Aka team</label>
+      <div class="col">
+        <select id="aka-team-select" [(ngModel)]="teamFight.aka_team" name="aka-team">
+          <option *ngFor="let team of teams" [ngValue]="team.id">
+            <ippon-team-line [team]="team"></ippon-team-line>
+          </option>
+        </select>
       </div>
     </div>
-    <div class="col-md-3 text-right">
-      <button class="btn btn-primary" (click)="save()" id="save-team-fight" i18n>Create</button>
-    </div>
-  </form>
-</div>
+  </div>
+  <button class="col btn btn-primary" (click)="save()" id="save-team-fight" i18n>Create</button>
+</form>

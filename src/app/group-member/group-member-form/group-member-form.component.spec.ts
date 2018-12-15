@@ -7,6 +7,8 @@ import { GroupMemberService } from '../group-member.service';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { GroupMember } from '../group-member';
+import { GroupMemberLineComponent } from '../group-member-line/group-member-line.component';
+import { RouterTestingModule } from '@angular/router/testing';
 
 const tournamentId: number = 32;
 const groupId: number = 231;
@@ -55,6 +57,51 @@ const assignedTeams: Team[] = [
 
 
 describe('GroupMemberFormComponent', () => {
+  const tournamentId: number = 32;
+  const groupId: number = 231;
+  const teamFightId: number = 87;
+  const unassignedTeams: Team[] = [
+    {
+      id: 22,
+      name: "T1",
+      members: [],
+      tournament: tournamentId
+    },
+    {
+      id: 27,
+      name: "T2",
+      members: [],
+      tournament: tournamentId
+    },
+    {
+      id: 28,
+      name: "T3",
+      members: [],
+      tournament: tournamentId
+    }
+  ]
+
+  const assignedTeams: Team[] = [
+    {
+      id: 25,
+      name: "T4",
+      members: [],
+      tournament: tournamentId
+    },
+    {
+      id: 23,
+      name: "T5",
+      members: [],
+      tournament: tournamentId
+    },
+    {
+      id: 21,
+      name: "T6",
+      members: [],
+      tournament: tournamentId
+    }
+  ]
+
   let component: GroupMemberFormComponent;
   let fixture: ComponentFixture<GroupMemberFormComponent>;
   let groupMemberService: GroupMemberServiceSpy;
@@ -65,12 +112,15 @@ describe('GroupMemberFormComponent', () => {
     groupMemberService.getListReturnValue.push(assignedTeams);
     groupMemberService.getNotAssignedReturnValue.push(unassignedTeams);
     TestBed.configureTestingModule({
-      declarations: [GroupMemberFormComponent],
+      declarations: [
+        GroupMemberFormComponent,
+        GroupMemberLineComponent],
       providers: [
         { provide: GroupMemberService, useValue: groupMemberService },
       ],
       imports: [
-        FormsModule
+        FormsModule,
+        RouterTestingModule
       ]
     })
       .compileComponents();
@@ -131,7 +181,7 @@ describe('GroupMemberFormComponent', () => {
     });
   });
 
-  describe("when assigned an add-team button is pressed", () => {
+  describe("when delete-member button is pressed", () => {
     let btn;
     let reloadRequested: boolean;
 
@@ -141,7 +191,7 @@ describe('GroupMemberFormComponent', () => {
         reloadRequested = true;
       });
       fixture.detectChanges();
-      btn = fixture.debugElement.query(By.css(`#remove-member-${assignedTeams[0].id}`));
+      btn = fixture.debugElement.query(By.css(`#delete-group-member-${assignedTeams[0].id}`));
       btn.nativeElement.click();
     }));
 

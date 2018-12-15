@@ -41,4 +41,8 @@ export class GroupMemberFormComponent implements OnInit {
     this.groupMemberService.delete(member)
       .subscribe(result => this.reloadRequest.emit(''));
   }
+
+  reloadTeams(): void {
+    this.reloadRequest.emit('');
+  }
 }

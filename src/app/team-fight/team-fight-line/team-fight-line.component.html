@@ -1,14 +1,16 @@
 <div class="row" *ngIf="teamFight != null">
-  <a class="col-md-4" routerLink="/team-fights/{{teamFight.id}}">
-    <div class="col-md" id="aka-team">
-      {{akaTeam.name}}
-    </div>
-    <div class="col-md" id="shiro-team">
-      {{shiroTeam.name}}
-    </div>
-  </a>
-  <div class="col-md" *ngIf="isAuthorized">
-    <button class="col-md-1 btn btn-warning" id="delete-team-fight" (click)="deleteTeamFight()" i18n>
-      Delete</button>
-  </div>
+  <h1 class="h3 col-8 text-center">
+    <a routerLink="/team-fights/{{teamFight.id}}">
+      <div class="row">
+        <div class="col" id="aka-team">
+          {{akaTeam.name}}
+        </div>
+        <div class="col" id="shiro-team">
+          {{shiroTeam.name}}
+        </div>
+      </div>
+    </a>
+  </h1>
+  <button *ngIf="isAuthorized" class="col btn btn-danger" id="delete-team-fight" (click)="deleteTeamFight()" i18n>
+    Delete</button>
 </div>
