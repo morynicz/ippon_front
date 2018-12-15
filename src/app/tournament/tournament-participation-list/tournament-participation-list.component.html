@@ -1,51 +1,59 @@
-<div class="row">
-  <span class="col-sm-1" i18n>
-    Name
-  </span>
-  <span class="col-sm-1" i18n>
-    Surname
-  </span>
-  <span class="col-sm-1" i18n>
-    Is paid
-  </span>
-  <span class="col-sm-1" i18n>
-    Is registered
-  </span>
-  <span class="col-sm-1" i18n>
-    Age
-  </span>
-  <span class="col-sm-1" i18n>
-    Grade
-  </span>
-  <span class="col-sm-1" i18n>
-    Sex
-  </span>
-  <span class="col-sm-1">
-    Qualified
-  </span>
-  <span class="col-sm-4">
-    Notes
-  </span>
-</div>
-<section class="row" ng-if="participations.length">
-  <ul class="list-unstyled">
-    <li *ngFor="let participation of participations">
+<section class="row text-center" ng-if="participations.length">
+  <ul class="list-group col">
+    <li class="list-group-item">
+      <div class="row">
+        <span class="col" i18n>
+          Name
+        </span>
+        <span class="col" i18n>
+          Surname
+        </span>
+        <span class="col" i18n>
+          Is paid
+        </span>
+        <span class="col" i18n>
+          Is registered
+        </span>
+        <span class="col" i18n>
+          Age
+        </span>
+        <span class="col" i18n>
+          Grade
+        </span>
+        <span class="col" i18n>
+          Sex
+        </span>
+        <span class="col">
+          Qualified
+        </span>
+        <span class="col-2">
+          Notes
+        </span>
+        <div class="col-2"></div>
+      </div>
+
+    </li>
+    <li *ngFor="let participation of participations" class="list-group-item">
       <ippon-tournament-participation-form [participation]="participation" (reloadRequest)="reload()"></ippon-tournament-participation-form>
     </li>
   </ul>
 </section>
 <section id='non_participants'>
-  <p i18n>
+  <p class="h3 text-center" i18n>
     Not participating
   </p>
-  <ul class="list-unstyled">
-    <li *ngFor="let non_participant of non_participants">
-      <div class="row non-participant">
-        <ippon-player-line [player]="non_participant"></ippon-player-line>
-        <button class="btn btn-primary" id="add-participant" (click)="addParticipant(non_participant)" i18n>Add</button>
-      </div>
-    </li>
-  </ul>
+  <div class="row">
+    <ul class="list-group col">
+      <li *ngFor="let non_participant of non_participants" class="list-group-item">
+        <div class="row non-participant">
+          <div class="col-8">
+            <ippon-player-line [player]="non_participant"></ippon-player-line>
+          </div>
+          <button class="col btn btn-primary" id="add-participant" (click)="addParticipant(non_participant)" i18n>Add</button>
+        </div>
+      </li>
+    </ul>
+  </div>
 </section>
 <section>
   <button routerLink="/tournament/{{tournamentId}}/" class="btn btn-default" id="index-club" i18n>

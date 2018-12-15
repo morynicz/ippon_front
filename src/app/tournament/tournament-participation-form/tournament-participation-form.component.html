@@ -1,39 +1,36 @@
-<div class="row">
-  <form role="form" name="participation-form" class="edit-user" #participationForm="ngForm">
-    <span class="col-sm-1">
-      {{participation.player.name}}
-    </span>
-    <span class="col-sm-1">
-      {{participation.player.surname}}
-    </span>
-    <span class="col-sm-1">
-      <input type="checkbox" id="is_paid" name="is_paid" [(ngModel)]="participation.is_paid" />
-    </span>
-    <span class="col-sm-1">
-      <input type="checkbox" id="is_registered" name="is_registered" [(ngModel)]="participation.is_registered" />
-    </span>
-    <span id="is_age_ok">
-      <span *ngIf="participation.is_age_ok" class="constraint-ok col-sm-1">OK</span>
-    <span *ngIf="!participation.is_age_ok" class="constraint-nok col-sm-1">X</span>
-    </span>
-    <span id="is_rank_ok">
-      <span *ngIf="participation.is_rank_ok" class="constraint-ok col-sm-1">OK</span>
-    <span *ngIf="!participation.is_rank_ok" class="constraint-nok col-sm-1">X</span>
-    </span>
-    <span id="is_sex_ok">
-      <span *ngIf="participation.is_sex_ok" class="constraint-ok col-sm-1">OK</span>
-    <span *ngIf="!participation.is_sex_ok" class="constraint-nok col-sm-1">X</span>
-    </span>
-    <span class="col-sm-1 form-group">
-      <input type="checkbox" id="is_qualified" name="is_qualified" [(ngModel)]="participation.is_qualified" />
-    </span>
-    <span class="col-sm-3 form-group">
-      <input type="text" id="notes" name="notes" [(ngModel)]="participation.notes" />
-    </span>
-    <span class="btn-group col-sm-1">
-    <button class="btn btn-success" (click)="save()" id="save-participation" i18n>Save changes</button>
-    <button class="btn btn-danger" (click)="delete()" id="delete-participation" i18n>Remove player</button>
-  </span>
-  </form>
-</div>
-<!-- {{participation|json}} -->
+<form role="form" name="participation-form" class="row" #participationForm="ngForm">
+  <div class="col">
+    {{participation.player.name}}
+  </div>
+  <div class="col">
+    {{participation.player.surname}}
+  </div>
+  <div class="col">
+    <input type="checkbox" id="is_paid" name="is_paid" [(ngModel)]="participation.is_paid" />
+  </div>
+  <div class="col">
+    <input type="checkbox" id="is_registered" name="is_registered" [(ngModel)]="participation.is_registered" />
+  </div>
+  <div id="is_age_ok" class="col">
+    <div *ngIf="participation.is_age_ok" class="constraint-ok col">OK</div>
+    <div *ngIf="!participation.is_age_ok" class="constraint-nok col">X</div>
+  </div>
+  <div id="is_rank_ok" class="col">
+    <div *ngIf="participation.is_rank_ok" class="constraint-ok col">OK</div>
+    <div *ngIf="!participation.is_rank_ok" class="constraint-nok col">X</div>
+  </div>
+  <div id="is_sex_ok" class="col">
+    <div *ngIf="participation.is_sex_ok" class="constraint-ok col">OK</div>
+    <div *ngIf="!participation.is_sex_ok" class="constraint-nok col">X</div>
+  </div>
+  <div class="col form-group">
+    <input type="checkbox" id="is_qualified" name="is_qualified" [(ngModel)]="participation.is_qualified" />
+  </div>
+  <div class="col-2 form-group">
+    <input type="text" id="notes" name="notes" [(ngModel)]="participation.notes" />
+  </div>
+  <div class="btn-group col-2">
+    <button class="btn btn-success" (click)="save()" id="save-participation" i18n>Save</button>
+    <button class="btn btn-danger" (click)="delete()" id="delete-participation" i18n>Remove</button>
+  </div>
+</form>

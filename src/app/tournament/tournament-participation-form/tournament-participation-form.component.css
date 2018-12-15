@@ -1,9 +1,9 @@
-SPAN.constraint-ok {
+DIV.constraint-ok {
   background-color:MediumSeaGreen;
   color:White
 }
 
-SPAN.constraint-nok {
+DIV.constraint-nok {
   background-color:Tomato;
   color:White
 }
