@@ -1,21 +1,23 @@
 <div class="row">
-  <div class="col-md-1">
+  <div class="col text-center display-4">
     {{akaPlayer.name}} {{akaPlayer.surname}}
   </div>
-  <div class="col-md-1">
+  <div class="col text-center display-4">
     {{shiroPlayer.name}} {{shiroPlayer.surname}}
   </div>
 </div>
 <div class="row">
-  <ul class="list-unstyled">
-    <li *ngFor="let point of points">
+  <ul class="list-group col">
+    <li *ngFor="let point of points" class="list-group-item">
       <ippon-point-line [akaPlayer]="akaPlayer" [shiroPlayer]="shiroPlayer" [point]="point" (reloadRequest)="reload()"
         [isAuthorized]="isAdmin">
       </ippon-point-line>
     </li>
   </ul>
 </div>
-<div *ngIf="isAdmin == true">
-  <ippon-point-form id="add-point-form" [akaPlayer]="akaPlayer" [shiroPlayer]="shiroPlayer" [fightId]="fight.id"
-    (reloadRequest)="reload()"></ippon-point-form>
+<div *ngIf="isAdmin == true" class="row">
+  <div class="col">
+    <ippon-point-form id="add-point-form" [akaPlayer]="akaPlayer" [shiroPlayer]="shiroPlayer" [fightId]="fight.id"
+      (reloadRequest)="reload()"></ippon-point-form>
+  </div>
 </div>
