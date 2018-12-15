@@ -1,32 +1,39 @@
 <div class="row">
-  <span class="col-sm-1" i18n>
+  <span class="col" i18n>
     Username
   </span>
-  <span class="col-sm-1" i18n>
+  <span class="col" i18n>
     Admin
   </span>
+  <span class="col" i18n></span>
 </div>
 <section id='admins' class="row" ng-if="admins.length">
-  <ul class="list-unstyled">
-    <li *ngFor="let admin of admins">
+  <ul class="list-group col">
+    <li *ngFor="let admin of admins" class="list-group-item">
       <ippon-tournament-admin-form [admin]="admin" (reloadRequest)="reload()">
       </ippon-tournament-admin-form>
     </li>
   </ul>
 </section>
 <section id='non_admins'>
-  <p i18n>
+  <p class="h3 text-center" i18n>
     Not admins
   </p>
-  <ul class="list-unstyled">
-    <li *ngFor="let nonAdmin of nonAdmins">
-      <div class="row non-participant">
-        {{nonAdmin.username}}
-        <button class="btn btn-primary" id="add-admin" (click)="addAdmin(nonAdmin)" i18n>Add</button>
-      </div>
-    </li>
-  </ul>
+  <div class="row">
+    <ul class="list-group col">
+      <li *ngFor="let nonAdmin of nonAdmins" class="list-group-item">
+        <div class="row non-participant">
+          <div class="col-8 h3 text-center">
+            {{nonAdmin.username}}
+          </div>
+          <button class="col btn btn-primary" id="add-admin" (click)="addAdmin(nonAdmin)" i18n>Add</button>
+        </div>
+      </li>
+    </ul>
+  </div>
 </section>
 <section class='row'>
-  <button routerLink="/tournament/{{tournamentId}}" class="btn btn-info" id="back-to-tournament" i18n> &larr tournament </button>
+  <button routerLink="/tournament/{{tournamentId}}" class="btn btn-info" id="back-to-tournament" i18n> &larr;
+    tournament
+  </button>
 </section>
