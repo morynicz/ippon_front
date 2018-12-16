@@ -1,32 +1,38 @@
-<div class="row">
-  <div class="col-md-4">
+<div class="card">
+  <div class="card-title text-center display-4">
     {{team.name}}
   </div>
-  <div id="members">
+  <div class="card-body">
     <h3 i18n>Members</h3>
-    <ul>
-      <li *ngFor="let member of members">
-        <div>
-          <ippon-player-line [player]="member"></ippon-player-line>
-          <div class="col-md-1" *ngIf="isAuthorized">
-            <button class="col-md-1 btn btn-warning" id="remove-member-{{member.id}}" (click)="removeMember(member)"
+    <div id="members" class="row">
+      <ul class="list-group col">
+        <li *ngFor="let member of members" class="list-group-item">
+          <div class="row">
+            <div class="col-8">
+              <ippon-player-line [player]="member"></ippon-player-line>
+            </div>
+            <button *ngIf="isAuthorized" class="col btn btn-warning" id="remove-member-{{member.id}}" (click)="removeMember(member)"
               i18n>
               Delete</button>
           </div>
-        </div>
-      </li>
-    </ul>
-  </div>
-  <div *ngIf="isAuthorized == true">
-    <h3 i18n>Not assigned players</h3>
-    <ul>
-      <li *ngFor="let player of notAssigned">
-        <div>
-          <ippon-player-line [player]="player"></ippon-player-line>
-          <button class="col-md-1 btn btn-primary" id="add-member-{{player.id}}" (click)="addMember(player)" i18n>
-            Add</button>
-        </div>
-      </li>
-    </ul>
+        </li>
+      </ul>
+    </div>
+    <div *ngIf="isAuthorized == true">
+      <h3 i18n>Not assigned players</h3>
+      <div class="row">
+        <ul class="col list-group">
+          <li *ngFor="let player of notAssigned" class="list-group-item">
+            <div class="row">
+              <div class="col-8">
+                <ippon-player-line [player]="player"></ippon-player-line>
+              </div>
+              <button class="col btn btn-primary" id="add-member-{{player.id}}" (click)="addMember(player)" i18n>
+                Add</button>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
   </div>
 </div>
