@@ -45,99 +45,53 @@ const team: Team = {
 }
 
 describe('TeamService', () => {
+  let service: TeamService;
+  let backend: HttpTestingController;
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [TeamService],
       imports: [HttpClientTestingModule]
     });
+    service = TestBed.get(TeamService);
+    backend = TestBed.get(HttpTestingController);
+  });
+
+  afterEach(() => {
+    backend.verify();
   });
 
   describe("when add is called", () => {
-    it("calls the teams api url",
-      inject(
-        [TeamService, HttpTestingController],
-        (service: TeamService,
-          backend: HttpTestingController) => {
-          service.add(team)
-            .subscribe();
-        }));
-    it("uses POST method",
-      inject(
-        [TeamService, HttpTestingController],
-        (service: TeamService,
-          backend: HttpTestingController) => {
-          service.add(team)
-            .subscribe();
-          const req = backend.expectOne(teamUrl);
-          expect(req.request.method).toBe('POST');
-        }));
-    it("sends request with application/json content type headers",
-      inject(
-        [TeamService, HttpTestingController],
-        (service: TeamService,
-          backend: HttpTestingController) => {
-          service.add(team)
-            .subscribe();
-          const req = backend.expectOne(teamUrl);
-          expect(req.request.headers.has('Content-Type'))
-            .toBe(true);
-          expect(req.request.headers.get('Content-Type'))
-            .toBe('application/json');
-        }));
-    it("responds with newly added team",
-      inject(
-        [TeamService, HttpTestingController],
-        (service: TeamService,
-          backend: HttpTestingController) => {
-          service.add(team)
-            .subscribe(response => expect(response).toBe(team));
-          const req = backend.expectOne(teamUrl);
-          req.flush(team);
-        }));
-    it("sends the team to be created in body",
-      inject(
-        [TeamService, HttpTestingController],
-        (service: TeamService,
-          backend: HttpTestingController) => {
-          service.add(team)
-            .subscribe();
-          const req = backend.expectOne(teamUrl);
-          expect(req.request.body).toBe(team);
-        }));
+    it("calls the teams api url, uses POST method,\
+    sends request with application/json content type headers, \
+    sends the team to be created in body \
+    and newly added team",
+      () => {
+        service.add(team)
+          .subscribe(response => expect(response).toBe(team));
+        const req = backend.expectOne(teamUrl);
+        req.flush(team);
+        expect(req.request.method).toBe('POST');
+        expect(req.request.headers.has('Content-Type'))
+          .toBe(true);
+        expect(req.request.headers.get('Content-Type'))
+          .toBe('application/json');
+        expect(req.request.body).toBe(team);
+      });
   });
 
   describe("when delete is called", () => {
-    it("calls the tournaments api url",
-      inject(
-        [TeamService, HttpTestingController],
-        (service: TeamService,
-          backend: HttpTestingController) => {
-          service.delete(team)
-            .subscribe();
-        }));
-    it("uses DELETE method",
-      inject(
-        [TeamService, HttpTestingController],
-        (service: TeamService,
-          backend: HttpTestingController) => {
-          service.delete(team)
-            .subscribe();
-          const req = backend.expectOne(teamUrl + team.id + '/');
-          expect(req.request.method).toBe('DELETE');
-        }));
-    it("sends request with application/json content type headers",
-      inject(
-        [TeamService, HttpTestingController],
-        (service: TeamService,
-          backend: HttpTestingController) => {
-          service.delete(team)
-            .subscribe();
-          const req = backend.expectOne(teamUrl + team.id + '/');
-          expect(req.request.headers.has('Content-Type'))
-            .toBe(true);
-          expect(req.request.headers.get('Content-Type'))
-            .toBe('application/json');
-        }));
+    it("calls the teams api url, uses DELETE method \
+    and sends request with application/json content type headers",
+      () => {
+        service.delete(team)
+          .subscribe();
+        const req = backend.expectOne(teamUrl + team.id + '/');
+        expect(req.request.headers.has('Content-Type'))
+          .toBe(true);
+        expect(req.request.headers.get('Content-Type'))
+          .toBe('application/json');
+        expect(req.request.method).toBe('DELETE');
+      });
   });
 
   describe("when getList is called", () => {
@@ -152,76 +106,58 @@ describe('TeamService', () => {
         tournament: tournamentId
       }];
 
-    it("calls the resources api url",
-      inject(
-        [TeamService, HttpTestingController],
-        (service: TeamService,
-          backend: HttpTestingController) => {
-          service.getList(tournamentId).subscribe();
-        }));
-    it("uses GET method",
-      inject(
-        [TeamService, HttpTestingController],
-        (service: TeamService,
-          backend: HttpTestingController) => {
-          service.getList(tournamentId).subscribe();
-          const req = backend.expectOne(filteredUrl);
-          expect(req.request.method).toBe('GET');
-        }));
-    it("sends request with application/json content type headers",
-      inject(
-        [TeamService, HttpTestingController],
-        (service: TeamService,
-          backend: HttpTestingController) => {
-          service.getList(tournamentId).subscribe();
-          const req = backend.expectOne(filteredUrl);
-          expect(req.request.headers.has('Content-Type'))
-            .toBe(true);
-          expect(req.request.headers.get('Content-Type'))
-            .toBe('application/json');
-        }));
-    it("responds with requested teams",
-      inject(
-        [TeamService, HttpTestingController],
-        (service: TeamService,
-          backend: HttpTestingController) => {
-          service.getList(tournamentId)
-            .subscribe(response => expect(response)
-              .toBe(teams));
-          const req = backend.expectOne(filteredUrl);
-          req.flush(teams);
-        }));
+    it("calls the teams api url, uses GET method, \
+      sends request with application/json content type headers \
+      and responds with requested teams",
+      () => {
+        service.getList(tournamentId)
+          .subscribe(response => expect(response)
+            .toBe(teams));
+        const req = backend.expectOne(filteredUrl);
+        req.flush(teams);
+        expect(req.request.method).toBe('GET');
+        expect(req.request.headers.has('Content-Type'))
+          .toBe(true);
+        expect(req.request.headers.get('Content-Type'))
+          .toBe('application/json');
+      });
+  });
+
+  describe("when update is called", () => {
+    it("calls the teams api url, uses PUT method, \
+    sends request with application/json content type headers \
+    sends the team to be updated in body \
+    and returns updated team",
+      () => {
+        service.update(team)
+          .subscribe(response => expect(response)
+            .toBe(team));
+        const req = backend.expectOne(
+          teamUrl + team.id + '/');
+        req.flush(team);
+        expect(req.request.body).toBe(team);
+        expect(req.request.method).toBe('PUT');
+        expect(req.request.headers.has('Content-Type'))
+          .toBe(true);
+        expect(req.request.headers.get('Content-Type'))
+          .toBe('application/json');
+      });
   });
 
   describe("when isAuthorized is called", () => {
-    let fightAuthUrl = IPPON_HOST + AUTHORIZATION_ENDPOINT + TEAMS_ENDPOINT + `${team.id}/`;
-    it("calls the teams api url",
-      inject(
-        [TeamService, HttpTestingController],
-        (service: TeamService,
-          backend: HttpTestingController) => {
-          service.isAuthorized(team.id).subscribe();
-          const req = backend.expectOne(fightAuthUrl);
-        }));
-    it("uses isAuthorized method",
-      inject(
-        [TeamService, HttpTestingController],
-        (service: TeamService,
-          backend: HttpTestingController) => {
-          service.isAuthorized(team.id).subscribe();
-          const req = backend.expectOne(fightAuthUrl);
-          expect(req.request.method).toBe('GET');
-        }));
-    it("responds with requested team authorization",
-      inject(
-        [TeamService, HttpTestingController],
-        (service: TeamService,
-          backend: HttpTestingController) => {
-          service.isAuthorized(team.id)
-            .subscribe(response => expect(response)
-              .toBe(true));
-          const req = backend.expectOne(fightAuthUrl);
-          req.flush({ "isAuthorized": true });
-        }));
+    let authUrl = IPPON_HOST + AUTHORIZATION_ENDPOINT + TEAMS_ENDPOINT + `${team.id}/`;
+    it("calls the teams api url, uses GET method \
+    and returns authorization",
+      () => {
+        service.isAuthorized(team.id)
+          .subscribe(response => {
+            expect(response).toBe(true)
+          });
+        const req = backend.expectOne(authUrl);
+        req.flush({ "isAuthorized": true });
+        expect(req.request.method).toBe('GET');
+        expect(req.request.headers.has('Content-Type')).toBe(true);
+        expect(req.request.headers.get('Content-Type')).toBe('application/json');
+      });
   });
 });

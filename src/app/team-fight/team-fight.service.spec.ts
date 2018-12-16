@@ -80,102 +80,56 @@ const akaTeam: Team = {
 }
 
 describe('TeamFightService', () => {
+  let service: TeamFightService;
+  let backend: HttpTestingController;
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [TeamFightService],
       imports: [HttpClientTestingModule]
     });
+    service = TestBed.get(TeamFightService);
+    backend = TestBed.get(HttpTestingController);
+  });
+
+  afterEach(() => {
+    backend.verify();
   });
 
   describe("when add is called", () => {
-    it("calls the team fights api url",
-      inject(
-        [TeamFightService, HttpTestingController],
-        (service: TeamFightService,
-          backend: HttpTestingController) => {
-          service.add(teamFight)
-            .subscribe();
-          const req = backend.expectOne(teamFightUrl);
-        }));
-    it("uses POST method",
-      inject(
-        [TeamFightService, HttpTestingController],
-        (service: TeamFightService,
-          backend: HttpTestingController) => {
-          service.add(teamFight)
-            .subscribe();
-          const req = backend.expectOne(teamFightUrl);
-          expect(req.request.method).toBe('POST');
-        }));
-    it("sends request with application/json content type headers",
-      inject(
-        [TeamFightService, HttpTestingController],
-        (service: TeamFightService,
-          backend: HttpTestingController) => {
-          service.add(teamFight)
-            .subscribe();
-          const req = backend.expectOne(teamFightUrl);
-          expect(req.request.headers.has('Content-Type'))
-            .toBe(true);
-          expect(req.request.headers.get('Content-Type'))
-            .toBe('application/json');
-        }));
-    it("responds with newly added team fight",
-      inject(
-        [TeamFightService, HttpTestingController],
-        (service: TeamFightService,
-          backend: HttpTestingController) => {
-          service.add(teamFight)
-            .subscribe(response => expect(response).toBe(teamFight));
-          const req = backend.expectOne(teamFightUrl);
-          req.flush(teamFight);
-        }));
-    it("sends the team fight to be created in body",
-      inject(
-        [TeamFightService, HttpTestingController],
-        (service: TeamFightService,
-          backend: HttpTestingController) => {
-          service.add(teamFight)
-            .subscribe();
-          const req = backend.expectOne(teamFightUrl);
-          expect(req.request.body).toBe(teamFight);
-        }));
+    it("calls the team fights api url, \
+    uses POST method, \
+    sends request with application/json content type headers\
+    sends the team fight to be created in body \
+    returns newly added team fight",
+      () => {
+        service.add(teamFight)
+          .subscribe(response => expect(response).toBe(teamFight));
+        const req = backend.expectOne(teamFightUrl);
+        expect(req.request.method).toBe('POST');
+        expect(req.request.headers.has('Content-Type'))
+          .toBe(true);
+        expect(req.request.headers.get('Content-Type'))
+          .toBe('application/json');
+        expect(req.request.body).toBe(teamFight);
+        req.flush(teamFight);
+      });
   });
 
   describe("when delete is called", () => {
-    it("calls the team fight api url",
-      inject(
-        [TeamFightService, HttpTestingController],
-        (service: TeamFightService,
-          backend: HttpTestingController) => {
-          service.delete(teamFight)
-            .subscribe();
-          const req = backend.expectOne(teamFightUrl + teamFight.id + '/');
-        }));
-    it("uses DELETE method",
-      inject(
-        [TeamFightService, HttpTestingController],
-        (service: TeamFightService,
-          backend: HttpTestingController) => {
-          service.delete(teamFight)
-            .subscribe();
-          const req = backend.expectOne(teamFightUrl + teamFight.id + '/');
-          expect(req.request.method).toBe('DELETE');
-        }));
-    it("sends request with application/json content type headers",
-      inject(
-        [TeamFightService, HttpTestingController],
-        (service: TeamFightService,
-          backend: HttpTestingController) => {
-          service.delete(teamFight)
-            .subscribe();
-          const req = backend.expectOne(teamFightUrl + teamFight.id + '/');
-          expect(req.request.headers.has('Content-Type'))
-            .toBe(true);
-          expect(req.request.headers.get('Content-Type'))
-            .toBe('application/json');
-        }));
+    it("calls the team fight api url, uses DELETE method and \
+    sends request with application/json content type headers",
+      () => {
+        service.delete(teamFight)
+          .subscribe();
+        const req = backend.expectOne(teamFightUrl + teamFight.id + '/');
+        expect(req.request.method).toBe('DELETE');
+        expect(req.request.headers.has('Content-Type'))
+          .toBe(true);
+        expect(req.request.headers.get('Content-Type'))
+          .toBe('application/json');
+      });
   });
+
 
   describe("when getList is called", () => {
     let tournamentId: number = 3;
@@ -189,77 +143,58 @@ describe('TeamFightService', () => {
         tournament: tournamentId
       }];
 
-    it("calls the resources api url",
-      inject(
-        [TeamFightService, HttpTestingController],
-        (service: TeamFightService,
-          backend: HttpTestingController) => {
-          service.getList(tournamentId).subscribe();
-          const req = backend.expectOne(filteredUrl);
-        }));
-    it("uses GET method",
-      inject(
-        [TeamFightService, HttpTestingController],
-        (service: TeamFightService,
-          backend: HttpTestingController) => {
-          service.getList(tournamentId).subscribe();
-          const req = backend.expectOne(filteredUrl);
-          expect(req.request.method).toBe('GET');
-        }));
-    it("sends request with application/json content type headers",
-      inject(
-        [TeamFightService, HttpTestingController],
-        (service: TeamFightService,
-          backend: HttpTestingController) => {
-          service.getList(tournamentId).subscribe();
-          const req = backend.expectOne(filteredUrl);
-          expect(req.request.headers.has('Content-Type'))
-            .toBe(true);
-          expect(req.request.headers.get('Content-Type'))
-            .toBe('application/json');
-        }));
-    it("responds with requested teams",
-      inject(
-        [TeamFightService, HttpTestingController],
-        (service: TeamFightService,
-          backend: HttpTestingController) => {
-          service.getList(tournamentId)
-            .subscribe(response => expect(response)
-              .toBe(teamFights));
-          const req = backend.expectOne(filteredUrl);
-          req.flush(teamFights);
-        }));
+    it("calls the team fights api url, uses GET method, \
+        sends request with application/json content type headers \
+        and responds with requested team fights",
+      () => {
+        service.getList(tournamentId)
+          .subscribe(response => expect(response)
+            .toBe(teamFights));
+        const req = backend.expectOne(filteredUrl);
+        req.flush(teamFights);
+        expect(req.request.method).toBe('GET');
+        expect(req.request.headers.has('Content-Type'))
+          .toBe(true);
+        expect(req.request.headers.get('Content-Type'))
+          .toBe('application/json');
+      });
+  });
+
+  describe("when update is called", () => {
+    it("calls the team fights api url, uses PUT method, \
+    sends request with application/json content type headers \
+    sends the team fight to be updated in body \
+    and returns updated team fight",
+      () => {
+        service.update(teamFight)
+          .subscribe(response => expect(response)
+            .toBe(teamFight));
+        const req = backend.expectOne(
+          teamFightUrl + teamFight.id + '/');
+        req.flush(teamFight);
+        expect(req.request.body).toBe(teamFight);
+        expect(req.request.method).toBe('PUT');
+        expect(req.request.headers.has('Content-Type'))
+          .toBe(true);
+        expect(req.request.headers.get('Content-Type'))
+          .toBe('application/json');
+      });
   });
 
   describe("when isAuthorized is called", () => {
-    let fightAuthUrl = IPPON_HOST + AUTHORIZATION_ENDPOINT + TEAM_FIGHTS_ENDPOINT + `${teamFight.id}/`;
-    it("calls the fights api url",
-      inject(
-        [TeamFightService, HttpTestingController],
-        (service: TeamFightService,
-          backend: HttpTestingController) => {
-          service.isAuthorized(teamFight.id).subscribe();
-          const req = backend.expectOne(fightAuthUrl);
-        }));
-    it("uses isAuthorized method",
-      inject(
-        [TeamFightService, HttpTestingController],
-        (service: TeamFightService,
-          backend: HttpTestingController) => {
-          service.isAuthorized(teamFight.id).subscribe();
-          const req = backend.expectOne(fightAuthUrl);
-          expect(req.request.method).toBe('GET');
-        }));
-    it("responds with requested fight",
-      inject(
-        [TeamFightService, HttpTestingController],
-        (service: TeamFightService,
-          backend: HttpTestingController) => {
-          service.isAuthorized(teamFight.id)
-            .subscribe(response => expect(response)
-              .toBe(true));
-          const req = backend.expectOne(fightAuthUrl);
-          req.flush({ "isAuthorized": true });
-        }));
+    let authUrl = IPPON_HOST + AUTHORIZATION_ENDPOINT + TEAM_FIGHTS_ENDPOINT + `${teamFight.id}/`;
+    it("calls the team fights api url, uses GET method \
+    and returns authorization",
+      () => {
+        service.isAuthorized(teamFight.id)
+          .subscribe(response => {
+            expect(response).toBe(true)
+          });
+        const req = backend.expectOne(authUrl);
+        req.flush({ "isAuthorized": true });
+        expect(req.request.method).toBe('GET');
+        expect(req.request.headers.has('Content-Type')).toBe(true);
+        expect(req.request.headers.get('Content-Type')).toBe('application/json');
+      });
   });
 });
