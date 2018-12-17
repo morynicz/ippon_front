@@ -15,9 +15,6 @@ import { TournamentListComponent } from './tournament/tournament-list/tournament
 import { TournamentFullComponent } from './tournament/tournament-full/tournament-full.component';
 import { TournamentFormComponent } from './tournament/tournament-form/tournament-form.component';
 
-import { TournamentParticipationListComponent } from './tournament/tournament-participation-list/tournament-participation-list.component';
-import { TournamentAdminListComponent } from './tournament/tournament-admin-list/tournament-admin-list.component';
-
 import { LoginFormComponent } from './authorization/login-form/login-form.component';
 import { TestingGroundsComponent } from './testing-grounds/testing-grounds.component';
 import { FightFullComponent } from './fight/fight-full/fight-full.component';
@@ -26,6 +23,8 @@ import { TeamFullComponent } from './team/team-full/team-full.component';
 import { TournamentTeamListComponent } from './tournament/tournament-team-list/tournament-team-list.component';
 import { GroupFullComponent } from './group/group-full/group-full.component';
 import { GroupPhaseFullComponent } from './group-phase/group-phase-full/group-phase-full.component';
+import { TournamentParticipationListComponent } from './tournament-participation/tournament-participation-list/tournament-participation-list.component';
+import { TournamentAdminListComponent } from './tournament-admin/tournament-admin-list/tournament-admin-list.component';
 
 
 const routes: Routes = [
