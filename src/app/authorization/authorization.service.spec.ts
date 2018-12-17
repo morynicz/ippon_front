@@ -1,10 +1,7 @@
-import { TestBed, inject, async } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { Observable } from 'rxjs/Observable';
-import { of } from 'rxjs/observable/of';
 
 import { AuthorizationService } from './authorization.service';
-import { Authorization } from "./Authorization";
 import {
   IPPON_HOST,
   AUTHORIZATION_ENDPOINT,
@@ -17,22 +14,23 @@ import {
 const authorizationUrl = IPPON_HOST + AUTHORIZATION_ENDPOINT;
 
 describe('AuthorizationService', () => {
+  let service: AuthorizationService;
+  let backend: HttpTestingController;
+
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [AuthorizationService],
       imports: [HttpClientTestingModule]
     });
+    service = TestBed.get(AuthorizationService);
+    backend = TestBed.get(HttpTestingController);
   });
 
-  afterEach(inject([HttpTestingController], (backend: HttpTestingController) => {
+  afterEach(() => {
     backend.verify();
-  }));
+  });
 
-  it('should be created', inject([AuthorizationService], (service: AuthorizationService) => {
-    expect(service).toBeTruthy();
-  }));
-
-  it('should query clubAdmin API when isClubAdmin is called', async(inject([AuthorizationService, HttpTestingController], (service: AuthorizationService, backend: HttpTestingController) => {
+  it('should query clubAdmin API when isClubAdmin is called', () => {
     let clubId: number = 42;
     service.isClubAdmin(clubId).subscribe(result => {
       expect(result).toEqual(true);
@@ -42,9 +40,9 @@ describe('AuthorizationService', () => {
       url: authorizationUrl + CLUBS_ENDPOINT + clubId,
       method: 'GET'
     }).flush({ isAuthorized: true });
-  })));
+  });
 
-  it('should query tournamentAdmin API when isTournamentAdmin is called', async(inject([AuthorizationService, HttpTestingController], (service: AuthorizationService, backend: HttpTestingController) => {
+  it('should query tournamentAdmin API when isTournamentAdmin is called', () => {
     let tournamentId: number = 11;
     service.isTournamentAdmin(tournamentId).subscribe(result => {
       expect(result).toEqual(false);
@@ -54,9 +52,9 @@ describe('AuthorizationService', () => {
       url: authorizationUrl + TOURNAMENTS_ENDPOINT + ADMINS_ENDPOINT + tournamentId,
       method: 'GET'
     }).flush({ isAuthorized: false });
-  })));
+  });
 
-  it('should query tournamentStaff API when isTournamentStaff is called', async(inject([AuthorizationService, HttpTestingController], (service: AuthorizationService, backend: HttpTestingController) => {
+  it('should query tournamentStaff API when isTournamentStaff is called', () => {
     let tournamentId: number = 11;
     service.isTournamentStaff(tournamentId).subscribe(result => {
       expect(result).toEqual(true);
@@ -66,6 +64,6 @@ describe('AuthorizationService', () => {
       url: authorizationUrl + TOURNAMENTS_ENDPOINT + STAFF_ENDPOINT + tournamentId,
       method: 'GET'
     }).flush({ isAuthorized: true });
-  })));
+  });
 
 });

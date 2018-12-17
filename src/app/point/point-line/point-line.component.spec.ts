@@ -122,15 +122,11 @@ describe('PointLineComponent', () => {
 
     it("sends to delete request for point to point.service",
       () => {
-        fixture.whenStable().then(() => {
-          expect(pointService.deleteValue).toEqual(point);
-        });
+        expect(pointService.deleteValue).toEqual(point);
       });
 
     it("triggers reload request in parent component", () => {
-      fixture.whenStable().then(() => {
-        expect(reloadRequested).toBe(true);
-      });
+      expect(reloadRequested).toBe(true);
     });
 
   });

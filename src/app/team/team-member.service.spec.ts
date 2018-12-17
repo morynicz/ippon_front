@@ -41,175 +41,88 @@ describe('TeamMemberService', () => {
   const resourcesUrl: string = IPPON_HOST + TEAMS_ENDPOINT + `${teamId}/` + MEMBERS_ENDPOINT;
   const resourceUrl: string = resourcesUrl + `${memberId}/`;
 
+  let service: TeamMemberService;
+  let backend: HttpTestingController;
+
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
       providers: [TeamMemberService]
     });
+    service = TestBed.get(TeamMemberService);
+    backend = TestBed.get(HttpTestingController);
   });
 
-  afterEach(inject([HttpTestingController], (backend: HttpTestingController) => {
+  afterEach(() => {
     backend.verify();
-  }));
+  });
 
   describe("when add is called", () => {
-    it("calls the resources api url",
-      inject(
-        [TeamMemberService, HttpTestingController],
-        (service: TeamMemberService,
-          backend: HttpTestingController) => {
-          service.add(resource).subscribe();
-          const req = backend.expectOne(resourceUrl);
-        }));
-    it("uses POST method",
-      inject(
-        [TeamMemberService, HttpTestingController],
-        (service: TeamMemberService,
-          backend: HttpTestingController) => {
-          service.add(resource).subscribe();
-          const req = backend.expectOne(resourceUrl);
-          expect(req.request.method).toBe('POST');
-        }));
-    it("sends request with application/json content type headers",
-      inject(
-        [TeamMemberService, HttpTestingController],
-        (service: TeamMemberService,
-          backend: HttpTestingController) => {
-          service.add(resource).subscribe();
-          const req = backend.expectOne(resourceUrl);
-          expect(req.request.headers.has('Content-Type'))
-            .toBe(true);
-          expect(req.request.headers.get('Content-Type'))
-            .toBe('application/json');
-        }));
-    it("sends empty body",
-      inject(
-        [TeamMemberService, HttpTestingController],
-        (service: TeamMemberService,
-          backend: HttpTestingController) => {
-          service.add(resource).subscribe();
-          const req = backend.expectOne(resourceUrl);
-          expect(req.request.body).toEqual({});
-          req.flush({});
-        }));
+    it("calls the resources api url, uses POST method, \
+    sends request with application/json content type headers \
+    and sends empty body",
+      () => {
+        service.add(resource).subscribe(
+          resp => expect(resp).toEqual({}));
+        const req = backend.expectOne(resourceUrl);
+        expect(req.request.body).toEqual({});
+        req.flush({});
+        expect(req.request.headers.has('Content-Type'))
+          .toBe(true);
+        expect(req.request.headers.get('Content-Type'))
+          .toBe('application/json');
+        expect(req.request.method).toBe('POST');
+      });
   });
 
   describe("when getList is called", () => {
-    it("calls the resources api url",
-      inject(
-        [TeamMemberService, HttpTestingController],
-        (service: TeamMemberService,
-          backend: HttpTestingController) => {
-          service.getList(teamId).subscribe();
-          const req = backend.expectOne(resourcesUrl);
-        }));
-    it("uses GET method",
-      inject(
-        [TeamMemberService, HttpTestingController],
-        (service: TeamMemberService,
-          backend: HttpTestingController) => {
-          service.getList(teamId).subscribe();
-          const req = backend.expectOne(resourcesUrl);
-          expect(req.request.method).toBe('GET');
-        }));
-    it("sends request with application/json content type headers",
-      inject(
-        [TeamMemberService, HttpTestingController],
-        (service: TeamMemberService,
-          backend: HttpTestingController) => {
-          service.getList(teamId).subscribe();
-          const req = backend.expectOne(resourcesUrl);
-          expect(req.request.headers.has('Content-Type'))
-            .toBe(true);
-          expect(req.request.headers.get('Content-Type'))
-            .toBe('application/json');
-        }));
-    it("responds with requested resources",
-      inject(
-        [TeamMemberService, HttpTestingController],
-        (service: TeamMemberService,
-          backend: HttpTestingController) => {
-          service.getList(teamId)
-            .subscribe(response => expect(response)
-              .toBe(players));
-          const req = backend.expectOne(resourcesUrl);
-          req.flush(players);
-        }));
+    it("calls the resources api url, uses GET method, \
+    sends request with application/json content type headers, \
+    and returns requested resources",
+      () => {
+        service.getList(teamId)
+          .subscribe(response => expect(response)
+            .toBe(players));
+        const req = backend.expectOne(resourcesUrl);
+        req.flush(players);
+        expect(req.request.method).toBe('GET');
+        expect(req.request.headers.has('Content-Type'))
+          .toBe(true);
+        expect(req.request.headers.get('Content-Type'))
+          .toBe('application/json');
+      });
   });
 
   describe("when getUnassigned is called", () => {
     const unassignedUrl: string = IPPON_HOST + TEAMS_ENDPOINT + `${teamId}/` + NOT_ASSIGNED_ENDPOINT;
-    it("calls the resources api url",
-      inject(
-        [TeamMemberService, HttpTestingController],
-        (service: TeamMemberService,
-          backend: HttpTestingController) => {
-          service.getNotAssigned(teamId).subscribe();
-          const req = backend.expectOne(unassignedUrl);
-        }));
-    it("uses GET method",
-      inject(
-        [TeamMemberService, HttpTestingController],
-        (service: TeamMemberService,
-          backend: HttpTestingController) => {
-          service.getNotAssigned(teamId).subscribe();
-          const req = backend.expectOne(unassignedUrl);
-          expect(req.request.method).toBe('GET');
-        }));
-    it("sends request with application/json content type headers",
-      inject(
-        [TeamMemberService, HttpTestingController],
-        (service: TeamMemberService,
-          backend: HttpTestingController) => {
-          service.getNotAssigned(teamId).subscribe();
-          const req = backend.expectOne(unassignedUrl);
-          expect(req.request.headers.has('Content-Type'))
-            .toBe(true);
-          expect(req.request.headers.get('Content-Type'))
-            .toBe('application/json');
-        }));
-    it("responds with requested resources",
-      inject(
-        [TeamMemberService, HttpTestingController],
-        (service: TeamMemberService,
-          backend: HttpTestingController) => {
-          service.getNotAssigned(teamId)
-            .subscribe(response => expect(response)
-              .toBe(players));
-          const req = backend.expectOne(unassignedUrl);
-          req.flush(players);
-        }));
+    it("calls the resources api url, uses GET method, \
+    sends request with application/json content type headers, \
+    and returns requested resources",
+      () => {
+        service.getNotAssigned(teamId)
+          .subscribe(response => expect(response)
+            .toBe(players));
+        const req = backend.expectOne(unassignedUrl);
+        req.flush(players);
+        expect(req.request.method).toBe('GET');
+        expect(req.request.headers.has('Content-Type'))
+          .toBe(true);
+        expect(req.request.headers.get('Content-Type'))
+          .toBe('application/json');
+      });
   });
 
   describe("when delete is called", () => {
-    it("calls the resources api url",
-      inject(
-        [TeamMemberService, HttpTestingController],
-        (service: TeamMemberService,
-          backend: HttpTestingController) => {
-          service.delete(resource).subscribe();
-          const req = backend.expectOne(resourceUrl);
-        }));
-    it("uses DELETE method",
-      inject(
-        [TeamMemberService, HttpTestingController],
-        (service: TeamMemberService,
-          backend: HttpTestingController) => {
-          service.delete(resource).subscribe();
-          const req = backend.expectOne(resourceUrl);
-          expect(req.request.method).toBe('DELETE');
-        }));
-    it("sends request with application/json content type headers",
-      inject(
-        [TeamMemberService, HttpTestingController],
-        (service: TeamMemberService,
-          backend: HttpTestingController) => {
-          service.delete(resource).subscribe();
-          const req = backend.expectOne(resourceUrl);
-          expect(req.request.headers.has('Content-Type'))
-            .toBe(true);
-          expect(req.request.headers.get('Content-Type'))
-            .toBe('application/json');
-        }));
+    it("calls the resources api url, uses DELETE method, \
+    sends request with application/json content type headers",
+      () => {
+        service.delete(resource).subscribe();
+        const req = backend.expectOne(resourceUrl);
+        expect(req.request.headers.has('Content-Type'))
+          .toBe(true);
+        expect(req.request.headers.get('Content-Type'))
+          .toBe('application/json');
+        expect(req.request.method).toBe('DELETE');
+      });
   });
 });

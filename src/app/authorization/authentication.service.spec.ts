@@ -48,6 +48,9 @@ const authenticationUrl: string = AUTHENTICATION_HOST + AUTHENTICATION_ENDPOINT;
 describe('AuthenticationService', () => {
   let tokenStorage: TokenStorageSpy;
   let jwtHelper: JwtHelperSpy;
+  let service: AuthenticationService;
+  let backend: HttpTestingController;
+
   beforeEach(() => {
     tokenStorage = new TokenStorageSpy();
     jwtHelper = new JwtHelperSpy();
@@ -57,44 +60,38 @@ describe('AuthenticationService', () => {
         { provide: TokenStorageService, useValue: tokenStorage }],
       imports: [HttpClientTestingModule]
     });
+    service = TestBed.get(AuthenticationService);
+    backend = TestBed.get(HttpTestingController);
   });
 
-  it('should be created', inject([AuthenticationService], (service: AuthenticationService) => {
-    expect(service).toBeTruthy();
-  }));
-
   it('should call the authentication API when logIn() is called',
-    inject([AuthenticationService, HttpTestingController],
-      (service: AuthenticationService, http: HttpTestingController) => {
-        service.logIn("user", "password").subscribe();
-        const req = http.expectOne({
-          url: authenticationUrl + TOKEN_ENDPOINT,
-          method: 'POST'
-        });
-      }));
+    () => {
+      service.logIn("user", "password").subscribe();
+      const req = backend.expectOne(authenticationUrl + TOKEN_ENDPOINT);
+      expect(req.request.method).toBe('POST');
+    });
 
   it('should store store retrieved tokens in tokenStorage when logIn called',
-    async(inject([AuthenticationService, HttpTestingController],
-      (service: AuthenticationService, http: HttpTestingController) => {
-        service.logIn("user", "password").subscribe();
-        const req = http.expectOne({
-          url: authenticationUrl + '/token',
-          method: 'POST'
-        }).flush({ "access": "access", "refresh": "refresh" });
-        expect(tokenStorage.setAccessToken).toBe("access");
-        expect(tokenStorage.setRefreshToken).toBe("refresh");
-      })));
+    () => {
+      service.logIn("user", "password").subscribe();
+      const req = backend.expectOne({
+        url: authenticationUrl + '/token',
+        method: 'POST'
+      }).flush({ "access": "access", "refresh": "refresh" });
+      expect(tokenStorage.setAccessToken).toBe("access");
+      expect(tokenStorage.setRefreshToken).toBe("refresh");
+    });
 
   it('should call jwtHelper.isExpired when isLoggedIn called',
-    inject([AuthenticationService], (service: AuthenticationService) => {
+    () => {
       jwtHelper.isExpiredResult = false;
       expect(service.isLoggedIn()).toBe(true);
       expect(tokenStorage.getAccessCalled).toBe(true);
-    }));
+    });
 
   it('should clear the tokens when logout() called',
-    inject([AuthenticationService], (service: AuthenticationService) => {
+    () => {
       service.logOut();
       expect(tokenStorage.clearCalled).toBe(true);
-    }));
+    });
 });
