@@ -37,10 +37,8 @@ import { SexConstraintPipe } from './tournament/sex-constraint.pipe';
 import { TournamentFormComponent } from './tournament/tournament-form/tournament-form.component';
 import { TournamentParticipationFormComponent } from './tournament/tournament-participation-form/tournament-participation-form.component';
 import { TournamentParticipationListComponent } from './tournament/tournament-participation-list/tournament-participation-list.component';
-import { TournamentAdminFormComponent } from './tournament/tournament-admin-form/tournament-admin-form.component';
 import { TournamentParticipantService } from './tournament/tournament-participant.service';
-import { TournamentAdminListComponent } from './tournament/tournament-admin-list/tournament-admin-list.component';
-import { TournamentAdminService } from './tournament/tournament-admin.service';
+import { TournamentAdminService } from './tournament-admin/tournament-admin.service';
 import { PointFormComponent } from './point/point-form/point-form.component';
 import { PointService } from './point/point.service';
 import { FightFullComponent } from './fight/fight-full/fight-full.component';
@@ -74,6 +72,8 @@ import { GroupLineComponent } from './group/group-line/group-line.component';
 import { GroupFormComponent } from './group/group-form/group-form.component';
 import { GroupPhaseService } from './group-phase/group-phase.service';
 import { GroupPhaseFormComponent } from './group-phase/group-phase-form/group-phase-form.component';
+import { TournamentAdminFormComponent } from './tournament-admin/tournament-admin-form/tournament-admin-form.component';
+import { TournamentAdminListComponent } from './tournament-admin/tournament-admin-list/tournament-admin-list.component';
 
 @NgModule({
   imports: [

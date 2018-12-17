@@ -1,10 +1,7 @@
-import { TestBed, inject, async } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { Observable } from 'rxjs/Observable';
-import { of } from 'rxjs/observable/of';
 
 import { TournamentAdminService } from './tournament-admin.service';
-import { Tournament } from './tournament';
 
 import { User } from '../user';
 import { TournamentAdmin } from './tournament-admin';

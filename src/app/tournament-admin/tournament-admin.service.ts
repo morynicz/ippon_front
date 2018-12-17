@@ -11,7 +11,7 @@ import {
   NON_ADMINS_ENDPOINT
 } from '../rest-api';
 
-import { Tournament } from './tournament';
+import { Tournament } from '../tournament/tournament';
 import { TournamentAdmin } from './tournament-admin';
 import { User } from '../user';
 
