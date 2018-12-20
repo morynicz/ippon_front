@@ -17,9 +17,9 @@ import { TournamentServiceSpy } from '../tournament.service.spy';
 class AuthenticationServiceSpy {
   isLoggedInResult: boolean = false;
   isLoggedInCalled: boolean = false;
-  isLoggedIn(): boolean {
+  isLoggedIn(): Observable<boolean> {
     this.isLoggedInCalled = true;
-    return this.isLoggedInResult;
+    return of(this.isLoggedInResult);
   }
 }
 
@@ -86,58 +86,63 @@ describe('TournamentListComponent', () => {
       .compileComponents();
   }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(TournamentListComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+  describe("when user is not logged in", () => {
+    beforeEach(() => {
+      fixture = TestBed.createComponent(TournamentListComponent);
+      component = fixture.componentInstance;
+      fixture.detectChanges();
+    });
+
+    it('should load tournaments using tournament.service on init', async(() => {
+      fixture.whenStable().then(() => {
+        expect(tournamentService.getListValue).toBeTruthy();
+      });
+    }));
+
+    it('should display loaded tournaments', async(() => {
+      fixture.whenStable().then(() => {
+        const de = fixture.debugElement;
+        const html = de.nativeElement;
+        const tournamentLines = html.querySelectorAll('ippon-tournament-line');
+
+        expect(tournamentLines[0].textContent).toContain('T1');
+        expect(tournamentLines[0].textContent).toContain('Ci1');
+        expect(tournamentLines[0].textContent).toContain('2020-01-01');
+        expect(tournamentLines[1].textContent).toContain('T2');
+        expect(tournamentLines[1].textContent).toContain('Ci2');
+        expect(tournamentLines[1].textContent).toContain('2022-02-02');
+      });
+    }));
+
+    it('should not display "add Tournament" button if user not signed in', async(() => {
+      authenticationService.isLoggedInResult = false;
+      fixture.whenStable().then(() => {
+        const de = fixture.debugElement;
+        const html = de.nativeElement;
+        const button = html.querySelector('button');
+
+        expect(button).toBeFalsy();
+      });
+    }));
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  describe("when user is logged in", () => {
+    beforeEach(() => {
+      authenticationService.isLoggedInResult = true;
+      fixture = TestBed.createComponent(TournamentListComponent);
+      component = fixture.componentInstance;
+      fixture.detectChanges();
+    });
+
+    it('should should display "add Tournament" button if auth service isLoggedIn returns true', async(() => {
+      fixture.whenStable().then(() => {
+        const de = fixture.debugElement;
+        const html = de.nativeElement;
+        const button = html.querySelector('button');
+
+        expect(authenticationService.isLoggedInCalled).toBeTruthy();
+        expect(button).toBeTruthy();
+      });
+    }));
   });
-
-  it('should load tournaments using tournament.service on init', async(() => {
-    fixture.whenStable().then(() => {
-      expect(tournamentService.getListValue).toBeTruthy();
-    });
-  }));
-
-  it('should display loaded tournaments', async(() => {
-    fixture.whenStable().then(() => {
-      const de = fixture.debugElement;
-      const html = de.nativeElement;
-      const tournamentLines = html.querySelectorAll('ippon-tournament-line');
-
-      expect(tournamentLines[0].textContent).toContain('T1');
-      expect(tournamentLines[0].textContent).toContain('Ci1');
-      expect(tournamentLines[0].textContent).toContain('2020-01-01');
-      expect(tournamentLines[1].textContent).toContain('T2');
-      expect(tournamentLines[1].textContent).toContain('Ci2');
-      expect(tournamentLines[1].textContent).toContain('2022-02-02');
-    });
-  }));
-
-  it('should not display "add Tournament" button if user not signed in', async(() => {
-    authenticationService.isLoggedInResult = false;
-    fixture.whenStable().then(() => {
-      const de = fixture.debugElement;
-      const html = de.nativeElement;
-      const button = html.querySelector('button');
-
-      expect(button).toBeFalsy();
-    });
-  }));
-
-  it('should should display "add Tournament" button if auth service isLoggedIn returns true', async(() => {
-    authenticationService.isLoggedInResult = true;
-    fixture.detectChanges();
-    fixture.whenStable().then(() => {
-      const de = fixture.debugElement;
-      const html = de.nativeElement;
-      const button = html.querySelector('button');
-
-      expect(authenticationService.isLoggedInCalled).toBeTruthy();
-      expect(button).toBeTruthy();
-    });
-  }));
 });

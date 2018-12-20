@@ -4,14 +4,15 @@ import { By } from '@angular/platform-browser';
 import { NavbarComponent } from './navbar.component';
 
 import { AuthenticationService } from '../authorization/authentication.service';
+import { Observable, of } from 'rxjs';
 
 class AuthenticationServiceSpy {
   isLoggedInCalled: boolean = false;
   logOutCalled: boolean = false;
   isLoggedInResult: boolean;
-  isLoggedIn(): boolean {
+  isLoggedIn(): Observable<boolean> {
     this.isLoggedInCalled = true;
-    return this.isLoggedInResult;
+    return of(this.isLoggedInResult);
   }
 
   logOut() {
@@ -35,26 +36,34 @@ describe('NavbarComponent', () => {
       .compileComponents();
   }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(NavbarComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+  describe("when user is not logged in", () => {
+    beforeEach(() => {
+      fixture = TestBed.createComponent(NavbarComponent);
+      component = fixture.componentInstance;
+      fixture.detectChanges();
+    });
+
+    it('should ask authenticationService if the user is signedIn', async(() => {
+      expect(authService.isLoggedInCalled).toBeTruthy();
+    }));
+
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+  describe("when user is logged in", () => {
+    beforeEach(() => {
+      authService.isLoggedInResult = true;
+      fixture = TestBed.createComponent(NavbarComponent);
+      component = fixture.componentInstance;
+      fixture.detectChanges();
+    });
 
-  it('should ask authenticationService if the user is signedIn', async(() => {
-    expect(authService.isLoggedInCalled).toBeTruthy();
-  }));
+    it('should call authentiicationService to logOut', () => {
+      fixture.detectChanges();
+      let btn = fixture.debugElement.query(By.css("#logout"));
+      btn.nativeElement.click();
+      fixture.detectChanges();
+      expect(authService.logOutCalled).toBeTruthy();
+    });
 
-  it('should call authentiicationService to logOut', () => {
-    authService.isLoggedInResult = true;
-    fixture.detectChanges();
-    let btn = fixture.debugElement.query(By.css("#logout"));
-    btn.nativeElement.click();
-    fixture.detectChanges();
-    expect(authService.logOutCalled).toBeTruthy();
   });
 });

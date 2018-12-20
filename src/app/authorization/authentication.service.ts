@@ -7,7 +7,8 @@ import { TokenStorageService } from "./token-storage.service";
 import {
   AUTHENTICATION_HOST,
   AUTHENTICATION_ENDPOINT,
-  TOKEN_ENDPOINT
+  TOKEN_ENDPOINT,
+  REFRESH_ENDPOINT
 } from '../rest-api';
 
 export class Token {
@@ -27,7 +28,7 @@ const httpOptions = {
 @Injectable()
 export class AuthenticationService {
   private authenticationUrl: string = AUTHENTICATION_HOST
-  + AUTHENTICATION_ENDPOINT;
+    + AUTHENTICATION_ENDPOINT;
   constructor(
     private http: HttpClient,
     private jwtHelper: JwtHelperWrapperService,
@@ -57,9 +58,29 @@ export class AuthenticationService {
     this.tokenStorage.clearTokens();
   }
 
-  public isLoggedIn(): boolean {
+  public isLoggedIn(): Observable<boolean> {
     const access_token = this.tokenStorage.getAccess();
-    return access_token && !this.jwtHelper.isExpired(access_token);
+    if (this.jwtHelper.isExpired(access_token)) {
+      return new Observable((observer) => {
+        this.http.post<Token>(this.authenticationUrl + TOKEN_ENDPOINT + REFRESH_ENDPOINT,
+          { "refresh": this.tokenStorage.getRefresh() }, httpOptions)
+          .subscribe(res => {
+            this.setSession(res);
+            observer.next(true);
+            observer.complete();
+          }, error => {
+            this.tokenStorage.clearTokens();
+            observer.next(true);
+            observer.complete();
+          }
+          );
+      });
+    } else {
+      return new Observable((observer) => {
+        observer.next(access_token != "");
+        observer.complete();
+      });
+    }
   }
 
   public isLoggedOut(): boolean {

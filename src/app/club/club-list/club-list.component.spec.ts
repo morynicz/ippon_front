@@ -31,9 +31,9 @@ const clubs: Club[] = [
 class AuthenticationServiceSpy {
   isLoggedInResult: boolean = false;
   isLoggedInCalled: boolean = false;
-  isLoggedIn(): boolean {
+  isLoggedIn(): Observable<boolean> {
     this.isLoggedInCalled = true;
-    return this.isLoggedInResult;
+    return of(this.isLoggedInResult);
   }
 }
 
@@ -61,56 +61,63 @@ describe('ClubListComponent', () => {
       .compileComponents();
   }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(ClubListComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+  describe("when user is not logged in", () => {
+    beforeEach(() => {
+      fixture = TestBed.createComponent(ClubListComponent);
+      component = fixture.componentInstance;
+      fixture.detectChanges();
+    });
+
+    it('should load clubs using club.service.getClubs() on init', async(() => {
+      fixture.whenStable().then(() => {
+        expect(clubService.getListValue).toBeTruthy();
+      });
+    }));
+
+    it('should display loaded clubs', async(() => {
+      fixture.whenStable().then(() => {
+        const de = fixture.debugElement;
+        const html = de.nativeElement;
+        const clubLines = html.querySelectorAll('ippon-club-line');
+
+        expect(clubLines[0].textContent).toContain('C1');
+        expect(clubLines[0].textContent).toContain('Ci1');
+        expect(clubLines[1].textContent).toContain('C2');
+        expect(clubLines[1].textContent).toContain('Ci2');
+      });
+    }));
+
+    it('should not display "add Club" button if user not signed in', async(() => {
+      authenticationService.isLoggedInResult = false;
+      fixture.whenStable().then(() => {
+        const de = fixture.debugElement;
+        const html = de.nativeElement;
+        const button = html.querySelector('button');
+
+        expect(button).toBeFalsy();
+      });
+    }));
   });
+  describe("when user is logged in", () => {
+    beforeEach(() => {
+      authenticationService.isLoggedInResult = true;
+      fixture = TestBed.createComponent(ClubListComponent);
+      component = fixture.componentInstance;
+      fixture.detectChanges();
+    });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+
+    it('should should display "add Club" button if auth service isLoggedIn returns true', async(() => {
+      authenticationService.isLoggedInResult = true;
+      fixture.detectChanges();
+      fixture.whenStable().then(() => {
+        const de = fixture.debugElement;
+        const html = de.nativeElement;
+        const button = html.querySelector('button');
+
+        expect(authenticationService.isLoggedInCalled).toBeTruthy();
+        expect(button).toBeTruthy();
+      });
+    }));
   });
-
-  it('should load clubs using club.service.getClubs() on init', async(() => {
-    fixture.whenStable().then(() => {
-      expect(clubService.getListValue).toBeTruthy();
-    });
-  }));
-
-  it('should display loaded clubs', async(() => {
-    fixture.whenStable().then(() => {
-      const de = fixture.debugElement;
-      const html = de.nativeElement;
-      const clubLines = html.querySelectorAll('ippon-club-line');
-
-      expect(clubLines[0].textContent).toContain('C1');
-      expect(clubLines[0].textContent).toContain('Ci1');
-      expect(clubLines[1].textContent).toContain('C2');
-      expect(clubLines[1].textContent).toContain('Ci2');
-    });
-  }));
-
-  it('should not display "add Club" button if user not signed in', async(() => {
-    authenticationService.isLoggedInResult = false;
-    fixture.whenStable().then(() => {
-      const de = fixture.debugElement;
-      const html = de.nativeElement;
-      const button = html.querySelector('button');
-
-      expect(button).toBeFalsy();
-    });
-  }));
-
-  it('should should display "add Club" button if auth service isLoggedIn returns true', async(() => {
-    authenticationService.isLoggedInResult = true;
-    fixture.detectChanges();
-    fixture.whenStable().then(() => {
-      const de = fixture.debugElement;
-      const html = de.nativeElement;
-      const button = html.querySelector('button');
-
-      expect(authenticationService.isLoggedInCalled).toBeTruthy();
-      expect(button).toBeTruthy();
-    });
-  }));
 });

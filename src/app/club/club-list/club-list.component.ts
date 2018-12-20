@@ -14,16 +14,21 @@ export class ClubListComponent implements OnInit {
   constructor(
     private clubService: ClubService,
     private authenticationService: AuthenticationService) { }
-
+  private isLoggedIn: boolean = false;
   ngOnInit() {
     this.getClubs();
+    this.authenticationService.isLoggedIn()
+      .subscribe(resp => this.isLoggedIn = resp,
+        error => this.handleError(error));
   }
 
   getClubs(): void {
-    this.clubService.getList().subscribe(clubs => this.clubs = clubs);
+    this.clubService.getList()
+      .subscribe(clubs => this.clubs = clubs,
+        error => this.handleError(error));
   }
 
-  signedIn(): boolean {
-    return this.authenticationService.isLoggedIn();
+  private handleError(error): void {
+    console.log(error);
   }
 }

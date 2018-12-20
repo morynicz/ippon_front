@@ -11,6 +11,7 @@ import { AuthenticationService } from '../../authorization/authentication.servic
 })
 export class TournamentListComponent implements OnInit {
   tournaments: Tournament[];
+  isLoggedIn: boolean = false;
   constructor(
     private tournamentService: TournamentService,
     private authenticationService: AuthenticationService
@@ -18,16 +19,15 @@ export class TournamentListComponent implements OnInit {
 
   ngOnInit() {
     this.getTournaments();
+    this.authenticationService.isLoggedIn()
+      .subscribe(resp => this.isLoggedIn = resp,
+        error => this.handleError(error));
   }
 
   getTournaments(): void {
     this.tournamentService.getList().subscribe(
       tournaments => { this.tournaments = tournaments; },
       error => this.handleError(error));
-  }
-
-  signedIn(): boolean {
-    return this.authenticationService.isLoggedIn();
   }
 
   private handleError(error): void {

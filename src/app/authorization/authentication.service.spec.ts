@@ -14,12 +14,20 @@ import {
 
 class TokenStorageSpy {
   getAccessCalled: boolean = false;
+  getRefreshCalled: boolean = false;
   setAccessToken: string = "";
   setRefreshToken: string = "";
   clearCalled: boolean = false;
+  getAccessReturnValues: string[] = [];
+  getRefreshReturnValues: string[] = [];
   getAccess() {
     this.getAccessCalled = true;
-    return 'token';
+    return this.getAccessReturnValues.shift();
+  }
+
+  getRefresh() {
+    this.getRefreshCalled = true;
+    return this.getRefreshReturnValues.shift();
   }
 
   setAccess(token: string) {
@@ -53,6 +61,10 @@ describe('AuthenticationService', () => {
 
   beforeEach(() => {
     tokenStorage = new TokenStorageSpy();
+    tokenStorage.getAccessReturnValues.push("token");
+    tokenStorage.getAccessReturnValues.push("token2");
+    tokenStorage.getRefreshReturnValues.push("refresh");
+    tokenStorage.getRefreshReturnValues.push("refresh2");
     jwtHelper = new JwtHelperSpy();
     TestBed.configureTestingModule({
       providers: [AuthenticationService,
@@ -62,6 +74,10 @@ describe('AuthenticationService', () => {
     });
     service = TestBed.get(AuthenticationService);
     backend = TestBed.get(HttpTestingController);
+  });
+
+  afterEach(() => {
+    backend.verify();
   });
 
   it('should call the authentication API when logIn() is called',
@@ -85,7 +101,7 @@ describe('AuthenticationService', () => {
   it('should call jwtHelper.isExpired when isLoggedIn called',
     () => {
       jwtHelper.isExpiredResult = false;
-      expect(service.isLoggedIn()).toBe(true);
+      service.isLoggedIn().subscribe(resp => expect(resp).toBeTruthy());
       expect(tokenStorage.getAccessCalled).toBe(true);
     });
 
@@ -94,4 +110,14 @@ describe('AuthenticationService', () => {
       service.logOut();
       expect(tokenStorage.clearCalled).toBe(true);
     });
+
+  it('should try to renew expired tokens if access is expired but refresh active', () => {
+    jwtHelper.isExpiredResult = true;
+    service.isLoggedIn().subscribe(resp => expect(resp).toBeTruthy());
+    expect(tokenStorage.getAccessCalled).toBe(true);
+    const req = backend.expectOne(authenticationUrl + '/token/refresh');
+    expect(req.request.body).toEqual({ "refresh": "refresh" });
+    expect(req.request.method).toBe('POST');
+    req.flush({ "access": "access2", "refresh": "refresh2" });
+  });
 });

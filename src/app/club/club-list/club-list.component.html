@@ -3,7 +3,7 @@
 </header>
 
 <section class="row">
-  <div *ngIf="signedIn()" class="form-group col-md-6 col-md-offset-3 text-center">
+  <div *ngIf="isLoggedIn" class="form-group col-md-6 col-md-offset-3 text-center">
     <button routerLink="/club/new" class="btn btn-info btn-lg" id="new-club" i18n>Add</button>
   </div>
 </section>
