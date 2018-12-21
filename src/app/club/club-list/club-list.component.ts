@@ -11,10 +11,10 @@ import { AuthenticationService } from '../../authorization/authentication.servic
 })
 export class ClubListComponent implements OnInit {
   clubs: Club[];
+  isLoggedIn: boolean = false;
   constructor(
     private clubService: ClubService,
     private authenticationService: AuthenticationService) { }
-  private isLoggedIn: boolean = false;
   ngOnInit() {
     this.getClubs();
     this.authenticationService.isLoggedIn()
