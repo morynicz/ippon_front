@@ -70,7 +70,7 @@ export class AuthenticationService {
             observer.complete();
           }, error => {
             this.tokenStorage.clearTokens();
-            observer.next(true);
+            observer.next(false);
             observer.complete();
           }
           );

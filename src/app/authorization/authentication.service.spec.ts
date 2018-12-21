@@ -115,9 +115,21 @@ describe('AuthenticationService', () => {
     jwtHelper.isExpiredResult = true;
     service.isLoggedIn().subscribe(resp => expect(resp).toBeTruthy());
     expect(tokenStorage.getAccessCalled).toBe(true);
+    expect(tokenStorage.getRefreshCalled).toBe(true);
     const req = backend.expectOne(authenticationUrl + '/token/refresh');
     expect(req.request.body).toEqual({ "refresh": "refresh" });
     expect(req.request.method).toBe('POST');
     req.flush({ "access": "access2", "refresh": "refresh2" });
+  });
+
+  it("should clear tokens if refresh attemt ends with error", () => {
+    jwtHelper.isExpiredResult = true;
+    service.isLoggedIn().subscribe(resp => expect(resp).toBeFalsy());
+    const req = backend.expectOne(authenticationUrl + '/token/refresh');
+    expect(req.request.method).toBe('POST');
+    req.flush("Invalid token", { status: 400, statusText: "Forbidden" });
+    expect(tokenStorage.getAccessCalled).toBeTruthy("access");
+    expect(tokenStorage.getRefreshCalled).toBeTruthy("refresh");
+    expect(tokenStorage.clearCalled).toBeTruthy("clear");
   });
 });
