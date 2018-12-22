@@ -132,4 +132,11 @@ describe('AuthenticationService', () => {
     expect(tokenStorage.getRefreshCalled).toBeTruthy("refresh");
     expect(tokenStorage.clearCalled).toBeTruthy("clear");
   });
+
+  it("should not call auth api when tokens are empty", () => {
+    jwtHelper.isExpiredResult = true;
+    tokenStorage.getAccessReturnValues = [null];
+    tokenStorage.getRefreshReturnValues = [null];
+    service.isLoggedIn().subscribe(resp => expect(resp).toBeFalsy());
+  });
 });

@@ -59,28 +59,29 @@ export class AuthenticationService {
   }
 
   public isLoggedIn(): Observable<boolean> {
-    const access_token = this.tokenStorage.getAccess();
-    if (this.jwtHelper.isExpired(access_token)) {
-      return new Observable((observer) => {
+    const access_token: string = this.tokenStorage.getAccess();
+    const refresh_token: string = this.tokenStorage.getRefresh();
+    return new Observable((observer) => {
+      if (refresh_token != null && this.jwtHelper.isExpired(access_token)) {
         this.http.post<Token>(this.authenticationUrl + TOKEN_ENDPOINT + REFRESH_ENDPOINT,
-          { "refresh": this.tokenStorage.getRefresh() }, httpOptions)
+          { "refresh": refresh_token }, httpOptions)
           .subscribe(res => {
             this.setSession(res);
             observer.next(true);
             observer.complete();
           }, error => {
+            console.log(error);
+            console.log(refresh_token);
             this.tokenStorage.clearTokens();
             observer.next(false);
             observer.complete();
           }
           );
-      });
-    } else {
-      return new Observable((observer) => {
-        observer.next(access_token != "");
+      } else {
+        observer.next(access_token != null);
         observer.complete();
-      });
-    }
+      }
+    });
   }
 
   public isLoggedOut(): boolean {

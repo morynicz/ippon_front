@@ -50,10 +50,6 @@ describe('LoginFormComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-
   it('should call logIn function of authentication service when log in button pressed', async(() => {
     fixture.whenStable().then(() => {
       setInput('email', 'email@server.com', fixture);
