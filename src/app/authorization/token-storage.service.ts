@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class TokenStorageService {
 
-  constructor() { this.clearTokens(); }
+  constructor() { }
 
   getAccess() {
     return localStorage.getItem('access');
