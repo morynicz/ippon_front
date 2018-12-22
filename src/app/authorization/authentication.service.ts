@@ -29,6 +29,7 @@ const httpOptions = {
 export class AuthenticationService {
   private authenticationUrl: string = AUTHENTICATION_HOST
     + AUTHENTICATION_ENDPOINT;
+  private statusChangeCallbacks: ((isLoggedIn: boolean) => void)[] = [];
   constructor(
     private http: HttpClient,
     private jwtHelper: JwtHelperWrapperService,
@@ -43,9 +44,17 @@ export class AuthenticationService {
     return new Observable((observer) => {
       this.http.post<Token>(this.authenticationUrl + TOKEN_ENDPOINT,
         { "username": email, "password": password }, httpOptions)
-        .subscribe(res => this.setSession(res));
+        .subscribe(res => {
+          this.setSession(res);
+          this.notifySubscribers(true);
+        });
       observer.next();
       observer.complete();
+    });
+  }
+  notifySubscribers(isAuthenticated: boolean): void {
+    this.statusChangeCallbacks.forEach(callback => {
+      callback(isAuthenticated);
     });
   }
 
@@ -56,6 +65,7 @@ export class AuthenticationService {
 
   logOut() {
     this.tokenStorage.clearTokens();
+    this.notifySubscribers(false);
   }
 
   public isLoggedIn(): Observable<boolean> {
@@ -68,12 +78,12 @@ export class AuthenticationService {
           .subscribe(res => {
             this.setSession(res);
             observer.next(true);
+            this.notifySubscribers(true);
             observer.complete();
           }, error => {
-            console.log(error);
-            console.log(refresh_token);
             this.tokenStorage.clearTokens();
             observer.next(false);
+            this.notifySubscribers(false);
             observer.complete();
           }
           );
@@ -83,9 +93,13 @@ export class AuthenticationService {
       }
     });
   }
-
   public isLoggedOut(): boolean {
     return !this.isLoggedIn();
+  }
+
+  public registerStatusChangeCallback(
+    callback: (isLoggedIn: boolean) => void): void {
+    this.statusChangeCallbacks.push(callback);
   }
 
 }

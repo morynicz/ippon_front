@@ -14,10 +14,16 @@ export class NavbarComponent implements OnInit {
   ngOnInit() {
     this.authService.isLoggedIn()
       .subscribe(resp => this.isLoggedIn = resp);
+    this.authService.registerStatusChangeCallback(
+      this.logInStateChangeCallback);
   }
 
   changeLanguage(language: string): void {
 
+  }
+
+  logInStateChangeCallback(isLoggedIn: boolean): void {
+    this.isLoggedIn = isLoggedIn;
   }
 
   logout(): void {

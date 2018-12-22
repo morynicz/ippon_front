@@ -10,6 +10,8 @@ class AuthenticationServiceSpy {
   isLoggedInCalled: boolean = false;
   logOutCalled: boolean = false;
   isLoggedInResult: boolean;
+  registerCalled: boolean = false;
+  callback: (isLoggedIn: boolean) => void;
   isLoggedIn(): Observable<boolean> {
     this.isLoggedInCalled = true;
     return of(this.isLoggedInResult);
@@ -17,6 +19,10 @@ class AuthenticationServiceSpy {
 
   logOut() {
     this.logOutCalled = true;
+  }
+
+  registerStatusChangeCallback(callback: (isLoggedIn: boolean) => void): void {
+    this.registerCalled = true;
   }
 }
 
@@ -47,6 +53,9 @@ describe('NavbarComponent', () => {
       expect(authService.isLoggedInCalled).toBeTruthy();
     }));
 
+    it("should register for auth state change notifications", () => {
+      expect(authService.registerCalled).toBeTruthy();
+    });
   });
 
   describe("when user is logged in", () => {
@@ -57,7 +66,7 @@ describe('NavbarComponent', () => {
       fixture.detectChanges();
     });
 
-    it('should call authentiicationService to logOut', () => {
+    it('should call authenticationService to logOut', () => {
       fixture.detectChanges();
       let btn = fixture.debugElement.query(By.css("#logout"));
       btn.nativeElement.click();
