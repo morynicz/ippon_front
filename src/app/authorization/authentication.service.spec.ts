@@ -92,7 +92,7 @@ describe('AuthenticationService', () => {
     });
 
   it('should broadcast change in authentication status when logIn resolves', () => {
-    service.registerStatusChangeCallback(callback);
+    service.statusChangeStream.subscribe(msg => loggedIn = msg);
     service.logIn("user", "password").subscribe();
     const req = backend.expectOne({
       url: authenticationUrl + '/token',
@@ -123,7 +123,7 @@ describe('AuthenticationService', () => {
     it('should clear the tokens and notify',
       () => {
         loggedIn = true;
-        service.registerStatusChangeCallback(callback);
+        service.statusChangeStream.subscribe(msg => loggedIn = msg);
         service.logOut();
         expect(tokenStorage.clearCalled).toBe(true);
         expect(loggedIn).toBeFalsy();
@@ -133,7 +133,7 @@ describe('AuthenticationService', () => {
   describe("when access is expired but refresh active", () => {
     beforeEach(() => {
       jwtHelper.isExpiredResult = true;
-      service.registerStatusChangeCallback(callback);
+      service.statusChangeStream.subscribe(msg => loggedIn = msg);
     });
     it('should try to renew expired tokens and notify about outcome', () => {
       service.isLoggedIn().subscribe(resp => expect(resp).toBeTruthy());

@@ -6,6 +6,22 @@ import { NavbarComponent } from './navbar.component';
 import { AuthenticationService } from '../authorization/authentication.service';
 import { Observable, of } from 'rxjs';
 
+class SubscriptionSpy {
+  isUnsubscribed = false;
+  unsubscribe() {
+    this.isUnsubscribed = true;
+  }
+}
+
+class ObservableSpy<Type> {
+  isSubscribed = false;
+  subscription: SubscriptionSpy = new SubscriptionSpy();
+  subscribe(arg): SubscriptionSpy {
+    this.isSubscribed = true;
+    return this.subscription;
+  }
+}
+
 class AuthenticationServiceSpy {
   isLoggedInCalled: boolean = false;
   logOutCalled: boolean = false;
@@ -20,10 +36,7 @@ class AuthenticationServiceSpy {
   logOut() {
     this.logOutCalled = true;
   }
-
-  registerStatusChangeCallback(callback: (isLoggedIn: boolean) => void): void {
-    this.registerCalled = true;
-  }
+  statusChangeStream: ObservableSpy<boolean> = new ObservableSpy<boolean>();
 }
 
 describe('NavbarComponent', () => {
@@ -54,9 +67,15 @@ describe('NavbarComponent', () => {
     }));
 
     it("should register for auth state change notifications", () => {
-      expect(authService.registerCalled).toBeTruthy();
+      expect(authService.statusChangeStream.isSubscribed).toBeTruthy();
+    });
+
+    it("should unregister before destruction", () => {
+      fixture.destroy();
+      expect(authService.statusChangeStream.subscription.isUnsubscribed).toBeTruthy();
     });
   });
+
 
   describe("when user is logged in", () => {
     beforeEach(() => {

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 import { JwtHelperWrapperService } from "./jwt-helper-wrapper.service";
 import { TokenStorageService } from "./token-storage.service";
@@ -30,6 +30,8 @@ export class AuthenticationService {
   private authenticationUrl: string = AUTHENTICATION_HOST
     + AUTHENTICATION_ENDPOINT;
   private statusChangeCallbacks: ((isLoggedIn: boolean) => void)[] = [];
+  private statusChangeSource: Subject<boolean> = new Subject<boolean>();
+  statusChangeStream = this.statusChangeSource.asObservable();
   constructor(
     private http: HttpClient,
     private jwtHelper: JwtHelperWrapperService,
@@ -46,15 +48,10 @@ export class AuthenticationService {
         { "username": email, "password": password }, httpOptions)
         .subscribe(res => {
           this.setSession(res);
-          this.notifySubscribers(true);
+          this.statusChangeSource.next(true);
         });
       observer.next();
       observer.complete();
-    });
-  }
-  notifySubscribers(isAuthenticated: boolean): void {
-    this.statusChangeCallbacks.forEach(callback => {
-      callback(isAuthenticated);
     });
   }
 
@@ -65,7 +62,7 @@ export class AuthenticationService {
 
   logOut() {
     this.tokenStorage.clearTokens();
-    this.notifySubscribers(false);
+    this.statusChangeSource.next(false);
   }
 
   public isLoggedIn(): Observable<boolean> {
@@ -78,12 +75,12 @@ export class AuthenticationService {
           .subscribe(res => {
             this.setSession(res);
             observer.next(true);
-            this.notifySubscribers(true);
+            this.statusChangeSource.next(true);
             observer.complete();
           }, error => {
             this.tokenStorage.clearTokens();
             observer.next(false);
-            this.notifySubscribers(false);
+            this.statusChangeSource.next(false);
             observer.complete();
           }
           );
@@ -96,10 +93,4 @@ export class AuthenticationService {
   public isLoggedOut(): boolean {
     return !this.isLoggedIn();
   }
-
-  public registerStatusChangeCallback(
-    callback: (isLoggedIn: boolean) => void): void {
-    this.statusChangeCallbacks.push(callback);
-  }
-
 }

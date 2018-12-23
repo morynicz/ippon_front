@@ -1,21 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AuthenticationService } from '../authorization/authentication.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent implements OnInit, OnDestroy {
   user: string = "user";
   isLoggedIn: boolean = false;
+  private authChangeSubscripion: Subscription;
+
   constructor(private authService: AuthenticationService) { }
 
   ngOnInit() {
     this.authService.isLoggedIn()
       .subscribe(resp => this.isLoggedIn = resp);
-    this.authService.registerStatusChangeCallback(
-      this.logInStateChangeCallback);
+    this.authChangeSubscripion = this.authService
+      .statusChangeStream.subscribe(
+        msg => this.isLoggedIn = msg);
   }
 
   changeLanguage(language: string): void {
@@ -28,5 +32,9 @@ export class NavbarComponent implements OnInit {
 
   logout(): void {
     this.authService.logOut();
+  }
+
+  ngOnDestroy(): void {
+    this.authChangeSubscripion.unsubscribe();
   }
 }
