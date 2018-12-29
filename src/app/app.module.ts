@@ -74,6 +74,9 @@ import { TournamentAdminFormComponent } from './tournament-admin/tournament-admi
 import { TournamentAdminListComponent } from './tournament-admin/tournament-admin-list/tournament-admin-list.component';
 import { TournamentParticipationFormComponent } from './tournament-participation/tournament-participation-form/tournament-participation-form.component';
 import { TournamentParticipationListComponent } from './tournament-participation/tournament-participation-list/tournament-participation-list.component';
+import { UserRegistrationFormComponent } from './user-registration/user-registration-form/user-registration-form.component';
+import { UserRegistrationService } from './user-registration/user-registration.service';
+
 
 @NgModule({
   imports: [
@@ -131,7 +134,8 @@ import { TournamentParticipationListComponent } from './tournament-participation
     GroupMemberFormComponent,
     GroupLineComponent,
     GroupFormComponent,
-    GroupPhaseFormComponent
+    GroupPhaseFormComponent,
+    UserRegistrationFormComponent
   ],
   providers: [
     PlayerService,
@@ -153,7 +157,8 @@ import { TournamentParticipationListComponent } from './tournament-participation
     GroupMemberService,
     GroupService,
     GroupFightService,
-    GroupPhaseService
+    GroupPhaseService,
+    UserRegistrationService
   ],
   bootstrap: [AppComponent]
 })

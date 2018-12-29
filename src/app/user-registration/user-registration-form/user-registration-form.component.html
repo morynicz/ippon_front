@@ -1,0 +1,23 @@
+<form class="form-horizontal" role="form" class="edit-user" name="player-form" #playerForm="ngForm">
+  <div class="form-group">
+    <label for="username" class="control-label" i18n>
+      Username
+    </label>
+    <input type="text" name="username" class="form-control" placeholder="men_slayer" [(ngModel)]="registration.username">
+  </div>
+  <div class="form-group">
+    <label for="email" class="control-label" i18n>
+      Email
+    </label>
+    <input type="email" name="email" class="form-control" placeholder="example@example.exm" [(ngModel)]="registration.email">
+  </div>
+  <div class="form-group">
+    <label for="password" class="control-label" i18n>
+      Password
+    </label>
+    <input type="password" name="password" class="form-control" placeholder="********" [(ngModel)]="registration.password">
+  </div>
+  <div class="form-group row">
+    <button class="btn btn-primary col" (click)="register()" id="register-user" i18n>Save</button>
+  </div>
+</form>

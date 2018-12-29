@@ -25,6 +25,7 @@ import { GroupFullComponent } from './group/group-full/group-full.component';
 import { GroupPhaseFullComponent } from './group-phase/group-phase-full/group-phase-full.component';
 import { TournamentParticipationListComponent } from './tournament-participation/tournament-participation-list/tournament-participation-list.component';
 import { TournamentAdminListComponent } from './tournament-admin/tournament-admin-list/tournament-admin-list.component';
+import { UserRegistrationFormComponent } from './user-registration/user-registration-form/user-registration-form.component';
 
 
 const routes: Routes = [
@@ -52,6 +53,7 @@ const routes: Routes = [
   { path: 'teams/:id', component: TeamFullComponent },
   { path: 'groups/:id', component: GroupFullComponent },
   { path: 'group-phases/:id', component: GroupPhaseFullComponent },
+  { path: 'registration', component: UserRegistrationFormComponent },
   { path: 'test', component: TestingGroundsComponent },
 ]
 
