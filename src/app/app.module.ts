@@ -76,6 +76,7 @@ import { TournamentParticipationFormComponent } from './tournament-participation
 import { TournamentParticipationListComponent } from './tournament-participation/tournament-participation-list/tournament-participation-list.component';
 import { UserRegistrationFormComponent } from './user-registration/user-registration-form/user-registration-form.component';
 import { UserRegistrationService } from './user-registration/user-registration.service';
+import { DeepPlayerService } from './player/deep-player.service';
 
 
 @NgModule({
@@ -158,7 +159,8 @@ import { UserRegistrationService } from './user-registration/user-registration.s
     GroupService,
     GroupFightService,
     GroupPhaseService,
-    UserRegistrationService
+    UserRegistrationService,
+    DeepPlayerService
   ],
   bootstrap: [AppComponent]
 })

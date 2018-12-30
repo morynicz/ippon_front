@@ -2,13 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 
-import { Player } from '../player'
-import { PlayerService } from '../player.service';
 import { Rank, RANK_STRINGS } from '../../rank';
-import { Sex } from '../../sex';
 
 import { ClubService } from '../../club/club.service';
 import { Club } from '../../club/club'
+import { DeepPlayer } from '../deep-player';
+import { DeepPlayerService } from '../deep-player.service';
 
 @Component({
   selector: 'app-player-form',
@@ -16,7 +15,7 @@ import { Club } from '../../club/club'
   styleUrls: ['./player-form.component.css']
 })
 export class PlayerFormComponent implements OnInit {
-  player: Player;
+  player: DeepPlayer;
   clubs: Club[];
   rankEnum: any;
   ranks: any[];
@@ -24,7 +23,7 @@ export class PlayerFormComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private playerService: PlayerService,
+    private playerService: DeepPlayerService,
     private clubService: ClubService,
     private location: Location,
     private router: Router
@@ -61,7 +60,7 @@ export class PlayerFormComponent implements OnInit {
   }
 
   initializePlayer() {
-    this.player = new Player();
+    this.player = new DeepPlayer();
   }
 
   rankCompare(r1: Rank, r2: Rank): boolean {

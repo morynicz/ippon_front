@@ -3,14 +3,11 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { FormsModule } from '@angular/forms';
-import { Observable } from 'rxjs/Observable';
-import { of } from 'rxjs/observable/of';
-import { ActivatedRoute, convertToParamMap, ParamMap } from '@angular/router';
+import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { Location } from '@angular/common';
 import { By } from '@angular/platform-browser';
 
 import { PlayerFormComponent } from './player-form.component';
-import { Player } from './../player';
 import { PlayerService } from '../player.service';
 import { Rank } from '../../rank';
 import { Sex } from '../../sex';
@@ -19,8 +16,11 @@ import { Club } from '../../club/club'
 import { ClubService } from '../../club/club.service';
 import { PlayerServiceSpy } from '../player.service.spy';
 import { ClubServiceSpy } from '../../club/club.service.spy';
+import { DeepPlayer } from '../deep-player';
+import { DeepPlayerService } from '../deep-player.service';
+import { DeepPlayerServiceSpy } from '../deep-player.service.spy';
 
-const player: Player = {
+const player: DeepPlayer = {
   name: 'P1',
   surname: 'S1',
   sex: Sex.Male,
@@ -52,8 +52,8 @@ class LocationSpy {
 }
 
 function expectPlayersToBeEqual(
-  value: Player,
-  expected: Player
+  value: DeepPlayer,
+  expected: DeepPlayer
 ) {
   expect(value.name).toBe(expected.name);
   expect(value.surname).toBe(expected.surname);
@@ -66,14 +66,13 @@ function expectPlayersToBeEqual(
 describe('PlayerFormComponent', () => {
   let component: PlayerFormComponent;
   let fixture: ComponentFixture<PlayerFormComponent>;
-  let playerService: PlayerServiceSpy;
+  let playerService: DeepPlayerServiceSpy;
   let clubService: ClubServiceSpy;
-  let el: HTMLElement;
   let location: LocationSpy;
 
   describe('when playerId is available', () => {
     beforeEach(async(() => {
-      playerService = new PlayerServiceSpy();
+      playerService = new DeepPlayerServiceSpy();
       playerService.getReturnValues.push(player);
       clubService = new ClubServiceSpy();
       clubService.getListReturnValues.push(clubs);
@@ -82,7 +81,7 @@ describe('PlayerFormComponent', () => {
         declarations: [PlayerFormComponent],
         imports: [FormsModule, RouterTestingModule],
         providers: [
-          { provide: PlayerService, useValue: playerService },
+          { provide: DeepPlayerService, useValue: playerService },
           { provide: ClubService, useValue: clubService },
           {
             provide: ActivatedRoute, useValue: {
@@ -107,7 +106,6 @@ describe('PlayerFormComponent', () => {
       async(() => {
         fixture.whenStable().then(() => {
           let de = fixture.debugElement;
-          let clubInput = de.query(By.css("[name=club]")).nativeElement.value;
           expect(de.query(By.css("[name=name]")).nativeElement.value)
             .toContain(player.name);
         });
@@ -151,7 +149,7 @@ describe('PlayerFormComponent', () => {
 
     describe('when form is filled out and submit clicked',
       () => {
-        let expectedPlayer: Player;
+        let expectedPlayer: DeepPlayer;
         let btn;
         beforeEach(async(() => {
           fixture.detectChanges();
@@ -186,7 +184,7 @@ describe('PlayerFormComponent', () => {
 
   describe('when playerId is not available', () => {
     beforeEach(async(() => {
-      playerService = new PlayerServiceSpy();
+      playerService = new DeepPlayerServiceSpy();
       clubService = new ClubServiceSpy();
       clubService.getListReturnValues.push(clubs);
       location = new LocationSpy();
@@ -194,7 +192,7 @@ describe('PlayerFormComponent', () => {
         declarations: [PlayerFormComponent],
         imports: [FormsModule, RouterTestingModule],
         providers: [
-          { provide: PlayerService, useValue: playerService },
+          { provide: DeepPlayerService, useValue: playerService },
           { provide: ClubService, useValue: clubService },
           { provide: Location, useValue: location }
         ]
@@ -209,7 +207,7 @@ describe('PlayerFormComponent', () => {
     });
     describe('when form is filled out and submit clicked',
       () => {
-        let expectedPlayer: Player;
+        let expectedPlayer: DeepPlayer;
         let btn;
         beforeEach(async(() => {
           fixture.detectChanges();
