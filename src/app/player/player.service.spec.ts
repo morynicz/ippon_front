@@ -39,7 +39,7 @@ describe('PlayerService', () => {
   }));
 
   it('calls upon proper url and returns \
-  result when getPlayersCalled', () => {
+  result when getList is called', () => {
       let dummyPlayers: Player[] = [
         {
           name: 'P1',
@@ -63,37 +63,13 @@ describe('PlayerService', () => {
     });
 
   it('calls the api url with application/json content type \
-  and POST method when addPlayer called',
-    () => {
-      service.add(player).subscribe(resp => expect(resp).toBe(player));
-      const req = backend.expectOne(playersUrl);
-      expect(req.request.headers.has('Content-Type')).toBe(true);
-      expect(req.request.headers.get('Content-Type')).toBe('application/json');
-      expect(req.request.method).toBe('POST');
-      expect(req.request.body).toBe(player);
-      req.flush(player);
-    });
-
-  it('calls the api url with application/json content type \
-  and get method when getPlayer called',
+  and get method when get is called',
     () => {
       service.get(player.id).subscribe(resp => expect(resp).toBe(player));
       const req = backend.expectOne(playersUrl + `${player.id}/`);
       expect(req.request.headers.has('Content-Type')).toBe(true);
       expect(req.request.headers.get('Content-Type')).toBe('application/json');
       expect(req.request.method).toBe('GET');
-      req.flush(player);
-    });
-
-  it('calls the api url with application/json content type \
-  and post method when updatePlayer called',
-    () => {
-      service.update(player).subscribe(resp => expect(resp).toBe(player));
-      const req = backend.expectOne(playersUrl + `${player.id}/`);
-      expect(req.request.headers.has('Content-Type')).toBe(true);
-      expect(req.request.headers.get('Content-Type')).toBe('application/json');
-      expect(req.request.method).toBe('PUT');
-      expect(req.request.body).toBe(player);
       req.flush(player);
     });
 

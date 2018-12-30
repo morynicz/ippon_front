@@ -4,14 +4,12 @@ import { Location } from '@angular/common';
 
 import { PlayerService } from '../player.service';
 import { Player } from '../player'
-import { Rank, RANK_STRINGS } from '../../rank';
 import { Sex } from '../../sex';
 
 import { ClubService } from '../../club/club.service';
 import { Club } from '../../club/club';
 
 import { AuthorizationService } from '../../authorization/authorization.service';
-import { Authorization } from "../../authorization/Authorization";
 
 @Component({
   selector: 'ippon-player-full',
@@ -28,10 +26,7 @@ export class PlayerFullComponent implements OnInit {
     private route: ActivatedRoute,
     private location: Location,
     private router: Router,
-    private playerService: PlayerService,
-    private clubService: ClubService,
-    private authorizationService: AuthorizationService
-  ) { }
+    private playerService: PlayerService) { }
 
   ngOnInit(): void {
     this.getPlayer();

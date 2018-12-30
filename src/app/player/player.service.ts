@@ -8,11 +8,11 @@ import {
   PLAYERS_ENDPOINT,
   AUTHORIZATION_ENDPOINT
 } from '../rest-api';
-import { CrudlaService } from '../crudla.service';
+import { RldaService } from '../rlda.service';
 
 
 @Injectable()
-export class PlayerService extends CrudlaService<Player> {
+export class PlayerService extends RldaService<Player> {
   constructor(protected http: HttpClient) {
     super(http,
       IPPON_HOST + PLAYERS_ENDPOINT,

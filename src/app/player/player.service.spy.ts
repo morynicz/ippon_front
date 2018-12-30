@@ -1,4 +1,4 @@
-import { CrudlaServiceSpy } from "../crudla.service.spy";
 import { Player } from "./player";
+import { RldaServiceSpy } from "../rlda.service.spy";
 
-export class PlayerServiceSpy extends CrudlaServiceSpy<Player> { }
+export class PlayerServiceSpy extends RldaServiceSpy<Player> { }
