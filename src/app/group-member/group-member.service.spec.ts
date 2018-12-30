@@ -62,15 +62,15 @@ describe('GroupMemberService', () => {
     sends empty body and returns nothing",
       () => {
         service.add(resource).subscribe(
-          response => expect(response).toEqual({}));
+          response => expect(response).toEqual(null));
         const req = backend.expectOne(resourceUrl);
-        req.flush({});
+        req.flush(null);
         expect(req.request.method).toBe('POST');
         expect(req.request.headers.has('Content-Type'))
           .toBe(true);
         expect(req.request.headers.get('Content-Type'))
           .toBe('application/json');
-        expect(req.request.body).toEqual({});
+        expect(req.request.body).toEqual(null);
       });
   });
 

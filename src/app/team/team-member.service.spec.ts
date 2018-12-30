@@ -1,9 +1,6 @@
-import { TestBed, inject } from '@angular/core/testing';
-
+import { TestBed } from '@angular/core/testing';
 import { TeamMemberService } from './team-member.service';
 import { Player } from '../player/player';
-import { Sex } from '../sex';
-import { Rank } from '../rank';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { IPPON_HOST, TEAMS_ENDPOINT, MEMBERS_ENDPOINT, NOT_ASSIGNED_ENDPOINT } from '../rest-api';
 import { TeamMember } from './team-member';
@@ -55,10 +52,10 @@ describe('TeamMemberService', () => {
     and sends empty body",
       () => {
         service.add(resource).subscribe(
-          resp => expect(resp).toEqual({}));
+          resp => expect(resp).toEqual(null));
         const req = backend.expectOne(resourceUrl);
-        expect(req.request.body).toEqual({});
-        req.flush({});
+        expect(req.request.body).toEqual(null);
+        req.flush(null);
         expect(req.request.headers.has('Content-Type'))
           .toBe(true);
         expect(req.request.headers.get('Content-Type'))

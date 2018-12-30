@@ -26,8 +26,8 @@ export class GroupMemberService {
   constructor(
     protected http: HttpClient
   ) { }
-  add(resource: GroupMember): Observable<{}> {
-    return this.http.post(this.getMemberUrl(resource), {}, httpOptions)
+  add(resource: GroupMember): Observable<void> {
+    return this.http.post(this.getMemberUrl(resource), null, httpOptions)
       .pipe(catchError(this.handleError<any>('add id=${resource.id}')));
   }
 

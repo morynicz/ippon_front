@@ -23,8 +23,8 @@ export class TeamMemberService {
   constructor(
     protected http: HttpClient
   ) { }
-  add(resource: TeamMember): Observable<{}> {
-    return this.http.post(this.getMemberUrl(resource), {}, httpOptions)
+  add(resource: TeamMember): Observable<void> {
+    return this.http.post(this.getMemberUrl(resource), null, httpOptions)
       .pipe(catchError(this.handleError<any>('add id=${resource.id}')));
   }
 
@@ -50,7 +50,7 @@ export class TeamMemberService {
 
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
-      console.error(error);
+      console.error("operation: " + operation + " error: " + error);
       return of(result as T);
     };
   }

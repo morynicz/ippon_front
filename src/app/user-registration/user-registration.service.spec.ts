@@ -32,9 +32,9 @@ describe('UserRegistrationService', () => {
           email: "email@email.com"
         }
         service.register(registration).subscribe(
-          response => expect(response).toEqual({}));
+          response => expect(response).toEqual(null));
         const req = backend.expectOne(registrationUrl);
-        req.flush({});
+        req.flush(null);
         expect(req.request.method).toBe('POST');
         expect(req.request.headers.has('Content-Type'))
           .toBe(true);
