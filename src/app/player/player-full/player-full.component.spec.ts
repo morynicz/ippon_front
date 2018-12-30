@@ -25,10 +25,6 @@ const playerId: number = 4;
 const expectedPlayer: Player = {
   name: 'P1',
   surname: 'S1',
-  sex: Sex.Male,
-  birthday: new Date("2001-01-01"),
-  rank: Rank.Kyu_5,
-  club_id: 0,
   id: playerId
 };
 
@@ -103,22 +99,10 @@ describe('PlayerFullComponent', () => {
     it("shows player's surname", () => {
       expect(html.textContent).toContain('S1');
     });
-    it("shows player's club name", () => {
-      expect(html.textContent).toContain('C4');
-    });
-    it("does not show player's rank", () => {
-      expect(html.textContent).not.toContain(RANK_STRINGS[Rank.Kyu_5]);
-    });
-    it("does not show player's birthday", () => {
-      expect(html.textContent).not.toContain("2001-01-01");
-    });
-    it("does not show player's gender", () => {
-      expect(html.textContent).not.toContain("Male");
-    });
   });
   describe("when user is admin", () => {
     beforeEach(async(() => {
-      authorizationService.isClubAdminResult = true;
+      playerService.isAuthorizedReturnValue = true;
       TestBed.configureTestingModule({
         declarations: [PlayerFullComponent, KendoRankPipe],
         imports: [RouterTestingModule],
@@ -143,15 +127,6 @@ describe('PlayerFullComponent', () => {
       component = fixture.componentInstance;
       fixture.detectChanges();
       html = fixture.debugElement.nativeElement;
-    });
-    it("shows player's rank", async(() => {
-      expect(html.textContent).toContain(RANK_STRINGS[Rank.Kyu_5]);
-    }));
-    it("does show player's birthday", () => {
-      expect(html.textContent).toContain("2001-01-01");
-    });
-    it("does show player's gender", () => {
-      expect(html.textContent).toContain("Male");
     });
     it('should display admin controls if the user is club admin', () => {
       authorizationService.isClubAdminResult = true;

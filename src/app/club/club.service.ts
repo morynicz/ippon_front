@@ -12,20 +12,23 @@ import {
   IPPON_HOST,
   CLUBS_ENDPOINT,
   ADMINS_ENDPOINT,
-  PLAYERS_ENDPOINT
+  PLAYERS_ENDPOINT,
+  AUTHORIZATION_ENDPOINT
 } from '../rest-api';
-import { CrudlService } from '../crudl.service';
+import { CrudlaService } from '../crudla.service';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 }
 
 @Injectable()
-export class ClubService extends CrudlService<Club>{
+export class ClubService extends CrudlaService<Club>{
   private clubsUrl = IPPON_HOST + CLUBS_ENDPOINT;
 
   constructor(protected http: HttpClient) {
-    super(http, IPPON_HOST + CLUBS_ENDPOINT);
+    super(http,
+      IPPON_HOST + CLUBS_ENDPOINT,
+      IPPON_HOST + AUTHORIZATION_ENDPOINT + CLUBS_ENDPOINT);
   }
 
   getPlayers(clubId: number): Observable<Player[]> {

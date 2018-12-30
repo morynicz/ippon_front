@@ -20,28 +20,16 @@ const tournamentId: number = 342;
 const members: Player[] = [{
   name: 'P1',
   surname: 'S1',
-  sex: Sex.Male,
-  birthday: new Date("2001-01-01"),
-  rank: Rank.Kyu_5,
-  club_id: 0,
   id: 1
 },
 {
   name: 'P3',
   surname: 'S3',
-  sex: Sex.Male,
-  birthday: new Date("2003-03-03"),
-  rank: Rank.Kyu_3,
-  club_id: 0,
   id: 3
 },
 {
   name: 'P5',
   surname: 'S5',
-  sex: Sex.Male,
-  birthday: new Date("2005-05-05"),
-  rank: Rank.Kyu_5,
-  club_id: 0,
   id: 5
 }];
 
@@ -49,10 +37,6 @@ const unassigned: Player[] = [
   {
     name: 'P2',
     surname: 'S2',
-    sex: Sex.Female,
-    birthday: new Date("2002-02-02"),
-    rank: Rank.Kyu_2,
-    club_id: 2,
     id: 2
   }
 ];

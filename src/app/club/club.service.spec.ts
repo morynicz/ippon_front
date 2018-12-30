@@ -100,19 +100,11 @@ describe('ClubService', () => {
       const players: Player[] = [{
         name: 'P1',
         surname: 'S1',
-        sex: Sex.Male,
-        birthday: new Date("2001-01-01"),
-        rank: Rank.Kyu_5,
-        club_id: 0,
         id: 0
       },
       {
         name: 'P3',
         surname: 'S3',
-        sex: Sex.Female,
-        birthday: new Date("2002-02-02"),
-        rank: Rank.Kyu_4,
-        club_id: 0,
         id: 2
       }];
       const club: Club =

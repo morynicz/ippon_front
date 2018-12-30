@@ -8,7 +8,8 @@ import { Sex } from '../sex';
 
 import {
   IPPON_HOST,
-  PLAYERS_ENDPOINT
+  PLAYERS_ENDPOINT,
+  AUTHORIZATION_ENDPOINT
 } from '../rest-api';
 
 const playersUrl = IPPON_HOST + PLAYERS_ENDPOINT;
@@ -16,6 +17,13 @@ const playersUrl = IPPON_HOST + PLAYERS_ENDPOINT;
 describe('PlayerService', () => {
   let service: PlayerService;
   let backend: HttpTestingController;
+
+  const player: Player =
+  {
+    name: 'P1',
+    surname: 'S1',
+    id: 0
+  };
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -36,19 +44,11 @@ describe('PlayerService', () => {
         {
           name: 'P1',
           surname: 'S1',
-          sex: Sex.Male,
-          birthday: new Date("2001-01-01"),
-          rank: Rank.Kyu_5,
-          club_id: 0,
           id: 0
         },
         {
           name: 'P2',
           surname: 'S2',
-          sex: Sex.Male,
-          birthday: new Date("2002-02-02"),
-          rank: Rank.Kyu_4,
-          club_id: 1,
           id: 1
         }
       ];
@@ -65,16 +65,6 @@ describe('PlayerService', () => {
   it('calls the api url with application/json content type \
   and POST method when addPlayer called',
     () => {
-      const player =
-      {
-        name: 'P1',
-        surname: 'S1',
-        sex: Sex.Male,
-        birthday: new Date("2001-01-01"),
-        rank: Rank.Kyu_5,
-        club_id: 0,
-        id: 0
-      };
       service.add(player).subscribe(resp => expect(resp).toBe(player));
       const req = backend.expectOne(playersUrl);
       expect(req.request.headers.has('Content-Type')).toBe(true);
@@ -87,15 +77,6 @@ describe('PlayerService', () => {
   it('calls the api url with application/json content type \
   and get method when getPlayer called',
     () => {
-      const player = {
-        name: 'P1',
-        surname: 'S1',
-        sex: Sex.Male,
-        birthday: new Date("2001-01-01"),
-        rank: Rank.Kyu_5,
-        club_id: 0,
-        id: 0
-      };
       service.get(player.id).subscribe(resp => expect(resp).toBe(player));
       const req = backend.expectOne(playersUrl + `${player.id}/`);
       expect(req.request.headers.has('Content-Type')).toBe(true);
@@ -107,15 +88,6 @@ describe('PlayerService', () => {
   it('calls the api url with application/json content type \
   and post method when updatePlayer called',
     () => {
-      const player = {
-        name: 'P1',
-        surname: 'S1',
-        sex: Sex.Male,
-        birthday: new Date("2001-01-01"),
-        rank: Rank.Kyu_5,
-        club_id: 0,
-        id: 0
-      };
       service.update(player).subscribe(resp => expect(resp).toBe(player));
       const req = backend.expectOne(playersUrl + `${player.id}/`);
       expect(req.request.headers.has('Content-Type')).toBe(true);
@@ -128,19 +100,24 @@ describe('PlayerService', () => {
   it('calls the players api url with application/json content \
   type and delete method when delete called',
     () => {
-      const player = {
-        name: 'P1',
-        surname: 'S1',
-        sex: Sex.Male,
-        birthday: new Date("2001-01-01"),
-        rank: Rank.Kyu_5,
-        club_id: 0,
-        id: 0
-      };
       service.delete(player).subscribe();
       const req = backend.expectOne(playersUrl + `${player.id}/`);
       expect(req.request.headers.has('Content-Type')).toBe(true);
       expect(req.request.headers.get('Content-Type')).toBe('application/json');
       expect(req.request.method).toBe('DELETE');
     });
+
+  describe("when isAuthorized is called", () => {
+    let authUrl = IPPON_HOST + AUTHORIZATION_ENDPOINT + PLAYERS_ENDPOINT + `${player.id}/`;
+    it("calls the fights api url and returns requested authorization",
+      () => {
+        service.isAuthorized(player.id)
+          .subscribe(response => expect(response)
+            .toBe(true));
+        const req = backend.expectOne(authUrl);
+        req.flush({ "isAuthorized": true });
+        expect(req.request.method).toBe('GET');
+      });
+  });
+
 });

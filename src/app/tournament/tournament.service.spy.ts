@@ -1,6 +1,6 @@
 import { Tournament } from './tournament';
-import { CrudlServiceSpy } from '../crudl.service.spy';
+import { CrudlaServiceSpy } from '../crudla.service.spy';
 
-export class TournamentServiceSpy extends CrudlServiceSpy<Tournament> {
+export class TournamentServiceSpy extends CrudlaServiceSpy<Tournament> {
 
 }

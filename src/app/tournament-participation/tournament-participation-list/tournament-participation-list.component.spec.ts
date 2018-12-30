@@ -27,10 +27,6 @@ describe('TournamentParticipationListComponent', () => {
     player: {
       name: 'P1',
       surname: 'S1',
-      sex: Sex.Male,
-      birthday: new Date("2001-01-01"),
-      rank: Rank.Kyu_5,
-      club_id: 1,
       id: 1
     },
     is_paid: true,
@@ -47,10 +43,6 @@ describe('TournamentParticipationListComponent', () => {
     player: {
       name: 'P2',
       surname: 'S2',
-      sex: Sex.Female,
-      birthday: new Date("2002-02-02"),
-      rank: Rank.Kyu_1,
-      club_id: 2,
       id: 2
     },
     is_paid: true,
@@ -66,19 +58,11 @@ describe('TournamentParticipationListComponent', () => {
     {
       name: 'P3',
       surname: 'S3',
-      sex: Sex.Female,
-      birthday: new Date("2003-03-03"),
-      rank: Rank.Dan_3,
-      club_id: 3,
       id: 3
     },
     {
       name: 'P4',
       surname: 'S4',
-      sex: Sex.Male,
-      birthday: new Date("2004-04-04"),
-      rank: Rank.Kyu_2,
-      club_id: 4,
       id: 4
     }
   ];
@@ -167,10 +151,6 @@ describe('TournamentParticipationListComponent', () => {
         player: {
           name: 'P1',
           surname: 'S1',
-          sex: Sex.Male,
-          birthday: new Date("2001-01-01"),
-          rank: Rank.Kyu_5,
-          club_id: 1,
           id: 1
         },
         is_paid: true,
@@ -187,10 +167,6 @@ describe('TournamentParticipationListComponent', () => {
         player: {
           name: 'P2',
           surname: 'S2',
-          sex: Sex.Female,
-          birthday: new Date("2002-02-02"),
-          rank: Rank.Kyu_1,
-          club_id: 2,
           id: 2
         },
         is_paid: true,
@@ -208,10 +184,6 @@ describe('TournamentParticipationListComponent', () => {
         {
           name: 'P4',
           surname: 'S4',
-          sex: Sex.Male,
-          birthday: new Date("2004-04-04"),
-          rank: Rank.Kyu_2,
-          club_id: 4,
           id: 4
         }
       ];

@@ -1,6 +1,6 @@
-import { Observable ,  of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
-export class CrudlServiceSpy<Resource> {
+export class CrudlaServiceSpy<Resource> {
   updateValue: Resource;
   update(resource: Resource): Observable<any> {
     this.updateValue = resource;
@@ -31,5 +31,12 @@ export class CrudlServiceSpy<Resource> {
   delete(resource: Resource): Observable<{}> {
     this.deleteValue = resource;
     return of({});
+  }
+
+  isAuthorizedValue: number;
+  isAuthorizedReturnValue: boolean = false;
+  isAuthorized(id: number): Observable<boolean> {
+    this.isAuthorizedValue = id;
+    return of(this.isAuthorizedReturnValue);
   }
 }

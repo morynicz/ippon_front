@@ -1,21 +1,5 @@
 <section class="jumbotron">
   <h1 class="display-4 text-center">{{ player.name }} {{ player.surname }}</h1>
-  <div *ngIf="isAdmin">
-    <div class="h3">
-      <span i18n>Rank:</span> {{ player.rank | kendoRank }}
-    </div>
-    <div class="h3">
-      <span i18n>Birthday:</span> {{ player.birthday | date: 'yyyy-MM-dd' }}</div>
-    <div class="h3">
-      <span i18n>Gender:</span>
-      <span *ngIf="player.sex == sexEnum.Male" i18n>Male</span>
-      <span *ngIf="player.sex == sexEnum.Female" i18n>Female</span>
-    </div>
-  </div>
-  <div class="h3">
-    <span i18n>Club:</span>
-    <a routerLink="/club/{{club.id}}"> {{ club.name }}</a>
-  </div>
   <section class="row">
     <div class="col">
       <button (click)="goBack()" class="btn-primary" id="back-player" i18n>

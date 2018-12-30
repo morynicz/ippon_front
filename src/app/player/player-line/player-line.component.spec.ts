@@ -26,19 +26,11 @@ describe('PlayerLineComponent', () => {
     expectedPlayer = {
       name: 'P1',
       surname: 'S1',
-      sex: Sex.Male,
-      birthday: new Date("2001-01-01"),
-      rank: Rank.Kyu_5,
-      club_id: 0,
       id: 0
     };
     component.player = expectedPlayer;
     fixture.detectChanges();
     html = fixture.debugElement.nativeElement;
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
   });
 
   describe("when created", () => {

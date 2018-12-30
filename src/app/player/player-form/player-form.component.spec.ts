@@ -8,13 +8,11 @@ import { Location } from '@angular/common';
 import { By } from '@angular/platform-browser';
 
 import { PlayerFormComponent } from './player-form.component';
-import { PlayerService } from '../player.service';
 import { Rank } from '../../rank';
 import { Sex } from '../../sex';
 
 import { Club } from '../../club/club'
 import { ClubService } from '../../club/club.service';
-import { PlayerServiceSpy } from '../player.service.spy';
 import { ClubServiceSpy } from '../../club/club.service.spy';
 import { DeepPlayer } from '../deep-player';
 import { DeepPlayerService } from '../deep-player.service';

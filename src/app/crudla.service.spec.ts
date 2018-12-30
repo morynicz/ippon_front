@@ -6,13 +6,15 @@ import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 
 
-import { CrudlService } from './crudl.service';
+import { CrudlaService } from './crudla.service';
 
 class Resource {
   id: number;
 }
 
 const resourcesUrl = "http://URL";
+const authorizationUrl: string = "http://AURL/"
+
 const resource: Resource = {
   id: 345
 }
@@ -25,14 +27,15 @@ const resources: Resource[] = [
 
 
 @Injectable()
-class TestService extends CrudlService<Resource> {
+class TestService extends CrudlaService<Resource> {
   constructor(http: HttpClient) {
-    super(http, resourcesUrl);
+    super(http, resourcesUrl, authorizationUrl);
   }
 }
 
 describe('CrudlService', () => {
   const resourceUrl: string = resourcesUrl + `${resource.id}/`;
+  const resourceAuthUrl = authorizationUrl + `${resource.id}/`;
   let service: TestService;
   let backend: HttpTestingController;
 
@@ -139,4 +142,23 @@ describe('CrudlService', () => {
         expect(req.request.method).toBe('DELETE');
       });
   });
+
+  describe("when isAuthorized is called", () => {
+    it("calls the resources api url, uses GET method, \
+    sends request with application/json content type headers \
+    and returns authorization",
+      () => {
+        service.isAuthorized(resource.id)
+          .subscribe(response => expect(response)
+            .toBe(true));
+        const req = backend.expectOne(resourceAuthUrl);
+        req.flush({ "isAuthorized": true });
+        expect(req.request.method).toBe('GET');
+        expect(req.request.headers.has('Content-Type'))
+          .toBe(true);
+        expect(req.request.headers.get('Content-Type'))
+          .toBe('application/json');
+      });
+  });
+
 });

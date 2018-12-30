@@ -16,10 +16,6 @@ const participation: TournamentParticipation = {
   player: {
     name: 'P1',
     surname: 'S1',
-    sex: Sex.Male,
-    birthday: new Date("2001-01-01"),
-    rank: Rank.Kyu_5,
-    club_id: 1,
     id: 1
   },
   is_paid: true,
@@ -37,10 +33,6 @@ const participation2: TournamentParticipation = {
   player: {
     name: 'P2',
     surname: 'S2',
-    sex: Sex.Female,
-    birthday: new Date("2002-02-02"),
-    rank: Rank.Kyu_1,
-    club_id: 2,
     id: 2
   },
   is_paid: true,

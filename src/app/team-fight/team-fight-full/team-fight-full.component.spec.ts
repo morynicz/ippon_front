@@ -8,8 +8,6 @@ import { TeamFightService } from '../team-fight.service';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { TeamFight } from '../team-fight';
 import { Player } from '../../player/player';
-import { Sex } from '../../sex';
-import { Rank } from '../../rank';
 import { Team } from '../../team/team';
 import { FightService } from '../../fight/fight.service';
 import { FightServiceSpy } from '../../fight/fight.service.spy';
@@ -42,56 +40,32 @@ const teamFight: TeamFight = {
 const akaPlayers: Player[] = [{
   name: 'P1',
   surname: 'S1',
-  sex: Sex.Male,
-  birthday: new Date("2001-01-01"),
-  rank: Rank.Kyu_5,
-  club_id: 0,
   id: 1
 },
 {
   name: 'P3',
   surname: 'S3',
-  sex: Sex.Male,
-  birthday: new Date("2003-03-03"),
-  rank: Rank.Kyu_3,
-  club_id: 0,
   id: 3
 },
 {
   name: 'P5',
   surname: 'S5',
-  sex: Sex.Male,
-  birthday: new Date("2005-05-05"),
-  rank: Rank.Kyu_5,
-  club_id: 0,
   id: 5
 }];
 
 const shiroPlayers: Player[] = [{
   name: 'P2',
   surname: 'S2',
-  sex: Sex.Female,
-  birthday: new Date("2002-02-02"),
-  rank: Rank.Kyu_2,
-  club_id: 2,
   id: 2
 },
 {
   name: 'P4',
   surname: 'S4',
-  sex: Sex.Female,
-  birthday: new Date("2004-04-04"),
-  rank: Rank.Kyu_4,
-  club_id: 4,
   id: 4
 },
 {
   name: 'P6',
   surname: 'S6',
-  sex: Sex.Female,
-  birthday: new Date("2006-06-06"),
-  rank: Rank.Dan_3,
-  club_id: 4,
   id: 6
 }];
 

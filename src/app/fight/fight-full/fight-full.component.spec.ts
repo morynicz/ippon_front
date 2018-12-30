@@ -29,20 +29,12 @@ describe('FightFullComponent', () => {
   const akaPlayer: Player = {
     name: 'P1',
     surname: 'S1',
-    sex: Sex.Male,
-    birthday: new Date("2001-01-01"),
-    rank: Rank.Kyu_5,
-    club_id: 0,
     id: 0
   }
 
   const shiroPlayer: Player = {
     name: 'P2',
     surname: 'S2',
-    sex: Sex.Female,
-    birthday: new Date("2002-02-02"),
-    rank: Rank.Kyu_2,
-    club_id: 2,
     id: 1
   }
 

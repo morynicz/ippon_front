@@ -10,7 +10,8 @@ import { Rank } from '../rank';
 
 import {
   IPPON_HOST,
-  TOURNAMENTS_ENDPOINT
+  TOURNAMENTS_ENDPOINT,
+  AUTHORIZATION_ENDPOINT
 } from '../rest-api';
 
 const tournamentsUrl = IPPON_HOST + TOURNAMENTS_ENDPOINT;
@@ -148,6 +149,19 @@ describe('TournamentService', () => {
           .toBe(true);
         expect(req.request.headers.get('Content-Type'))
           .toBe('application/json');
+      });
+  });
+
+  describe("when isAuthorized is called", () => {
+    let fightAuthUrl = IPPON_HOST + AUTHORIZATION_ENDPOINT + TOURNAMENTS_ENDPOINT + `${tournament.id}/`;
+    it("calls the fights api url and returns requested authorization",
+      () => {
+        service.isAuthorized(tournament.id)
+          .subscribe(response => expect(response)
+            .toBe(true));
+        const req = backend.expectOne(fightAuthUrl);
+        req.flush({ "isAuthorized": true });
+        expect(req.request.method).toBe('GET');
       });
   });
 });

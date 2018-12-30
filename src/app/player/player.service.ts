@@ -1,25 +1,21 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import { Observable, of } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
-
 import { Player } from './player';
 
 import {
   IPPON_HOST,
-  PLAYERS_ENDPOINT
+  PLAYERS_ENDPOINT,
+  AUTHORIZATION_ENDPOINT
 } from '../rest-api';
-import { CrudlService } from '../crudl.service';
+import { CrudlaService } from '../crudla.service';
 
-const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-}
 
 @Injectable()
-export class PlayerService extends CrudlService<Player> {
-  private playersUrl = IPPON_HOST + PLAYERS_ENDPOINT;
+export class PlayerService extends CrudlaService<Player> {
   constructor(protected http: HttpClient) {
-    super(http, IPPON_HOST + PLAYERS_ENDPOINT);
+    super(http,
+      IPPON_HOST + PLAYERS_ENDPOINT,
+      IPPON_HOST + AUTHORIZATION_ENDPOINT + PLAYERS_ENDPOINT);
   }
 }

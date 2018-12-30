@@ -41,17 +41,11 @@ export class PlayerFullComponent implements OnInit {
     const id = +this.route.snapshot.paramMap.get('id');
     this.playerService.get(id).subscribe(player => {
       this.player = player;
-      this.getClub(player.club_id);
-      this.getAuthorization(player.club_id);
+      this.getAuthorization(player);
     });
   }
-
-  getClub(clubId: number): void {
-    this.clubService.get(clubId).subscribe(club => this.club = club);
-  }
-
-  getAuthorization(clubId: number): void {
-    this.authorizationService.isClubAdmin(clubId)
+  getAuthorization(player: Player): void {
+    this.playerService.isAuthorized(player.id)
       .subscribe(response => this.isAdmin = response);
   }
 

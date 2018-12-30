@@ -15,19 +15,11 @@ import { PlayerServiceSpy } from '../player.service.spy';
 const dummyPlayers: Player[] = [{
   name: 'P1',
   surname: 'S1',
-  sex: Sex.Male,
-  birthday: new Date("2001-01-01"),
-  rank: Rank.Kyu_5,
-  club_id: 0,
   id: 0
 },
 {
   name: 'P2',
   surname: 'S2',
-  sex: Sex.Male,
-  birthday: new Date("2002-02-02"),
-  rank: Rank.Kyu_4,
-  club_id: 1,
   id: 1
 }];
 
