@@ -2,11 +2,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute, convertToParamMap, ParamMap } from '@angular/router';
+import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { Location, DatePipe } from '@angular/common';
-
-import { Observable } from 'rxjs/Observable';
-import { of } from 'rxjs/observable/of';
 
 import { TournamentFormComponent } from './tournament-form.component';
 import { Tournament } from '../tournament';
@@ -15,7 +12,6 @@ import { TournamentServiceSpy } from '../tournament.service.spy';
 import { NumericConstraint } from '../numeric-constraint';
 import { SexConstraint } from '../sex-constraint';
 import { Rank } from '../../rank';
-import { Sex } from '../../sex';
 
 import { KendoRankPipe } from '../../player/kendo-rank.pipe';
 import { NumericConstraintPipe } from '../numeric-constraint.pipe';

@@ -26,7 +26,6 @@ import { AuthenticationService } from './authorization/authentication.service';
 import { AuthenticationInterceptor } from './authorization/authentication-interceptor';
 import { JwtHelperWrapperService } from './authorization/jwt-helper-wrapper.service';
 import { TokenStorageService } from "./authorization/token-storage.service";
-import { AuthorizationService } from './authorization/authorization.service';
 import { KendoRankPipe } from './player/kendo-rank.pipe';
 import { TournamentListComponent } from './tournament/tournament-list/tournament-list.component';
 import { TournamentLineComponent } from './tournament/tournament-line/tournament-line.component';
@@ -147,7 +146,6 @@ import { DeepPlayerService } from './player/deep-player.service';
     { provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true },
     JwtHelperWrapperService,
     TokenStorageService,
-    AuthorizationService,
     TournamentParticipantService,
     TournamentAdminService,
     PointService,

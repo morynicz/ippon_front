@@ -1,14 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Location } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
 
 import { Player } from '../../player/player'
 
 import { ClubService } from '../club.service';
 import { Club } from '../club';
 
-import { AuthorizationService } from '../../authorization/authorization.service';
-import { Authorization } from "../../authorization/Authorization";
 
 @Component({
   selector: 'app-club-full',
@@ -22,10 +19,7 @@ export class ClubFullComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private location: Location,
-    private router: Router,
-    private clubService: ClubService,
-    private authorizationService: AuthorizationService
+    private clubService: ClubService
   ) { }
 
   ngOnInit() {
@@ -49,7 +43,7 @@ export class ClubFullComponent implements OnInit {
   }
 
   getAuthorization(id: number): void {
-    this.authorizationService.isClubAdmin(id).subscribe((auth) => {
+    this.clubService.isAuthorized(id).subscribe((auth) => {
       this.isAdmin = auth;
     });
   }

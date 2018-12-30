@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TeamService } from '../../team/team.service';
 import { Team } from '../../team/team';
 import { ActivatedRoute } from '@angular/router';
-import { AuthorizationService } from '../../authorization/authorization.service';
+import { TournamentService } from '../tournament.service';
 
 @Component({
   selector: 'ippon-tournament-team-list',
@@ -15,13 +15,13 @@ export class TournamentTeamListComponent implements OnInit {
   isAuthorized: boolean = false;
   constructor(
     private teamService: TeamService,
-    private authorizationService: AuthorizationService,
+    private tournamentService: TournamentService,
     private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.tournamentId = +this.route.snapshot.paramMap.get('id');
     this.loadTeams();
-    this.authorizationService.isTournamentStaff(this.tournamentId)
+    this.tournamentService.isStaff(this.tournamentId)
       .subscribe(response => this.isAuthorized = response);
   }
 

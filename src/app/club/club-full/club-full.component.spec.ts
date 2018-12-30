@@ -2,20 +2,11 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
-
-import { Observable } from 'rxjs/Observable';
-import { of } from 'rxjs/observable/of';
-
 import { ClubFullComponent } from './club-full.component';
 import { Club } from '../club';
 import { ClubService } from '../club.service';
-
 import { Player } from '../../player/player';
-import { Rank } from '../../rank';
-import { Sex } from '../../sex';
 import { PlayerLineComponent } from '../../player/player-line/player-line.component';
-
-import { AuthorizationService } from '../../authorization/authorization.service';
 import { ClubServiceSpy } from '../club.service.spy';
 
 const clubId: number = 1;
@@ -38,31 +29,18 @@ const players: Player[] = [{
   id: 2
 }];
 
-class AuthorizationServiceDummy {
-  isClubAdminResult: boolean = false;
-  isClubAdminCallArgument: number = -1;
-  isClubAdmin(clubId: number): Observable<boolean> {
-    this.isClubAdminCallArgument = clubId;
-    return of(this.isClubAdminResult);
-  }
-}
-
 describe('ClubFullComponent', () => {
-  let component: ClubFullComponent;
   let fixture: ComponentFixture<ClubFullComponent>;
-  let authorizationService: AuthorizationServiceDummy;
   let clubService: ClubServiceSpy;
 
   describe("when user is not admin", () => {
     beforeEach(async(() => {
-      authorizationService = new AuthorizationServiceDummy();
       clubService = new ClubServiceSpy();
       clubService.getPlayersReturnValues.push(players);
       clubService.getReturnValues.push(club);
       TestBed.configureTestingModule({
         providers: [
           { provide: ClubService, useValue: clubService },
-          { provide: AuthorizationService, useValue: authorizationService },
           {
             provide: ActivatedRoute, useValue: {
               snapshot: {
@@ -79,12 +57,11 @@ describe('ClubFullComponent', () => {
 
     beforeEach(() => {
       fixture = TestBed.createComponent(ClubFullComponent);
-      component = fixture.componentInstance;
       fixture.detectChanges();
     });
 
-    it('should create', () => {
-      expect(component).toBeTruthy();
+    it("should call club API to check for user authorization", () => {
+      expect(clubService.isAuthorizedValue).toEqual(clubId);
     });
 
     it('should display all club details', () => {
@@ -122,14 +99,12 @@ describe('ClubFullComponent', () => {
   });
   describe("when user is admin", () => {
     beforeEach(async(() => {
-      authorizationService = new AuthorizationServiceDummy();
-      authorizationService.isClubAdminResult = true;
       clubService = new ClubServiceSpy();
       clubService.getReturnValues.push(club);
+      clubService.isAuthorizedReturnValue = true;
       TestBed.configureTestingModule({
         providers: [
           { provide: ClubService, useValue: clubService },
-          { provide: AuthorizationService, useValue: authorizationService }
         ],
         imports: [RouterTestingModule],
         declarations: [
@@ -141,13 +116,10 @@ describe('ClubFullComponent', () => {
 
     beforeEach(() => {
       fixture = TestBed.createComponent(ClubFullComponent);
-      component = fixture.componentInstance;
       fixture.detectChanges();
     });
 
     it('should display admin controls if the user is club admin', () => {
-      authorizationService.isClubAdminResult = true;
-      fixture.detectChanges();
       const de = fixture.debugElement;
       const html = de.nativeElement;
       expect(html.querySelector('#delete-club')).toBeTruthy();

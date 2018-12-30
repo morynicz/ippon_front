@@ -1,25 +1,13 @@
 import { TestBed, async, inject } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { ActivatedRouteSnapshot, Router, RouterStateSnapshot, ParamMap, convertToParamMap } from '@angular/router';
-import { Component, Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Observable } from 'rxjs/Observable';
-import { of } from 'rxjs/observable/of';
+import { ActivatedRouteSnapshot, Router, RouterStateSnapshot, convertToParamMap } from '@angular/router';
+import { Component } from '@angular/core';
 
 import { ClubGuard } from './club.guard';
 
-import { AuthorizationService } from '../authorization/authorization.service';
-import { Authorization } from "../authorization/Authorization";
 import { AuthenticationService } from '../authorization/authentication.service';
-
-class AuthorizationServiceMock {
-  isClubAdminValue: boolean;
-  called: number;
-  isClubAdmin(id: number): Observable<boolean> {
-    this.called = id;
-    return of(this.isClubAdminValue);
-  }
-};
+import { ClubService } from './club.service';
+import { ClubServiceSpy } from './club.service.spy';
 
 class AuthenticationServiceDummy {
   authenticated: boolean;
@@ -36,7 +24,7 @@ class RouterStateSnapshotStub {
 class StubComponent { }
 
 describe('ClubGuard', () => {
-  let authorizationServiceMock: AuthorizationServiceMock;
+  let clubService: ClubServiceSpy;
   let authenticationServiceDummy: AuthenticationServiceDummy;
   let activatedRouteSnapshot: ActivatedRouteSnapshot;
   let clubId: number = 42;
@@ -54,8 +42,8 @@ describe('ClubGuard', () => {
       providers: [
         ClubGuard,
         {
-          provide: AuthorizationService,
-          useClass: AuthorizationServiceMock
+          provide: ClubService,
+          useClass: ClubServiceSpy
         },
         {
           provide: AuthenticationService,
@@ -76,7 +64,7 @@ describe('ClubGuard', () => {
   }));
 
   beforeEach(() => {
-    authorizationServiceMock = TestBed.get(AuthorizationService);
+    clubService = TestBed.get(ClubService);
     authenticationServiceDummy = TestBed.get(AuthenticationService);
     activatedRouteSnapshot = TestBed.get(ActivatedRouteSnapshot);
   });
@@ -84,37 +72,33 @@ describe('ClubGuard', () => {
   it('should return true when user is logged in and authorized club admin',
     async(inject(
       [ClubGuard, Router],
-      (guard: ClubGuard, router: Router) => {
-        authorizationServiceMock.isClubAdminValue = true;
+      (guard: ClubGuard) => {
+        clubService.isAuthorizedReturnValue = true;
         authenticationServiceDummy.authenticated = true;
         guard.canActivate(activatedRouteSnapshot, new RouterStateSnapshotStub()).subscribe(
           result => expect(result).toBeTruthy());
-        expect(authorizationServiceMock.called).toBe(42);
+        expect(clubService.isAuthorizedValue).toBe(42);
       })));
 
 
   it('should return false when user is logged in and not authorized club admin',
     async(inject(
       [ClubGuard, Router],
-      (guard: ClubGuard, router: Router) => {
-        authorizationServiceMock.isClubAdminValue = false;
+      (guard: ClubGuard) => {
+        clubService.isAuthorizedReturnValue = false;
         authenticationServiceDummy.authenticated = true;
         guard.canActivate(activatedRouteSnapshot, new RouterStateSnapshotStub()).subscribe(
           result => expect(result).toBeFalsy());
-        expect(authorizationServiceMock.called).toBe(42);
+        expect(clubService.isAuthorizedValue).toBe(42);
       })));
 
   it('should return false when user is not logged in',
     async(inject(
       [ClubGuard, Router],
-      (guard: ClubGuard, router: Router) => {
-        authorizationServiceMock.isClubAdminValue = true;
+      (guard: ClubGuard) => {
+        clubService.isAuthorizedReturnValue = false;
         authenticationServiceDummy.authenticated = false;
         guard.canActivate(activatedRouteSnapshot, new RouterStateSnapshotStub()).subscribe(
           result => expect(result).toBeFalsy());
       })));
-
-  it('should ...', async(inject([ClubGuard], (guard: ClubGuard) => {
-    expect(guard).toBeTruthy();
-  })));
 });

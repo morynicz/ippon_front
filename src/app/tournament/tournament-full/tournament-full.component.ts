@@ -1,13 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Location } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
 
 import { Tournament } from '../tournament';
 import { TournamentService } from '../tournament.service';
 import { NumericConstraint } from '../numeric-constraint';
 import { SexConstraint } from '../sex-constraint';
-import { AuthorizationService } from '../../authorization/authorization.service';
-import { Authorization } from "../../authorization/Authorization";
 import { GroupPhaseService } from '../../group-phase/group-phase.service';
 import { GroupPhase } from '../../group-phase/group-phase';
 
@@ -26,10 +23,7 @@ export class TournamentFullComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private location: Location,
-    private router: Router,
     private tournamentService: TournamentService,
-    private authorizationService: AuthorizationService,
     private groupPhaseService: GroupPhaseService
   ) { }
 
@@ -49,19 +43,19 @@ export class TournamentFullComponent implements OnInit {
   private loadGroupPhases(id: number) {
     this.groupPhaseService.getList(id).subscribe(response => {
       this.groupPhases = response;
-    }, error => this.handleError(error));
+    }, () => this.handleError());
   }
 
   getTournament(id: number): void {
     this.tournamentService.get(id).subscribe(tournament => {
       this.tournament = tournament;
-    }, error => this.handleError(error));
+    }, () => this.handleError());
   }
 
   getAuthorization(id: number): void {
-    this.authorizationService.isTournamentAdmin(id).subscribe(auth => {
+    this.tournamentService.isAuthorized(id).subscribe(auth => {
       this.isAdmin = auth;
-    }, error => this.handleError(error));
+    }, () => this.handleError());
   }
 
   reloadGroupPhases(): void {
@@ -73,7 +67,7 @@ export class TournamentFullComponent implements OnInit {
     this.prepareNewGroupPhase(this.tournament.id);
   }
 
-  handleError(error): void {
+  handleError(): void {
 
   }
 

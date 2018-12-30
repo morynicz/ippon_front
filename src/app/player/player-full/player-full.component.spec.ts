@@ -2,21 +2,12 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { By } from '@angular/platform-browser';
-
-import { Observable } from 'rxjs/Observable';
-import { of } from 'rxjs/observable/of';
-
 import { PlayerFullComponent } from './player-full.component';
 import { Player } from '../player';
 import { PlayerService } from '../player.service';
-import { Rank, RANK_STRINGS } from '../../rank';
-import { Sex } from '../../sex';
-
 import { Club } from '../../club/club'
 import { ClubService } from '../../club/club.service';
-
 import { KendoRankPipe } from '../kendo-rank.pipe';
-import { AuthorizationService } from '../../authorization/authorization.service';
 import { PlayerServiceSpy } from '../player.service.spy';
 import { ClubServiceSpy } from '../../club/club.service.spy';
 
@@ -36,21 +27,11 @@ const club: Club = {
   webpage: 'W'
 };
 
-class AuthorizationServiceDummy {
-  isClubAdminResult: boolean = false;
-  isClubAdminCallArgument: number = -1;
-  isClubAdmin(clubId: number): Observable<boolean> {
-    this.isClubAdminCallArgument = clubId;
-    return of(this.isClubAdminResult);
-  }
-}
-
 describe('PlayerFullComponent', () => {
   let component: PlayerFullComponent;
   let fixture: ComponentFixture<PlayerFullComponent>;
   let playerService: PlayerServiceSpy;
   let clubService: ClubServiceSpy;
-  let authorizationService: AuthorizationServiceDummy;
   let html;
 
   beforeEach(async(() => {
@@ -58,7 +39,6 @@ describe('PlayerFullComponent', () => {
     playerService.getReturnValues.push(expectedPlayer);
     clubService = new ClubServiceSpy();
     clubService.getReturnValues.push(club);
-    authorizationService = new AuthorizationServiceDummy();
   }));
 
   describe('when user is not admin', () => {
@@ -69,7 +49,6 @@ describe('PlayerFullComponent', () => {
         providers: [
           { provide: PlayerService, useValue: playerService },
           { provide: ClubService, useValue: clubService },
-          { provide: AuthorizationService, useValue: authorizationService },
           {
             provide: ActivatedRoute, useValue: {
               snapshot: {
@@ -109,7 +88,6 @@ describe('PlayerFullComponent', () => {
         providers: [
           { provide: PlayerService, useValue: playerService },
           { provide: ClubService, useValue: clubService },
-          { provide: AuthorizationService, useValue: authorizationService },
           {
             provide: ActivatedRoute, useValue: {
               snapshot: {
@@ -129,7 +107,6 @@ describe('PlayerFullComponent', () => {
       html = fixture.debugElement.nativeElement;
     });
     it('should display admin controls if the user is club admin', () => {
-      authorizationService.isClubAdminResult = true;
       fixture.detectChanges();
       const de = fixture.debugElement;
       const html = de.nativeElement;

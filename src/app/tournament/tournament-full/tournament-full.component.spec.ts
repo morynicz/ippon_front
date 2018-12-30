@@ -2,10 +2,6 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
-
-import { Observable } from 'rxjs/Observable';
-import { of } from 'rxjs/observable/of';
-
 import { TournamentFullComponent } from './tournament-full.component';
 import { Tournament } from '../tournament';
 import { TournamentService } from '../tournament.service';
@@ -13,8 +9,6 @@ import { NumericConstraint } from '../numeric-constraint';
 import { SexConstraint } from '../sex-constraint';
 import { Rank } from '../../rank';
 import { KendoRankPipe } from '../../player/kendo-rank.pipe';
-import { AuthorizationService } from '../../authorization/authorization.service';
-
 import { NumericConstraintPipe } from '../numeric-constraint.pipe';
 import { SexConstraintPipe } from '../sex-constraint.pipe';
 import { TournamentServiceSpy } from '../tournament.service.spy';
@@ -46,15 +40,6 @@ const tournament: Tournament = {
   webpage: "W1"
 };
 
-class AuthorizationServiceDummy {
-  isTournamentAdminResult: boolean = false;
-  isTournamentAdminCallArgument: number = -1;
-  isTournamentAdmin(): Observable<boolean> {
-    this.isTournamentAdminCallArgument = tournamentId;
-    return of(this.isTournamentAdminResult);
-  }
-}
-
 const groupPhases: GroupPhase[] = [{
   id: 89,
   name: "GP1",
@@ -71,7 +56,6 @@ const groupPhases: GroupPhase[] = [{
 describe('TournamentFullComponent', () => {
   let component: TournamentFullComponent;
   let fixture: ComponentFixture<TournamentFullComponent>;
-  let authorizationService: AuthorizationServiceDummy;
   let tournamentService: TournamentServiceSpy;
   let groupPhaseService: GroupPhaseServiceSpy;
   let html;
@@ -80,7 +64,6 @@ describe('TournamentFullComponent', () => {
     beforeEach(async(() => {
       tournamentService = new TournamentServiceSpy();
       tournamentService.getReturnValues.push({ ...tournament });
-      authorizationService = new AuthorizationServiceDummy();
       groupPhaseService = new GroupPhaseServiceSpy();
       groupPhaseService.getListReturnValues.push(groupPhases);
       TestBed.configureTestingModule({
@@ -96,10 +79,6 @@ describe('TournamentFullComponent', () => {
           {
             provide: TournamentService,
             useValue: tournamentService
-          },
-          {
-            provide: AuthorizationService,
-            useValue: authorizationService
           },
           {
             provide: GroupPhaseService,
@@ -125,8 +104,8 @@ describe('TournamentFullComponent', () => {
       html = fixture.debugElement.nativeElement;
     });
 
-    it('should create', () => {
-      expect(component).toBeTruthy();
+    it('should check if user is admin', () => {
+      expect(tournamentService.isAuthorizedValue).toEqual(tournamentId);
     });
 
     it('should display all tournament details', () => {
@@ -170,7 +149,7 @@ describe('TournamentFullComponent', () => {
     });
 
     it('should not display admin controls if the user is not tournament admin', () => {
-      authorizationService.isTournamentAdminResult = true;
+      tournamentService.isAuthorizedReturnValue = true;
       fixture.detectChanges();
       const de = fixture.debugElement;
       const html = de.nativeElement;
@@ -204,8 +183,7 @@ describe('TournamentFullComponent', () => {
     beforeEach(async(() => {
       tournamentService = new TournamentServiceSpy();
       tournamentService.getReturnValues.push(tournament);
-      authorizationService = new AuthorizationServiceDummy();
-      authorizationService.isTournamentAdminResult = true;
+      tournamentService.isAuthorizedReturnValue = true;
       groupPhaseService = new GroupPhaseServiceSpy();
       groupPhaseService.getListReturnValues.push(groupPhases);
       TestBed.configureTestingModule({
@@ -221,10 +199,6 @@ describe('TournamentFullComponent', () => {
           {
             provide: TournamentService,
             useValue: tournamentService
-          },
-          {
-            provide: AuthorizationService,
-            useValue: authorizationService
           },
           {
             provide: GroupPhaseService,
@@ -251,7 +225,6 @@ describe('TournamentFullComponent', () => {
     });
 
     it('should display admin controls if the user is tournament admin', () => {
-      authorizationService.isTournamentAdminResult = true;
       fixture.detectChanges();
       const de = fixture.debugElement;
       const html = de.nativeElement;

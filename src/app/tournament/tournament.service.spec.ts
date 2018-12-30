@@ -11,7 +11,10 @@ import { Rank } from '../rank';
 import {
   IPPON_HOST,
   TOURNAMENTS_ENDPOINT,
-  AUTHORIZATION_ENDPOINT
+  AUTHORIZATION_ENDPOINT,
+  TOURNAMENT_ADMINS_ENDPOINT,
+  ADMINS_ENDPOINT,
+  STAFF_ENDPOINT
 } from '../rest-api';
 
 const tournamentsUrl = IPPON_HOST + TOURNAMENTS_ENDPOINT;
@@ -153,7 +156,7 @@ describe('TournamentService', () => {
   });
 
   describe("when isAuthorized is called", () => {
-    let fightAuthUrl = IPPON_HOST + AUTHORIZATION_ENDPOINT + TOURNAMENTS_ENDPOINT + `${tournament.id}/`;
+    let fightAuthUrl = IPPON_HOST + AUTHORIZATION_ENDPOINT + TOURNAMENTS_ENDPOINT + ADMINS_ENDPOINT + `${tournament.id}/`;
     it("calls the fights api url and returns requested authorization",
       () => {
         service.isAuthorized(tournament.id)
@@ -164,4 +167,18 @@ describe('TournamentService', () => {
         expect(req.request.method).toBe('GET');
       });
   });
+
+  describe("when isStaff is called", () => {
+    let fightAuthUrl = IPPON_HOST + AUTHORIZATION_ENDPOINT + TOURNAMENTS_ENDPOINT + STAFF_ENDPOINT + `${tournament.id}/`;
+    it("calls the fights api url and returns requested authorization",
+      () => {
+        service.isStaff(tournament.id)
+          .subscribe(response => expect(response)
+            .toBe(true));
+        const req = backend.expectOne(fightAuthUrl);
+        req.flush({ "isAuthorized": true });
+        expect(req.request.method).toBe('GET');
+      });
+  });
+
 });

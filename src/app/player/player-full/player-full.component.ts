@@ -6,10 +6,8 @@ import { PlayerService } from '../player.service';
 import { Player } from '../player'
 import { Sex } from '../../sex';
 
-import { ClubService } from '../../club/club.service';
 import { Club } from '../../club/club';
 
-import { AuthorizationService } from '../../authorization/authorization.service';
 
 @Component({
   selector: 'ippon-player-full',

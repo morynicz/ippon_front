@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
-import { AuthorizationService } from '../authorization/authorization.service';
 import { AuthenticationService } from '../authorization/authentication.service';
+import { ClubService } from './club.service';
 
 @Injectable()
 export class ClubGuard implements CanActivate {
 
-  constructor(private authorizationService: AuthorizationService, private authenticationService: AuthenticationService) { }
+  constructor(
+    private clubService: ClubService,
+    private authenticationService: AuthenticationService) { }
 
 
   canActivate(
@@ -18,7 +20,7 @@ export class ClubGuard implements CanActivate {
 
     return new Observable<boolean>((observer) => {
       if (id && this.authenticationService.authenticated) {
-        this.authorizationService.isClubAdmin(id).subscribe(result => {
+        this.clubService.isAuthorized(id).subscribe(result => {
           observer.next(result);
         }, error => {
           console.log(error);
