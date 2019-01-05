@@ -18,7 +18,7 @@ export class GroupFightLineComponent implements OnInit {
 
   ngOnInit() {
     if (this.groupFight != null) {
-      this.teamFightService.get(this.groupFight.id)
+      this.teamFightService.get(this.groupFight.team_fight)
         .subscribe(result => this.teamFight = result);
     }
   }

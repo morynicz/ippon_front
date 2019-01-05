@@ -90,6 +90,10 @@ describe('GroupFightLineComponent', () => {
     de = fixture.debugElement;
   });
 
+  it("calls teamFight service to get underlying team fight", () => {
+    expect(teamFightService.getValues).toContain(teamFightId);
+  });
+
   it('shows aka team name on aka team side', () => {
     let akaTeamSide = de.query(By.css("#aka-team"));
     expect(akaTeamSide.nativeElement.textContent).toContain(akaTeam.name);
