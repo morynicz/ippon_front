@@ -10,6 +10,7 @@ import { ClubService } from '../club.service';
 import { Club } from '../club'
 
 import { ClubServiceSpy } from '../club.service.spy';
+import { LocationSpy } from '../../test-utils/location.spy';
 
 const clubId: number = 1;
 const club: Club = {
@@ -19,13 +20,6 @@ const club: Club = {
   city: 'Ci',
   webpage: 'W'
 };
-
-class LocationSpy {
-  clicked: boolean = false;
-  back(): void {
-    this.clicked = true;
-  }
-}
 
 function expectClubsToBeEqual(
   value: Club,

@@ -17,6 +17,7 @@ import { ClubServiceSpy } from '../../club/club.service.spy';
 import { DeepPlayer } from '../deep-player';
 import { DeepPlayerService } from '../deep-player.service';
 import { DeepPlayerServiceSpy } from '../deep-player.service.spy';
+import { LocationSpy } from '../../test-utils/location.spy';
 
 const player: DeepPlayer = {
   name: 'P1',
@@ -41,13 +42,6 @@ const clubs: Club[] = [{
   city: 'Ci12',
   webpage: 'W7'
 }];
-
-class LocationSpy {
-  clicked: boolean = false;
-  back(): void {
-    this.clicked = true;
-  }
-}
 
 function expectPlayersToBeEqual(
   value: DeepPlayer,

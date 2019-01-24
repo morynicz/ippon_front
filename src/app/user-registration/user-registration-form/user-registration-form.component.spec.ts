@@ -8,20 +8,13 @@ import { UserRegistrationService } from '../user-registration.service';
 import { By } from '@angular/platform-browser';
 import { Observable, of } from 'rxjs';
 import { Location } from '@angular/common';
+import { LocationSpy } from '../../test-utils/location.spy';
 
 const registration: UserRegistration = {
   username: "user1",
   password: "lonpassword",
   email: "email@email.com"
 }
-
-class LocationSpy {
-  clicked: boolean = false;
-  back(): void {
-    this.clicked = true;
-  }
-}
-
 
 class UserRegistrationServiceSpy {
   registrationCallValues: UserRegistration[] = [];

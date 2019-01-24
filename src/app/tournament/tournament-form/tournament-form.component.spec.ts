@@ -16,6 +16,7 @@ import { Rank } from '../../rank';
 import { KendoRankPipe } from '../../player/kendo-rank.pipe';
 import { NumericConstraintPipe } from '../numeric-constraint.pipe';
 import { SexConstraintPipe } from '../sex-constraint.pipe';
+import { LocationSpy } from '../../test-utils/location.spy';
 
 const tournament: Tournament = {
   id: 7,
@@ -36,13 +37,6 @@ const tournament: Tournament = {
   description: "d1",
   webpage: "w1"
 };
-
-class LocationSpy {
-  clicked: boolean = false;
-  back(): void {
-    this.clicked = true;
-  }
-}
 
 function expectTournamentsToBeEqual(
   value: Tournament,
