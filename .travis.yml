@@ -28,3 +28,5 @@ before_script:
 script:
 - node_modules/@angular/cli/bin/ng test --source-map false  --watch false --browsers ChromeHeadless
 
+notifications:
+  slack: ipponforge:POZIxDUMmeddHxK10Ub78v8j
