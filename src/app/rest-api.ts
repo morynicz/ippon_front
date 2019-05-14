@@ -28,3 +28,4 @@ export const GROUPS_ENDPOINT: string = "groups/";
 export const GROUP_FIGHTS_ENDPOINT: string = "group_fights/";
 export const REFRESH_ENDPOINT: string = "/refresh";
 export const REGISTRATION_ENDPOINT: string = "registration/"
+export const CUP_PHASES_ENDPOINT: string = "cup_phases/";

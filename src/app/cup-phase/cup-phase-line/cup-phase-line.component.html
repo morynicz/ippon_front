@@ -1,0 +1,19 @@
+<div class="row">
+  <h1 class="h3 col text-center">
+    <a routerLink="/cup-phases/{{cupPhase.id}}">
+      <div class="row">
+        <div class="col">
+          {{cupPhase.name}}
+        </div>
+        <div class="col">
+          {{cupPhase.fight_length}}
+        </div>
+        <div class="col">
+          {{cupPhase.final_fight_length}}
+        </div>
+      </div>
+    </a>
+  </h1>
+  <button *ngIf="isAuthorized" class="col btn btn-danger" id="delete-cup-phase" (click)="deleteCupPhase()" i18n>
+    Delete</button>
+</div>
