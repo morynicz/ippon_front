@@ -1,0 +1,30 @@
+<form class="form-horizontal row" role="form" class="edit-user" name="cup-phase-form" #cupPhaseForm="ngForm">
+  <div class="form-cup col">
+    <div class="row">
+      <label for="name" class="col control-label" i18n>
+        Cup phase name
+      </label>
+      <div class="col">
+        <input type="text" name="name" class="form-control" placeholder="cup name" [(ngModel)]="cupPhase.name">
+      </div>
+      <label for="fight_length" class="col control-label" i18n>
+        Fight length
+      </label>
+      <div class="col">
+        <input type="number" name="fight_length" class="form-control" placeholder="3"
+          [(ngModel)]="cupPhase.fight_length">
+      </div>
+      <label for="final_fight_length" class="col control-label" i18n>
+        Final fight length
+      </label>
+      <div class="col">
+        <input type="number" name="final_fight_length" class="form-control" placeholder="5"
+          [(ngModel)]="cupPhase.final_fight_length">
+      </div>
+    </div>
+
+  </div>
+  <div class="row text-right">
+    <button class="col btn btn-primary" (click)="save()" id="save-cup-phase" i18n>Create</button>
+  </div>
+</form>

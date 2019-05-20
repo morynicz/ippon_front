@@ -25,7 +25,7 @@ describe('GroupPhaseFormComponent', () => {
   beforeEach(async(() => {
     groupPhaseService = new GroupPhaseServiceSpy();
     TestBed.configureTestingModule({
-      declarations: [ GroupPhaseFormComponent ],
+      declarations: [GroupPhaseFormComponent],
       providers: [
         { provide: GroupPhaseService, useValue: groupPhaseService }
       ],
@@ -33,7 +33,7 @@ describe('GroupPhaseFormComponent', () => {
         FormsModule
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -43,10 +43,6 @@ describe('GroupPhaseFormComponent', () => {
     injectedGroupPhase = new GroupPhase();
     injectedGroupPhase.id = groupPhaseId;
     injectedGroupPhase.tournament = tournamentId;
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
   });
 
   describe("when name is written and create button is pushed", () => {
