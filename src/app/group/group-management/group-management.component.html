@@ -1,0 +1,38 @@
+<div class="card">
+  <h2 class="card-title text-center" i18n>Group phases</h2>
+  <div class="card-body">
+    <ul class="list-group">
+      <li class="list-group-item">
+        <div class="row">
+          <div class="col">
+            <div class="row text-center">
+              <div class="col" i18n>
+                Name
+              </div>
+              <div class="col" i18n>
+                Fight length
+              </div>
+            </div>
+          </div>
+          <div class="col" *ngIf="isAdmin">
+            &nbsp;
+          </div>
+        </div>
+      </li>
+      <li *ngFor="let groupPhase of groupPhases" class="list-group-item">
+        <ippon-group-phase-line [groupPhase]="groupPhase" [isAuthorized]="isAdmin" (reloadRequest)="loadGroupPhases()">
+
+        </ippon-group-phase-line>
+      </li>
+    </ul>
+  </div>
+  <div class="card" id="create-group-phase" *ngIf="isAdmin">
+    <div class="row card-body">
+      <div class="col">
+        <ippon-group-phase-form [groupPhase]="newGroupPhase" (reloadRequest)="loadGroupPhases()">
+
+        </ippon-group-phase-form>
+      </div>
+    </div>
+  </div>
+</div>
