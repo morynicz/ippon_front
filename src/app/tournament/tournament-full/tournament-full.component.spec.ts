@@ -19,6 +19,12 @@ import { GroupPhaseLineComponent } from '../../group-phase/group-phase-line/grou
 import { GroupPhaseFormComponent } from '../../group-phase/group-phase-form/group-phase-form.component';
 import { FormsModule } from '@angular/forms';
 import { GroupPhaseManagementComponent } from '../../group-phase/group-phase-management/group-phase-management.component';
+import { CupPhase } from '../../cup-phase/cup-phase';
+import { CupPhaseManagementComponent } from '../../cup-phase/cup-phase-management/cup-phase-management.component';
+import { CupPhaseLineComponent } from '../../cup-phase/cup-phase-line/cup-phase-line.component';
+import { CupPhaseFormComponent } from '../../cup-phase/cup-phase-form/cup-phase-form.component';
+import { CupPhaseServiceSpy } from '../../cup-phase/cup-phase.service.spy';
+import { CupPhaseService } from '../../cup-phase/cup-phase.service';
 
 const tournamentId: number = 9;
 const tournament: Tournament = {
@@ -54,51 +60,77 @@ const groupPhases: GroupPhase[] = [{
   tournament: tournament.id
 }];
 
+const cupPhases: CupPhase[] = [{
+  tournament: tournamentId,
+  id: 98564,
+  fight_length: 5,
+  final_fight_length: 10,
+  name: "cp1"
+},
+{
+  tournament: tournamentId,
+  id: 9284,
+  fight_length: 5,
+  final_fight_length: 10,
+  name: "cp2"
+}];
+
 describe('TournamentFullComponent', () => {
   let component: TournamentFullComponent;
   let fixture: ComponentFixture<TournamentFullComponent>;
   let tournamentService: TournamentServiceSpy;
   let groupPhaseService: GroupPhaseServiceSpy;
+  let cupPhaseService: CupPhaseServiceSpy;
   let html;
 
-  describe("when user is not admin", () => {
-    beforeEach(async(() => {
-      tournamentService = new TournamentServiceSpy();
-      tournamentService.getReturnValues.push({ ...tournament });
-      groupPhaseService = new GroupPhaseServiceSpy();
-      groupPhaseService.getListReturnValues.push(groupPhases);
-      TestBed.configureTestingModule({
-        declarations: [
-          TournamentFullComponent,
-          GroupPhaseLineComponent,
-          NumericConstraintPipe,
-          KendoRankPipe,
-          SexConstraintPipe,
-          GroupPhaseFormComponent,
-          GroupPhaseManagementComponent
-        ],
-        providers: [
-          {
-            provide: TournamentService,
-            useValue: tournamentService
-          },
-          {
-            provide: GroupPhaseService,
-            useValue: groupPhaseService
-          },
-          {
-            provide: ActivatedRoute, useValue: {
-              snapshot: {
-                paramMap: convertToParamMap({ id: tournamentId })
-              }
+  beforeEach(async(() => {
+    tournamentService = new TournamentServiceSpy();
+    //triple dots give copy, so the test cannot modify const
+    tournamentService.getReturnValues.push({ ...tournament });
+    groupPhaseService = new GroupPhaseServiceSpy();
+    groupPhaseService.getListReturnValues.push(groupPhases);
+    cupPhaseService = new CupPhaseServiceSpy();
+    cupPhaseService.getListReturnValues.push(cupPhases);
+    TestBed.configureTestingModule({
+      declarations: [
+        TournamentFullComponent,
+        GroupPhaseLineComponent,
+        NumericConstraintPipe,
+        KendoRankPipe,
+        SexConstraintPipe,
+        GroupPhaseFormComponent,
+        GroupPhaseManagementComponent,
+        CupPhaseLineComponent,
+        CupPhaseFormComponent,
+        CupPhaseManagementComponent
+      ],
+      providers: [
+        {
+          provide: TournamentService,
+          useValue: tournamentService
+        },
+        {
+          provide: GroupPhaseService,
+          useValue: groupPhaseService
+        },
+        {
+          provide: CupPhaseService,
+          useValue: cupPhaseService
+        },
+        {
+          provide: ActivatedRoute, useValue: {
+            snapshot: {
+              paramMap: convertToParamMap({ id: tournamentId })
             }
           }
-        ],
-        imports: [RouterTestingModule, FormsModule],
-      })
-        .compileComponents();
-    }));
+        }
+      ],
+      imports: [RouterTestingModule, FormsModule],
+    })
+      .compileComponents();
+  }));
 
+  describe("when user is not admin", () => {
     beforeEach(() => {
       fixture = TestBed.createComponent(TournamentFullComponent);
       component = fixture.componentInstance;
@@ -179,49 +211,16 @@ describe('TournamentFullComponent', () => {
     it("should not display group phase creation form", () => {
       expect(fixture.debugElement.query(By.css("#create-group-phase")) == null).toBeTruthy();
     });
+
+    it("should display list of cup phases", () => {
+      expect(html.textContent).toContain(cupPhases[0].name);
+      expect(html.textContent).toContain(cupPhases[1].name);
+    });
   });
 
   describe("when user is admin", () => {
-    beforeEach(async(() => {
-      tournamentService = new TournamentServiceSpy();
-      tournamentService.getReturnValues.push(tournament);
-      tournamentService.isAuthorizedReturnValue = true;
-      groupPhaseService = new GroupPhaseServiceSpy();
-      groupPhaseService.getListReturnValues.push(groupPhases);
-      groupPhaseService.isAuthorizedReturnValue = true;
-      TestBed.configureTestingModule({
-        declarations: [
-          TournamentFullComponent,
-          GroupPhaseLineComponent,
-          NumericConstraintPipe,
-          KendoRankPipe,
-          SexConstraintPipe,
-          GroupPhaseFormComponent,
-          GroupPhaseManagementComponent
-        ],
-        providers: [
-          {
-            provide: TournamentService,
-            useValue: tournamentService
-          },
-          {
-            provide: GroupPhaseService,
-            useValue: groupPhaseService
-          },
-          {
-            provide: ActivatedRoute, useValue: {
-              snapshot: {
-                paramMap: convertToParamMap({ id: tournamentId })
-              }
-            }
-          }
-        ],
-        imports: [RouterTestingModule, FormsModule],
-      })
-        .compileComponents();
-    }));
-
     beforeEach(() => {
+      tournamentService.isAuthorizedReturnValue = true;
       fixture = TestBed.createComponent(TournamentFullComponent);
       component = fixture.componentInstance;
       fixture.detectChanges();
