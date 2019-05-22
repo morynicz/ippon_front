@@ -79,6 +79,7 @@ import { DeepPlayerService } from './player/deep-player.service';
 import { CupPhaseLineComponent } from './cup-phase/cup-phase-line/cup-phase-line.component';
 import { CupPhaseFormComponent } from './cup-phase/cup-phase-form/cup-phase-form.component';
 import { GroupPhaseManagementComponent } from './group-phase/group-phase-management/group-phase-management.component';
+import { CupPhaseManagementComponent } from './cup-phase/cup-phase-management/cup-phase-management.component';
 
 
 @NgModule({
@@ -141,7 +142,8 @@ import { GroupPhaseManagementComponent } from './group-phase/group-phase-managem
     UserRegistrationFormComponent,
     CupPhaseLineComponent,
     CupPhaseFormComponent,
-    GroupPhaseManagementComponent
+    GroupPhaseManagementComponent,
+    CupPhaseManagementComponent
   ],
   providers: [
     PlayerService,
