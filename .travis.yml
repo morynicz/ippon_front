@@ -24,9 +24,15 @@ addons:
 before_script:
 # - npm install -g angular-cli
 # - npm install
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
 
 script:
-- node_modules/@angular/cli/bin/ng test --source-map false  --watch false --browsers ChromeHeadless
+- node_modules/@angular/cli/bin/ng test --source-map false  --watch false --browsers ChromeHeadless  --code-coverage
 
 notifications:
   slack: ipponforge:POZIxDUMmeddHxK10Ub78v8j
+
+after_script:
+- ./cc-test-reporter format-coverage -t lcov -o coverage/codeclimate.json coverage/lcov.info  # Format frontend coverage
+- if [[ "$TRAVIS_TEST_RESULT" == 0 ]]; then ./cc-test-reporter upload-coverage; fi  # Upload coverage/codeclimate.json
