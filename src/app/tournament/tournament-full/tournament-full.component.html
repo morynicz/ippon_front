@@ -49,44 +49,7 @@
         </ul>
       </div>
     </div>
-    <div class="card">
-      <h2 class="card-title text-center" i18n>Group phases</h2>
-      <div class="card-body">
-        <ul class="list-group">
-          <li class="list-group-item">
-            <div class="row">
-              <div class="col">
-                <div class="row text-center">
-                  <div class="col" i18n>
-                    Name
-                  </div>
-                  <div class="col" i18n>
-                    Fight length
-                  </div>
-                </div>
-              </div>
-              <div class="col" *ngIf="isAdmin">
-                &nbsp;
-              </div>
-            </div>
-          </li>
-          <li *ngFor="let groupPhase of groupPhases" class="list-group-item">
-            <ippon-group-phase-line [groupPhase]="groupPhase" [isAuthorized]="isAdmin" (reloadRequest)="reloadGroupPhases()">
-
-            </ippon-group-phase-line>
-          </li>
-        </ul>
-      </div>
-      <div class="card" id="create-group-phase" *ngIf="isAdmin">
-        <div class="row card-body">
-          <div class="col">
-            <ippon-group-phase-form [groupPhase]="newGroupPhase" (reloadRequest)="reloadGroupPhases()">
-
-            </ippon-group-phase-form>
-          </div>
-        </div>
-      </div>
-    </div>
+    <ippon-group-phase-management [tournamentId]="tournament.id"></ippon-group-phase-management>
     <section>
       <div class="row">
         <button routerLink="/tournaments" class="btn btn-default col" id="index-club" i18n>
@@ -99,8 +62,8 @@
             Edit
           </button>
           <button (click)="deleteTournament()" class="btn btn-danger col" id="delete-tournament" i18n> Delete </button>
-          <button routerLink="/tournament/{{tournament.id}}/participation" class="btn btn-primary" id="edit-participants"
-            i18n> Registration </button>
+          <button routerLink="/tournament/{{tournament.id}}/participation" class="btn btn-primary"
+            id="edit-participants" i18n> Registration </button>
           <button routerLink="/tournament/{{tournament.id}}/admin" class="btn btn-secondary" id="edit-admins" i18n>
             Admins
           </button>

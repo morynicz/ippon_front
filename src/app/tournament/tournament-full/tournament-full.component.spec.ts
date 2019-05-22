@@ -18,6 +18,7 @@ import { GroupPhaseServiceSpy } from '../../group-phase/group-phase.service.spy'
 import { GroupPhaseLineComponent } from '../../group-phase/group-phase-line/group-phase-line.component';
 import { GroupPhaseFormComponent } from '../../group-phase/group-phase-form/group-phase-form.component';
 import { FormsModule } from '@angular/forms';
+import { GroupPhaseManagementComponent } from '../../group-phase/group-phase-management/group-phase-management.component';
 
 const tournamentId: number = 9;
 const tournament: Tournament = {
@@ -73,7 +74,8 @@ describe('TournamentFullComponent', () => {
           NumericConstraintPipe,
           KendoRankPipe,
           SexConstraintPipe,
-          GroupPhaseFormComponent
+          GroupPhaseFormComponent,
+          GroupPhaseManagementComponent
         ],
         providers: [
           {
@@ -186,6 +188,7 @@ describe('TournamentFullComponent', () => {
       tournamentService.isAuthorizedReturnValue = true;
       groupPhaseService = new GroupPhaseServiceSpy();
       groupPhaseService.getListReturnValues.push(groupPhases);
+      groupPhaseService.isAuthorizedReturnValue = true;
       TestBed.configureTestingModule({
         declarations: [
           TournamentFullComponent,
@@ -193,7 +196,8 @@ describe('TournamentFullComponent', () => {
           NumericConstraintPipe,
           KendoRankPipe,
           SexConstraintPipe,
-          GroupPhaseFormComponent
+          GroupPhaseFormComponent,
+          GroupPhaseManagementComponent
         ],
         providers: [
           {

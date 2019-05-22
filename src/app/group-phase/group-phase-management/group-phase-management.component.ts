@@ -1,18 +1,21 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { GroupPhaseService } from '../../group-phase/group-phase.service';
-import { GroupPhase } from '../../group-phase/group-phase';
+import { GroupPhaseService } from '../group-phase.service';
+import { GroupPhase } from '../group-phase';
+import { TournamentService } from '../../tournament/tournament.service';
 
 @Component({
-  selector: 'ippon-group-management',
-  templateUrl: './group-management.component.html',
-  styleUrls: ['./group-management.component.css']
+  selector: 'ippon-group-phase-management',
+  templateUrl: './group-phase-management.component.html',
+  styleUrls: ['./group-phase-management.component.css']
 })
-export class GroupManagementComponent implements OnInit {
+export class GroupPhaseManagementComponent implements OnInit {
   @Input() tournamentId: number;
   newGroupPhase: GroupPhase;
   groupPhases: GroupPhase[];
   isAdmin: boolean;
-  constructor(private groupPhaseService: GroupPhaseService) { }
+  constructor(
+    private groupPhaseService: GroupPhaseService,
+    private tournamentService: TournamentService) { }
 
   ngOnInit() {
     this.prepareNewGroupPhase();
@@ -32,7 +35,7 @@ export class GroupManagementComponent implements OnInit {
   }
 
   private loadAuthorization(): void {
-    this.groupPhaseService.isAuthorized(this.tournamentId).subscribe(auth => {
+    this.tournamentService.isAuthorized(this.tournamentId).subscribe(auth => {
       this.isAdmin = auth;
     }, () => this.handleError());
   }

@@ -1,18 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GroupManagementComponent } from './group-management.component';
+import { GroupPhaseManagementComponent as GroupPhaseManagementComponent } from './group-phase-management.component';
 import { Tournament } from '../../tournament/tournament';
 import { NumericConstraint } from '../../tournament/numeric-constraint';
 import { Rank } from '../../rank';
 import { SexConstraint } from '../../tournament/sex-constraint';
-import { GroupPhase } from '../../group-phase/group-phase';
-import { GroupPhaseServiceSpy } from '../../group-phase/group-phase.service.spy';
-import { GroupPhaseService } from '../../group-phase/group-phase.service';
+import { GroupPhase } from '../group-phase';
+import { GroupPhaseServiceSpy } from '../group-phase.service.spy';
+import { GroupPhaseService } from '../group-phase.service';
 import { By } from '@angular/platform-browser';
-import { GroupPhaseLineComponent } from '../../group-phase/group-phase-line/group-phase-line.component';
-import { GroupPhaseFormComponent } from '../../group-phase/group-phase-form/group-phase-form.component';
+import { GroupPhaseLineComponent } from '../group-phase-line/group-phase-line.component';
+import { GroupPhaseFormComponent } from '../group-phase-form/group-phase-form.component';
 import { FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
+import { TournamentServiceSpy } from '../../tournament/tournament.service.spy';
+import { TournamentService } from '../../tournament/tournament.service';
 
 const tournamentId: number = 9;
 const tournament: Tournament = {
@@ -47,23 +49,29 @@ const groupPhases: GroupPhase[] = [{
   tournament: tournament.id
 }];
 
-describe('GroupManagementComponent', () => {
-  let component: GroupManagementComponent;
-  let fixture: ComponentFixture<GroupManagementComponent>;
+describe('GroupPhaseManagementComponent', () => {
+  let component: GroupPhaseManagementComponent;
+  let fixture: ComponentFixture<GroupPhaseManagementComponent>;
   let groupPhaseService: GroupPhaseServiceSpy;
+  let tournamentService: TournamentServiceSpy;
   let html;
 
   beforeEach(async(() => {
     groupPhaseService = new GroupPhaseServiceSpy();
     groupPhaseService.getListReturnValues.push(groupPhases);
+    tournamentService = new TournamentServiceSpy();
     TestBed.configureTestingModule({
       declarations: [
-        GroupManagementComponent,
+        GroupPhaseManagementComponent,
         GroupPhaseLineComponent,
         GroupPhaseFormComponent],
       providers: [{
         provide: GroupPhaseService,
         useValue: groupPhaseService
+      },
+      {
+        provide: TournamentService,
+        useValue: tournamentService
       }],
       imports: [FormsModule, RouterTestingModule]
     })
@@ -72,7 +80,7 @@ describe('GroupManagementComponent', () => {
 
   describe("when user is not admin", () => {
     beforeEach(() => {
-      fixture = TestBed.createComponent(GroupManagementComponent);
+      fixture = TestBed.createComponent(GroupPhaseManagementComponent);
       component = fixture.componentInstance;
       component.tournamentId = tournamentId;
       fixture.detectChanges();
@@ -88,6 +96,10 @@ describe('GroupManagementComponent', () => {
       expect(html.textContent).toContain(groupPhases[1].name);
     });
 
+    it("should check if user is admin for this tournament", () => {
+      expect(tournamentService.isAuthorizedValue).toBe(tournamentId);
+    });
+
     it("should not display group phase destruction buttons", () => {
       expect(fixture.debugElement.query(By.css("#delete-group-phase")) == null).toBeTruthy();
     });
@@ -99,8 +111,8 @@ describe('GroupManagementComponent', () => {
 
   describe("when user is admin", () => {
     beforeEach(() => {
-      groupPhaseService.isAuthorizedReturnValue = true;
-      fixture = TestBed.createComponent(GroupManagementComponent);
+      tournamentService.isAuthorizedReturnValue = true;
+      fixture = TestBed.createComponent(GroupPhaseManagementComponent);
       component = fixture.componentInstance;
       component.tournamentId = tournamentId;
       fixture.detectChanges();
