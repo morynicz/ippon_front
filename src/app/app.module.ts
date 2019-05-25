@@ -80,6 +80,7 @@ import { CupPhaseLineComponent } from './cup-phase/cup-phase-line/cup-phase-line
 import { CupPhaseFormComponent } from './cup-phase/cup-phase-form/cup-phase-form.component';
 import { GroupPhaseManagementComponent } from './group-phase/group-phase-management/group-phase-management.component';
 import { CupPhaseManagementComponent } from './cup-phase/cup-phase-management/cup-phase-management.component';
+import { CupFightService } from './cup-fight/cup-fight.service';
 
 
 @NgModule({
@@ -166,7 +167,8 @@ import { CupPhaseManagementComponent } from './cup-phase/cup-phase-management/cu
     GroupFightService,
     GroupPhaseService,
     UserRegistrationService,
-    DeepPlayerService
+    DeepPlayerService,
+    CupFightService
   ],
   bootstrap: [AppComponent]
 })
