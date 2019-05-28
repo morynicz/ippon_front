@@ -18,6 +18,7 @@ import { CupPhase } from '../cup-phase';
 import { CupPhaseService } from '../cup-phase.service';
 import { By } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
+import { CupFightTileComponent } from '../../cup-fight/cup-fight-tile/cup-fight-tile.component';
 
 class TeamFightServiceSpyMapped extends TeamFightServiceSpy {
   getReturnValuesMap: Map<number, TeamFight> = new Map<number, TeamFight>();
@@ -66,7 +67,10 @@ describe('CupPhaseFullComponent', () => {
     cupFightService = new CupFightServiceSpyMultiDeletion();
     cupPhaseService = new CupPhaseServiceSpy();
     TestBed.configureTestingModule({
-      declarations: [CupPhaseFullComponent],
+      declarations: [
+        CupPhaseFullComponent,
+        CupFightTileComponent
+      ],
       providers: [
         { provide: TeamService, useValue: teamService },
         { provide: TeamFightService, useValue: teamFightService },

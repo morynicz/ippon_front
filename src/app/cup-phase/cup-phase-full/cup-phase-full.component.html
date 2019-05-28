@@ -1,7 +1,7 @@
 <div>
   <ul>
-    <li *ngFor="let team of teams">
-      {{team.name}}
+    <li *ngFor="let cupFight of cupFights">
+      <ippon-cup-fight-tile [cupFight]="cupFight"></ippon-cup-fight-tile>
     </li>
 
   </ul>

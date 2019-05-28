@@ -24,7 +24,6 @@ export class CupPhaseFullComponent implements OnInit {
   cupPhase: CupPhase;
   cupFights: CupFight[] = [];
   teamFights: TeamFight[] = [];
-  teams: Team[] = [];
   availableTeams: Team[] = [];
   teamSelections: TeamSelection[] = [];
   constructor(private route: ActivatedRoute,
@@ -38,23 +37,13 @@ export class CupPhaseFullComponent implements OnInit {
     this.cupPhaseService.get(id).subscribe(resp => {
       this.cupPhase = resp;
       this.reloadTeams();
+      this.loadCupFights();
     });
-    this.loadCupFights(id);
   }
 
-  private loadCupFights(id: number) {
-    this.cupFightService.getList(id).subscribe(resp => {
+  private loadCupFights() {
+    this.cupFightService.getList(this.cupPhase.id).subscribe(resp => {
       this.cupFights = resp;
-      if (this.cupFights.length > 0) {
-        this.cupFights.forEach((cupFight: CupFight, idx: number, arr: CupFight[]) => {
-          this.teamFightService.get(cupFight.team_fight).subscribe(resp => {
-            let teamFight: TeamFight = resp;
-            this.teamFights.push(teamFight);
-            this.teamService.get(teamFight.aka_team).subscribe(resp => this.teams.push(resp));
-            this.teamService.get(teamFight.shiro_team).subscribe(resp => this.teams.push(resp));
-          });
-        });
-      }
     });
   }
 
@@ -89,7 +78,7 @@ export class CupPhaseFullComponent implements OnInit {
         cup_phase: this.cupPhase.id
       }).subscribe(resp => {
         this.reloadTeams();
-        this.loadCupFights(this.cupPhase.id);
+        this.loadCupFights();
       });
     });
   }
