@@ -1,10 +1,19 @@
-<p>
-  cup-phase-full works!
-</p>
 <div>
   <ul>
     <li *ngFor="let team of teams">
       {{team.name}}
     </li>
+
   </ul>
+  <ul>
+    <li *ngFor="let teamSelection of teamSelections">
+      <div>
+        {{teamSelection.team.name}}
+        <input type="checkbox" id="select-team-{{teamSelection.team.id}}" name="select-team-{{teamSelection.team.id}}"
+          [(ngModel)]="teamSelection.isSelected" />
+      </div>
+    </li>
+  </ul>
+  <button class="col btn btn-primary" id="generate-cup" name="generate-cup" (click)="generateCup()">Generate</button>
+  <button class="col btn btn-danger" id="delete-cup" name="delete-cup" (click)="deleteCup()">Clear</button>
 </div>
