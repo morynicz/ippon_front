@@ -8,6 +8,8 @@ import { Team } from '../../team/team';
 import { TeamService } from '../../team/team.service';
 import { TeamFight } from '../../team-fight/team-fight';
 import { TeamFightService } from '../../team-fight/team-fight.service';
+import { mergeMap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 class TeamSelection {
   constructor(team: Team) { this.team = team; }
@@ -42,51 +44,50 @@ export class CupPhaseFullComponent implements OnInit {
   }
 
   private loadCupFights() {
-    this.cupFightService.getList(this.cupPhase.id).subscribe(resp => {
+    this.cupFightService.getList(this.cupPhase.id).subscribe((resp: CupFight[]) => {
       this.cupFights = resp;
-    });
+    }, this.handleError);
   }
 
   reloadTeams(): void {
     this.teamService.getList(this.cupPhase.tournament).subscribe(
-      resp => {
+      (resp: Team[]) => {
         this.availableTeams = resp;
         this.availableTeams.forEach(team => {
           this.teamSelections.push(new TeamSelection(team));
         });
       },
-      () => this.handleError());
+      this.handleError);
   }
 
   generateCup(): void {
     let selectedTeams: Team[]
       = this.teamSelections.filter(selection => selection.isSelected)
         .map(selection => selection.team);
-    let teamFight: TeamFight;
     this.teamFightService.add({
       aka_team: selectedTeams[0].id,
       shiro_team: selectedTeams[1].id,
       tournament: this.cupPhase.tournament,
       id: 0
-    }).subscribe(resp => {
-      teamFight = resp;
-      this.cupFightService.add({
+    }).pipe(mergeMap<TeamFight, Observable<CupFight>>((resp: TeamFight) => {
+      let teamFight: TeamFight = resp;
+      return this.cupFightService.add({
         id: 0,
         team_fight: teamFight.id,
         previous_aka_fight: null,
         previous_shiro_fight: null,
         cup_phase: this.cupPhase.id
-      }).subscribe(resp => {
-        this.reloadTeams();
-        this.loadCupFights();
       });
-    });
+    })).subscribe(resp => {
+      this.reloadTeams();
+      this.loadCupFights();
+    }, this.handleError);
   }
 
   deleteCup(): void {
     this.cupFights.forEach(cupFight => this.cupFightService.delete(cupFight).subscribe());
   }
-  handleError(): void {
-
+  handleError(arg): void {
+    console.log(arg);
   }
 }
