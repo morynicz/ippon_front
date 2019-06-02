@@ -9,7 +9,8 @@ import { TeamService } from '../../team/team.service';
 import { TeamFight } from '../../team-fight/team-fight';
 import { TeamFightService } from '../../team-fight/team-fight.service';
 import { mergeMap } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { Observable, forkJoin } from 'rxjs';
+import { JsonPipe } from '@angular/common';
 
 class TeamSelection {
   constructor(team: Team) { this.team = team; }
@@ -63,6 +64,7 @@ export class CupPhaseFullComponent implements OnInit {
   }
 
   generateCup(): void {
+    console.log("genCup");
     let selectedTeamPairs: number[][]
       = this.teamSelections.concat()
         .map((teamId: TeamId) => teamId.id)
@@ -71,24 +73,44 @@ export class CupPhaseFullComponent implements OnInit {
             result.push(array.slice(index, index + 2));
           return result;
         }, []);
-    this.teamFightService.add({
-      aka_team: selectedTeamPairs[0][0],
-      shiro_team: selectedTeamPairs[0][1],
-      tournament: this.cupPhase.tournament,
-      id: 0
-    }).pipe(mergeMap<TeamFight, Observable<CupFight>>((resp: TeamFight) => {
-      let teamFight: TeamFight = resp;
-      return this.cupFightService.add({
-        id: 0,
-        team_fight: teamFight.id,
-        previous_aka_fight: null,
-        previous_shiro_fight: null,
-        cup_phase: this.cupPhase.id
-      });
-    })).subscribe(resp => {
-      this.reloadTeams();
-      this.loadCupFights();
-    }, this.handleError);
+    forkJoin(selectedTeamPairs.map((item: number[]) => {
+      return this.teamFightService.add({
+        aka_team: item[0],
+        shiro_team: item[1],
+        tournament: this.cupPhase.tournament,
+        id: 0
+      }).pipe(mergeMap<TeamFight, Observable<CupFight>>((resp: TeamFight) => {
+        console.log("in map");
+        let teamFight: TeamFight = resp;
+        return this.cupFightService.add({
+          id: 0,
+          team_fight: teamFight.id,
+          previous_aka_fight: null,
+          previous_shiro_fight: null,
+          cup_phase: this.cupPhase.id
+        });
+      }));
+    })).subscribe((resp: CupFight[]) => {
+      if (resp.length > 1) {
+        let reduced: CupFight[][] = resp.reduce((result, value, index, array) => {
+          if (index % 2 === 0)
+            result.push(array.slice(index, index + 2));
+          return result;
+        }, []);
+        forkJoin(reduced.map((cupFightPair: CupFight[]) => {
+          return this.cupFightService.add({
+            id: 0,
+            team_fight: null,
+            previous_aka_fight: cupFightPair[0].id,
+            previous_shiro_fight: cupFightPair[1].id,
+            cup_phase: this.cupPhase.id
+          });
+        }))
+      } else {
+        this.reloadTeams();
+        this.loadCupFights();
+      }
+    });
   }
 
   onNumOfTeamsChange(): void {
