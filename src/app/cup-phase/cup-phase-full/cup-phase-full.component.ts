@@ -10,7 +10,6 @@ import { TeamFight } from '../../team-fight/team-fight';
 import { TeamFightService } from '../../team-fight/team-fight.service';
 import { mergeMap } from 'rxjs/operators';
 import { Observable, forkJoin } from 'rxjs';
-import { JsonPipe } from '@angular/common';
 
 class TeamSelection {
   constructor(team: Team) { this.team = team; }
@@ -64,7 +63,6 @@ export class CupPhaseFullComponent implements OnInit {
   }
 
   generateCup(): void {
-    console.log("genCup");
     let selectedTeamPairs: number[][]
       = this.teamSelections.concat()
         .map((teamId: TeamId) => teamId.id)
@@ -80,7 +78,6 @@ export class CupPhaseFullComponent implements OnInit {
         tournament: this.cupPhase.tournament,
         id: 0
       }).pipe(mergeMap<TeamFight, Observable<CupFight>>((resp: TeamFight) => {
-        console.log("in map");
         let teamFight: TeamFight = resp;
         return this.cupFightService.add({
           id: 0,
@@ -105,7 +102,10 @@ export class CupPhaseFullComponent implements OnInit {
             previous_shiro_fight: cupFightPair[1].id,
             cup_phase: this.cupPhase.id
           });
-        }))
+        })).subscribe(resp => {
+          this.reloadTeams();
+          this.loadCupFights();
+        });
       } else {
         this.reloadTeams();
         this.loadCupFights();

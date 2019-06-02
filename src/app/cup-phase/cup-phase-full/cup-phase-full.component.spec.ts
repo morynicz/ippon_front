@@ -385,24 +385,21 @@ describe('CupCreation', () => {
         {
           id: 0,
           cup_phase: cupPhaseId,
-          previous_aka_fight: 1001,
-          previous_shiro_fight: 1002,
+          previous_aka_fight: 1,
+          previous_shiro_fight: 2,
           team_fight: null
         }];
-      let returnedCupFightIds: number[] = [1001, 1002, 1003];
+      let returnedCupFightIds: number[] = [1, 2, 3];
 
       beforeEach(() => {
         teamFightService.addReturnIdValues.push(expectedCupFights[0].team_fight, expectedCupFights[1].team_fight);
-        cupFightService.addReturnIdValues = returnedCupFightIds;
+        cupFightService.addReturnIdValues.push(...returnedCupFightIds);
         teamService.getListReturnValues.push([]);
-
 
         teamService.getValues = [];
         teamFightService.getValues = [];
 
         fixture.detectChanges();
-
-        console.log(cupFightService.resources);
 
         numberOfTeamsInput = fixture.debugElement.query(By.css("#cup-phase-number-of-teams")).nativeElement;
         numberOfTeamsInput.value = 4;
@@ -436,15 +433,15 @@ describe('CupCreation', () => {
         expect(cupFightService.addValues).toContain(expectedCupFights[2]);
       });
 
-      xit("reloads to show new fight -- defeated by stupid fixture not rendering on time", async(() => {
+      it("reloads to show new fight -- defeated by stupid fixture not rendering on time", async(() => {
         fixture.whenStable().then(() => {
           fixture.detectChanges();
-          // Fixture for some reason does not trigger rendering cup fights in template but component has them
-          // expect(html).toContain(teams[3].name);
-          // expect(html).toContain(teams[4].name);
+          expect(teamService.getValues).toContain(teams[0].id);
+          expect(teamService.getValues).toContain(teams[1].id);
+          expect(teamService.getValues).toContain(teams[2].id);
           expect(teamService.getValues).toContain(teams[3].id);
-          expect(teamService.getValues).toContain(teams[4].id);
-          expect(teamFightService.getValues).toContain(teamFightId);
+          expect(teamFightService.getValues).toContain(expectedCupFights[0].team_fight);
+          expect(teamFightService.getValues).toContain(expectedCupFights[1].team_fight);
         });
       }));
     });
