@@ -13,8 +13,12 @@ import { Observable } from 'rxjs';
 
 class TeamSelection {
   constructor(team: Team) { this.team = team; }
-  isSelected: boolean = false;
+  position: number = 0;
   team: Team;
+}
+
+class TeamId {
+  id: number = 0;
 }
 
 @Component({
@@ -27,7 +31,8 @@ export class CupPhaseFullComponent implements OnInit {
   cupFights: CupFight[] = [];
   teamFights: TeamFight[] = [];
   availableTeams: Team[] = [];
-  teamSelections: TeamSelection[] = [];
+  teamSelections: TeamId[] = [];
+  numberOfTeams: number = 0;
   constructor(private route: ActivatedRoute,
     private cupPhaseService: CupPhaseService,
     private cupFightService: CupFightService,
@@ -53,20 +58,22 @@ export class CupPhaseFullComponent implements OnInit {
     this.teamService.getList(this.cupPhase.tournament).subscribe(
       (resp: Team[]) => {
         this.availableTeams = resp;
-        this.availableTeams.forEach(team => {
-          this.teamSelections.push(new TeamSelection(team));
-        });
       },
       this.handleError);
   }
 
   generateCup(): void {
-    let selectedTeams: Team[]
-      = this.teamSelections.filter(selection => selection.isSelected)
-        .map(selection => selection.team);
+    let selectedTeamPairs: number[][]
+      = this.teamSelections.concat()
+        .map((teamId: TeamId) => teamId.id)
+        .reduce((result, value, index, array) => {
+          if (index % 2 === 0)
+            result.push(array.slice(index, index + 2));
+          return result;
+        }, []);
     this.teamFightService.add({
-      aka_team: selectedTeams[0].id,
-      shiro_team: selectedTeams[1].id,
+      aka_team: selectedTeamPairs[0][0],
+      shiro_team: selectedTeamPairs[0][1],
       tournament: this.cupPhase.tournament,
       id: 0
     }).pipe(mergeMap<TeamFight, Observable<CupFight>>((resp: TeamFight) => {
@@ -82,6 +89,12 @@ export class CupPhaseFullComponent implements OnInit {
       this.reloadTeams();
       this.loadCupFights();
     }, this.handleError);
+  }
+
+  onNumOfTeamsChange(): void {
+    this.teamSelections = new Array<TeamId>();
+    for (let i = 0; i < this.numberOfTeams; ++i)
+      this.teamSelections.push(new TeamId());
   }
 
   deleteCup(): void {
