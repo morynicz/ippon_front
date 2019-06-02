@@ -19,11 +19,13 @@ export class CupFightTileComponent implements OnInit {
     private teamService: TeamService) { }
 
   ngOnInit() {
-    this.teamFightService.get(this.cupFight.team_fight).subscribe(resp => {
-      this.teamFight = resp;
-      this.teamService.get(this.teamFight.aka_team).subscribe(resp => this.aka_team = resp);
-      this.teamService.get(this.teamFight.shiro_team).subscribe(resp => this.shiro_team = resp);
-    });
+    if (this.cupFight.team_fight) {
+      this.teamFightService.get(this.cupFight.team_fight).subscribe((resp: TeamFight) => {
+        this.teamFight = resp;
+        this.teamService.get(this.teamFight.aka_team).subscribe(resp => this.aka_team = resp);
+        this.teamService.get(this.teamFight.shiro_team).subscribe(resp => this.shiro_team = resp);
+      });
+    }
   }
 
 }

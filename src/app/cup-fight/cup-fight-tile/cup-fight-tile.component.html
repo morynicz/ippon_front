@@ -1,4 +1,6 @@
 <div class="col">
-  <div>{{aka_team.name}}</div>
-  <div>{{shiro_team.name}}</div>
+  <div *ngIf="cupFight.team_fight">
+    <div>{{aka_team?.name}}</div>
+    <div>{{shiro_team?.name}}</div>
+  </div>
 </div>

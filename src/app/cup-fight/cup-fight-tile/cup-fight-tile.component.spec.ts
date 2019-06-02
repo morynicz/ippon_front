@@ -13,13 +13,6 @@ const cupFightId: number = 2754;
 const cupPhaseId: number = 478;
 const teamFightId: number = 3486;
 const tournamentId: number = 423;
-const cupFight: CupFight = {
-  id: cupFightId,
-  cup_phase: cupPhaseId,
-  previous_aka_fight: null,
-  previous_shiro_fight: null,
-  team_fight: teamFightId
-}
 
 const teams: Team[] = [
   {
@@ -69,13 +62,32 @@ describe('CupFightTileComponent', () => {
     teamFightService.getReturnValues.push(teamFight);
     teamService.getReturnValues.push(teams[0]);
     teamService.getReturnValues.push(teams[1]);
-    component.cupFight = cupFight;
-    fixture.detectChanges();
-    html = fixture.debugElement.nativeElement.textContent;
   });
 
-  it('shows names teams taking part in the fight', () => {
+  it('shows names of teams taking part in the fight', () => {
+    component.cupFight = {
+      id: cupFightId,
+      cup_phase: cupPhaseId,
+      previous_aka_fight: null,
+      previous_shiro_fight: null,
+      team_fight: teamFightId
+    };
+    fixture.detectChanges();
+    html = fixture.debugElement.nativeElement.textContent;
     expect(html).toContain(teams[0].name);
     expect(html).toContain(teams[1].name);
+  });
+
+  it('shows nothing if there is no teamFight assigned to cupFight', () => {
+    component.cupFight = {
+      id: cupFightId,
+      cup_phase: cupPhaseId,
+      previous_aka_fight: null,
+      previous_shiro_fight: null,
+      team_fight: null
+    };
+    fixture.detectChanges();
+    html = fixture.debugElement.nativeElement.textContent;
+    expect(teamFightService.getValues.length).toBe(0);
   });
 });
