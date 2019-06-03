@@ -5,18 +5,20 @@
     </li>
 
   </ul>
-  <ul>
-    <li *ngFor="let teamSelection of teamSelections; let i = index">
-      <select id="cup-phase-team-position-{{i+1}}" name="cup-phase-team-position-{{i+i}}"
-        [(ngModel)]="teamSelections[i].id">
-        <option [ngValue]=0 i18n>Blank</option>
-        <option *ngFor="let team of availableTeams" [ngValue]="team.id">{{team.name}}</option>
-      </select>
-    </li>
-  </ul>
+  <div *ngIf="isAuthorized">
+    <ul>
+      <li *ngFor="let teamSelection of teamSelections; let i = index">
+        <select id="cup-phase-team-position-{{i+1}}" name="cup-phase-team-position-{{i+i}}"
+          [(ngModel)]="teamSelections[i].id">
+          <option [ngValue]=0 i18n>Blank</option>
+          <option *ngFor="let team of availableTeams" [ngValue]="team.id">{{team.name}}</option>
+        </select>
+      </li>
+    </ul>
 
-  <input type="number" id="cup-phase-number-of-teams" name="cup-phase-number-of-teams" [(ngModel)]="numberOfTeams"
-    (ngModelChange)="onNumOfTeamsChange()" />
-  <button class="col btn btn-primary" id="generate-cup" name="generate-cup" (click)="generateCup()">Generate</button>
-  <button class="col btn btn-danger" id="delete-cup" name="delete-cup" (click)="deleteCup()">Clear</button>
+    <input type="number" id="cup-phase-number-of-teams" name="cup-phase-number-of-teams" [(ngModel)]="numberOfTeams"
+      (ngModelChange)="onNumOfTeamsChange()" />
+    <button class="col btn btn-primary" id="generate-cup" name="generate-cup" (click)="generateCup()">Generate</button>
+    <button class="col btn btn-danger" id="delete-cup" name="delete-cup" (click)="deleteCup()">Clear</button>
+  </div>
 </div>

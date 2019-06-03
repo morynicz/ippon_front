@@ -33,6 +33,7 @@ export class CupPhaseFullComponent implements OnInit {
   availableTeams: Team[] = [];
   teamSelections: TeamId[] = [];
   numberOfTeams: number = 0;
+  isAuthorized: boolean = false;
   constructor(private route: ActivatedRoute,
     private cupPhaseService: CupPhaseService,
     private cupFightService: CupFightService,
@@ -46,6 +47,7 @@ export class CupPhaseFullComponent implements OnInit {
       this.reloadTeams();
       this.loadCupFights();
     });
+    this.cupPhaseService.isAuthorized(id).subscribe((resp: boolean) => this.isAuthorized = resp);
   }
 
   private loadCupFights() {

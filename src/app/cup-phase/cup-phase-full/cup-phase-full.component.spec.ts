@@ -122,10 +122,11 @@ describe('CupPhaseFullComponent', () => {
     });
   });
 
-  describe("when there are 32 competitors", () => {
+  describe("when there are 32 competitors and user is authorized", () => {
     beforeEach(() => {
       teamService.getListReturnValues.push([]);
       cupPhaseService.getReturnValues.push(cupPhase);
+      cupPhaseService.isAuthorizedReturnValue = true;
       cupFightService.getListReturnValues.push(cupFights);
       teams.forEach(team => {
         teamService.getReturnValuesMap.set(team.id, team);
@@ -159,10 +160,31 @@ describe('CupPhaseFullComponent', () => {
         expect(cupFightService.getListValue).toEqual([cupPhaseId]);
       });
     });
-
   });
 
+  describe("when user is not authorized", () => {
+    beforeEach(() => {
+      teamService.getListReturnValues.push([]);
+      cupPhaseService.getReturnValues.push(cupPhase);
+      cupPhaseService.isAuthorizedReturnValue = false;
+      cupFightService.getListReturnValues.push(cupFights);
+      teams.forEach(team => {
+        teamService.getReturnValuesMap.set(team.id, team);
+      });
+      teamFights.forEach(teamFight => {
+        teamFightService.getReturnValuesMap.set(teamFight.id, teamFight);
+      });
+      fixture = TestBed.createComponent(CupPhaseFullComponent);
+      fixture.detectChanges();
+      html = fixture.debugElement.nativeElement.textContent;
+    });
 
+    it("does not show cup creation/deletion controls", () => {
+      expect(fixture.debugElement.query(By.css("#delete-cup"))).toBeFalsy();
+      expect(fixture.debugElement.query(By.css("#cup-phase-number-of-teams"))).toBeFalsy();
+      expect(fixture.debugElement.query(By.css("#generate-cup"))).toBeFalsy();
+    });
+  });
 });
 
 let pipe = new JsonPipe();
@@ -246,6 +268,7 @@ describe('CupCreation', () => {
 
   describe("when cup phase has no fights yet", () => {
     beforeEach(() => {
+      cupPhaseService.isAuthorizedReturnValue = true;
       cupPhaseService.getReturnValues.push(cupPhase);
       teamService.getReturnValuesMap.set(teams[0].id, teams[0]);
       teamService.getReturnValuesMap.set(teams[1].id, teams[1]);
@@ -262,6 +285,7 @@ describe('CupCreation', () => {
     describe("when selecting number of teams in cup phase", () => {
       let numberOfTeamsInput;
       beforeEach(() => {
+        fixture.detectChanges();
         numberOfTeamsInput = fixture.debugElement.query(By.css("#cup-phase-number-of-teams")).nativeElement;
         fixture.detectChanges();
       });
