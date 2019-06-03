@@ -282,6 +282,11 @@ describe('CupCreation', () => {
       html = fixture.debugElement.nativeElement.textContent;
     });
 
+    it("does not show delete cup button", () => {
+      fixture.detectChanges();
+      expect(fixture.debugElement.query(By.css("#delete-cup"))).toBeFalsy();
+    });
+
     describe("when selecting number of teams in cup phase", () => {
       let numberOfTeamsInput;
       beforeEach(() => {
@@ -368,6 +373,11 @@ describe('CupCreation', () => {
           expect(teamFightService.getValues).toContain(teamFightId);
         });
       }));
+
+      it("does not show generate cup button", () => {
+        fixture.detectChanges();
+        expect(fixture.debugElement.query(By.css("#generate-cup"))).toBeFalsy();
+      });
     });
 
     describe("when eight teams are selected and 'generate cup' button is clicked", () => {
