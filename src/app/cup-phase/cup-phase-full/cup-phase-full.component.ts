@@ -119,7 +119,7 @@ export class CupPhaseFullComponent implements OnInit {
   }
 
   deleteCup(): void {
-    this.cupFights.forEach(cupFight => this.cupFightService.delete(cupFight).subscribe());
+    forkJoin(this.cupFights.map((cupFight: CupFight) => this.cupFightService.delete(cupFight))).subscribe(() => this.loadCupFights());
   }
   handleError(arg): void {
     console.log(arg);

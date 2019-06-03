@@ -146,11 +146,17 @@ describe('CupPhaseFullComponent', () => {
     describe("when delete cup button is clicked", () => {
       let del;
       beforeEach(() => {
+        cupFightService.getListReturnValues.push([]);
+        cupFightService.getListValue = [];
         del = fixture.debugElement.query(By.css("#delete-cup")).nativeElement;
         del.click();
       });
       it("deletes all cup fights of this cup phase", () => {
         expect(new Set(cupFightService.deleteValues)).toEqual(new Set(cupFights));
+      });
+      it("reloads the cup fights", () => {
+        fixture.detectChanges();
+        expect(cupFightService.getListValue).toEqual([cupPhaseId]);
       });
     });
 
