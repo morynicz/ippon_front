@@ -340,9 +340,8 @@ describe('CupCreation', () => {
       }));
     });
 
-    describe("when four teams are selected and 'generate cup' button is clicked", () => {
-      let posInput1, posInput2, posInput3, posInput4, generateButton, numberOfTeamsInput;
-      const teamFightId = 5;
+    describe("when eight teams are selected and 'generate cup' button is clicked", () => {
+      let generateButton, numberOfTeamsInput;
       let expectedTeamFights: TeamFight[] = [{
         id: 0,
         aka_team: teams[0].id,
@@ -354,17 +353,17 @@ describe('CupCreation', () => {
         aka_team: teams[1].id,
         shiro_team: teams[3].id,
         tournament: tournamentId
-      }];
-      let returnedTeamFights: TeamFight[] = [{
-        id: 101,
-        aka_team: teams[0].id,
-        shiro_team: teams[2].id,
+      },
+      {
+        id: 0,
+        aka_team: teams[4].id,
+        shiro_team: teams[5].id,
         tournament: tournamentId
       },
       {
-        id: 102,
-        aka_team: teams[1].id,
-        shiro_team: teams[3].id,
+        id: 0,
+        aka_team: teams[6].id,
+        shiro_team: teams[7].id,
         tournament: tournamentId
       }];
       let expectedCupFights: CupFight[] = [
@@ -385,14 +384,46 @@ describe('CupCreation', () => {
         {
           id: 0,
           cup_phase: cupPhaseId,
+          previous_aka_fight: null,
+          previous_shiro_fight: null,
+          team_fight: 103
+        },
+        {
+          id: 0,
+          cup_phase: cupPhaseId,
+          previous_aka_fight: null,
+          previous_shiro_fight: null,
+          team_fight: 104
+        },
+        {
+          id: 0,
+          cup_phase: cupPhaseId,
           previous_aka_fight: 1,
           previous_shiro_fight: 2,
           team_fight: null
+        },
+        {
+          id: 0,
+          cup_phase: cupPhaseId,
+          previous_aka_fight: 3,
+          previous_shiro_fight: 4,
+          team_fight: null
+        },
+        {
+          id: 0,
+          cup_phase: cupPhaseId,
+          previous_aka_fight: 5,
+          previous_shiro_fight: 6,
+          team_fight: null
         }];
-      let returnedCupFightIds: number[] = [1, 2, 3];
+      let returnedCupFightIds: number[] = [1, 2, 3, 4, 5, 6, 7];
 
       beforeEach(() => {
-        teamFightService.addReturnIdValues.push(expectedCupFights[0].team_fight, expectedCupFights[1].team_fight);
+        teamFightService.addReturnIdValues.push(
+          expectedCupFights[0].team_fight,
+          expectedCupFights[1].team_fight,
+          expectedCupFights[2].team_fight,
+          expectedCupFights[3].team_fight);
         cupFightService.addReturnIdValues.push(...returnedCupFightIds);
         teamService.getListReturnValues.push([]);
 
@@ -402,36 +433,39 @@ describe('CupCreation', () => {
         fixture.detectChanges();
 
         numberOfTeamsInput = fixture.debugElement.query(By.css("#cup-phase-number-of-teams")).nativeElement;
-        numberOfTeamsInput.value = 4;
+        numberOfTeamsInput.value = 8;
         numberOfTeamsInput.dispatchEvent(new Event('input'));
         fixture.detectChanges();
-        posInput1 = fixture.debugElement.query(By.css("#cup-phase-team-position-1")).nativeElement;
-        posInput1.value = posInput1.options[1].value;
-        posInput1.dispatchEvent(new Event('change'));
-        fixture.detectChanges();
-        posInput2 = fixture.debugElement.query(By.css("#cup-phase-team-position-2")).nativeElement;
-        posInput2.value = posInput1.options[3].value;
-        posInput2.dispatchEvent(new Event('change'));
-        posInput3 = fixture.debugElement.query(By.css("#cup-phase-team-position-3")).nativeElement;
-        posInput3.value = posInput1.options[2].value;
-        posInput3.dispatchEvent(new Event('change'));
-        posInput4 = fixture.debugElement.query(By.css("#cup-phase-team-position-4")).nativeElement;
-        posInput4.value = posInput1.options[4].value;
-        posInput4.dispatchEvent(new Event('change'));
+        setTeamOnCupPosition(fixture, 1, 1);
+        setTeamOnCupPosition(fixture, 2, 3);
+        setTeamOnCupPosition(fixture, 3, 2);
+        setTeamOnCupPosition(fixture, 4, 4);
+        setTeamOnCupPosition(fixture, 5, 5);
+        setTeamOnCupPosition(fixture, 6, 6);
+        setTeamOnCupPosition(fixture, 7, 7);
+        setTeamOnCupPosition(fixture, 8, 8);
 
         fixture.detectChanges();
         generateButton = fixture.debugElement.query(By.css("#generate-cup")).nativeElement;
         generateButton.click();
       });
 
-      it("creates cup fights with selected teams", () => {
+      it("creates cup fights with selected teams", async(() => {
         fixture.detectChanges();
-        expect(teamFightService.addValues).toContain(expectedTeamFights[0], "first tf missing");
-        expect(teamFightService.addValues).toContain(expectedTeamFights[1], "second tf missing");
-        expect(cupFightService.addValues).toContain(expectedCupFights[0]);
-        expect(cupFightService.addValues).toContain(expectedCupFights[1]);
-        expect(cupFightService.addValues).toContain(expectedCupFights[2]);
-      });
+        fixture.whenStable().then(() => {
+          expect(teamFightService.addValues).toContain(expectedTeamFights[0], "first tf missing");
+          expect(teamFightService.addValues).toContain(expectedTeamFights[1], "second tf missing");
+          expect(teamFightService.addValues).toContain(expectedTeamFights[2], "third tf missing");
+          expect(teamFightService.addValues).toContain(expectedTeamFights[3], "fourth tf missing");
+          expect(cupFightService.addValues).toContain(expectedCupFights[0]);
+          expect(cupFightService.addValues).toContain(expectedCupFights[1]);
+          expect(cupFightService.addValues).toContain(expectedCupFights[2]);
+          expect(cupFightService.addValues).toContain(expectedCupFights[3]);
+          expect(cupFightService.addValues).toContain(expectedCupFights[4]);
+          expect(cupFightService.addValues).toContain(expectedCupFights[5]);
+          expect(cupFightService.addValues).toContain(expectedCupFights[6]);
+        });
+      }));
 
       it("reloads to show new fight -- defeated by stupid fixture not rendering on time", async(() => {
         fixture.whenStable().then(() => {
@@ -442,8 +476,16 @@ describe('CupCreation', () => {
           expect(teamService.getValues).toContain(teams[3].id);
           expect(teamFightService.getValues).toContain(expectedCupFights[0].team_fight);
           expect(teamFightService.getValues).toContain(expectedCupFights[1].team_fight);
+          expect(teamFightService.getValues).toContain(expectedCupFights[2].team_fight);
+          expect(teamFightService.getValues).toContain(expectedCupFights[3].team_fight);
         });
       }));
     });
   });
 });
+
+function setTeamOnCupPosition(fixture: ComponentFixture<CupPhaseFullComponent>, position: number, teamIndex: number) {
+  let input = fixture.debugElement.query(By.css("#cup-phase-team-position-" + position)).nativeElement;
+  input.value = input.options[teamIndex].value;
+  input.dispatchEvent(new Event('change'));
+}

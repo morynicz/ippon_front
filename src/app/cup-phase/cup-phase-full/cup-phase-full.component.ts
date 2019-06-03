@@ -87,30 +87,29 @@ export class CupPhaseFullComponent implements OnInit {
           cup_phase: this.cupPhase.id
         });
       }));
-    })).subscribe((resp: CupFight[]) => {
-      if (resp.length > 1) {
-        let reduced: CupFight[][] = resp.reduce((result, value, index, array) => {
-          if (index % 2 === 0)
-            result.push(array.slice(index, index + 2));
-          return result;
-        }, []);
-        forkJoin(reduced.map((cupFightPair: CupFight[]) => {
-          return this.cupFightService.add({
-            id: 0,
-            team_fight: null,
-            previous_aka_fight: cupFightPair[0].id,
-            previous_shiro_fight: cupFightPair[1].id,
-            cup_phase: this.cupPhase.id
-          });
-        })).subscribe(resp => {
-          this.reloadTeams();
-          this.loadCupFights();
+    })).subscribe((result: CupFight[]) => this.buildNextTreeLevel(result, this.cupFightService));
+  }
+
+  buildNextTreeLevel(cupFights: CupFight[], cupFightService: CupFightService): void {
+    if (cupFights.length > 1) {
+      let reduced: CupFight[][] = cupFights.reduce((result, value, index, array) => {
+        if (index % 2 === 0)
+          result.push(array.slice(index, index + 2));
+        return result;
+      }, []);
+      forkJoin(reduced.map((cupFightPair: CupFight[]) => {
+        return cupFightService.add({
+          id: 0,
+          team_fight: null,
+          previous_aka_fight: cupFightPair[0].id,
+          previous_shiro_fight: cupFightPair[1].id,
+          cup_phase: this.cupPhase.id
         });
-      } else {
-        this.reloadTeams();
-        this.loadCupFights();
-      }
-    });
+      })).subscribe((result: CupFight[]) => this.buildNextTreeLevel(result, this.cupFightService));
+    } else {
+      this.reloadTeams();
+      this.loadCupFights();
+    }
   }
 
   onNumOfTeamsChange(): void {
