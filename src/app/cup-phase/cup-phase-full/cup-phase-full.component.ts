@@ -34,6 +34,8 @@ export class CupPhaseFullComponent implements OnInit {
   teamSelections: TeamId[] = [];
   numberOfTeams: number = 0;
   isAuthorized: boolean = false;
+  cup: any[] = [];
+  final: CupFight;
   constructor(private route: ActivatedRoute,
     private cupPhaseService: CupPhaseService,
     private cupFightService: CupFightService,
@@ -53,7 +55,32 @@ export class CupPhaseFullComponent implements OnInit {
   private loadCupFights() {
     this.cupFightService.getList(this.cupPhase.id).subscribe((resp: CupFight[]) => {
       this.cupFights = resp;
+      this.buildCup();
     }, this.handleError);
+  }
+
+  buildCup(): void {
+    this.findFinalFight();
+  }
+
+  private findFinalFight() {
+    let fightMap: Map<number, CupFight> = new Map<number, CupFight>();
+    this.cupFights.forEach((fight: CupFight) => {
+      fightMap.set(fight.id, fight);
+    });
+    let ids: Number[] = Array.from(fightMap.keys());
+    fightMap.forEach((fight: CupFight) => {
+      if (fight.previous_aka_fight != null && fight.previous_shiro_fight != null) {
+        [fight.previous_aka_fight, fight.previous_shiro_fight].forEach((id: number) => {
+          let index: number = ids.lastIndexOf(fight.previous_aka_fight);
+          if (index >= 0)
+            ids.splice(index, 1);
+        });
+      }
+    });
+    if (ids.length > 0) {
+      this.final = fightMap.get(ids[0].valueOf());
+    }
   }
 
   reloadTeams(): void {

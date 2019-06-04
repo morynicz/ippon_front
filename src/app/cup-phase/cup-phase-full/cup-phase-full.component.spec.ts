@@ -144,6 +144,13 @@ describe('CupPhaseFullComponent', () => {
       teamNames.forEach(teamName => expect(html).toContain(teamName));
     });
 
+    describe("when looking at positions of displayed competitors", () => {
+      it("shows final fight in finals area", () => {
+        let centerColumn = fixture.debugElement.query(By.css("#final-fight"));
+        expect(centerColumn.query(By.css("#cup-final-" + cupFights[0].id))).toBeTruthy();
+      });
+    });
+
     describe("when delete cup button is clicked", () => {
       let del;
       beforeEach(() => {

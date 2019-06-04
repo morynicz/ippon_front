@@ -1,4 +1,12 @@
 <div>
+  <div *ngIf="cupFights.length > 0">
+    <div id="final-fight">
+      <div id="cup-final-{{final?.id}}">
+        a
+      </div>
+    </div>
+  </div>
+
   <ul>
     <li *ngFor="let cupFight of cupFights">
       <ippon-cup-fight-tile [cupFight]="cupFight"></ippon-cup-fight-tile>
