@@ -14,7 +14,8 @@ const cupPhase: CupPhase = {
   id: cupPhaseId,
   fight_length: 5,
   final_fight_length: 10,
-  name: "cp1"
+  name: "cp1",
+  number_of_positions: 16
 }
 
 describe('CupPhaseFormComponent', () => {
@@ -60,6 +61,7 @@ describe('CupPhaseFormComponent', () => {
       component.cupPhase.name = cupPhase.name;
       component.cupPhase.fight_length = cupPhase.fight_length;
       component.cupPhase.final_fight_length = cupPhase.final_fight_length;
+      component.cupPhase.number_of_positions = cupPhase.number_of_positions;
       btn.nativeElement.click();
 
     });
@@ -70,6 +72,7 @@ describe('CupPhaseFormComponent', () => {
       expect(cupPhaseService.addValue.final_fight_length).toBe(cupPhase.final_fight_length);
       expect(cupPhaseService.addValue.tournament).toBe(cupPhase.tournament);
       expect(cupPhaseService.addValue.id).toBe(cupPhase.id);
+      expect(cupPhaseService.addValue.number_of_positions).toBe(cupPhase.number_of_positions);
     });
 
     it("should call reload callback", () => {

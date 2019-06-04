@@ -43,14 +43,16 @@ const cupPhases: CupPhase[] = [{
   id: 98564,
   fight_length: 5,
   final_fight_length: 10,
-  name: "cp1"
+  name: "cp1",
+  number_of_positions: 4
 },
 {
   tournament: tournamentId,
   id: 9284,
   fight_length: 5,
   final_fight_length: 10,
-  name: "cp2"
+  name: "cp2",
+  number_of_positions: 16
 }];
 
 describe('CupPhaseManagementComponent', () => {

@@ -14,7 +14,8 @@ const cupPhase: CupPhase = {
   id: cupPhaseId,
   fight_length: 5,
   final_fight_length: 10,
-  name: "cp1"
+  name: "cp1",
+  number_of_positions: 4
 }
 
 describe('CupPhaseLineComponent', () => {
@@ -55,6 +56,10 @@ describe('CupPhaseLineComponent', () => {
 
   it('should display cup phase final fight length', () => {
     expect(html.textContent).toContain('10');
+  });
+
+  it('should display cup phase number of positions', () => {
+    expect(html.textContent).toContain('4');
   });
 
   it('should provide link to the cup phase', () => {

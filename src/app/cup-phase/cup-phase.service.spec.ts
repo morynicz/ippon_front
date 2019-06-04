@@ -12,7 +12,8 @@ const cupPhase: CupPhase = {
   fight_length: 3,
   final_fight_length: 4,
   name: "CP",
-  id: cupPhaseId
+  id: cupPhaseId,
+  number_of_positions: 16
 }
 
 const cupPhases: CupPhase[] = [
@@ -22,7 +23,8 @@ const cupPhases: CupPhase[] = [
     fight_length: 3,
     final_fight_length: 4,
     name: "CP",
-    id: cupPhaseId
+    id: cupPhaseId,
+    number_of_positions: 8
   }
 ];
 

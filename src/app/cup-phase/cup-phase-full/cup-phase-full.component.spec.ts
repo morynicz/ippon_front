@@ -66,7 +66,8 @@ const cupPhase: CupPhase = {
   tournament: tournamentId,
   name: "CP1",
   fight_length: 4,
-  final_fight_length: 5
+  final_fight_length: 5,
+  number_of_positions: 8
 }
 
 describe('CupPhaseFullComponent', () => {
@@ -125,7 +126,9 @@ describe('CupPhaseFullComponent', () => {
   describe("when there are 32 competitors and user is authorized", () => {
     beforeEach(() => {
       teamService.getListReturnValues.push([]);
-      cupPhaseService.getReturnValues.push(cupPhase);
+      let cupPhase32Positions = { ...cupPhase }
+      cupPhase32Positions.number_of_positions = 32;
+      cupPhaseService.getReturnValues.push(cupPhase32Positions);
       cupPhaseService.isAuthorizedReturnValue = true;
       cupFightService.getListReturnValues.push(cupFights);
       teams.forEach(team => {
