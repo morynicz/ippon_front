@@ -23,9 +23,6 @@
         </select>
       </li>
     </ul>
-
-    <input type="number" id="cup-phase-number-of-teams" name="cup-phase-number-of-teams" [(ngModel)]="numberOfTeams"
-      (ngModelChange)="onNumOfTeamsChange()" />
     <button *ngIf="cupFights.length == 0" class="col btn btn-primary" id="generate-cup" name="generate-cup"
       (click)="generateCup()">Generate</button>
     <button *ngIf="cupFights.length > 0" class="col btn btn-danger" id="delete-cup" name="delete-cup"

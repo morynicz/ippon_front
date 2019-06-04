@@ -299,14 +299,10 @@ describe('CupCreation', () => {
 
     describe("when selecting number of teams in cup phase", () => {
       let numberOfTeamsInput;
-      beforeEach(() => {
-        fixture.detectChanges();
-        numberOfTeamsInput = fixture.debugElement.query(By.css("#cup-phase-number-of-teams")).nativeElement;
-        fixture.detectChanges();
-      });
       it("shows exactly four position dropdowns number of teams is four", () => {
-        numberOfTeamsInput.value = 4;
-        numberOfTeamsInput.dispatchEvent(new Event('input'));
+        let localCupPhase: CupPhase = { ...cupPhase }
+        localCupPhase.number_of_positions = 4;
+        cupPhaseService.getReturnValues = [localCupPhase];
         fixture.detectChanges();
         expect(fixture.debugElement.query(By.css("#cup-phase-team-position-0"))).toBeFalsy();
         expect(fixture.debugElement.query(By.css("#cup-phase-team-position-1"))).toBeTruthy();
@@ -317,8 +313,9 @@ describe('CupCreation', () => {
       });
 
       it("shows exactly two position dropdowns number of teams is two", () => {
-        numberOfTeamsInput.value = 2;
-        numberOfTeamsInput.dispatchEvent(new Event('input'));
+        let localCupPhase: CupPhase = { ...cupPhase }
+        localCupPhase.number_of_positions = 2;
+        cupPhaseService.getReturnValues = [localCupPhase];
         fixture.detectChanges();
         expect(fixture.debugElement.query(By.css("#cup-phase-team-position-0"))).toBeFalsy();
         expect(fixture.debugElement.query(By.css("#cup-phase-team-position-1"))).toBeTruthy();
@@ -348,10 +345,9 @@ describe('CupCreation', () => {
         teamService.getListReturnValues.push([]);
         cupFightService.addReturnIdValues = [0];
         teamFightService.addReturnIdValues.push(teamFightId);
-        fixture.detectChanges();
-        numberOfTeamsInput = fixture.debugElement.query(By.css("#cup-phase-number-of-teams")).nativeElement;
-        numberOfTeamsInput.value = 2;
-        numberOfTeamsInput.dispatchEvent(new Event('input'));
+        let localCupPhase: CupPhase = { ...cupPhase }
+        localCupPhase.number_of_positions = 2;
+        cupPhaseService.getReturnValues = [localCupPhase];
         fixture.detectChanges();
         posInput1 = fixture.debugElement.query(By.css("#cup-phase-team-position-1")).nativeElement;
         posInput1.value = posInput1.options[1].value;
@@ -479,12 +475,9 @@ describe('CupCreation', () => {
 
         teamService.getValues = [];
         teamFightService.getValues = [];
-
-        fixture.detectChanges();
-
-        numberOfTeamsInput = fixture.debugElement.query(By.css("#cup-phase-number-of-teams")).nativeElement;
-        numberOfTeamsInput.value = 8;
-        numberOfTeamsInput.dispatchEvent(new Event('input'));
+        let localCupPhase: CupPhase = { ...cupPhase }
+        localCupPhase.number_of_positions = 8;
+        cupPhaseService.getReturnValues = [localCupPhase];
         fixture.detectChanges();
         setTeamOnCupPosition(fixture, 1, 1);
         setTeamOnCupPosition(fixture, 2, 3);

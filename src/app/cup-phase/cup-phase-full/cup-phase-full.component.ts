@@ -48,6 +48,7 @@ export class CupPhaseFullComponent implements OnInit {
       this.cupPhase = resp;
       this.reloadTeams();
       this.loadCupFights();
+      this.generateTeamSelections();
     });
     this.cupPhaseService.isAuthorized(id).subscribe((resp: boolean) => this.isAuthorized = resp);
   }
@@ -141,9 +142,9 @@ export class CupPhaseFullComponent implements OnInit {
     }
   }
 
-  onNumOfTeamsChange(): void {
+  generateTeamSelections(): void {
     this.teamSelections = new Array<TeamId>();
-    for (let i = 0; i < this.numberOfTeams; ++i)
+    for (let i = 0; i < this.cupPhase.number_of_positions; ++i)
       this.teamSelections.push(new TeamId());
   }
 
