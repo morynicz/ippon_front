@@ -11,12 +11,6 @@ import { TeamFightService } from '../../team-fight/team-fight.service';
 import { mergeMap } from 'rxjs/operators';
 import { Observable, forkJoin } from 'rxjs';
 
-class TeamSelection {
-  constructor(team: Team) { this.team = team; }
-  position: number = 0;
-  team: Team;
-}
-
 class TeamId {
   id: number = 0;
 }
@@ -29,26 +23,17 @@ class TeamId {
 export class CupPhaseFullComponent implements OnInit {
   cupPhase: CupPhase;
   cupFights: CupFight[] = [];
-  teamFights: TeamFight[] = [];
-  availableTeams: Team[] = [];
-  teamSelections: TeamId[] = [];
-  numberOfTeams: number = 0;
   isAuthorized: boolean = false;
-  cup: any[] = [];
   final: CupFight;
   constructor(private route: ActivatedRoute,
     private cupPhaseService: CupPhaseService,
-    private cupFightService: CupFightService,
-    private teamFightService: TeamFightService,
-    private teamService: TeamService) { }
+    private cupFightService: CupFightService) { }
 
   ngOnInit() {
     const id = +this.route.snapshot.paramMap.get('id');
     this.cupPhaseService.get(id).subscribe(resp => {
       this.cupPhase = resp;
-      this.reloadTeams();
       this.loadCupFights();
-      this.generateTeamSelections();
     });
     this.cupPhaseService.isAuthorized(id).subscribe((resp: boolean) => this.isAuthorized = resp);
   }
@@ -84,73 +69,6 @@ export class CupPhaseFullComponent implements OnInit {
     }
   }
 
-  reloadTeams(): void {
-    this.teamService.getList(this.cupPhase.tournament).subscribe(
-      (resp: Team[]) => {
-        this.availableTeams = resp;
-      },
-      this.handleError);
-  }
-
-  generateCup(): void {
-    let selectedTeamPairs: number[][]
-      = this.teamSelections.concat()
-        .map((teamId: TeamId) => teamId.id)
-        .reduce((result, value, index, array) => {
-          if (index % 2 === 0)
-            result.push(array.slice(index, index + 2));
-          return result;
-        }, []);
-    forkJoin(selectedTeamPairs.map((item: number[]) => {
-      return this.teamFightService.add({
-        aka_team: item[0],
-        shiro_team: item[1],
-        tournament: this.cupPhase.tournament,
-        id: 0
-      }).pipe(mergeMap<TeamFight, Observable<CupFight>>((resp: TeamFight) => {
-        let teamFight: TeamFight = resp;
-        return this.cupFightService.add({
-          id: 0,
-          team_fight: teamFight.id,
-          previous_aka_fight: null,
-          previous_shiro_fight: null,
-          cup_phase: this.cupPhase.id
-        });
-      }));
-    })).subscribe((result: CupFight[]) => this.buildNextTreeLevel(result, this.cupFightService));
-  }
-
-  buildNextTreeLevel(cupFights: CupFight[], cupFightService: CupFightService): void {
-    if (cupFights.length > 1) {
-      let reduced: CupFight[][] = cupFights.reduce((result, value, index, array) => {
-        if (index % 2 === 0)
-          result.push(array.slice(index, index + 2));
-        return result;
-      }, []);
-      forkJoin(reduced.map((cupFightPair: CupFight[]) => {
-        return cupFightService.add({
-          id: 0,
-          team_fight: null,
-          previous_aka_fight: cupFightPair[0].id,
-          previous_shiro_fight: cupFightPair[1].id,
-          cup_phase: this.cupPhase.id
-        });
-      })).subscribe((result: CupFight[]) => this.buildNextTreeLevel(result, this.cupFightService));
-    } else {
-      this.reloadTeams();
-      this.loadCupFights();
-    }
-  }
-
-  generateTeamSelections(): void {
-    this.teamSelections = new Array<TeamId>();
-    for (let i = 0; i < this.cupPhase.number_of_positions; ++i)
-      this.teamSelections.push(new TeamId());
-  }
-
-  deleteCup(): void {
-    forkJoin(this.cupFights.map((cupFight: CupFight) => this.cupFightService.delete(cupFight))).subscribe(() => this.loadCupFights());
-  }
   handleError(arg): void {
     console.log(arg);
   }
