@@ -150,10 +150,216 @@ describe('CupPhaseFullComponent', () => {
     });
 
     describe("when looking at positions of displayed competitors", () => {
+      beforeEach(() => console.log("start"));
       it("shows final fight in finals area", () => {
         let centerColumn = fixture.debugElement.query(By.css("#final-fight"));
         expect(centerColumn.query(By.css("#cup-final-" + cupFights[0].id))).toBeTruthy();
       });
+
+      describe("on the aka side", () => {
+        let akaArea;
+        beforeEach(() => {
+          akaArea = fixture.debugElement.query(By.css("#aka-side"));
+        });
+        it("shows fights leading to this side finalist in this area", () => {
+          expect(akaArea.query(By.css("#cup-fight-2"))).toBeTruthy();
+          expect(akaArea.query(By.css("#cup-fight-4"))).toBeTruthy();
+          expect(akaArea.query(By.css("#cup-fight-5"))).toBeTruthy();
+          expect(akaArea.query(By.css("#cup-fight-8"))).toBeTruthy();
+          expect(akaArea.query(By.css("#cup-fight-9"))).toBeTruthy();
+          expect(akaArea.query(By.css("#cup-fight-10"))).toBeTruthy();
+          expect(akaArea.query(By.css("#cup-fight-11"))).toBeTruthy();
+          expect(akaArea.query(By.css("#cup-fight-16"))).toBeTruthy();
+          expect(akaArea.query(By.css("#cup-fight-17"))).toBeTruthy();
+          expect(akaArea.query(By.css("#cup-fight-18"))).toBeTruthy();
+          expect(akaArea.query(By.css("#cup-fight-19"))).toBeTruthy();
+          expect(akaArea.query(By.css("#cup-fight-20"))).toBeTruthy();
+          expect(akaArea.query(By.css("#cup-fight-21"))).toBeTruthy();
+          expect(akaArea.query(By.css("#cup-fight-22"))).toBeTruthy();
+          expect(akaArea.query(By.css("#cup-fight-23"))).toBeTruthy();
+        });
+        it("shows only leaf fights in leaf area", () => {
+          let leafArea = akaArea.query(By.css("#leaf-area"));
+          expect(leafArea.query(By.css("#cup-fight-16"))).toBeTruthy();
+          expect(leafArea.query(By.css("#cup-fight-17"))).toBeTruthy();
+          expect(leafArea.query(By.css("#cup-fight-18"))).toBeTruthy();
+          expect(leafArea.query(By.css("#cup-fight-19"))).toBeTruthy();
+          expect(leafArea.query(By.css("#cup-fight-20"))).toBeTruthy();
+          expect(leafArea.query(By.css("#cup-fight-21"))).toBeTruthy();
+          expect(leafArea.query(By.css("#cup-fight-22"))).toBeTruthy();
+          expect(leafArea.query(By.css("#cup-fight-23"))).toBeTruthy();
+
+          expect(leafArea.query(By.css("#cup-fight-2"))).toBeFalsy();
+          expect(leafArea.query(By.css("#cup-fight-4"))).toBeFalsy();
+          expect(leafArea.query(By.css("#cup-fight-5"))).toBeFalsy();
+          expect(leafArea.query(By.css("#cup-fight-8"))).toBeFalsy();
+          expect(leafArea.query(By.css("#cup-fight-9"))).toBeFalsy();
+          expect(leafArea.query(By.css("#cup-fight-10"))).toBeFalsy();
+          expect(leafArea.query(By.css("#cup-fight-11"))).toBeFalsy();
+        });
+
+        it("shows only semi-final fight in level-0 area", () => {
+          let levelArea = akaArea.query(By.css("#level-0"));
+          expect(levelArea.query(By.css("#cup-fight-2"))).toBeTruthy();
+          expect(levelArea.query(By.css("#cup-fight-4"))).toBeFalsy();
+          expect(levelArea.query(By.css("#cup-fight-5"))).toBeFalsy();
+          expect(levelArea.query(By.css("#cup-fight-8"))).toBeFalsy();
+          expect(levelArea.query(By.css("#cup-fight-9"))).toBeFalsy();
+          expect(levelArea.query(By.css("#cup-fight-10"))).toBeFalsy();
+          expect(levelArea.query(By.css("#cup-fight-11"))).toBeFalsy();
+          expect(levelArea.query(By.css("#cup-fight-16"))).toBeFalsy();
+          expect(levelArea.query(By.css("#cup-fight-17"))).toBeFalsy();
+          expect(levelArea.query(By.css("#cup-fight-18"))).toBeFalsy();
+          expect(levelArea.query(By.css("#cup-fight-19"))).toBeFalsy();
+          expect(levelArea.query(By.css("#cup-fight-20"))).toBeFalsy();
+          expect(levelArea.query(By.css("#cup-fight-21"))).toBeFalsy();
+          expect(levelArea.query(By.css("#cup-fight-22"))).toBeFalsy();
+          expect(levelArea.query(By.css("#cup-fight-23"))).toBeFalsy();
+        });
+
+        it("shows only quarter-final fights in level-1 area", () => {
+          let levelArea = akaArea.query(By.css("#level-1"));
+          expect(levelArea.query(By.css("#cup-fight-2"))).toBeFalsy();
+          expect(levelArea.query(By.css("#cup-fight-4"))).toBeTruthy("cf4");
+          expect(levelArea.query(By.css("#cup-fight-5"))).toBeTruthy("cf5");
+          expect(levelArea.query(By.css("#cup-fight-8"))).toBeFalsy();
+          expect(levelArea.query(By.css("#cup-fight-9"))).toBeFalsy();
+          expect(levelArea.query(By.css("#cup-fight-10"))).toBeFalsy();
+          expect(levelArea.query(By.css("#cup-fight-11"))).toBeFalsy();
+          expect(levelArea.query(By.css("#cup-fight-16"))).toBeFalsy();
+          expect(levelArea.query(By.css("#cup-fight-17"))).toBeFalsy();
+          expect(levelArea.query(By.css("#cup-fight-18"))).toBeFalsy();
+          expect(levelArea.query(By.css("#cup-fight-19"))).toBeFalsy();
+          expect(levelArea.query(By.css("#cup-fight-20"))).toBeFalsy();
+          expect(levelArea.query(By.css("#cup-fight-21"))).toBeFalsy();
+          expect(levelArea.query(By.css("#cup-fight-22"))).toBeFalsy();
+          expect(levelArea.query(By.css("#cup-fight-23"))).toBeFalsy();
+        });
+
+        it("shows only eight-final fights in level-2 area", () => {
+          let levelArea = akaArea.query(By.css("#level-2"));
+          expect(levelArea.query(By.css("#cup-fight-2"))).toBeFalsy();
+          expect(levelArea.query(By.css("#cup-fight-4"))).toBeFalsy();
+          expect(levelArea.query(By.css("#cup-fight-5"))).toBeFalsy();
+          expect(levelArea.query(By.css("#cup-fight-8"))).toBeTruthy();
+          expect(levelArea.query(By.css("#cup-fight-9"))).toBeTruthy();
+          expect(levelArea.query(By.css("#cup-fight-10"))).toBeTruthy();
+          expect(levelArea.query(By.css("#cup-fight-11"))).toBeTruthy();
+          expect(levelArea.query(By.css("#cup-fight-16"))).toBeFalsy();
+          expect(levelArea.query(By.css("#cup-fight-17"))).toBeFalsy();
+          expect(levelArea.query(By.css("#cup-fight-18"))).toBeFalsy();
+          expect(levelArea.query(By.css("#cup-fight-19"))).toBeFalsy();
+          expect(levelArea.query(By.css("#cup-fight-20"))).toBeFalsy();
+          expect(levelArea.query(By.css("#cup-fight-21"))).toBeFalsy();
+          expect(levelArea.query(By.css("#cup-fight-22"))).toBeFalsy();
+          expect(levelArea.query(By.css("#cup-fight-23"))).toBeFalsy();
+        });
+
+
+      });
+
+      describe("on the shiro side", () => {
+        let shiroArea;
+        beforeEach(() => {
+          shiroArea = fixture.debugElement.query(By.css("#shiro-side"));
+        });
+        it("shows fights leading to this side finalist in this area", () => {
+          expect(shiroArea.query(By.css("#cup-fight-3"))).toBeTruthy();
+          expect(shiroArea.query(By.css("#cup-fight-6"))).toBeTruthy();
+          expect(shiroArea.query(By.css("#cup-fight-7"))).toBeTruthy();
+          expect(shiroArea.query(By.css("#cup-fight-12"))).toBeTruthy();
+          expect(shiroArea.query(By.css("#cup-fight-13"))).toBeTruthy();
+          expect(shiroArea.query(By.css("#cup-fight-14"))).toBeTruthy();
+          expect(shiroArea.query(By.css("#cup-fight-15"))).toBeTruthy();
+          expect(shiroArea.query(By.css("#cup-fight-24"))).toBeTruthy();
+          expect(shiroArea.query(By.css("#cup-fight-25"))).toBeTruthy();
+          expect(shiroArea.query(By.css("#cup-fight-26"))).toBeTruthy();
+          expect(shiroArea.query(By.css("#cup-fight-27"))).toBeTruthy();
+          expect(shiroArea.query(By.css("#cup-fight-28"))).toBeTruthy();
+          expect(shiroArea.query(By.css("#cup-fight-29"))).toBeTruthy();
+          expect(shiroArea.query(By.css("#cup-fight-30"))).toBeTruthy();
+          expect(shiroArea.query(By.css("#cup-fight-31"))).toBeTruthy();
+        });
+        it("shows only leaf fights in leaf area", () => {
+          let leafArea = shiroArea.query(By.css("#leaf-area"));
+          expect(leafArea.query(By.css("#cup-fight-3"))).toBeFalsy();
+          expect(leafArea.query(By.css("#cup-fight-6"))).toBeFalsy();
+          expect(leafArea.query(By.css("#cup-fight-7"))).toBeFalsy();
+          expect(leafArea.query(By.css("#cup-fight-12"))).toBeFalsy();
+          expect(leafArea.query(By.css("#cup-fight-13"))).toBeFalsy();
+          expect(leafArea.query(By.css("#cup-fight-14"))).toBeFalsy();
+          expect(leafArea.query(By.css("#cup-fight-15"))).toBeFalsy();
+          expect(leafArea.query(By.css("#cup-fight-24"))).toBeTruthy();
+          expect(leafArea.query(By.css("#cup-fight-25"))).toBeTruthy();
+          expect(leafArea.query(By.css("#cup-fight-26"))).toBeTruthy();
+          expect(leafArea.query(By.css("#cup-fight-27"))).toBeTruthy();
+          expect(leafArea.query(By.css("#cup-fight-28"))).toBeTruthy();
+          expect(leafArea.query(By.css("#cup-fight-29"))).toBeTruthy();
+          expect(leafArea.query(By.css("#cup-fight-30"))).toBeTruthy();
+          expect(leafArea.query(By.css("#cup-fight-31"))).toBeTruthy();
+        });
+
+        it("shows only semi-final fight in level-0 area", () => {
+          let levelArea = shiroArea.query(By.css("#level-0"));
+          expect(levelArea.query(By.css("#cup-fight-3"))).toBeTruthy();
+          expect(levelArea.query(By.css("#cup-fight-6"))).toBeFalsy();
+          expect(levelArea.query(By.css("#cup-fight-7"))).toBeFalsy();
+          expect(levelArea.query(By.css("#cup-fight-12"))).toBeFalsy();
+          expect(levelArea.query(By.css("#cup-fight-13"))).toBeFalsy();
+          expect(levelArea.query(By.css("#cup-fight-14"))).toBeFalsy();
+          expect(levelArea.query(By.css("#cup-fight-15"))).toBeFalsy();
+          expect(levelArea.query(By.css("#cup-fight-24"))).toBeFalsy();
+          expect(levelArea.query(By.css("#cup-fight-25"))).toBeFalsy();
+          expect(levelArea.query(By.css("#cup-fight-26"))).toBeFalsy();
+          expect(levelArea.query(By.css("#cup-fight-27"))).toBeFalsy();
+          expect(levelArea.query(By.css("#cup-fight-28"))).toBeFalsy();
+          expect(levelArea.query(By.css("#cup-fight-29"))).toBeFalsy();
+          expect(levelArea.query(By.css("#cup-fight-30"))).toBeFalsy();
+          expect(levelArea.query(By.css("#cup-fight-31"))).toBeFalsy();
+        });
+
+        it("shows only quarter-final fights in level-1 area", () => {
+          let levelArea = shiroArea.query(By.css("#level-1"));
+          expect(levelArea.query(By.css("#cup-fight-3"))).toBeFalsy();
+          expect(levelArea.query(By.css("#cup-fight-6"))).toBeTruthy("cf4");
+          expect(levelArea.query(By.css("#cup-fight-7"))).toBeTruthy("cf5");
+          expect(levelArea.query(By.css("#cup-fight-12"))).toBeFalsy();
+          expect(levelArea.query(By.css("#cup-fight-13"))).toBeFalsy();
+          expect(levelArea.query(By.css("#cup-fight-14"))).toBeFalsy();
+          expect(levelArea.query(By.css("#cup-fight-15"))).toBeFalsy();
+          expect(levelArea.query(By.css("#cup-fight-24"))).toBeFalsy();
+          expect(levelArea.query(By.css("#cup-fight-25"))).toBeFalsy();
+          expect(levelArea.query(By.css("#cup-fight-26"))).toBeFalsy();
+          expect(levelArea.query(By.css("#cup-fight-27"))).toBeFalsy();
+          expect(levelArea.query(By.css("#cup-fight-28"))).toBeFalsy();
+          expect(levelArea.query(By.css("#cup-fight-29"))).toBeFalsy();
+          expect(levelArea.query(By.css("#cup-fight-30"))).toBeFalsy();
+          expect(levelArea.query(By.css("#cup-fight-31"))).toBeFalsy();
+        });
+
+        it("shows only eight-final fights in level-2 area", () => {
+          let levelArea = shiroArea.query(By.css("#level-2"));
+          expect(levelArea.query(By.css("#cup-fight-3"))).toBeFalsy();
+          expect(levelArea.query(By.css("#cup-fight-6"))).toBeFalsy();
+          expect(levelArea.query(By.css("#cup-fight-7"))).toBeFalsy();
+          expect(levelArea.query(By.css("#cup-fight-12"))).toBeTruthy();
+          expect(levelArea.query(By.css("#cup-fight-13"))).toBeTruthy();
+          expect(levelArea.query(By.css("#cup-fight-14"))).toBeTruthy();
+          expect(levelArea.query(By.css("#cup-fight-15"))).toBeTruthy();
+          expect(levelArea.query(By.css("#cup-fight-24"))).toBeFalsy();
+          expect(levelArea.query(By.css("#cup-fight-25"))).toBeFalsy();
+          expect(levelArea.query(By.css("#cup-fight-26"))).toBeFalsy();
+          expect(levelArea.query(By.css("#cup-fight-27"))).toBeFalsy();
+          expect(levelArea.query(By.css("#cup-fight-28"))).toBeFalsy();
+          expect(levelArea.query(By.css("#cup-fight-29"))).toBeFalsy();
+          expect(levelArea.query(By.css("#cup-fight-30"))).toBeFalsy();
+          expect(levelArea.query(By.css("#cup-fight-31"))).toBeFalsy();
+        });
+
+
+      });
+
+
     });
 
     describe("when delete cup button is clicked", () => {

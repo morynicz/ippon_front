@@ -1,18 +1,84 @@
 <div>
-  <div *ngIf="cupFights.length > 0">
-    <div id="final-fight">
+  <div *ngIf="cupFights.length > 0" clas="row">
+    <div class="col-{{akaFights.length}}" id="aka-side">
+      <div class="row align-items-center">
+        <div class="col order-{{akaFights.length-i-1}}"
+          *ngFor="let el of [].constructor(akaFights.length); let i = index">
+          <div *ngIf="i < (akaFights.length - 1)" id="level-{{i}}">
+            <div *ngFor="let cupFight of akaFights[i]; let j=index" id="cup-fight-{{cupFight?.id}}">
+              <div class="node row">
+                <!-- {{i}}
+                <br>a<br>s<br>
+                {{cupFight?.id}} -->
+                <ippon-cup-fight-tile [cupFight]="cupFight"></ippon-cup-fight-tile>
+              </div>
+              <div *ngIf="j != (akaFights[i].length -1)">
+                <div *ngFor="let k of [].constructor(akaFights.length - i - 1)">
+                  <br><br>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="i == (akaFights.length - 1)" id="leaf-area">
+            <div *ngFor="let cupFight of akaFights[i]">
+              <div id="cup-fight-{{cupFight?.id}}" class="node row">
+                <ippon-cup-fight-tile [cupFight]="cupFight"></ippon-cup-fight-tile>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="final-fight" class="col">
+      <div id="cup-final-{{final?.id}}" class="node row">
+        <ippon-cup-fight-tile [cupFight]="final"></ippon-cup-fight-tile>
+      </div>
+    </div>
+    <div class="col-{{shiroFights.length}}" id="shiro-side">
+      <div class="row align-items-center">
+        <div class="col" *ngFor="let el of [].constructor(shiroFights.length); let i = index">
+          <div *ngIf="i < (shiroFights.length - 1)" id="level-{{i}}">
+            <div *ngFor="let cupFight of shiroFights[i]; let j=index" id="cup-fight-{{cupFight?.id}}">
+              <div class="node row">
+                <!-- {{i}}
+                <br>a<br>s<br>
+                {{cupFight?.id}} -->
+                <ippon-cup-fight-tile [cupFight]="cupFight"></ippon-cup-fight-tile>
+              </div>
+              <div *ngIf="j != (shiroFights[i].length -1)">
+                <div *ngFor="let k of [].constructor(shiroFights.length - i - 1)">
+                  <br><br>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="i == (shiroFights.length - 1)" id="leaf-area">
+            <div *ngFor="let cupFight of shiroFights[i]">
+              <div id="cup-fight-{{cupFight?.id}}" class="node row">
+                <ippon-cup-fight-tile [cupFight]="cupFight"></ippon-cup-fight-tile>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="leaf-area">
+        <div *ngFor="let cupFight of akaLeafFights">
+          <div id="cup-fight-{{cupFight?.id}}">b</div>
+        </div>
+      </div>
+    </div>
+    <div id="final-fight" class="col">
       <div id="cup-final-{{final?.id}}">
         a
       </div>
     </div>
   </div>
 
-  <ul>
+  <!-- <ul>
     <li *ngFor="let cupFight of cupFights">
       <ippon-cup-fight-tile [cupFight]="cupFight"></ippon-cup-fight-tile>
     </li>
-
-  </ul>
+  </ul> -->
   <div *ngIf="isAuthorized">
     <ippon-cup-creation [cupPhase]="cupPhase" [cupFights]="cupFights" (reloadRequest)="loadCupFights()">
     </ippon-cup-creation>
