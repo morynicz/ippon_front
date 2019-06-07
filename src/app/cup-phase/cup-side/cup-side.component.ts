@@ -12,8 +12,7 @@ export class CupSideComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
   getOrderNo(index: number): number {
     if (this.isReverseOrder) {

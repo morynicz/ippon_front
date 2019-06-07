@@ -18,7 +18,6 @@ export class CupPhaseFullComponent implements OnInit {
   final: CupFight;
   akaFights: CupFight[][] = [];
   shiroFights: CupFight[][] = [];
-  akaLeafFights: CupFight[] = [];
   fightMap: Map<number, CupFight>;
   constructor(private route: ActivatedRoute,
     private cupPhaseService: CupPhaseService,
@@ -44,6 +43,7 @@ export class CupPhaseFullComponent implements OnInit {
   buildCup(): void {
     this.findFinalFight();
     this.akaFights = [];
+    this.shiroFights = [];
     this.findAncestorFights(this.final.previous_aka_fight, 0, this.akaFights);
     this.findAncestorFights(this.final.previous_shiro_fight, 0, this.shiroFights);
   }
@@ -54,9 +54,7 @@ export class CupPhaseFullComponent implements OnInit {
     if (null != id) {
       let currentFight: CupFight = this.fightMap.get(id);
       fights[level].push(currentFight);
-      if (null == currentFight.previous_aka_fight || null == currentFight.previous_shiro_fight) {
-        this.akaLeafFights.push(currentFight);
-      } else {
+      if (null != currentFight.previous_aka_fight && null != currentFight.previous_shiro_fight) {
         this.findAncestorFights(currentFight.previous_aka_fight, level + 1, fights);
         this.findAncestorFights(currentFight.previous_shiro_fight, level + 1, fights);
       }

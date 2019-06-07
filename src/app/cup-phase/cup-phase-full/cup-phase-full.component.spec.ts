@@ -21,6 +21,7 @@ import { FormsModule } from '@angular/forms';
 import { CupFightTileComponent } from '../../cup-fight/cup-fight-tile/cup-fight-tile.component';
 import { JsonPipe } from '@angular/common';
 import { CupCreationComponent } from '../cup-creation/cup-creation.component';
+import { CupSideComponent } from '../cup-side/cup-side.component';
 
 class TeamFightServiceSpyMapped extends TeamFightServiceSpy {
   getReturnValuesMap: Map<number, TeamFight> = new Map<number, TeamFight>();
@@ -89,7 +90,8 @@ describe('CupPhaseFullComponent', () => {
       declarations: [
         CupPhaseFullComponent,
         CupFightTileComponent,
-        CupCreationComponent
+        CupCreationComponent,
+        CupSideComponent
       ],
       providers: [
         { provide: TeamService, useValue: teamService },
@@ -150,7 +152,6 @@ describe('CupPhaseFullComponent', () => {
     });
 
     describe("when looking at positions of displayed competitors", () => {
-      beforeEach(() => console.log("start"));
       it("shows final fight in finals area", () => {
         let centerColumn = fixture.debugElement.query(By.css("#final-fight"));
         expect(centerColumn.query(By.css("#cup-final-" + cupFights[0].id))).toBeTruthy();
