@@ -40,9 +40,9 @@ class TokenStorageSpy {
 
 class JwtHelperSpy {
   isExpiredArgument: string = "";
-  isExpiredResult: boolean;
+  isExpiredResultMap: Map<string, boolean> = new Map<string, boolean>();
   isExpired(token: string) {
-    return this.isExpiredResult;
+    return this.isExpiredResultMap.get(token);
   }
 }
 
@@ -79,9 +79,10 @@ describe('TokenMaintenanceService', () => {
 
   describe("when access token is outdated but refresh is active", () => {
     beforeEach(() => {
-      jwtHelper.isExpiredResult = true;
+      jwtHelper.isExpiredResultMap.set("token", true);
+      jwtHelper.isExpiredResultMap.set("refresh", false);
     });
-    it('should try to renew expired tokens and notify about outcome', () => {
+    it('should try to renew expired tokens', () => {
       service.updateTokens();
       expect(tokenStorage.getAccessCalled).toBe(true);
       expect(tokenStorage.getRefreshCalled).toBe(true);
@@ -94,7 +95,6 @@ describe('TokenMaintenanceService', () => {
     });
 
     it("should clear tokens if refresh attempt ends with error", () => {
-      jwtHelper.isExpiredResult = true;
       service.updateTokens();
       const req = backend.expectOne(authenticationUrl + '/token/refresh');
       expect(req.request.method).toBe('POST');
@@ -106,9 +106,30 @@ describe('TokenMaintenanceService', () => {
   });
 
   describe("when both tokens are fresh", () => {
+    beforeEach(() => {
+      jwtHelper.isExpiredResultMap.set("token", false);
+      jwtHelper.isExpiredResultMap.set("refresh", false);
+    });
     it("should not call auth api", () => {
       service.updateTokens();
       expect(tokenStorage.getAccessCalled).toBeTruthy("access");
     });
+  });
+
+  describe("when both tokens are outdated", () => {
+    beforeEach(() => {
+      jwtHelper.isExpiredResultMap.set("token", true);
+      jwtHelper.isExpiredResultMap.set("refresh", true);
+    });
+    it("should not call auth api", () => {
+      service.updateTokens();
+      expect(tokenStorage.getAccessCalled).toBeTruthy("access");
+      expect(tokenStorage.getRefreshCalled).toBeTruthy("refresh");
+    });
+    it("should clear both tokens", () => {
+      service.updateTokens();
+      expect(tokenStorage.clearCalled).toBeTruthy("clear");
+    });
+
   });
 });

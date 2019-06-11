@@ -27,25 +27,30 @@ export class TokenMaintenanceService {
     this.updateTokensIfNecessary().subscribe(() => { });
   }
 
-  private updateTokensIfNecessary(): Observable<boolean> {
+  private updateTokensIfNecessary(): Observable<string> {
     const access_token: string = this.tokenStorage.getAccess();
     const refresh_token: string = this.tokenStorage.getRefresh();
     return new Observable((observer) => {
-      if (refresh_token != null && this.jwtHelper.isExpired(access_token)) {
-        this.http.post<Token>(this.authenticationUrl + TOKEN_ENDPOINT + REFRESH_ENDPOINT,
-          { "refresh": refresh_token }, httpOptions)
-          .subscribe(res => {
-            this.setSession(res);
-            observer.next(true);
-            observer.complete();
-          }, error => {
-            this.tokenStorage.clearTokens();
-            observer.next(false);
-            observer.complete();
-          }
-          );
+      if (this.jwtHelper.isExpired(access_token)) {
+        if (refresh_token != null && !this.jwtHelper.isExpired(refresh_token)) {
+          this.http.post<Token>(this.authenticationUrl + TOKEN_ENDPOINT + REFRESH_ENDPOINT,
+            { "refresh": refresh_token }, httpOptions)
+            .subscribe(res => {
+              this.setSession(res);
+              observer.next(res.access);
+              observer.complete();
+            }, error => {
+              this.tokenStorage.clearTokens();
+              observer.next("");
+              observer.complete();
+            }
+            );
+        } else {
+          this.tokenStorage.clearTokens();
+          observer.complete();
+        }
       } else {
-        observer.next(access_token != null);
+        observer.next(access_token);
         observer.complete();
       }
     });
