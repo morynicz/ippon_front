@@ -14,6 +14,12 @@ export class CupSideComponent implements OnInit {
 
   ngOnInit() { }
 
+  getSeparator(index): number {
+    if (index == 0)
+      return 0;
+    return this.getSeparator(index - 1) * 2 + 1;
+  }
+
   getOrderNo(index: number): number {
     if (this.isReverseOrder) {
       return this.cupFights.length - index - 1;

@@ -200,6 +200,13 @@ describe('CupSideComponent', () => {
       expect(component.getOrderNo(1)).toBe(2);
       expect(component.getOrderNo(0)).toBe(3);
     });
+
+    it("calculates correct distance between fight tiles", () => {
+      expect(component.getSeparator(1)).toEqual(1);
+      expect(component.getSeparator(2)).toEqual(3);
+      expect(component.getSeparator(3)).toEqual(7);
+      expect(component.getSeparator(4)).toEqual(15);
+    });
   });
 });
 

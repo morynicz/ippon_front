@@ -6,7 +6,7 @@
           <ippon-cup-fight-tile [cupFight]="cupFight"></ippon-cup-fight-tile>
         </div>
         <div *ngIf="j != (cupFights[i].length -1)">
-          <div *ngFor="let k of [].constructor(cupFights.length - i - 1)">
+          <div *ngFor="let k of [].constructor(getSeparator(cupFights.length - i - 1))">
             <br><br>
           </div>
         </div>
