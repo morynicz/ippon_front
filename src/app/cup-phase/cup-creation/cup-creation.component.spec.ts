@@ -184,6 +184,13 @@ describe('CupCreationComponent', () => {
       expect(fixture.debugElement.query(By.css("#generate-cup"))).toBeFalsy();
     });
 
+    it("does not show team selection selects", () => {
+      fixture.detectChanges();
+      expect(fixture.debugElement.query(By.css("#cup-phase-team-position-1"))).toBeFalsy();
+      expect(fixture.debugElement.query(By.css("#cup-phase-team-position-4"))).toBeFalsy();
+      expect(fixture.debugElement.query(By.css("#cup-phase-team-position-8"))).toBeFalsy();
+    });
+
     describe("when delete cup button is clicked", () => {
       let del;
       beforeEach(() => {
