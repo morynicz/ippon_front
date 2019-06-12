@@ -70,14 +70,16 @@ export class CupPhaseFullComponent implements OnInit {
     this.fightMap.forEach((fight: CupFight) => {
       if (fight.previous_aka_fight != null && fight.previous_shiro_fight != null) {
         [fight.previous_aka_fight, fight.previous_shiro_fight].forEach(() => {
-          let index: number = ids.lastIndexOf(fight.previous_aka_fight);
-          if (index >= 0)
-            ids.splice(index, 1);
+          removeIfPresent(ids, fight.previous_aka_fight);
+          removeIfPresent(ids, fight.previous_shiro_fight);
         });
       }
     });
-    if (ids.length > 0) {
+    if (ids.length == 1) {
       this.final = this.fightMap.get(ids[0].valueOf());
+    } else {
+      console.log(ids);
+      console.log(this.cupFights);
     }
   }
 
@@ -85,3 +87,9 @@ export class CupPhaseFullComponent implements OnInit {
     console.log(arg);
   }
 }
+function removeIfPresent(ids: Number[], previousFight: number) {
+  let index: number = ids.lastIndexOf(previousFight);
+  if (index >= 0)
+    ids.splice(index, 1);
+}
+
