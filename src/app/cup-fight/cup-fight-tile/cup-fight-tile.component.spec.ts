@@ -8,6 +8,7 @@ import { TeamServiceSpy } from '../../team/team.service.spy';
 import { TeamFightServiceSpy } from '../../team-fight/team-fight.service.spy';
 import { TeamService } from '../../team/team.service';
 import { TeamFightService } from '../../team-fight/team-fight.service';
+import { FightStatus } from '../../fight-status';
 
 const cupFightId: number = 2754;
 const cupPhaseId: number = 478;
@@ -33,7 +34,10 @@ const teamFight: TeamFight = {
   id: 0,
   aka_team: teams[0].id,
   shiro_team: teams[1].id,
-  tournament: tournamentId
+  tournament: tournamentId,
+  shiro_score: 1,
+  aka_score: 0,
+  status: FightStatus.Prepared
 }
 
 describe('CupFightTileComponent', () => {

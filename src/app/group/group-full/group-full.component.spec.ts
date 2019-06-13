@@ -26,6 +26,7 @@ import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { GroupMemberLineComponent } from '../../group-member/group-member-line/group-member-line.component';
 import { Group } from '../group';
 import { GroupMemberFormComponent } from '../../group-member/group-member-form/group-member-form.component';
+import { FightStatus } from '../../fight-status';
 
 describe('GroupFullComponent', () => {
   const tournamentId: number = 32;
@@ -55,7 +56,10 @@ describe('GroupFullComponent', () => {
     aka_team: teams[0].id,
     shiro_team: teams[2].id,
     id: teamFightId,
-    tournament: tournamentId
+    tournament: tournamentId,
+    shiro_score: 0,
+    aka_score: 0,
+    status: FightStatus.Prepared
   }
 
   const groupFightId: number = 768;

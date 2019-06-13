@@ -13,6 +13,7 @@ import { By } from '@angular/platform-browser';
 import { JsonPipe } from '@angular/common';
 import { CupPhase } from '../cup-phase';
 import { FormsModule } from '@angular/forms';
+import { FightStatus } from '../../fight-status';
 
 
 
@@ -263,7 +264,10 @@ describe('CupCreationComponent', () => {
         id: 0,
         aka_team: teams[0].id,
         shiro_team: teams[2].id,
-        tournament: tournamentId
+        tournament: tournamentId,
+        shiro_score: 0,
+        aka_score: 0,
+        status: FightStatus.Prepared
       }
       let expectedCupFight: CupFight = {
         id: 0,
@@ -311,25 +315,37 @@ describe('CupCreationComponent', () => {
         id: 0,
         aka_team: teams[0].id,
         shiro_team: teams[2].id,
-        tournament: tournamentId
+        tournament: tournamentId,
+        shiro_score: 0,
+        aka_score: 0,
+        status: FightStatus.Prepared
       },
       {
         id: 0,
         aka_team: teams[1].id,
         shiro_team: teams[3].id,
-        tournament: tournamentId
+        tournament: tournamentId,
+        shiro_score: 0,
+        aka_score: 0,
+        status: FightStatus.Prepared
       },
       {
         id: 0,
         aka_team: teams[4].id,
         shiro_team: teams[5].id,
-        tournament: tournamentId
+        tournament: tournamentId,
+        shiro_score: 0,
+        aka_score: 0,
+        status: FightStatus.Prepared
       },
       {
         id: 0,
         aka_team: teams[6].id,
         shiro_team: teams[7].id,
-        tournament: tournamentId
+        tournament: tournamentId,
+        shiro_score: 0,
+        aka_score: 0,
+        status: FightStatus.Prepared
       }];
       let expectedCupFights: CupFight[] = [
         {

@@ -13,6 +13,7 @@ import { Fight } from '../fight';
 import { By } from '@angular/platform-browser';
 import { FightService } from '../fight.service';
 import { FightServiceSpy } from '../fight.service.spy';
+import { FightStatus } from '../../fight-status';
 
 const akaTeamId: number = 15;
 const shiroTeamId: number = 74;
@@ -22,7 +23,10 @@ const teamFight: TeamFight = {
   id: 1,
   aka_team: akaTeamId,
   shiro_team: shiroTeamId,
-  tournament: tournamentId
+  tournament: tournamentId,
+  shiro_score: 0,
+  aka_score: 0,
+  status: FightStatus.Prepared
 }
 
 const akaPlayers: Player[] = [{

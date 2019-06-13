@@ -24,6 +24,7 @@ import { PlayerLineComponent } from '../../player/player-line/player-line.compon
 import { TeamMemberServiceSpy } from '../../team/team-member.service.spy';
 import { TeamMemberService } from '../../team/team-member.service';
 import { PlayerServiceSpy } from '../../player/player.service.spy';
+import { FightStatus } from '../../fight-status';
 
 const teamFightId: number = 13;
 const akaTeamId: number = 15;
@@ -34,7 +35,10 @@ const teamFight: TeamFight = {
   id: teamFightId,
   aka_team: akaTeamId,
   shiro_team: shiroTeamId,
-  tournament: tournamentId
+  tournament: tournamentId,
+  shiro_score: 0,
+  aka_score: 0,
+  status: FightStatus.Prepared
 }
 
 const akaPlayers: Player[] = [{

@@ -10,6 +10,7 @@ import { TeamLineComponent } from '../../team/team-line/team-line.component';
 import { TeamService } from '../../team/team.service';
 import { TeamFight } from '../team-fight';
 import { By } from '@angular/platform-browser';
+import { FightStatus } from '../../fight-status';
 
 const tournamentId: number = 32;
 const teamFightId: number = 87;
@@ -38,7 +39,10 @@ const teamFight: TeamFight = {
   aka_team: teams[0].id,
   shiro_team: teams[2].id,
   id: teamFightId,
-  tournament: tournamentId
+  tournament: tournamentId,
+  shiro_score: 0,
+  aka_score: 0,
+  status: FightStatus.Prepared
 }
 
 describe('TeamFightFormComponent', () => {

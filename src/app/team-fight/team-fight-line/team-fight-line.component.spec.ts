@@ -10,6 +10,7 @@ import { By } from '@angular/platform-browser';
 import { TeamService } from '../../team/team.service';
 import { TeamFightService } from '../team-fight.service';
 import { RouterTestingModule } from '@angular/router/testing';
+import { FightStatus } from '../../fight-status';
 
 const teamFightId: number = 13;
 const akaTeamId: number = 15;
@@ -20,7 +21,10 @@ const teamFight: TeamFight = {
   id: teamFightId,
   aka_team: akaTeamId,
   shiro_team: shiroTeamId,
-  tournament: tournamentId
+  tournament: tournamentId,
+  shiro_score: 0,
+  aka_score: 0,
+  status: FightStatus.Prepared
 }
 
 const shiroTeam: Team = {

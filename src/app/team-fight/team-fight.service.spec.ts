@@ -10,9 +10,8 @@ import {
 } from '../rest-api';
 import { TeamFight } from './team-fight';
 import { Player } from '../player/player';
-import { Sex } from '../sex';
-import { Rank } from '../rank';
 import { Team } from '../team/team';
+import { FightStatus } from '../fight-status';
 
 const teamFightUrl: string = IPPON_HOST + TEAM_FIGHTS_ENDPOINT;
 
@@ -24,7 +23,10 @@ const teamFight: TeamFight = {
   id: 1,
   aka_team: akaTeamId,
   shiro_team: shiroTeamId,
-  tournament: tournamentId
+  tournament: tournamentId,
+  shiro_score: 0,
+  aka_score: 0,
+  status: FightStatus.Prepared
 }
 
 const akaPlayers: Player[] = [{
@@ -124,7 +126,10 @@ describe('TeamFightService', () => {
         id: 2,
         aka_team: 24,
         shiro_team: 25,
-        tournament: tournamentId
+        tournament: tournamentId,
+        shiro_score: 0,
+        aka_score: 0,
+        status: FightStatus.Prepared
       }];
 
     it("calls the team fights api url, uses GET method, \

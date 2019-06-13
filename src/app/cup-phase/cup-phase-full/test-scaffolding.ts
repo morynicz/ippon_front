@@ -1,6 +1,7 @@
 import { CupFight } from "../../cup-fight/cup-fight";
 import { Team } from "../../team/team";
 import { TeamFight } from "../../team-fight/team-fight";
+import { FightStatus } from "../../fight-status";
 
 export const cupPhaseId: number = 78;
 export const tournamentId: number = 32;
@@ -383,187 +384,280 @@ export const teamFights: TeamFight[] = [{
     aka_team: 1001,
     shiro_team: 1002,
     id: 101,
-    tournament: tournamentId
+    tournament: tournamentId,
+    shiro_score: 0,
+    aka_score: 0,
+    status: FightStatus.Prepared
 },
 {
     aka_team: 1003,
     shiro_team: 1004,
     id: 102,
-    tournament: tournamentId
+    tournament: tournamentId,
+    shiro_score: 0,
+    aka_score: 0,
+    status: FightStatus.Prepared
 },
 {
     aka_team: 1005,
     shiro_team: 1006,
     id: 103,
-    tournament: tournamentId
+    tournament: tournamentId,
+    shiro_score: 0,
+    aka_score: 0,
+    status: FightStatus.Prepared
 },
 {
     aka_team: 1007,
     shiro_team: 1008,
     id: 104,
-    tournament: tournamentId
+    tournament: tournamentId,
+    shiro_score: 0,
+    aka_score: 0,
+    status: FightStatus.Prepared
 },
 {
     aka_team: 1009,
     shiro_team: 1010,
     id: 105,
-    tournament: tournamentId
+    tournament: tournamentId,
+    shiro_score: 0,
+    aka_score: 0,
+    status: FightStatus.Prepared
 },
 {
     aka_team: 1011,
     shiro_team: 1012,
     id: 106,
-    tournament: tournamentId
+    tournament: tournamentId,
+    shiro_score: 0,
+    aka_score: 0,
+    status: FightStatus.Prepared
 },
 {
     aka_team: 1013,
     shiro_team: 1014,
     id: 107,
-    tournament: tournamentId
+    tournament: tournamentId,
+    shiro_score: 0,
+    aka_score: 0,
+    status: FightStatus.Prepared
 },
 {
     aka_team: 1015,
     shiro_team: 1016,
     id: 108,
-    tournament: tournamentId
+    tournament: tournamentId,
+    shiro_score: 0,
+    aka_score: 0,
+    status: FightStatus.Prepared
 },
 {
     aka_team: 1017,
     shiro_team: 1018,
     id: 109,
-    tournament: tournamentId
+    tournament: tournamentId,
+    shiro_score: 0,
+    aka_score: 0,
+    status: FightStatus.Prepared
 },
 {
     aka_team: 1019,
     shiro_team: 1020,
     id: 110,
-    tournament: tournamentId
+    tournament: tournamentId,
+    shiro_score: 0,
+    aka_score: 0,
+    status: FightStatus.Prepared
 },
 {
     aka_team: 1021,
     shiro_team: 1022,
     id: 111,
-    tournament: tournamentId
+    tournament: tournamentId,
+    shiro_score: 0,
+    aka_score: 0,
+    status: FightStatus.Prepared
 },
 {
     aka_team: 1023,
     shiro_team: 1024,
     id: 112,
-    tournament: tournamentId
+    tournament: tournamentId,
+    shiro_score: 0,
+    aka_score: 0,
+    status: FightStatus.Prepared
 },
 {
     aka_team: 1025,
     shiro_team: 1026,
     id: 113,
-    tournament: tournamentId
+    tournament: tournamentId,
+    shiro_score: 0,
+    aka_score: 0,
+    status: FightStatus.Prepared
 },
 {
     aka_team: 1027,
     shiro_team: 1028,
     id: 114,
-    tournament: tournamentId
+    tournament: tournamentId,
+    shiro_score: 0,
+    aka_score: 0,
+    status: FightStatus.Prepared
 },
 {
     aka_team: 1029,
     shiro_team: 1030,
     id: 115,
-    tournament: tournamentId
+    tournament: tournamentId,
+    shiro_score: 0,
+    aka_score: 0,
+    status: FightStatus.Prepared
 },
 {
     aka_team: 1031,
     shiro_team: 1032,
     id: 116,
-    tournament: tournamentId
+    tournament: tournamentId,
+    shiro_score: 0,
+    aka_score: 0,
+    status: FightStatus.Prepared
 },
 {
     aka_team: 1033,
     shiro_team: 1034,
     id: 117,
-    tournament: tournamentId
+    tournament: tournamentId,
+    shiro_score: 0,
+    aka_score: 0,
+    status: FightStatus.Prepared
 },
 {
     aka_team: 1035,
     shiro_team: 1036,
     id: 118,
-    tournament: tournamentId
+    tournament: tournamentId,
+    shiro_score: 0,
+    aka_score: 0,
+    status: FightStatus.Prepared
 },
 {
     aka_team: 1037,
     shiro_team: 1038,
     id: 119,
-    tournament: tournamentId
+    tournament: tournamentId,
+    shiro_score: 0,
+    aka_score: 0,
+    status: FightStatus.Prepared
 },
 {
     aka_team: 1039,
     shiro_team: 1040,
     id: 120,
-    tournament: tournamentId
+    tournament: tournamentId,
+    shiro_score: 0,
+    aka_score: 0,
+    status: FightStatus.Prepared
 },
 {
     aka_team: 1041,
     shiro_team: 1042,
     id: 121,
-    tournament: tournamentId
+    tournament: tournamentId,
+    shiro_score: 0,
+    aka_score: 0,
+    status: FightStatus.Prepared
 },
 {
     aka_team: 1043,
     shiro_team: 1044,
     id: 122,
-    tournament: tournamentId
+    tournament: tournamentId,
+    shiro_score: 0,
+    aka_score: 0,
+    status: FightStatus.Prepared
 },
 {
     aka_team: 1045,
     shiro_team: 1046,
     id: 123,
-    tournament: tournamentId
+    tournament: tournamentId,
+    shiro_score: 0,
+    aka_score: 0,
+    status: FightStatus.Prepared
 },
 {
     aka_team: 1047,
     shiro_team: 1048,
     id: 124,
-    tournament: tournamentId
+    tournament: tournamentId,
+    shiro_score: 0,
+    aka_score: 0,
+    status: FightStatus.Prepared
 },
 {
     aka_team: 1049,
     shiro_team: 1050,
     id: 125,
-    tournament: tournamentId
+    tournament: tournamentId,
+    shiro_score: 0,
+    aka_score: 0,
+    status: FightStatus.Prepared
 },
 {
     aka_team: 1051,
     shiro_team: 1052,
     id: 126,
-    tournament: tournamentId
+    tournament: tournamentId,
+    shiro_score: 0,
+    aka_score: 0,
+    status: FightStatus.Prepared
 },
 {
     aka_team: 1053,
     shiro_team: 1054,
     id: 127,
-    tournament: tournamentId
+    tournament: tournamentId,
+    shiro_score: 0,
+    aka_score: 0,
+    status: FightStatus.Prepared
 },
 {
     aka_team: 1055,
     shiro_team: 1056,
     id: 128,
-    tournament: tournamentId
+    tournament: tournamentId,
+    shiro_score: 0,
+    aka_score: 0,
+    status: FightStatus.Prepared
 },
 {
     aka_team: 1057,
     shiro_team: 1058,
     id: 129,
-    tournament: tournamentId
+    tournament: tournamentId,
+    shiro_score: 0,
+    aka_score: 0,
+    status: FightStatus.Prepared
 },
 {
     aka_team: 1059,
     shiro_team: 1060,
     id: 130,
-    tournament: tournamentId
+    tournament: tournamentId,
+    shiro_score: 0,
+    aka_score: 0,
+    status: FightStatus.Prepared
 },
 {
     aka_team: 1061,
     shiro_team: 1062,
     id: 131,
-    tournament: tournamentId
+    tournament: tournamentId,
+    shiro_score: 0,
+    aka_score: 0,
+    status: FightStatus.Prepared
 }]
 
 

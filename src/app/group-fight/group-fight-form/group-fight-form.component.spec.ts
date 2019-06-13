@@ -14,6 +14,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { GroupFightService } from '../group-fight.service';
 import { By } from '@angular/platform-browser';
 import { TeamServiceSpy } from '../../team/team.service.spy';
+import { FightStatus } from '../../fight-status';
 
 
 describe('GroupFightFormComponent', () => {
@@ -47,7 +48,10 @@ describe('GroupFightFormComponent', () => {
     aka_team: teams[0].id,
     shiro_team: teams[2].id,
     id: teamFightId,
-    tournament: tournamentId
+    tournament: tournamentId,
+    shiro_score: 0,
+    aka_score: 0,
+    status: FightStatus.Prepared
   }
 
   let component: GroupFightFormComponent;
