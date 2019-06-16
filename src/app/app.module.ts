@@ -85,6 +85,7 @@ import { CupPhaseFullComponent } from './cup-phase/cup-phase-full/cup-phase-full
 import { CupFightTileComponent } from './cup-fight/cup-fight-tile/cup-fight-tile.component';
 import { CupCreationComponent } from './cup-phase/cup-creation/cup-creation.component';
 import { CupSideComponent } from './cup-phase/cup-side/cup-side.component';
+import { GroupMemberListComponent } from './group-member/group-member-list/group-member-list.component';
 
 
 @NgModule({
@@ -152,7 +153,8 @@ import { CupSideComponent } from './cup-phase/cup-side/cup-side.component';
     CupPhaseFullComponent,
     CupFightTileComponent,
     CupCreationComponent,
-    CupSideComponent
+    CupSideComponent,
+    GroupMemberListComponent
   ],
   providers: [
     PlayerService,
