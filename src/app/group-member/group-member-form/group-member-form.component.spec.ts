@@ -115,7 +115,8 @@ describe('GroupMemberFormComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         GroupMemberFormComponent,
-        GroupMemberLineComponent],
+        GroupMemberLineComponent,
+        GroupMemberListComponent],
       providers: [
         { provide: GroupMemberService, useValue: groupMemberService },
       ],

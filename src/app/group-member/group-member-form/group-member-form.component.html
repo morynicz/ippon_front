@@ -14,7 +14,8 @@
                 </div>
               </a>
             </h1>
-            <button class="col btn btn-primary" (click)="addMember(team)" id="add-member-{{team.id}}" i18n>Add member</button>
+            <button class="col btn btn-primary" (click)="addMember(team)" id="add-member-{{team.id}}" i18n>Add
+              member</button>
           </div>
         </li>
       </ul>
@@ -24,13 +25,9 @@
 <div class="row">
   <div class="col">
     <h3 class="card-title display-4" i18n>Member teams</h3>
-    <div class="row" id="assigned-teams">
-      <ul class="list-group col">
-        <li *ngFor="let team of assignedTeams" class="list-group-item">
-          <ippon-group-member-line [team]="team" [isAuthorized]="true" [group]="group" (reloadRequest)="reloadTeams()">
-          </ippon-group-member-line>
-        </li>
-      </ul>
+    <div id="assigned-teams">
+      <ippon-group-member-list [teams]="assignedTeams" [isAuthorized]="true" [groupId]="group"
+        (reloadRequest)="reloadTeams()"></ippon-group-member-list>
     </div>
   </div>
 </div>
