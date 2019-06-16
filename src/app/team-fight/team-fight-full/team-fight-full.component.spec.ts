@@ -26,6 +26,7 @@ import { TeamMemberService } from '../../team/team-member.service';
 import { PlayerServiceSpy } from '../../player/player.service.spy';
 import { FightStatus } from '../../fight-status';
 import { FightWinner } from '../../fight-result';
+import { By } from '@angular/platform-browser';
 
 const teamFightId: number = 13;
 const akaTeamId: number = 15;
@@ -216,7 +217,7 @@ describe('TeamFightFullComponent', () => {
     });
 
     it("should not show form for creating new fights", () => {
-      expect(html.querySelector('#add-point-form')).toBeFalsy();
+      expect(html.querySelector('#add-fight-form')).toBeFalsy();
     });
   });
 
@@ -229,8 +230,56 @@ describe('TeamFightFullComponent', () => {
       html = fixture.debugElement.nativeElement;
     });
 
-    it("should display form for adding new points", () => {
+    it("should display form for adding new fights", () => {
       expect(html.querySelector('#add-fight-form')).toBeTruthy();
+    });
+
+    it("should allow setting aka as the winner", () => {
+      let button = fixture.debugElement.query(By.css('#winner-selection-aka'));
+      button.triggerEventHandler('change', { target: button.nativeElement });
+      let fightWonByAka: TeamFight = { ...teamFight };
+      fightWonByAka.result = FightWinner.Aka;
+      expect(teamFightService.updateValue).toEqual(fightWonByAka);
+    });
+
+    it("should allow setting shiro as the winner", () => {
+      let button = fixture.debugElement.query(By.css('#winner-selection-shiro'));
+      button.triggerEventHandler('change', { target: button.nativeElement });
+      let fightWonByShiro: TeamFight = { ...teamFight };
+      fightWonByShiro.result = FightWinner.Shiro;
+      expect(teamFightService.updateValue).toEqual(fightWonByShiro);
+    });
+
+    it("should allow setting none as the winner", () => {
+      let button = fixture.debugElement.query(By.css('#winner-selection-none'));
+      button.triggerEventHandler('change', { target: button.nativeElement });
+      let fightWonByNone: TeamFight = { ...teamFight };
+      fightWonByNone.result = FightWinner.None;
+      expect(teamFightService.updateValue).toEqual(fightWonByNone);
+    });
+
+    it("should allow setting fight as started", () => {
+      let button = fixture.debugElement.query(By.css('#status-selection-started'));
+      button.triggerEventHandler('change', { target: button.nativeElement });
+      let fightStarted: TeamFight = { ...teamFight };
+      fightStarted.status = FightStatus.Started;
+      expect(teamFightService.updateValue).toEqual(fightStarted);
+    });
+
+    it("should allow setting fight as prepared", () => {
+      let button = fixture.debugElement.query(By.css('#status-selection-prepared'));
+      button.triggerEventHandler('change', { target: button.nativeElement });
+      let fightPrepared: TeamFight = { ...teamFight };
+      fightPrepared.status = FightStatus.Prepared;
+      expect(teamFightService.updateValue).toEqual(fightPrepared);
+    });
+
+    it("should allow setting fight as finished", () => {
+      let button = fixture.debugElement.query(By.css('#status-selection-finished'));
+      button.triggerEventHandler('change', { target: button.nativeElement });
+      let fightFinished: TeamFight = { ...teamFight };
+      fightFinished.status = FightStatus.Finished;
+      expect(teamFightService.updateValue).toEqual(fightFinished);
     });
 
     describe("when reloadFights() method is called", () => {

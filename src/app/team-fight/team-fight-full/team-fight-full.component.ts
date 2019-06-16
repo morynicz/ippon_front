@@ -52,4 +52,8 @@ export class TeamFightFullComponent implements OnInit {
     this.loadFights();
   }
 
+  updateFight(): void {
+    this.teamfightService.update(this.teamFight).subscribe(() => this.reload());
+  }
+
 }

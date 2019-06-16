@@ -15,6 +15,43 @@
   </ul>
 </div>
 <div *ngIf="isAdmin == true">
-  <ippon-fight-form id="add-fight-form" [akaPlayers]="akaTeamMembers" [shiroPlayers]="shiroTeamMembers" [teamFight]="teamFight.id"
-    (reloadRequest)="reload()"></ippon-fight-form>
+  <ippon-fight-form id="add-fight-form" [akaPlayers]="akaTeamMembers" [shiroPlayers]="shiroTeamMembers"
+    [teamFight]="teamFight.id" (reloadRequest)="reload()"></ippon-fight-form>
+  Winner
+  <div class="row">
+    <div class="col">
+      <label for="winner-selection-aka" i18n> <input type="radio" [(ngModel)]="teamFight.result" name="winner-selection"
+          id="winner-selection-aka" [value]=1 [checked]="1===teamFight.result" (ngModelChange)="updateFight()">
+        Aka</label>
+    </div>
+    <div class="col">
+      <label for="winner-selection-none" i18n><input type="radio" [(ngModel)]="teamFight.result" name="winner-selection"
+          id="winner-selection-none" [value]=0 [checked]="0===teamFight.result"
+          (ngModelChange)="updateFight()">None</label>
+    </div>
+    <div class="col">
+      <label for="winner-selection-shiro">
+        <input type="radio" [(ngModel)]="teamFight.result" name="winner-selection" id="winner-selection-shiro" [value]=2
+          [checked]="2===teamFight.result" (ngModelChange)="updateFight()">Shiro</label>
+    </div>
+  </div>
+  State
+  <div class="row">
+    <div class="col">
+      <label for="state-selection-prepared" i18n> <input type="radio" [(ngModel)]="teamFight.status"
+          name="status-selection" id="status-selection-prepared" [value]=0 [checked]="0===teamFight.status"
+          (ngModelChange)="updateFight()">
+        Pepared</label>
+    </div>
+    <div class="col">
+      <label for="status-selection-started" i18n><input type="radio" [(ngModel)]="teamFight.status"
+          name="status-selection" id="status-selection-started" [value]=1 [checked]="1===teamFight.status"
+          (ngModelChange)="updateFight()">Started</label>
+    </div>
+    <div class="col">
+      <label for="status-selection-finished">
+        <input type="radio" [(ngModel)]="teamFight.status" name="status-selection" id="status-selection-finished"
+          [value]=2 [checked]="2===teamFight.status" (ngModelChange)="updateFight()">Finished</label>
+    </div>
+  </div>
 </div>
