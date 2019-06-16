@@ -79,17 +79,19 @@ describe('GroupMemberListComponent', () => {
       fixture.detectChanges();
       component.teams = teams;
     });
-    it("should reload content", () => {
-      expect(html).toContain(1);
-      expect(html).toContain(2);
-      expect(html).toContain(3);
-      expect(html).toContain(4);
-      expect(html).toContain(5);
-      expect(html).toContain(6);
-      expect(html).toContain(7);
-      expect(html).toContain(8);
-      expect(html).toContain(9);
-    });
+    it("should reload content", async(() => {
+      fixture.whenStable().then(() => {
+        expect(html).toContain(1);
+        expect(html).toContain(2);
+        expect(html).toContain(3);
+        expect(html).toContain(4);
+        expect(html).toContain(5);
+        expect(html).toContain(6);
+        expect(html).toContain(7);
+        expect(html).toContain(8);
+        expect(html).toContain(9);
+      });
+    }));
   });
 
   describe("when initial values are correct", () => {
