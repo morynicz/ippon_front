@@ -11,6 +11,7 @@ import { TeamService } from '../../team/team.service';
 import { TeamFightService } from '../team-fight.service';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FightStatus } from '../../fight-status';
+import { FightWinner } from '../../fight-result';
 
 const teamFightId: number = 13;
 const akaTeamId: number = 15;
@@ -22,9 +23,10 @@ const teamFight: TeamFight = {
   aka_team: akaTeamId,
   shiro_team: shiroTeamId,
   tournament: tournamentId,
-  shiro_score: 0,
-  aka_score: 0,
-  status: FightStatus.Prepared
+  shiro_score: 1,
+  aka_score: 3,
+  status: FightStatus.Finished,
+  result: FightWinner.Shiro
 }
 
 const shiroTeam: Team = {
@@ -79,14 +81,26 @@ describe('TeamFightLineComponent', () => {
     });
 
     it('shows aka team name on aka team side', () => {
-      let akaTeamSide = de.query(By.css("#aka-team"));
-      expect(akaTeamSide.nativeElement.textContent).toContain(akaTeam.name);
+      let teamSide = de.query(By.css("#aka-team"));
+      expect(teamSide.nativeElement.textContent).toContain(akaTeam.name);
     });
 
-    it('shows shiro team name on shiro team side', () => {
-      let akaTeamSide = de.query(By.css("#shiro-team"));
-      expect(akaTeamSide.nativeElement.textContent).toContain(shiroTeam.name);
+    it('shows aka team score on aka team side', () => {
+      let teamSide = de.query(By.css("#aka-team"));
+      expect(teamSide.nativeElement.textContent).toContain(teamFight.aka_score);
     });
+
+
+    it('shows shiro team name on shiro team side', () => {
+      let teamSide = de.query(By.css("#shiro-team"));
+      expect(teamSide.nativeElement.textContent).toContain(shiroTeam.name);
+    });
+
+    it('shows shiro team score on shiro team side', () => {
+      let teamSide = de.query(By.css("#shiro-team"));
+      expect(teamSide.nativeElement.textContent).toContain(teamFight.shiro_score);
+    });
+
 
     it('does not show delete button when user not authorized', () => {
       const html = fixture.debugElement.nativeElement;

@@ -3,8 +3,6 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FightFormComponent } from './fight-form.component';
 import { TeamFight } from '../../team-fight/team-fight';
 import { Player } from '../../player/player';
-import { Sex } from '../../sex';
-import { Rank } from '../../rank';
 import { Team } from '../../team/team';
 import { PlayerLineComponent } from '../../player/player-line/player-line.component';
 import { FormsModule } from '@angular/forms';
@@ -14,6 +12,7 @@ import { By } from '@angular/platform-browser';
 import { FightService } from '../fight.service';
 import { FightServiceSpy } from '../fight.service.spy';
 import { FightStatus } from '../../fight-status';
+import { FightWinner } from '../../fight-result';
 
 const akaTeamId: number = 15;
 const shiroTeamId: number = 74;
@@ -26,7 +25,8 @@ const teamFight: TeamFight = {
   tournament: tournamentId,
   shiro_score: 0,
   aka_score: 0,
-  status: FightStatus.Prepared
+  status: FightStatus.Prepared,
+  result: FightWinner.None
 }
 
 const akaPlayers: Player[] = [{
@@ -51,19 +51,7 @@ const shiroPlayers: Player[] = [{
   id: 4
 }];
 
-const shiroTeam: Team = {
-  id: 22,
-  name: "T1",
-  members: [shiroPlayers[0].id, shiroPlayers[1].id],
-  tournament: tournamentId
-}
 
-const akaTeam: Team = {
-  id: 22,
-  name: "T2",
-  members: [akaPlayers[0].id, akaPlayers[1].id],
-  tournament: tournamentId
-}
 
 function expectFightsToEqual(lhs: Fight, rhs: Fight): void {
   expect(lhs.id).toEqual(rhs.id);
@@ -106,7 +94,7 @@ describe('FightFormComponent', () => {
     component.shiroPlayers = shiroPlayers;
     component.akaPlayers = akaPlayers;
     component.teamFight = teamFight.id;
-    component.reloadRequest.subscribe(req => {
+    component.reloadRequest.subscribe(() => {
       reloadRequested = true;
     });
     fixture.detectChanges();

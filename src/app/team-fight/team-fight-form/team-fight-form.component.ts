@@ -2,6 +2,8 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Team } from '../../team/team';
 import { TeamFight } from '../team-fight';
 import { TeamFightService } from '../team-fight.service';
+import { FightStatus } from '../../fight-status';
+import { FightWinner } from '../../fight-result';
 
 @Component({
   selector: 'ippon-team-fight-form',
@@ -16,6 +18,10 @@ export class TeamFightFormComponent implements OnInit {
   teamFight: TeamFight;
   constructor(private teamFightService: TeamFightService) {
     this.teamFight = new TeamFight();
+    this.teamFight.aka_score = 0;
+    this.teamFight.shiro_score = 0;
+    this.teamFight.status = FightStatus.Prepared;
+    this.teamFight.result = FightWinner.None;
   }
 
   ngOnInit() {

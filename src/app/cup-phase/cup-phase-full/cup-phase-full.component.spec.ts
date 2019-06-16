@@ -19,7 +19,6 @@ import { CupPhaseService } from '../cup-phase.service';
 import { By } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { CupFightTileComponent } from '../../cup-fight/cup-fight-tile/cup-fight-tile.component';
-import { JsonPipe } from '@angular/common';
 import { CupCreationComponent } from '../cup-creation/cup-creation.component';
 import { CupSideComponent } from '../cup-side/cup-side.component';
 

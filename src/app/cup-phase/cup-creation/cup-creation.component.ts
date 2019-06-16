@@ -9,6 +9,7 @@ import { Team } from '../../team/team';
 import { forkJoin, Observable } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
 import { FightStatus } from '../../fight-status';
+import { FightWinner } from '../../fight-result';
 
 class TeamId {
   id: number = 0;
@@ -62,7 +63,8 @@ export class CupCreationComponent implements OnInit {
         id: 0,
         shiro_score: 0,
         aka_score: 0,
-        status: FightStatus.Prepared
+        status: FightStatus.Prepared,
+        result: FightWinner.None
       }).pipe(mergeMap<TeamFight, Observable<CupFight>>((resp: TeamFight) => {
         let teamFight: TeamFight = resp;
         return this.cupFightService.add({

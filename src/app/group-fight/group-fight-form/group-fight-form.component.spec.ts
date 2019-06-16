@@ -15,6 +15,7 @@ import { GroupFightService } from '../group-fight.service';
 import { By } from '@angular/platform-browser';
 import { TeamServiceSpy } from '../../team/team.service.spy';
 import { FightStatus } from '../../fight-status';
+import { FightWinner } from '../../fight-result';
 
 
 describe('GroupFightFormComponent', () => {
@@ -51,7 +52,8 @@ describe('GroupFightFormComponent', () => {
     tournament: tournamentId,
     shiro_score: 0,
     aka_score: 0,
-    status: FightStatus.Prepared
+    status: FightStatus.Prepared,
+    result: FightWinner.None
   }
 
   let component: GroupFightFormComponent;

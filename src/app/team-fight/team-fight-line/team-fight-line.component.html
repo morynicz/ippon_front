@@ -3,10 +3,10 @@
     <a routerLink="/team-fights/{{teamFight.id}}">
       <div class="row">
         <div class="col" id="aka-team">
-          {{akaTeam.name}}
+          {{akaTeam.name}} {{teamFight.aka_score}}
         </div>
         <div class="col" id="shiro-team">
-          {{shiroTeam.name}}
+          {{teamFight.shiro_score}} {{shiroTeam.name}}
         </div>
       </div>
     </a>

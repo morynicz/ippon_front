@@ -20,8 +20,8 @@ const team: Team = {
 }
 
 const member: GroupMember = {
-  'team': teamId,
-  'group': groupId
+  team: teamId,
+  group: groupId
 }
 
 describe('GroupMemberLineComponent', () => {

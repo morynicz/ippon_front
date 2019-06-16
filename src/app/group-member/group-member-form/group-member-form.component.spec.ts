@@ -170,8 +170,8 @@ describe('GroupMemberFormComponent', () => {
 
     it("sends request to create member with selected team", () => {
       let member: GroupMember = {
-        'group': groupId,
-        'team': unassignedTeams[0].id
+        group: groupId,
+        team: unassignedTeams[0].id
       }
       expect(groupMemberService.addValue).toEqual(member);
     });
@@ -197,8 +197,8 @@ describe('GroupMemberFormComponent', () => {
 
     it("sends request to remove member with selected team", () => {
       let member: GroupMember = {
-        'group': groupId,
-        'team': assignedTeams[0].id
+        group: groupId,
+        team: assignedTeams[0].id
       }
       expect(groupMemberService.deleteValue).toEqual(member);
     });

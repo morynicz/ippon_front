@@ -25,6 +25,7 @@ import { TeamMemberServiceSpy } from '../../team/team-member.service.spy';
 import { TeamMemberService } from '../../team/team-member.service';
 import { PlayerServiceSpy } from '../../player/player.service.spy';
 import { FightStatus } from '../../fight-status';
+import { FightWinner } from '../../fight-result';
 
 const teamFightId: number = 13;
 const akaTeamId: number = 15;
@@ -38,7 +39,8 @@ const teamFight: TeamFight = {
   tournament: tournamentId,
   shiro_score: 0,
   aka_score: 0,
-  status: FightStatus.Prepared
+  status: FightStatus.Prepared,
+  result: FightWinner.None
 }
 
 const akaPlayers: Player[] = [{

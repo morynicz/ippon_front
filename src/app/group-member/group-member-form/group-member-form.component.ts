@@ -26,8 +26,8 @@ export class GroupMemberFormComponent implements OnInit {
 
   private addMember(team: Team): void {
     let member: GroupMember = {
-      "group": this.group,
-      "team": team.id
+      group: this.group,
+      team: team.id
     }
     this.groupMemberService.add(member)
       .subscribe(result => this.reloadRequest.emit(''));
@@ -35,8 +35,8 @@ export class GroupMemberFormComponent implements OnInit {
 
   private removeMember(team: Team): void {
     let member: GroupMember = {
-      "group": this.group,
-      "team": team.id
+      group: this.group,
+      team: team.id
     }
     this.groupMemberService.delete(member)
       .subscribe(result => this.reloadRequest.emit(''));

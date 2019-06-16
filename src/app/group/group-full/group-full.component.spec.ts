@@ -59,7 +59,8 @@ describe('GroupFullComponent', () => {
     tournament: tournamentId,
     shiro_score: 0,
     aka_score: 0,
-    status: FightStatus.Prepared
+    status: FightStatus.Prepared,
+    result: FightWinner.None
   }
 
   const groupFightId: number = 768;

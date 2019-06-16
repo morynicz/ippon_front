@@ -21,8 +21,8 @@ export class GroupMemberLineComponent implements OnInit {
 
   deleteGroupMember(): void {
     let groupMember: GroupMember = {
-      'group': this.group,
-      'team': this.team.id
+      group: this.group,
+      team: this.team.id
     }
     this.groupMemberService.delete(groupMember)
       .subscribe(resp => this.reloadRequest.emit(''));

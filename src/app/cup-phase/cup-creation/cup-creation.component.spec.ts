@@ -14,6 +14,7 @@ import { JsonPipe } from '@angular/common';
 import { CupPhase } from '../cup-phase';
 import { FormsModule } from '@angular/forms';
 import { FightStatus } from '../../fight-status';
+import { FightWinner } from '../../fight-result';
 
 
 
@@ -102,9 +103,6 @@ class CrdlaServiceSpyWithMemory<Resource extends Identifiable> {
     this.addValues.push(added);
     let addedCopy: Resource = { ...added };
     addedCopy.id = this.addReturnIdValues.shift();
-    // console.log("add. current:");
-    // console.log(this.resources);
-    // console.log("adding " + pipe.transform(addedCopy));
     this.resources.set(addedCopy.id, addedCopy);
     return of(addedCopy);
   }
@@ -119,9 +117,6 @@ class CrdlaServiceSpyWithMemory<Resource extends Identifiable> {
   getList(id: number): Observable<Resource[]> {
     this.getListValues.push(id);
     let arr = Array.from(this.resources.values());
-    // console.log("get list. current");
-    // console.log(this.resources);
-    // console.log("returning list: " + pipe.transform(arr));
     return of(arr);
   }
 }
@@ -267,7 +262,8 @@ describe('CupCreationComponent', () => {
         tournament: tournamentId,
         shiro_score: 0,
         aka_score: 0,
-        status: FightStatus.Prepared
+        status: FightStatus.Prepared,
+        result: FightWinner.None
       }
       let expectedCupFight: CupFight = {
         id: 0,
@@ -318,7 +314,8 @@ describe('CupCreationComponent', () => {
         tournament: tournamentId,
         shiro_score: 0,
         aka_score: 0,
-        status: FightStatus.Prepared
+        status: FightStatus.Prepared,
+        result: FightWinner.None
       },
       {
         id: 0,
@@ -327,7 +324,8 @@ describe('CupCreationComponent', () => {
         tournament: tournamentId,
         shiro_score: 0,
         aka_score: 0,
-        status: FightStatus.Prepared
+        status: FightStatus.Prepared,
+        result: FightWinner.None
       },
       {
         id: 0,
@@ -336,7 +334,8 @@ describe('CupCreationComponent', () => {
         tournament: tournamentId,
         shiro_score: 0,
         aka_score: 0,
-        status: FightStatus.Prepared
+        status: FightStatus.Prepared,
+        result: FightWinner.None
       },
       {
         id: 0,
@@ -345,7 +344,8 @@ describe('CupCreationComponent', () => {
         tournament: tournamentId,
         shiro_score: 0,
         aka_score: 0,
-        status: FightStatus.Prepared
+        status: FightStatus.Prepared,
+        result: FightWinner.None
       }];
       let expectedCupFights: CupFight[] = [
         {
