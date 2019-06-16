@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { Team } from '../../team/team';
 import { GroupMemberService, MemberScore } from '../group-member.service';
 
@@ -8,7 +8,7 @@ import { GroupMemberService, MemberScore } from '../group-member.service';
   templateUrl: './group-member-list.component.html',
   styleUrls: ['./group-member-list.component.css']
 })
-export class GroupMemberListComponent implements OnInit {
+export class GroupMemberListComponent implements OnInit, OnChanges {
   @Input() teams: Team[];
   @Input() groupId: number;
   @Input() isAuthorized: boolean = false;
@@ -18,10 +18,15 @@ export class GroupMemberListComponent implements OnInit {
   constructor(private groupMemberService: GroupMemberService) { }
 
   ngOnInit() {
+    this.loadTeamScores();
+  }
+
+  ngOnChanges() {
+    this.loadTeamScores();
+  }
+  private loadTeamScores() {
     this.teams.forEach(team => {
-      this.groupMemberService.getScore({ group: this.groupId, team: team.id }).subscribe(
-        (resp: MemberScore) => this.teamScores.set(team.id, resp)
-      );
+      this.groupMemberService.getScore({ group: this.groupId, team: team.id }).subscribe((resp: MemberScore) => this.teamScores.set(team.id, resp));
     });
   }
 

@@ -43,9 +43,6 @@ describe('GroupMemberListComponent', () => {
 
   beforeEach(async(() => {
     groupMemberService = new GroupMemberServiceSpy();
-    groupMemberService.getListReturnValue.push(teams);
-    groupMemberService.getListReturnValue.push(teams);
-    groupMemberService.getListReturnValue.push(teams);
     groupMemberService.getScoreReturnValues.set(teams[0].id, { wins: 1, draws: 2, points: 3 });
     groupMemberService.getScoreReturnValues.set(teams[1].id, { wins: 4, draws: 5, points: 6 });
     groupMemberService.getScoreReturnValues.set(teams[2].id, { wins: 7, draws: 8, points: 9 });
@@ -69,85 +66,106 @@ describe('GroupMemberListComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(GroupMemberListComponent);
     component = fixture.componentInstance;
-    component.teams = teams;
     component.groupId = groupId;
     component.reloadRequest.subscribe(() => {
       reloadRequested = true;
     });
   });
 
-
-  describe("when user is not authorized", () => {
+  describe("when initial values are empty and then input changes", () => {
     beforeEach(() => {
+      component.teams = [];
       component.isAuthorized = false;
       fixture.detectChanges();
-      html = fixture.debugElement.nativeElement.textContent;
+      component.teams = teams;
     });
-
-    it('should create', () => {
-      expect(component).toBeTruthy();
-    });
-
-    it("should show names of all teams in group inside designated area", async(() => {
-      fixture.whenStable().then(() => {
-        expect(html).toContain(teams[0].name);
-        expect(html).toContain(teams[1].name);
-        expect(html).toContain(teams[2].name);
-      });
-    }));
-
-    it("should show scores of all teams in group inside designated area", async(() => {
-      fixture.whenStable().then(() => {
-        expect(html).toContain(1);
-        expect(html).toContain(2);
-        expect(html).toContain(3);
-        expect(html).toContain(4);
-        expect(html).toContain(5);
-        expect(html).toContain(6);
-        expect(html).toContain(7);
-        expect(html).toContain(8);
-        expect(html).toContain(9);
-      });
-    }));
-
-    it("should not show fight deletion buttons", () => {
-      expect(html).not.toContain("Delete");
+    it("should reload content", () => {
+      expect(html).toContain(1);
+      expect(html).toContain(2);
+      expect(html).toContain(3);
+      expect(html).toContain(4);
+      expect(html).toContain(5);
+      expect(html).toContain(6);
+      expect(html).toContain(7);
+      expect(html).toContain(8);
+      expect(html).toContain(9);
     });
   });
 
-  describe("when user is authorized", () => {
+  describe("when initial values are correct", () => {
     beforeEach(() => {
-      component.isAuthorized = true;
-      fixture.detectChanges();
-      html = fixture.debugElement.nativeElement.textContent;
+      component.teams = teams;
+    });
+    describe("when user is not authorized", () => {
+      beforeEach(() => {
+        component.isAuthorized = false;
+        fixture.detectChanges();
+        html = fixture.debugElement.nativeElement.textContent;
+      });
+
+      it('should create', () => {
+        expect(component).toBeTruthy();
+      });
+
+      it("should show names of all teams in group inside designated area", async(() => {
+        fixture.whenStable().then(() => {
+          expect(html).toContain(teams[0].name);
+          expect(html).toContain(teams[1].name);
+          expect(html).toContain(teams[2].name);
+        });
+      }));
+
+      it("should show scores of all teams in group inside designated area", async(() => {
+        fixture.whenStable().then(() => {
+          expect(html).toContain(1);
+          expect(html).toContain(2);
+          expect(html).toContain(3);
+          expect(html).toContain(4);
+          expect(html).toContain(5);
+          expect(html).toContain(6);
+          expect(html).toContain(7);
+          expect(html).toContain(8);
+          expect(html).toContain(9);
+        });
+      }));
+
+      it("should not show fight deletion buttons", () => {
+        expect(html).not.toContain("Delete");
+      });
     });
 
-    it("should show fight deletion buttons", () => {
-      expect(html).toContain("Delete");
+    describe("when user is authorized", () => {
+      beforeEach(() => {
+        component.isAuthorized = true;
+        fixture.detectChanges();
+        html = fixture.debugElement.nativeElement.textContent;
+      });
+
+      it("should show fight deletion buttons", () => {
+        expect(html).toContain("Delete");
+      });
+
+      it("should show names of all teams in group inside designated area", async(() => {
+        fixture.whenStable().then(() => {
+          expect(html).toContain(teams[0].name);
+          expect(html).toContain(teams[1].name);
+          expect(html).toContain(teams[2].name);
+        });
+      }));
+
+      it("should show scores of all teams in group inside designated area", async(() => {
+        fixture.whenStable().then(() => {
+          expect(html).toContain(1);
+          expect(html).toContain(2);
+          expect(html).toContain(3);
+          expect(html).toContain(4);
+          expect(html).toContain(5);
+          expect(html).toContain(6);
+          expect(html).toContain(7);
+          expect(html).toContain(8);
+          expect(html).toContain(9);
+        });
+      }));
     });
-
-    it("should show names of all teams in group inside designated area", async(() => {
-      fixture.whenStable().then(() => {
-        expect(html).toContain(teams[0].name);
-        expect(html).toContain(teams[1].name);
-        expect(html).toContain(teams[2].name);
-      });
-    }));
-
-    it("should show scores of all teams in group inside designated area", async(() => {
-      fixture.whenStable().then(() => {
-        expect(html).toContain(1);
-        expect(html).toContain(2);
-        expect(html).toContain(3);
-        expect(html).toContain(4);
-        expect(html).toContain(5);
-        expect(html).toContain(6);
-        expect(html).toContain(7);
-        expect(html).toContain(8);
-        expect(html).toContain(9);
-      });
-    }));
-
   });
-
 });
