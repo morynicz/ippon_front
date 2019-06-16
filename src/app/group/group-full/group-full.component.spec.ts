@@ -28,6 +28,7 @@ import { Group } from '../group';
 import { GroupMemberFormComponent } from '../../group-member/group-member-form/group-member-form.component';
 import { FightStatus } from '../../fight-status';
 import { FightWinner } from '../../fight-result';
+import { GroupMemberListComponent } from '../../group-member/group-member-list/group-member-list.component';
 
 describe('GroupFullComponent', () => {
   const tournamentId: number = 32;
@@ -117,7 +118,8 @@ describe('GroupFullComponent', () => {
         TeamFightFormComponent,
         TeamLineComponent,
         GroupMemberLineComponent,
-        GroupMemberFormComponent
+        GroupMemberFormComponent,
+        GroupMemberListComponent
       ],
       providers: [
         { provide: GroupService, useValue: groupService },
