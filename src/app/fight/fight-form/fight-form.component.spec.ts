@@ -12,7 +12,7 @@ import { By } from '@angular/platform-browser';
 import { FightService } from '../fight.service';
 import { FightServiceSpy } from '../fight.service.spy';
 import { FightStatus } from '../../fight-status';
-import { FightWinner } from '../../fight-result';
+import { FightWinner } from '../../fight-winner';
 
 const akaTeamId: number = 15;
 const shiroTeamId: number = 74;
@@ -26,7 +26,7 @@ const teamFight: TeamFight = {
   shiro_score: 0,
   aka_score: 0,
   status: FightStatus.Prepared,
-  result: FightWinner.None
+  winner: FightWinner.None
 }
 
 const akaPlayers: Player[] = [{

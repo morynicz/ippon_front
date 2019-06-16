@@ -9,7 +9,7 @@ import { TeamFightServiceSpy } from '../../team-fight/team-fight.service.spy';
 import { TeamService } from '../../team/team.service';
 import { TeamFightService } from '../../team-fight/team-fight.service';
 import { FightStatus } from '../../fight-status';
-import { FightWinner } from '../../fight-result';
+import { FightWinner } from '../../fight-winner';
 
 const cupFightId: number = 2754;
 const cupPhaseId: number = 478;
@@ -39,7 +39,7 @@ const teamFight: TeamFight = {
   shiro_score: 1,
   aka_score: 0,
   status: FightStatus.Prepared,
-  result: FightWinner.None
+  winner: FightWinner.None
 }
 
 describe('CupFightTileComponent', () => {

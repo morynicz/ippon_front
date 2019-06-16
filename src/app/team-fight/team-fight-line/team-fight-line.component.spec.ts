@@ -11,7 +11,7 @@ import { TeamService } from '../../team/team.service';
 import { TeamFightService } from '../team-fight.service';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FightStatus } from '../../fight-status';
-import { FightWinner } from '../../fight-result';
+import { FightWinner } from '../../fight-winner';
 
 const teamFightId: number = 13;
 const akaTeamId: number = 15;
@@ -26,7 +26,7 @@ const teamFight: TeamFight = {
   shiro_score: 1,
   aka_score: 3,
   status: FightStatus.Finished,
-  result: FightWinner.Shiro
+  winner: FightWinner.Shiro
 }
 
 const shiroTeam: Team = {

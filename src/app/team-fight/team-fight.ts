@@ -1,5 +1,5 @@
 import { FightStatus } from "../fight-status";
-import { FightWinner } from "../fight-result";
+import { FightWinner } from "../fight-winner";
 
 export class TeamFight {
   id: number;
@@ -9,5 +9,5 @@ export class TeamFight {
   shiro_score: number;
   aka_score: number;
   status: FightStatus;
-  result: FightWinner;
+  winner: FightWinner;
 }

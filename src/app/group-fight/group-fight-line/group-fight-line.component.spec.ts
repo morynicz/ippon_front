@@ -15,7 +15,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { GroupFightService } from '../group-fight.service';
 import { By } from '@angular/platform-browser';
 import { FightStatus } from '../../fight-status';
-import { FightWinner } from '../../fight-result';
+import { FightWinner } from '../../fight-winner';
 
 const groupFightId: number = 768;
 const groupId: number = 231;
@@ -32,7 +32,7 @@ const teamFight: TeamFight = {
   shiro_score: 0,
   aka_score: 0,
   status: FightStatus.Prepared,
-  result: FightWinner.None
+  winner: FightWinner.None
 }
 
 const shiroTeam: Team = {

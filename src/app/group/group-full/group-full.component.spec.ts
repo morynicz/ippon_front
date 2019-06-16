@@ -27,7 +27,7 @@ import { GroupMemberLineComponent } from '../../group-member/group-member-line/g
 import { Group } from '../group';
 import { GroupMemberFormComponent } from '../../group-member/group-member-form/group-member-form.component';
 import { FightStatus } from '../../fight-status';
-import { FightWinner } from '../../fight-result';
+import { FightWinner } from '../../fight-winner';
 import { GroupMemberListComponent } from '../../group-member/group-member-list/group-member-list.component';
 
 describe('GroupFullComponent', () => {
@@ -62,7 +62,7 @@ describe('GroupFullComponent', () => {
     shiro_score: 0,
     aka_score: 0,
     status: FightStatus.Prepared,
-    result: FightWinner.None
+    winner: FightWinner.None
   }
 
   const groupFightId: number = 768;

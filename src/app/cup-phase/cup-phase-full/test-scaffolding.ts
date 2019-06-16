@@ -2,7 +2,7 @@ import { CupFight } from "../../cup-fight/cup-fight";
 import { Team } from "../../team/team";
 import { TeamFight } from "../../team-fight/team-fight";
 import { FightStatus } from "../../fight-status";
-import { FightWinner } from "../../fight-result";
+import { FightWinner } from "../../fight-winner";
 
 export const cupPhaseId: number = 78;
 export const tournamentId: number = 32;
@@ -389,7 +389,7 @@ export const teamFights: TeamFight[] = [{
     shiro_score: 0,
     aka_score: 0,
     status: FightStatus.Prepared,
-    result: FightWinner.None
+    winner: FightWinner.None
 },
 {
     aka_team: 1003,
@@ -399,7 +399,7 @@ export const teamFights: TeamFight[] = [{
     shiro_score: 0,
     aka_score: 0,
     status: FightStatus.Prepared,
-    result: FightWinner.None
+    winner: FightWinner.None
 },
 {
     aka_team: 1005,
@@ -409,7 +409,7 @@ export const teamFights: TeamFight[] = [{
     shiro_score: 0,
     aka_score: 0,
     status: FightStatus.Prepared,
-    result: FightWinner.None
+    winner: FightWinner.None
 },
 {
     aka_team: 1007,
@@ -419,7 +419,7 @@ export const teamFights: TeamFight[] = [{
     shiro_score: 0,
     aka_score: 0,
     status: FightStatus.Prepared,
-    result: FightWinner.None
+    winner: FightWinner.None
 },
 {
     aka_team: 1009,
@@ -429,7 +429,7 @@ export const teamFights: TeamFight[] = [{
     shiro_score: 0,
     aka_score: 0,
     status: FightStatus.Prepared,
-    result: FightWinner.None
+    winner: FightWinner.None
 },
 {
     aka_team: 1011,
@@ -439,7 +439,7 @@ export const teamFights: TeamFight[] = [{
     shiro_score: 0,
     aka_score: 0,
     status: FightStatus.Prepared,
-    result: FightWinner.None
+    winner: FightWinner.None
 },
 {
     aka_team: 1013,
@@ -449,7 +449,7 @@ export const teamFights: TeamFight[] = [{
     shiro_score: 0,
     aka_score: 0,
     status: FightStatus.Prepared,
-    result: FightWinner.None
+    winner: FightWinner.None
 },
 {
     aka_team: 1015,
@@ -459,7 +459,7 @@ export const teamFights: TeamFight[] = [{
     shiro_score: 0,
     aka_score: 0,
     status: FightStatus.Prepared,
-    result: FightWinner.None
+    winner: FightWinner.None
 },
 {
     aka_team: 1017,
@@ -469,7 +469,7 @@ export const teamFights: TeamFight[] = [{
     shiro_score: 0,
     aka_score: 0,
     status: FightStatus.Prepared,
-    result: FightWinner.None
+    winner: FightWinner.None
 },
 {
     aka_team: 1019,
@@ -479,7 +479,7 @@ export const teamFights: TeamFight[] = [{
     shiro_score: 0,
     aka_score: 0,
     status: FightStatus.Prepared,
-    result: FightWinner.None
+    winner: FightWinner.None
 },
 {
     aka_team: 1021,
@@ -489,7 +489,7 @@ export const teamFights: TeamFight[] = [{
     shiro_score: 0,
     aka_score: 0,
     status: FightStatus.Prepared,
-    result: FightWinner.None
+    winner: FightWinner.None
 },
 {
     aka_team: 1023,
@@ -499,7 +499,7 @@ export const teamFights: TeamFight[] = [{
     shiro_score: 0,
     aka_score: 0,
     status: FightStatus.Prepared,
-    result: FightWinner.None
+    winner: FightWinner.None
 },
 {
     aka_team: 1025,
@@ -509,7 +509,7 @@ export const teamFights: TeamFight[] = [{
     shiro_score: 0,
     aka_score: 0,
     status: FightStatus.Prepared,
-    result: FightWinner.None
+    winner: FightWinner.None
 },
 {
     aka_team: 1027,
@@ -519,7 +519,7 @@ export const teamFights: TeamFight[] = [{
     shiro_score: 0,
     aka_score: 0,
     status: FightStatus.Prepared,
-    result: FightWinner.None
+    winner: FightWinner.None
 },
 {
     aka_team: 1029,
@@ -529,7 +529,7 @@ export const teamFights: TeamFight[] = [{
     shiro_score: 0,
     aka_score: 0,
     status: FightStatus.Prepared,
-    result: FightWinner.None
+    winner: FightWinner.None
 },
 {
     aka_team: 1031,
@@ -539,7 +539,7 @@ export const teamFights: TeamFight[] = [{
     shiro_score: 0,
     aka_score: 0,
     status: FightStatus.Prepared,
-    result: FightWinner.None
+    winner: FightWinner.None
 },
 {
     aka_team: 1033,
@@ -549,7 +549,7 @@ export const teamFights: TeamFight[] = [{
     shiro_score: 0,
     aka_score: 0,
     status: FightStatus.Prepared,
-    result: FightWinner.None
+    winner: FightWinner.None
 },
 {
     aka_team: 1035,
@@ -559,7 +559,7 @@ export const teamFights: TeamFight[] = [{
     shiro_score: 0,
     aka_score: 0,
     status: FightStatus.Prepared,
-    result: FightWinner.None
+    winner: FightWinner.None
 },
 {
     aka_team: 1037,
@@ -569,7 +569,7 @@ export const teamFights: TeamFight[] = [{
     shiro_score: 0,
     aka_score: 0,
     status: FightStatus.Prepared,
-    result: FightWinner.None
+    winner: FightWinner.None
 },
 {
     aka_team: 1039,
@@ -579,7 +579,7 @@ export const teamFights: TeamFight[] = [{
     shiro_score: 0,
     aka_score: 0,
     status: FightStatus.Prepared,
-    result: FightWinner.None
+    winner: FightWinner.None
 },
 {
     aka_team: 1041,
@@ -589,7 +589,7 @@ export const teamFights: TeamFight[] = [{
     shiro_score: 0,
     aka_score: 0,
     status: FightStatus.Prepared,
-    result: FightWinner.None
+    winner: FightWinner.None
 },
 {
     aka_team: 1043,
@@ -599,7 +599,7 @@ export const teamFights: TeamFight[] = [{
     shiro_score: 0,
     aka_score: 0,
     status: FightStatus.Prepared,
-    result: FightWinner.None
+    winner: FightWinner.None
 },
 {
     aka_team: 1045,
@@ -609,7 +609,7 @@ export const teamFights: TeamFight[] = [{
     shiro_score: 0,
     aka_score: 0,
     status: FightStatus.Prepared,
-    result: FightWinner.None
+    winner: FightWinner.None
 },
 {
     aka_team: 1047,
@@ -619,7 +619,7 @@ export const teamFights: TeamFight[] = [{
     shiro_score: 0,
     aka_score: 0,
     status: FightStatus.Prepared,
-    result: FightWinner.None
+    winner: FightWinner.None
 },
 {
     aka_team: 1049,
@@ -629,7 +629,7 @@ export const teamFights: TeamFight[] = [{
     shiro_score: 0,
     aka_score: 0,
     status: FightStatus.Prepared,
-    result: FightWinner.None
+    winner: FightWinner.None
 },
 {
     aka_team: 1051,
@@ -639,7 +639,7 @@ export const teamFights: TeamFight[] = [{
     shiro_score: 0,
     aka_score: 0,
     status: FightStatus.Prepared,
-    result: FightWinner.None
+    winner: FightWinner.None
 },
 {
     aka_team: 1053,
@@ -649,7 +649,7 @@ export const teamFights: TeamFight[] = [{
     shiro_score: 0,
     aka_score: 0,
     status: FightStatus.Prepared,
-    result: FightWinner.None
+    winner: FightWinner.None
 },
 {
     aka_team: 1055,
@@ -659,7 +659,7 @@ export const teamFights: TeamFight[] = [{
     shiro_score: 0,
     aka_score: 0,
     status: FightStatus.Prepared,
-    result: FightWinner.None
+    winner: FightWinner.None
 },
 {
     aka_team: 1057,
@@ -669,7 +669,7 @@ export const teamFights: TeamFight[] = [{
     shiro_score: 0,
     aka_score: 0,
     status: FightStatus.Prepared,
-    result: FightWinner.None
+    winner: FightWinner.None
 },
 {
     aka_team: 1059,
@@ -679,7 +679,7 @@ export const teamFights: TeamFight[] = [{
     shiro_score: 0,
     aka_score: 0,
     status: FightStatus.Prepared,
-    result: FightWinner.None
+    winner: FightWinner.None
 },
 {
     aka_team: 1061,
@@ -689,7 +689,7 @@ export const teamFights: TeamFight[] = [{
     shiro_score: 0,
     aka_score: 0,
     status: FightStatus.Prepared,
-    result: FightWinner.None
+    winner: FightWinner.None
 }]
 
 

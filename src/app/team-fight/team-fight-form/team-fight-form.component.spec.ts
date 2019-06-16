@@ -11,7 +11,7 @@ import { TeamService } from '../../team/team.service';
 import { TeamFight } from '../team-fight';
 import { By } from '@angular/platform-browser';
 import { FightStatus } from '../../fight-status';
-import { FightWinner } from '../../fight-result';
+import { FightWinner } from '../../fight-winner';
 
 const tournamentId: number = 32;
 const teamFightId: number = 87;
@@ -44,7 +44,7 @@ const teamFight: TeamFight = {
   shiro_score: 0,
   aka_score: 0,
   status: FightStatus.Prepared,
-  result: FightWinner.None
+  winner: FightWinner.None
 }
 
 describe('TeamFightFormComponent', () => {
@@ -110,7 +110,7 @@ describe('TeamFightFormComponent', () => {
       expect(teamFightService.addValue.shiro_team).toEqual(teams[2].id);
       expect(teamFightService.addValue.tournament).toEqual(tournamentId);
       expect(teamFightService.addValue.status).toEqual(FightStatus.Prepared);
-      expect(teamFightService.addValue.result).toEqual(FightWinner.None);
+      expect(teamFightService.addValue.winner).toEqual(FightWinner.None);
       expect(teamFightService.addValue.aka_score).toEqual(0);
       expect(teamFightService.addValue.shiro_score).toEqual(0);
     });
@@ -121,7 +121,7 @@ describe('TeamFightFormComponent', () => {
       expect(createdTeamFight.shiro_team).toEqual(teams[2].id);
       expect(createdTeamFight.tournament).toEqual(tournamentId);
       expect(createdTeamFight.status).toEqual(FightStatus.Prepared);
-      expect(createdTeamFight.result).toEqual(FightWinner.None);
+      expect(createdTeamFight.winner).toEqual(FightWinner.None);
       expect(createdTeamFight.aka_score).toEqual(0);
       expect(createdTeamFight.shiro_score).toEqual(0);
       expect(createdTeamFight.id).toEqual(teamFightId);

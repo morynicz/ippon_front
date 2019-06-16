@@ -9,6 +9,7 @@ import { By } from '@angular/platform-browser';
 import { GroupMember } from '../group-member';
 import { GroupMemberLineComponent } from '../group-member-line/group-member-line.component';
 import { RouterTestingModule } from '@angular/router/testing';
+import { GroupMemberListComponent } from '../group-member-list/group-member-list.component';
 
 const tournamentId: number = 32;
 const groupId: number = 231;

@@ -25,7 +25,7 @@ import { TeamMemberServiceSpy } from '../../team/team-member.service.spy';
 import { TeamMemberService } from '../../team/team-member.service';
 import { PlayerServiceSpy } from '../../player/player.service.spy';
 import { FightStatus } from '../../fight-status';
-import { FightWinner } from '../../fight-result';
+import { FightWinner } from '../../fight-winner';
 import { By } from '@angular/platform-browser';
 
 const teamFightId: number = 13;
@@ -41,7 +41,7 @@ const teamFight: TeamFight = {
   shiro_score: 0,
   aka_score: 0,
   status: FightStatus.Prepared,
-  result: FightWinner.None
+  winner: FightWinner.None
 }
 
 const akaPlayers: Player[] = [{
@@ -238,7 +238,7 @@ describe('TeamFightFullComponent', () => {
       let button = fixture.debugElement.query(By.css('#winner-selection-aka'));
       button.triggerEventHandler('change', { target: button.nativeElement });
       let fightWonByAka: TeamFight = { ...teamFight };
-      fightWonByAka.result = FightWinner.Aka;
+      fightWonByAka.winner = FightWinner.Aka;
       expect(teamFightService.updateValue).toEqual(fightWonByAka);
     });
 
@@ -246,7 +246,7 @@ describe('TeamFightFullComponent', () => {
       let button = fixture.debugElement.query(By.css('#winner-selection-shiro'));
       button.triggerEventHandler('change', { target: button.nativeElement });
       let fightWonByShiro: TeamFight = { ...teamFight };
-      fightWonByShiro.result = FightWinner.Shiro;
+      fightWonByShiro.winner = FightWinner.Shiro;
       expect(teamFightService.updateValue).toEqual(fightWonByShiro);
     });
 
@@ -254,7 +254,7 @@ describe('TeamFightFullComponent', () => {
       let button = fixture.debugElement.query(By.css('#winner-selection-none'));
       button.triggerEventHandler('change', { target: button.nativeElement });
       let fightWonByNone: TeamFight = { ...teamFight };
-      fightWonByNone.result = FightWinner.None;
+      fightWonByNone.winner = FightWinner.None;
       expect(teamFightService.updateValue).toEqual(fightWonByNone);
     });
 
