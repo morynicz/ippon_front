@@ -1,6 +1,6 @@
 import { TestBed, inject } from '@angular/core/testing';
 
-import { GroupMemberService } from './group-member.service';
+import { GroupMemberService, MemberScore } from './group-member.service';
 import { Team } from '../team/team';
 import { IPPON_HOST, GROUPS_ENDPOINT, MEMBERS_ENDPOINT, NOT_ASSIGNED_ENDPOINT } from '../rest-api';
 import { HttpTestingController, HttpClientTestingModule } from '@angular/common/http/testing';
@@ -123,5 +123,19 @@ describe('GroupMemberService', () => {
           .toBe('application/json');
         expect(req.request.method).toBe('DELETE');
       });
+  });
+
+  describe("when get_score is called", () => {
+    it("calls resource api with get method and json content type and returns the score", () => {
+      let expectedScore: MemberScore = { wins: 1, draws: 2, points: 3 };
+      service.getScore(resource).subscribe((resp: MemberScore) => expect(resp).toEqual(expectedScore));
+      const req = backend.expectOne(resourceUrl + 'score');
+      expect(req.request.headers.has('Content-Type'))
+        .toBe(true);
+      expect(req.request.headers.get('Content-Type'))
+        .toBe('application/json');
+      expect(req.request.method).toBe('GET');
+      req.flush(expectedScore);
+    });
   });
 });

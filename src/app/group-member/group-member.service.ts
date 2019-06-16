@@ -10,6 +10,12 @@ const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 }
 
+export class MemberScore {
+  wins: number;
+  draws: number;
+  points: number;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -48,6 +54,10 @@ export class GroupMemberService {
     return this.http.get<Team[]>(
       IPPON_HOST + GROUPS_ENDPOINT + `${id}/` + NOT_ASSIGNED_ENDPOINT, httpOptions)
       .pipe(catchError(this.handleError('getList', [])));
+  }
+
+  getScore(resource: GroupMember): Observable<MemberScore> {
+    return this.http.get<MemberScore>(this.getMemberUrl(resource) + 'score', httpOptions);
   }
 
 

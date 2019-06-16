@@ -6,9 +6,39 @@
     <h4 class="display-4 text-center" i18n>Members</h4>
     <div *ngIf="isAuthorized == false" id="group-members-list" class="row">
       <ul class="list-group col">
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-8" i18n>Name</div>
+            <div class="col-4">
+              <div class="row">
+                <div class="col" i18n>Win</div>
+                <div class="col" i18n>Draw</div>
+                <div class="col" i18n>Points</div>
+              </div>
+            </div>
+          </div>
+        </li>
         <li *ngFor="let team of  teams" class="list-group-item">
-          <ippon-group-member-line [team]="team" [isAuthorized]="false" [group]="group.id" (reloadRequest)="reloadTeams()">
-          </ippon-group-member-line>
+          <div class="row">
+            <div class="col-8">
+              <ippon-group-member-line [team]="team" [isAuthorized]="false" [group]="group.id"
+                (reloadRequest)="reloadTeams()">
+              </ippon-group-member-line>
+            </div>
+            <div class="col-4" *ngIf="teamScores.get(team.id) != undefined">
+              <div class="row">
+                <div class="col">
+                  {{teamScores.get(team.id)?.wins}}
+                </div>
+                <div class="col">
+                  {{teamScores.get(team.id)?.draws}}
+                </div>
+                <div class="col">
+                  {{teamScores.get(team.id)?.points}}
+                </div>
+              </div>
+            </div>
+          </div>
         </li>
       </ul>
     </div>
@@ -29,7 +59,8 @@
     </div>
     <div id="group-fight-management" *ngIf="isAuthorized == true" class="row">
       <div class="col">
-        <ippon-group-fight-form [group]="group.id" [tournament]="tournament" [teams]="teams" (reloadRequest)="reloadFights()"></ippon-group-fight-form>
+        <ippon-group-fight-form [group]="group.id" [tournament]="tournament" [teams]="teams"
+          (reloadRequest)="reloadFights()"></ippon-group-fight-form>
       </div>
     </div>
   </div>

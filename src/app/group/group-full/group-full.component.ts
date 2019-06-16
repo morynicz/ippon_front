@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { GroupMemberService } from '../../group-member/group-member.service';
+import { GroupMemberService, MemberScore } from '../../group-member/group-member.service';
 import { ActivatedRoute } from '@angular/router';
 import { Team } from '../../team/team';
 import { GroupService } from '../group.service';
 import { Group } from '../group';
 import { GroupFight } from '../../group-fight/group-fight';
 import { GroupFightService } from '../../group-fight/group-fight.service';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'ippon-group-full',
@@ -18,6 +19,7 @@ export class GroupFullComponent implements OnInit {
   groupFights: GroupFight[];
   isAuthorized: boolean = false;
   tournament: number;
+  teamScores: Map<number, MemberScore> = new Map<number, MemberScore>();
   constructor(private route: ActivatedRoute,
     private groupMemberService: GroupMemberService,
     private groupService: GroupService,
@@ -47,6 +49,11 @@ export class GroupFullComponent implements OnInit {
         if (this.teams.length > 0) {
           this.tournament = this.teams[0].tournament;
         }
+        this.teams.forEach(team => {
+          this.groupMemberService.getScore({ group: id, team: team.id }).subscribe(
+            (resp: MemberScore) => this.teamScores.set(team.id, resp)
+          );
+        });
       });
   }
 

@@ -3,6 +3,7 @@ import { Team } from "../team/team";
 import { Observable, of } from "rxjs";
 
 import { GroupMember } from "./group-member";
+import { MemberScore } from "./group-member.service";
 
 export class GroupMemberServiceSpy {
     getListReturnValue: Team[][] = [];
@@ -30,5 +31,11 @@ export class GroupMemberServiceSpy {
     delete(resource: GroupMember): Observable<{}> {
         this.deleteValue = resource;
         return of({});
+    }
+    getScoreReturnValues: Map<number, MemberScore> = new Map<number, MemberScore>();
+    getScoreValues: GroupMember[] = [];
+    getScore(member: GroupMember): Observable<MemberScore> {
+        this.getScoreValues.push(member);
+        return of(this.getScoreReturnValues.get(member.team));
     }
 }

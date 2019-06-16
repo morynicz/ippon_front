@@ -27,6 +27,7 @@ import { GroupMemberLineComponent } from '../../group-member/group-member-line/g
 import { Group } from '../group';
 import { GroupMemberFormComponent } from '../../group-member/group-member-form/group-member-form.component';
 import { FightStatus } from '../../fight-status';
+import { FightWinner } from '../../fight-result';
 
 describe('GroupFullComponent', () => {
   const tournamentId: number = 32;
@@ -34,19 +35,19 @@ describe('GroupFullComponent', () => {
   const teams: Team[] = [
     {
       id: 22,
-      name: "T1",
+      name: "TOne",
       members: [],
       tournament: tournamentId
     },
     {
       id: 27,
-      name: "T2",
+      name: "TTwo",
       members: [],
       tournament: tournamentId
     },
     {
-      id: 27,
-      name: "T3",
+      id: 28,
+      name: "TThree",
       members: [],
       tournament: tournamentId
     }
@@ -103,6 +104,10 @@ describe('GroupFullComponent', () => {
     groupMemberService.getListReturnValue.push(teams);
     groupMemberService.getListReturnValue.push(teams);
     groupMemberService.getListReturnValue.push(teams);
+    groupMemberService.getScoreReturnValues.set(teams[0].id, { wins: 1, draws: 2, points: 3 });
+    groupMemberService.getScoreReturnValues.set(teams[1].id, { wins: 4, draws: 5, points: 6 });
+    groupMemberService.getScoreReturnValues.set(teams[2].id, { wins: 7, draws: 8, points: 9 });
+
     TestBed.configureTestingModule({
       declarations: [
         GroupFullComponent,
@@ -155,6 +160,22 @@ describe('GroupFullComponent', () => {
       expect(teamsArea.nativeElement.textContent).toContain(teams[1].name);
       expect(teamsArea.nativeElement.textContent).toContain(teams[2].name);
     });
+
+    it("should show scores of all teams in group inside designated area", async(() => {
+      let teamsArea = fixture.debugElement.query(By.css("#group-members-list"));
+      fixture.whenStable().then(() => {
+        expect(teamsArea.nativeElement.textContent).toContain(1);
+        expect(teamsArea.nativeElement.textContent).toContain(2);
+        expect(teamsArea.nativeElement.textContent).toContain(3);
+        expect(teamsArea.nativeElement.textContent).toContain(4);
+        expect(teamsArea.nativeElement.textContent).toContain(5);
+        expect(teamsArea.nativeElement.textContent).toContain(6);
+        expect(teamsArea.nativeElement.textContent).toContain(7);
+        expect(teamsArea.nativeElement.textContent).toContain(8);
+        expect(teamsArea.nativeElement.textContent).toContain(9);
+      });
+    }));
+
 
     it("should call group service to get rest of group data", () => {
       expect(groupService.getValues).toEqual([groupId]);
