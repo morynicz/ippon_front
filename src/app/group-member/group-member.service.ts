@@ -14,6 +14,7 @@ export class MemberScore {
   wins: number;
   draws: number;
   points: number;
+  id: number;
 }
 
 @Injectable({

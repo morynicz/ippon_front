@@ -127,7 +127,7 @@ describe('GroupMemberService', () => {
 
   describe("when get_score is called", () => {
     it("calls resource api with get method and json content type and returns the score", () => {
-      let expectedScore: MemberScore = { wins: 1, draws: 2, points: 3 };
+      let expectedScore: MemberScore = { wins: 1, draws: 2, points: 3, id: resource.team };
       service.getScore(resource).subscribe((resp: MemberScore) => expect(resp).toEqual(expectedScore));
       const req = backend.expectOne(resourceUrl + 'score');
       expect(req.request.headers.has('Content-Type'))

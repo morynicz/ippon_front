@@ -105,9 +105,9 @@ describe('GroupFullComponent', () => {
     groupMemberService.getListReturnValue.push(teams);
     groupMemberService.getListReturnValue.push(teams);
     groupMemberService.getListReturnValue.push(teams);
-    groupMemberService.getScoreReturnValues.set(teams[0].id, { wins: 1, draws: 2, points: 3 });
-    groupMemberService.getScoreReturnValues.set(teams[1].id, { wins: 4, draws: 5, points: 6 });
-    groupMemberService.getScoreReturnValues.set(teams[2].id, { wins: 7, draws: 8, points: 9 });
+    groupMemberService.getScoreReturnValues.set(teams[0].id, { wins: 1, draws: 2, points: 3, id: teams[0].id });
+    groupMemberService.getScoreReturnValues.set(teams[1].id, { wins: 4, draws: 5, points: 6, id: teams[1].id });
+    groupMemberService.getScoreReturnValues.set(teams[2].id, { wins: 7, draws: 8, points: 9, id: teams[2].id });
 
     TestBed.configureTestingModule({
       declarations: [
