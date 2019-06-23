@@ -9,6 +9,21 @@ import { GroupMemberServiceSpy } from '../group-member.service.spy';
 import { TeamService } from '../../team/team.service';
 import { GroupMemberService } from '../group-member.service';
 import { By } from '@angular/platform-browser';
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  template: "<ippon-group-member-list [teams]='teams' [groupId]='groupId' [isAuthorized]='false' (reloadRequest)='reload()' ></ippon-group-member-list>"
+})
+class TestComponent implements OnInit {
+  teams: Team[] = [];
+  groupId: number = 231;
+  reload(): void {
+
+  }
+  ngOnInit() {
+    this.teams = [];
+  }
+}
 
 describe('GroupMemberListComponent', () => {
   const tournamentId: number = 32;
@@ -34,8 +49,6 @@ describe('GroupMemberListComponent', () => {
     }
   ]
 
-  let component: GroupMemberListComponent;
-  let fixture: ComponentFixture<GroupMemberListComponent>;
   let teamService: TeamServiceSpy;
   let groupMemberService: GroupMemberServiceSpy;
   let reloadRequested: boolean = false;
@@ -50,7 +63,8 @@ describe('GroupMemberListComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         GroupMemberListComponent,
-        GroupMemberLineComponent
+        GroupMemberLineComponent,
+        TestComponent
       ],
       providers: [
         { provide: TeamService, useValue: teamService },
@@ -63,41 +77,49 @@ describe('GroupMemberListComponent', () => {
       .compileComponents();
   }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(GroupMemberListComponent);
-    component = fixture.componentInstance;
-    component.groupId = groupId;
-    component.reloadRequest.subscribe(() => {
-      reloadRequested = true;
-    });
-  });
-
   describe("when initial values are empty and then input changes", () => {
+    let fixture: ComponentFixture<TestComponent>;
+    let component: TestComponent;
     beforeEach(() => {
-      component.teams = [];
-      component.isAuthorized = false;
+      fixture = TestBed.createComponent(TestComponent);
+      component = fixture.componentInstance;
       fixture.detectChanges();
-      component.teams = teams;
     });
+
     it("should reload content", async(() => {
-      fixture.whenStable().then(() => {
-        expect(html).toContain(1);
-        expect(html).toContain(2);
-        expect(html).toContain(3);
-        expect(html).toContain(4);
-        expect(html).toContain(5);
-        expect(html).toContain(6);
-        expect(html).toContain(7);
-        expect(html).toContain(8);
-        expect(html).toContain(9);
-      });
+      component.teams = teams;
+      fixture.detectChanges();
+      fixture.detectChanges();
+      html = fixture.debugElement.nativeElement.textContent;
+
+      expect(html).toContain(1);
+      expect(html).toContain(2);
+      expect(html).toContain(3);
+      expect(html).toContain(4);
+      expect(html).toContain(5);
+      expect(html).toContain(6);
+      expect(html).toContain(7);
+      expect(html).toContain(8);
+      expect(html).toContain(9);
     }));
   });
 
   describe("when initial values are correct", () => {
+    let component: GroupMemberListComponent;
+    let fixture: ComponentFixture<GroupMemberListComponent>;
     beforeEach(() => {
+      fixture = TestBed.createComponent(GroupMemberListComponent);
+      component = fixture.componentInstance;
+      component.groupId = groupId;
+      component.reloadRequest.subscribe(() => {
+        reloadRequested = true;
+      });
       component.teams = teams;
     });
+
+    // beforeEach(() => {
+    //   component.teams = teams;
+    // });
     describe("when user is not authorized", () => {
       beforeEach(() => {
         component.isAuthorized = false;
