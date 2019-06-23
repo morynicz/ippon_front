@@ -35,6 +35,11 @@ export class GroupMemberServiceSpy {
     getScoreReturnValues: Map<number, MemberScore> = new Map<number, MemberScore>();
     getScoreValues: GroupMember[] = [];
     getScore(member: GroupMember): Observable<MemberScore> {
+        console.log("called with " + member.team + " size " + this.getScoreReturnValues.size);
+        if (!this.getScoreReturnValues.has(member.team)) {
+            console.log("No key " + member.team);
+            return of({ id: member.team, wins: 0, draws: 0, points: 0 });
+        }
         this.getScoreValues.push(member);
         return of(this.getScoreReturnValues.get(member.team));
     }
