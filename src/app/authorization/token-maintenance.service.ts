@@ -18,13 +18,18 @@ export class TokenMaintenanceService {
   private authenticationUrl: string = AUTHENTICATION_HOST
     + AUTHENTICATION_ENDPOINT;
 
+  isNotRefreshing: boolean = true;
+
   constructor(private http: HttpClient,
     private jwtHelper: JwtHelperWrapperService,
     private tokenStorage: TokenStorageService) {
   }
 
   updateTokens(): void {
-    this.updateTokensIfNecessary().subscribe(() => { });
+    if (this.isNotRefreshing) {
+      this.isNotRefreshing = false;
+      this.updateTokensIfNecessary().subscribe(() => { this.isNotRefreshing = true; });
+    }
   }
 
   private updateTokensIfNecessary(): Observable<string> {

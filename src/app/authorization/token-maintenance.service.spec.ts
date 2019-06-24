@@ -103,6 +103,23 @@ describe('TokenMaintenanceService', () => {
       expect(tokenStorage.getRefreshCalled).toBeTruthy("refresh");
       expect(tokenStorage.clearCalled).toBeTruthy("clear");
     });
+
+    describe("when refreshing already taking place", () => {
+      beforeEach(() => {
+        tokenStorage.getAccessReturnValues = ["token", "token"];
+      });
+
+      it("does not send another refresh request before previous refresh ends", () => {
+        service.updateTokens();
+        service.updateTokens();
+        const req = backend.expectOne(authenticationUrl + '/token/refresh');
+        expect(req.request.body).toEqual({ "refresh": "refresh" });
+        expect(req.request.method).toBe('POST');
+        req.flush({ "access": "access2", "refresh": "refresh2" });
+        expect(tokenStorage.setAccessToken).toBe("access2");
+        expect(tokenStorage.setRefreshToken).toBe("refresh2");
+      });
+    });
   });
 
   describe("when both tokens are fresh", () => {
