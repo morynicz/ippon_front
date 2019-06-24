@@ -22,6 +22,9 @@ import { PointServiceSpy } from '../../point/point.service.spy';
 import { Point, PointType } from '../../point/point';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { PlayerServiceSpy } from '../../player/player.service.spy';
+import { FightStatus } from '../../fight-status';
+import { FightWinner } from '../../fight-winner';
+import { By } from '@angular/platform-browser';
 
 describe('FightFullComponent', () => {
   const fightId: number = 4;
@@ -59,7 +62,9 @@ describe('FightFullComponent', () => {
     aka: akaPlayer.id,
     shiro: shiroPlayer.id,
     team_fight: 33,
-    orderingNumber: 0
+    orderingNumber: 0,
+    status: FightStatus.Prepared,
+    winner: FightWinner.None
   }
 
   let component: FightFullComponent;
@@ -164,6 +169,54 @@ describe('FightFullComponent', () => {
 
     it("should display form for adding new points", () => {
       expect(html.querySelector('#add-point-form')).toBeTruthy();
+    });
+
+    it("should allow setting aka as the winner", () => {
+      let button = fixture.debugElement.query(By.css('#winner-selection-aka'));
+      button.triggerEventHandler('change', { target: button.nativeElement });
+      let fightWonByAka: Fight = { ...fight };
+      fightWonByAka.winner = FightWinner.Aka;
+      expect(fightService.updateValue).toEqual(fightWonByAka);
+    });
+
+    it("should allow setting shiro as the winner", () => {
+      let button = fixture.debugElement.query(By.css('#winner-selection-shiro'));
+      button.triggerEventHandler('change', { target: button.nativeElement });
+      let fightWonByShiro: Fight = { ...fight };
+      fightWonByShiro.winner = FightWinner.Shiro;
+      expect(fightService.updateValue).toEqual(fightWonByShiro);
+    });
+
+    it("should allow setting none as the winner", () => {
+      let button = fixture.debugElement.query(By.css('#winner-selection-none'));
+      button.triggerEventHandler('change', { target: button.nativeElement });
+      let fightWonByNone: Fight = { ...fight };
+      fightWonByNone.winner = FightWinner.None;
+      expect(fightService.updateValue).toEqual(fightWonByNone);
+    });
+
+    it("should allow setting fight as started", () => {
+      let button = fixture.debugElement.query(By.css('#status-selection-started'));
+      button.triggerEventHandler('change', { target: button.nativeElement });
+      let fightStarted: Fight = { ...fight };
+      fightStarted.status = FightStatus.Started;
+      expect(fightService.updateValue).toEqual(fightStarted);
+    });
+
+    it("should allow setting fight as prepared", () => {
+      let button = fixture.debugElement.query(By.css('#status-selection-prepared'));
+      button.triggerEventHandler('change', { target: button.nativeElement });
+      let fightPrepared: Fight = { ...fight };
+      fightPrepared.status = FightStatus.Prepared;
+      expect(fightService.updateValue).toEqual(fightPrepared);
+    });
+
+    it("should allow setting fight as finished", () => {
+      let button = fixture.debugElement.query(By.css('#status-selection-finished'));
+      button.triggerEventHandler('change', { target: button.nativeElement });
+      let fightFinished: Fight = { ...fight };
+      fightFinished.status = FightStatus.Finished;
+      expect(fightService.updateValue).toEqual(fightFinished);
     });
 
     describe("when reloadPoints() method is called", () => {

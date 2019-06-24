@@ -47,4 +47,8 @@ export class FightFullComponent implements OnInit {
   reload(): void {
     this.loadPoints();
   }
+
+  updateFight(): void {
+    this.fightService.update(this.fight).subscribe(() => this.reload());
+  }
 }

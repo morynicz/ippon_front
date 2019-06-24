@@ -132,7 +132,9 @@ describe('FightFormComponent', () => {
         shiro: shiroPlayers[0].id,
         team_fight: teamFight.id,
         points: [],
-        orderingNumber: 0
+        orderingNumber: 0,
+        winner: FightWinner.None,
+        status: FightStatus.Prepared
       };
       component.fight.aka = akaPlayers[0].id;
       component.fight.shiro = shiroPlayers[0].id;

@@ -96,7 +96,9 @@ const fights: Fight[] = [{
   aka: akaPlayers[0].id,
   shiro: shiroPlayers[0].id,
   team_fight: teamFightId,
-  orderingNumber: 0
+  orderingNumber: 0,
+  winner: FightWinner.None,
+  status: FightStatus.Prepared
 },
 {
   id: 79,
@@ -104,7 +106,9 @@ const fights: Fight[] = [{
   aka: akaPlayers[1].id,
   shiro: shiroPlayers[1].id,
   team_fight: teamFightId,
-  orderingNumber: 1
+  orderingNumber: 1,
+  winner: FightWinner.None,
+  status: FightStatus.Prepared
 }];
 
 describe('TeamFightFullComponent', () => {

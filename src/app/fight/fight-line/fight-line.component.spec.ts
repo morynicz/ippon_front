@@ -16,6 +16,8 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { FightServiceSpy } from '../fight.service.spy';
 import { FightService } from '../fight.service';
 import { PlayerServiceSpy } from '../../player/player.service.spy';
+import { FightWinner } from '../../fight-winner';
+import { FightStatus } from '../../fight-status';
 
 const fightId: number = 4;
 
@@ -52,7 +54,9 @@ const fight: Fight = {
   aka: akaPlayer.id,
   shiro: shiroPlayer.id,
   team_fight: 33,
-  orderingNumber: 0
+  orderingNumber: 0,
+  winner: FightWinner.None,
+  status: FightStatus.Prepared
 }
 
 describe('FightLineComponent', () => {

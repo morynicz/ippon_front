@@ -10,6 +10,8 @@ import {
   FIGHTS_ENDPOINT,
   AUTHORIZATION_ENDPOINT
 } from '../rest-api';
+import { FightWinner } from '../fight-winner';
+import { FightStatus } from '../fight-status';
 
 const fightsUrl = IPPON_HOST + FIGHTS_ENDPOINT;
 const fight: Fight = {
@@ -18,7 +20,9 @@ const fight: Fight = {
   aka: 5,
   shiro: 7,
   team_fight: 33,
-  orderingNumber: 0
+  orderingNumber: 0,
+  winner: FightWinner.Aka,
+  status: FightStatus.Finished
 }
 
 
