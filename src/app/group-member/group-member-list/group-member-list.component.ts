@@ -29,7 +29,6 @@ export class GroupMemberListComponent implements OnInit, OnChanges {
     forkJoin(this.teams.map(team =>
       this.groupMemberService.getScore({ group: this.groupId, team: team.id })))
       .subscribe((results: MemberScore[]) => {
-        console.log(results);
         results.forEach((score: MemberScore) => this.teamScores.set(score.id, score));
       }
       );
