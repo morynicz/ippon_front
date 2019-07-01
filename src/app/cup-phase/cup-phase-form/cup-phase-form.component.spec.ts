@@ -67,12 +67,12 @@ describe('CupPhaseFormComponent', () => {
     });
 
     it("should create a cup phase with given parameters", () => {
-      expect(cupPhaseService.addValue.name).toBe(cupPhase.name);
-      expect(cupPhaseService.addValue.fight_length).toBe(cupPhase.fight_length);
-      expect(cupPhaseService.addValue.final_fight_length).toBe(cupPhase.final_fight_length);
-      expect(cupPhaseService.addValue.tournament).toBe(cupPhase.tournament);
-      expect(cupPhaseService.addValue.id).toBe(cupPhase.id);
-      expect(cupPhaseService.addValue.number_of_positions).toBe(cupPhase.number_of_positions);
+      expect(cupPhaseService.addValues[0].name).toBe(cupPhase.name);
+      expect(cupPhaseService.addValues[0].fight_length).toBe(cupPhase.fight_length);
+      expect(cupPhaseService.addValues[0].final_fight_length).toBe(cupPhase.final_fight_length);
+      expect(cupPhaseService.addValues[0].tournament).toBe(cupPhase.tournament);
+      expect(cupPhaseService.addValues[0].id).toBe(cupPhase.id);
+      expect(cupPhaseService.addValues[0].number_of_positions).toBe(cupPhase.number_of_positions);
     });
 
     it("should call reload callback", () => {

@@ -56,13 +56,13 @@ describe('TeamFormComponent', () => {
       btn = fixture.debugElement.query(By.css("#save-team"));
       component.team.name = team.name;
       btn.nativeElement.click();
-
+      fixture.detectChanges();
     });
 
     it("should create a team with given name and tournament id", () => {
-      expect(teamService.addValue.name).toBe(team.name);
-      expect(teamService.addValue.tournament).toBe(team.tournament);
-      expect(teamService.addValue.id).toBe(team.id);
+      expect(teamService.addValues[0].name).toBe(team.name);
+      expect(teamService.addValues[0].tournament).toBe(team.tournament);
+      expect(teamService.addValues[0].id).toBe(team.id);
     });
 
     it("should call reload callback", () => {

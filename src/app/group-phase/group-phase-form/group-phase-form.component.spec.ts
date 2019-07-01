@@ -63,10 +63,10 @@ describe('GroupPhaseFormComponent', () => {
     });
 
     it("should create a group phase with given parameters", () => {
-      expect(groupPhaseService.addValue.name).toBe(groupPhase.name);
-      expect(groupPhaseService.addValue.fight_length).toBe(groupPhase.fight_length);
-      expect(groupPhaseService.addValue.tournament).toBe(groupPhase.tournament);
-      expect(groupPhaseService.addValue.id).toBe(groupPhase.id);
+      expect(groupPhaseService.addValues[0].name).toBe(groupPhase.name);
+      expect(groupPhaseService.addValues[0].fight_length).toBe(groupPhase.fight_length);
+      expect(groupPhaseService.addValues[0].tournament).toBe(groupPhase.tournament);
+      expect(groupPhaseService.addValues[0].id).toBe(groupPhase.id);
     });
 
     it("should call reload callback", () => {

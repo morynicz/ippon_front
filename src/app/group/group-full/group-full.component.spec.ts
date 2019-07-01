@@ -95,7 +95,7 @@ describe('GroupFullComponent', () => {
     groupService.getReturnValues.push(group);
     teamFightService = new TeamFightServiceSpy();
     teamFightService.getReturnValues.push(teamFight);
-    teamFightService.addReturnValue = teamFight;
+    teamFightService.addReturnValues.push(teamFight);
     groupFightService = new GroupFightServiceSpy();
     groupFightService.getListReturnValues.push([groupFight]);
     teamService = new TeamServiceSpy();

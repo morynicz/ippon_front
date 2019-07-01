@@ -144,7 +144,7 @@ describe('FightFormComponent', () => {
     });
 
     it("should create a fight with set players and teamFight id", () => {
-      expectFightsToEqual(expectedFight, fightService.addValue);
+      expectFightsToEqual(expectedFight, fightService.addValues[0]);
     });
 
     it("should call reload callback", () => {

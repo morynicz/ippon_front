@@ -57,7 +57,7 @@ describe('TeamFightFormComponent', () => {
 
   beforeEach(async(() => {
     teamFightService = new TeamFightServiceSpy();
-    teamFightService.addReturnValue = teamFight;
+    teamFightService.addReturnValues.push(teamFight);
     TestBed.configureTestingModule({
       declarations: [
         TeamFightFormComponent,
@@ -106,13 +106,13 @@ describe('TeamFightFormComponent', () => {
     });
 
     it("should create teamFight between selected teams", () => {
-      expect(teamFightService.addValue.aka_team).toEqual(teams[0].id);
-      expect(teamFightService.addValue.shiro_team).toEqual(teams[2].id);
-      expect(teamFightService.addValue.tournament).toEqual(tournamentId);
-      expect(teamFightService.addValue.status).toEqual(FightStatus.Prepared);
-      expect(teamFightService.addValue.winner).toEqual(FightWinner.None);
-      expect(teamFightService.addValue.aka_score).toEqual(0);
-      expect(teamFightService.addValue.shiro_score).toEqual(0);
+      expect(teamFightService.addValues[0].aka_team).toEqual(teams[0].id);
+      expect(teamFightService.addValues[0].shiro_team).toEqual(teams[2].id);
+      expect(teamFightService.addValues[0].tournament).toEqual(tournamentId);
+      expect(teamFightService.addValues[0].status).toEqual(FightStatus.Prepared);
+      expect(teamFightService.addValues[0].winner).toEqual(FightWinner.None);
+      expect(teamFightService.addValues[0].aka_score).toEqual(0);
+      expect(teamFightService.addValues[0].shiro_score).toEqual(0);
     });
 
     it("should call reload callback with created team", () => {

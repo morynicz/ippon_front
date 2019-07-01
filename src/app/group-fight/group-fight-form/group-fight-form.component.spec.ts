@@ -66,7 +66,7 @@ describe('GroupFightFormComponent', () => {
 
   beforeEach(async(() => {
     teamFightService = new TeamFightServiceSpy();
-    teamFightService.addReturnValue = teamFight;
+    teamFightService.addReturnValues.push(teamFight);
     groupFightService = new GroupFightServiceSpy();
     teamService = new TeamServiceSpy();
     TestBed.configureTestingModule({
@@ -128,17 +128,17 @@ describe('GroupFightFormComponent', () => {
 
     it("should create teamFight between selected teams", (done) => {
       fixture.whenStable().then(() => {
-        expect(teamFightService.addValue.aka_team).toEqual(teams[0].id);
-        expect(teamFightService.addValue.shiro_team).toEqual(teams[2].id);
-        expect(teamFightService.addValue.tournament).toEqual(tournamentId);
+        expect(teamFightService.addValues[0].aka_team).toEqual(teams[0].id);
+        expect(teamFightService.addValues[0].shiro_team).toEqual(teams[2].id);
+        expect(teamFightService.addValues[0].tournament).toEqual(tournamentId);
         done();
       });
     });
 
     it("should create groupFight from created TeamFight", (done) => {
       fixture.whenStable().then(() => {
-        expect(groupFightService.addValue.team_fight).toEqual(teamFightId);
-        expect(groupFightService.addValue.group).toEqual(groupId);
+        expect(groupFightService.addValues[0].team_fight).toEqual(teamFightId);
+        expect(groupFightService.addValues[0].group).toEqual(groupId);
         done();
       });
     });

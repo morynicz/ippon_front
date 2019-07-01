@@ -64,9 +64,9 @@ describe('GroupFormComponent', () => {
     });
 
     it("should create a group with given name and group phase id", () => {
-      expect(groupService.addValue.name).toBe(group.name);
-      expect(groupService.addValue.group_phase).toBe(group.group_phase);
-      expect(groupService.addValue.id).toBe(group.id);
+      expect(groupService.addValues[0].name).toBe(group.name);
+      expect(groupService.addValues[0].group_phase).toBe(group.group_phase);
+      expect(groupService.addValues[0].id).toBe(group.id);
     });
 
     it("should call reload callback", () => {

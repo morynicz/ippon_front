@@ -1,4 +1,4 @@
-import { Observable ,  of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 export class CrudfaServiceSpy<Resource> {
   updateValue: Resource;
@@ -21,11 +21,11 @@ export class CrudfaServiceSpy<Resource> {
     return of(this.getReturnValues.shift());
   }
 
-  addValue: Resource;
-  addReturnValue: Resource;
+  addValues: Resource[] = [];
+  addReturnValues: Resource[] = [];
   add(resource: Resource): Observable<Resource> {
-    this.addValue = resource;
-    return of(this.addReturnValue);
+    this.addValues.push(resource);
+    return of(this.addReturnValues.shift());
   }
 
   deleteValue: Resource;
