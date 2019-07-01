@@ -1,7 +1,7 @@
 import { TournamentParticipation } from './tournament-participation';
 import { Player } from '../player/player';
 
-import { Observable ,  of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 export class TournamentParticipantServiceSpy {
   addParticipationId: number;
@@ -38,6 +38,14 @@ export class TournamentParticipantServiceSpy {
   getNonParticipants(id: number): Observable<Player[]> {
     this.getNonParticipantsValue = id;
     return of(this.getNonParticipantsReturnValue);
+  }
+
+  getNotAssignedValues: number[] = [];
+  getNotAssignedReturnValues: Player[][] = [];
+
+  getNotAssigned(id: number): Observable<Player[]> {
+    this.getNotAssignedValues.push(id);
+    return of(this.getNotAssignedReturnValues.shift());
   }
 
 }
