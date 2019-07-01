@@ -11,13 +11,15 @@ import {
   IPPON_HOST,
   TOURNAMENTS_ENDPOINT,
   NON_PARTICIPANTS_ENDPOINT,
-  PARTICIPATIONS_ENDPOINT
+  PARTICIPATIONS_ENDPOINT,
+  NOT_ASSIGNED_ENDPOINT
 } from '../rest-api';
 
 const tournamentId: number = 7;
 const participationsUrl = IPPON_HOST + TOURNAMENTS_ENDPOINT + `${tournamentId}/` + PARTICIPATIONS_ENDPOINT;
 const participationUrl = IPPON_HOST + PARTICIPATIONS_ENDPOINT;
 const nonParticipantsUrl = IPPON_HOST + TOURNAMENTS_ENDPOINT + `${tournamentId}/` + NON_PARTICIPANTS_ENDPOINT;
+const notAssignedUrl = IPPON_HOST + TOURNAMENTS_ENDPOINT + `${tournamentId}/` + NOT_ASSIGNED_ENDPOINT;
 
 const participation: TournamentParticipation = {
   id: 3,
@@ -66,6 +68,19 @@ const participations: TournamentParticipation[] = [
     is_rank_ok: false,
     is_qualified: false,
     notes: "N2"
+  }
+]
+
+const notAssigned: Player[] = [
+  {
+    id: 34,
+    name: "n34",
+    surname: "s34"
+  },
+  {
+    id: 72,
+    name: "n72",
+    surname: "s72"
   }
 ]
 
@@ -172,4 +187,22 @@ describe('TournamentParticipantService', () => {
           .toBe('application/json');
       });
   });
+
+  describe("when getNotAssigned is called", () => {
+    it("calls the participations api url, uses GET method, \
+    sends request with application/json content type headers \
+    and returns requested non participants",
+      () => {
+        service.getNotAssigned(tournamentId)
+          .subscribe(response => expect(response).toBe(notAssigned));
+        const req = backend.expectOne(notAssignedUrl);
+        req.flush(notAssigned);
+        expect(req.request.method).toBe('GET');
+        expect(req.request.headers.has('Content-Type'))
+          .toBe(true);
+        expect(req.request.headers.get('Content-Type'))
+          .toBe('application/json');
+      });
+  });
+
 });

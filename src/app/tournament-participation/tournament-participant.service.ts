@@ -11,7 +11,8 @@ import {
   IPPON_HOST,
   TOURNAMENTS_ENDPOINT,
   NON_PARTICIPANTS_ENDPOINT,
-  PARTICIPATIONS_ENDPOINT
+  PARTICIPATIONS_ENDPOINT,
+  NOT_ASSIGNED_ENDPOINT
 } from '../rest-api';
 
 const httpOptions = {
@@ -68,6 +69,12 @@ export class TournamentParticipantService {
     return this.http.get<Player[]>(
       this.getNonParticipantsUrl(tournamentId), httpOptions)
       .pipe(catchError(this.handleError<any>('getNonParticipants')));
+  }
+
+  getNotAssigned(tournamentId: number): Observable<Player[]> {
+    return this.http.get<Player[]>(
+      this.tournamentsUrl + `${tournamentId}/` + NOT_ASSIGNED_ENDPOINT, httpOptions)
+      .pipe(catchError(this.handleError<any>('getNotAssigned')));
   }
 
   private handleError<T>(operation = 'operation', result?: T) {
