@@ -3,6 +3,12 @@ import { TeamService } from '../../team/team.service';
 import { Team } from '../../team/team';
 import { ActivatedRoute } from '@angular/router';
 import { TournamentService } from '../tournament.service';
+import { Tournament } from '../tournament';
+import { TeamMemberService } from '../../team/team-member.service';
+import { Player } from '../../player/player';
+import { forkJoin } from 'rxjs';
+import { TournamentParticipantService } from '../../tournament-participation/tournament-participant.service';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'ippon-tournament-team-list',
@@ -13,16 +19,20 @@ export class TournamentTeamListComponent implements OnInit {
   teams: Team[];
   tournamentId: number;
   isAuthorized: boolean = false;
+  tournament: Tournament;
   constructor(
     private teamService: TeamService,
     private tournamentService: TournamentService,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute,
+    private tournamentParticipantService: TournamentParticipantService,
+    private teamMemberService: TeamMemberService) { }
 
   ngOnInit() {
     this.tournamentId = +this.route.snapshot.paramMap.get('id');
     this.loadTeams();
     this.tournamentService.isStaff(this.tournamentId)
       .subscribe(response => this.isAuthorized = response);
+    this.tournamentService.get(this.tournamentId).subscribe((response: Tournament) => this.tournament = response);
   }
 
   private loadTeams() {
@@ -34,4 +44,18 @@ export class TournamentTeamListComponent implements OnInit {
     this.loadTeams();
   }
 
+  generateTeams(): void {
+    this.tournamentParticipantService.getNotAssigned(this.tournamentId).subscribe(
+      (players: Player[]) => {
+        let dict = {};
+        players.forEach(player => {
+          dict[player.id] = this.teamService.add({ id: 0, members: [], tournament: this.tournamentId, name: player.name + " " + player.surname })
+            .pipe(
+              map((team: Team) =>
+                this.teamMemberService.add({ player: player.id, team: team.id })
+              ))
+        });
+        forkJoin(dict).subscribe(result => forkJoin(result).subscribe(res=>console.log(res)));
+      });
+  }
 }

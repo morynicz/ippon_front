@@ -17,11 +17,11 @@ export class TeamMemberServiceSpy {
         return of(this.getNotAssignedReturnValue.shift());
     }
 
-    addValue: TeamMember;
-    addReturnValue: TeamMember;
+    addValues: TeamMember[] = [];
+    addReturnValues: TeamMember[] = [];
     add(resource: TeamMember): Observable<TeamMember> {
-        this.addValue = resource;
-        return of(this.addValue);
+        this.addValues.push(resource);
+        return of(this.addReturnValues.shift());
     }
 
     deleteValue: TeamMember;
