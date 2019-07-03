@@ -235,7 +235,7 @@ describe('GroupFullComponent', () => {
     it("reloads fights when fights reload is requested", (done) => {
       fixture.whenStable().then(() => {
         let btn;
-        groupFightService.getListValue = [];
+        groupFightService.getListValues = [];
         btn = fixture.debugElement.query(By.css("#save-team-fight"));
         let redSelect = fixture.debugElement.query(By.css('#aka-team-select')).nativeElement;
         redSelect.click();
@@ -248,7 +248,7 @@ describe('GroupFullComponent', () => {
         btn.nativeElement.click();
         fixture.detectChanges();
 
-        expect(groupFightService.getListValue).toEqual([groupId]);
+        expect(groupFightService.getListValues).toEqual([groupId]);
         done();
       });
     });

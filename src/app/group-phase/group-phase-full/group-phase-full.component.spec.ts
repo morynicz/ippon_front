@@ -129,18 +129,18 @@ describe('GroupPhaseFullComponent', () => {
 
     it("reloads groups when reload is requested from group list", () => {
       let btn;
-      groupService.getListValue = [];
+      groupService.getListValues = [];
       btn = fixture.debugElement.query(By.css("#delete-group"));
       btn.nativeElement.click();
-      expect(groupService.getListValue).toEqual([groupPhaseId]);
+      expect(groupService.getListValues).toEqual([groupPhaseId]);
     });
 
     it("reloads groups when reload is requested from group form", () => {
       let btn;
-      groupService.getListValue = [];
+      groupService.getListValues = [];
       btn = fixture.debugElement.query(By.css("#save-group"));
       btn.nativeElement.click();
-      expect(groupService.getListValue).toEqual([groupPhaseId]);
+      expect(groupService.getListValues).toEqual([groupPhaseId]);
     });
   });
 

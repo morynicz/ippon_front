@@ -8,9 +8,9 @@ export class CrudfaServiceSpy<Resource> {
   }
 
   getListReturnValues: Resource[][] = [];
-  getListValue: number[] = [];
+  getListValues: number[] = [];
   getList(id: number): Observable<Resource[]> {
-    this.getListValue.push(id);
+    this.getListValues.push(id);
     return of(this.getListReturnValues.shift());
   }
 

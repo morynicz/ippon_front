@@ -16,7 +16,7 @@ import { map, mergeMap } from 'rxjs/operators';
   styleUrls: ['./tournament-team-list.component.css']
 })
 export class TournamentTeamListComponent implements OnInit {
-  teams: Team[];
+  teams: Team[] = [];
   tournamentId: number;
   isAuthorized: boolean = false;
   tournament: Tournament;
