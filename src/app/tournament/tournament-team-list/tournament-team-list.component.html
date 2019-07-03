@@ -1,12 +1,15 @@
+<div *ngIf="isAuthorized == true" class="row">
+  <div class="col">
+    <ippon-team-form id="add-team-form" [tournamentId]="tournamentId" (reloadRequest)="reload()"></ippon-team-form>
+  </div>
+  <div *ngIf="tournament != undefined && tournament.team_size == 1" class="col">
+    <button class="btn btn-primary" id="generate-teams" (click)="generateTeams()" i18n>Generate one man teams</button>
+  </div>
+</div>
 <div class="row">
   <ul class="list-group col">
     <li *ngFor="let team of teams" class="list-group-item">
       <ippon-team-line [team]="team" [isAuthorized]="isAuthorized" (reloadRequest)="reload()"></ippon-team-line>
     </li>
   </ul>
-</div>
-<div *ngIf="isAuthorized == true" class="row">
-  <div class="col">
-    <ippon-team-form id="add-team-form" [tournamentId]="tournamentId" (reloadRequest)="reload()"></ippon-team-form>
-  </div>
 </div>

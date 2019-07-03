@@ -146,9 +146,9 @@ describe('TeamFullComponent', () => {
         btn.nativeElement.click();
       }));
 
-      it("sends delete request for the member", () => {
-        expect(teamMemberService.addValue.team).toEqual(teamId);
-        expect(teamMemberService.addValue.player).toEqual(unassigned[0].id);
+      it("sends add request for the member", () => {
+        expect(teamMemberService.addValues[0].team).toEqual(teamId);
+        expect(teamMemberService.addValues[0].player).toEqual(unassigned[0].id);
       });
 
       it("reloads members and unassigned players", () => {
