@@ -9,8 +9,6 @@ import { Player } from '../../player/player';
 import { forkJoin, Observable } from 'rxjs';
 import { TournamentParticipantService } from '../../tournament-participation/tournament-participant.service';
 import { map, mergeMap } from 'rxjs/operators';
-import { JsonPipe } from '@angular/common';
-import { fork } from 'child_process';
 
 @Component({
   selector: 'ippon-tournament-team-list',
@@ -55,6 +53,6 @@ export class TournamentTeamListComponent implements OnInit {
               this.teamMemberService.add({ player: player.id, team: team.id }))))),
       forkJoin,
       mergeMap((result: [[Observable<void>]]) => forkJoin(result[0]))
-    ).subscribe(res => console.log(res));
+    ).subscribe(() => this.loadTeams());
   }
 }

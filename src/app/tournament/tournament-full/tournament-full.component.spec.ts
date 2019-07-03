@@ -243,12 +243,12 @@ describe('TournamentFullComponent', () => {
       let btn;
       beforeEach(() => {
         btn = fixture.debugElement.query(By.css("#delete-group-phase"));
-        groupPhaseService.getListValue = [];
+        groupPhaseService.getListValues = [];
         btn.nativeElement.click();
       });
 
       it("should reload group phases through groupPhase service", () => {
-        expect(groupPhaseService.getListValue).toEqual([tournamentId]);
+        expect(groupPhaseService.getListValues).toEqual([tournamentId]);
       })
     });
 
@@ -256,11 +256,11 @@ describe('TournamentFullComponent', () => {
       let btn;
       beforeEach(() => {
         btn = fixture.debugElement.query(By.css("#save-group-phase"));
-        groupPhaseService.getListValue = [];
+        groupPhaseService.getListValues = [];
         btn.nativeElement.click();
       });
       it("should reload group phases through groupPhase service", () => {
-        expect(groupPhaseService.getListValue).toEqual([tournamentId]);
+        expect(groupPhaseService.getListValues).toEqual([tournamentId]);
       });
     });
   });

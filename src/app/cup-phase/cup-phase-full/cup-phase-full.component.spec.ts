@@ -366,7 +366,7 @@ describe('CupPhaseFullComponent', () => {
       let del;
       beforeEach(() => {
         cupFightService.getListReturnValues.push([]);
-        cupFightService.getListValue = [];
+        cupFightService.getListValues = [];
         del = fixture.debugElement.query(By.css("#delete-cup")).nativeElement;
         del.click();
       });
@@ -375,7 +375,7 @@ describe('CupPhaseFullComponent', () => {
       });
       it("reloads the cup fights", () => {
         fixture.detectChanges();
-        expect(cupFightService.getListValue).toEqual([cupPhaseId]);
+        expect(cupFightService.getListValues).toEqual([cupPhaseId]);
       });
     });
   });

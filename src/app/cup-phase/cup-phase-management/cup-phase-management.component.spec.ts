@@ -137,12 +137,12 @@ describe('CupPhaseManagementComponent', () => {
       let btn;
       beforeEach(() => {
         btn = fixture.debugElement.query(By.css("#delete-cup-phase"));
-        cupPhaseService.getListValue = [];
+        cupPhaseService.getListValues = [];
         btn.nativeElement.click();
       });
 
       it("should reload cup phases through cupPhase service", () => {
-        expect(cupPhaseService.getListValue).toEqual([tournamentId]);
+        expect(cupPhaseService.getListValues).toEqual([tournamentId]);
       })
     });
 
@@ -150,11 +150,11 @@ describe('CupPhaseManagementComponent', () => {
       let btn;
       beforeEach(() => {
         btn = fixture.debugElement.query(By.css("#save-cup-phase"));
-        cupPhaseService.getListValue = [];
+        cupPhaseService.getListValues = [];
         btn.nativeElement.click();
       });
       it("should reload cup phases through cupPhase service", () => {
-        expect(cupPhaseService.getListValue).toEqual([tournamentId]);
+        expect(cupPhaseService.getListValues).toEqual([tournamentId]);
       });
     });
   });

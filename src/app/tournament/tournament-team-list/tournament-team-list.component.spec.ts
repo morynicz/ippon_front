@@ -143,7 +143,7 @@ describe('TournamentTeamListComponent', () => {
     });
 
     it("should retrieve teams from teams api with tournament id", () => {
-      expect(teamService.getListValue).toEqual([tournamentId]);
+      expect(teamService.getListValues).toEqual([tournamentId]);
     });
 
     it("should not show form for adding new teams", () => {
@@ -171,8 +171,8 @@ describe('TournamentTeamListComponent', () => {
         component.reload();
       });
       it("loads teams again", () => {
-        expect(teamService.getListValue.length).toBe(2);
-        expect(teamService.getListValue[1]).toBe(tournamentId);
+        expect(teamService.getListValues.length).toBe(2);
+        expect(teamService.getListValues[1]).toBe(tournamentId);
       });
     });
 
@@ -212,6 +212,10 @@ describe('TournamentTeamListComponent', () => {
         expect(teamService.addValues).toContain({ id: 0, tournament: tournamentId, name: players[0].name + " " + players[0].surname, members: [] });
         expect(teamService.addValues).toContain({ id: 0, tournament: tournamentId, name: players[1].name + " " + players[1].surname, members: [] });
         expect(teamMemberService.addValues).toContain({ team: 5, player: players[0].id }, { team: 9, player: players[1].id })
+      });
+
+      it("should reload teams", () => {
+        expect(teamService.getListValues).toEqual([tournamentId, tournamentId])
       });
     });
   });

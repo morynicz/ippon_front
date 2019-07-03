@@ -191,7 +191,7 @@ describe('TeamFightFullComponent', () => {
     });
 
     it("should call fightService to get the fights", () => {
-      expect(fightService.getListValue).toContain(teamFightId);
+      expect(fightService.getListValues).toContain(teamFightId);
     });
 
     it("should call teamMembersService to get teammembers of both teams", () => {
@@ -291,8 +291,8 @@ describe('TeamFightFullComponent', () => {
         component.reload();
       });
       it("loads fights again", () => {
-        expect(fightService.getListValue.length).toBe(2);
-        expect(fightService.getListValue[1]).toBe(teamFightId);
+        expect(fightService.getListValues.length).toBe(2);
+        expect(fightService.getListValues[1]).toBe(teamFightId);
       });
     });
   });
