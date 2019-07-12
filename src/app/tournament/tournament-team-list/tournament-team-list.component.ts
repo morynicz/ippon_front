@@ -6,9 +6,9 @@ import { TournamentService } from '../tournament.service';
 import { Tournament } from '../tournament';
 import { TeamMemberService } from '../../team/team-member.service';
 import { Player } from '../../player/player';
-import { forkJoin } from 'rxjs';
+import { forkJoin, Observable } from 'rxjs';
 import { TournamentParticipantService } from '../../tournament-participation/tournament-participant.service';
-import { map } from 'rxjs/operators';
+import { map, mergeMap } from 'rxjs/operators';
 
 @Component({
   selector: 'ippon-tournament-team-list',
@@ -45,17 +45,17 @@ export class TournamentTeamListComponent implements OnInit {
   }
 
   generateTeams(): void {
-    this.tournamentParticipantService.getNotAssigned(this.tournamentId).subscribe(
-      (players: Player[]) => {
-        let dict = {};
-        players.forEach(player => {
-          dict[player.id] = this.teamService.add({ id: 0, members: [], tournament: this.tournamentId, name: player.name + " " + player.surname })
-            .pipe(
-              map((team: Team) =>
-                this.teamMemberService.add({ player: player.id, team: team.id })
-              ))
-        });
-        forkJoin(dict).subscribe(result => forkJoin(result).subscribe(res=>console.log(res)));
-      });
+    this.tournamentParticipantService.getNotAssigned(this.tournamentId).pipe(
+      map((players: Player[]) => players.map(
+        (player: Player) => this.teamService.add({ id: 0, members: [], tournament: this.tournamentId, name: player.name + " " + player.surname })
+          .pipe(
+            map((team: Team) =>
+              this.teamMemberService.add({ player: player.id, team: team.id }))
+          ))),
+      mergeMap((tasks: Observable<Observable<void>>[]) => forkJoin(tasks)),
+      mergeMap((tasks: Observable<void>[]) => forkJoin(tasks))
+    ).subscribe(() => {
+      this.loadTeams();
+    });
   }
 }

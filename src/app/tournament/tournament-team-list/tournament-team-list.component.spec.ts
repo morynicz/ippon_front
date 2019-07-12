@@ -21,6 +21,8 @@ import { TeamMemberService } from '../../team/team-member.service';
 import { Player } from '../../player/player';
 import { TournamentParticipantServiceSpy } from '../../tournament-participation/tournament-participant.service.spy';
 import { TournamentParticipantService } from '../../tournament-participation/tournament-participant.service';
+import { TeamMember } from '../../team/team-member';
+import { Observable } from 'rxjs';
 
 const tournamentId: number = 4;
 const teams: Team[] = [
@@ -73,12 +75,25 @@ const players: Player[] = [{
   id: 1
 }];
 
+
+class TeamMemberServiceSpyWithObservableControl extends TeamMemberServiceSpy {
+  addObservableSubscribedFor: TeamMember[] = [];
+  add(resource: TeamMember): Observable<void> {
+    this.addValues.push(resource);
+    return new Observable<void>(observer => {
+      this.addObservableSubscribedFor.push(resource);
+      observer.next();
+      observer.complete();
+    });
+  }
+}
+
 describe('TournamentTeamListComponent', () => {
   let component: TournamentTeamListComponent;
   let fixture: ComponentFixture<TournamentTeamListComponent>;
   let teamService: TeamServiceSpy;
   let tournamentService: TournamentServiceSpy;
-  let teamMemberService: TeamMemberServiceSpy;
+  let teamMemberService: TeamMemberServiceSpyWithObservableControl;
   let tournamentParticipantService: TournamentParticipantServiceSpy;
   let html;
 
@@ -87,7 +102,7 @@ describe('TournamentTeamListComponent', () => {
     teamService.getListReturnValues.push(teams);
     teamService.isAuthorizedReturnValue = false;
     tournamentService = new TournamentServiceSpy();
-    teamMemberService = new TeamMemberServiceSpy();
+    teamMemberService = new TeamMemberServiceSpyWithObservableControl();
     tournamentParticipantService = new TournamentParticipantServiceSpy();
     TestBed.configureTestingModule({
       declarations: [
@@ -211,7 +226,8 @@ describe('TournamentTeamListComponent', () => {
       it("should create teams for unassigned players", () => {
         expect(teamService.addValues).toContain({ id: 0, tournament: tournamentId, name: players[0].name + " " + players[0].surname, members: [] });
         expect(teamService.addValues).toContain({ id: 0, tournament: tournamentId, name: players[1].name + " " + players[1].surname, members: [] });
-        expect(teamMemberService.addValues).toContain({ team: 5, player: players[0].id }, { team: 9, player: players[1].id })
+        expect(teamMemberService.addValues).toContain({ team: 5, player: players[0].id }, { team: 9, player: players[1].id });
+        expect(teamMemberService.addObservableSubscribedFor).toContain({ team: 5, player: players[0].id }, { team: 9, player: players[1].id });
       });
     });
   });
