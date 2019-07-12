@@ -2,8 +2,6 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TeamFullComponent } from './team-full.component';
 import { Player } from '../../player/player';
-import { Sex } from '../../sex';
-import { Rank } from '../../rank';
 import { TeamService } from '../team.service';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { TeamServiceSpy } from '../team.service.spy';

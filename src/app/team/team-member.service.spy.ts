@@ -1,8 +1,9 @@
 import { TeamMember } from "./team-member";
 import { Player } from "../player/player";
 import { Observable, of } from "rxjs";
+import { TeamMemberServiceInterface } from "./team-member-service-interface";
 
-export class TeamMemberServiceSpy {
+export class TeamMemberServiceSpy implements TeamMemberServiceInterface {
     getListReturnValue: Player[][] = [];
     getListValues: number[] = [];
     getList(id: number): Observable<Player[]> {
@@ -18,14 +19,13 @@ export class TeamMemberServiceSpy {
     }
 
     addValues: TeamMember[] = [];
-    addReturnValues: TeamMember[] = [];
-    add(resource: TeamMember): Observable<TeamMember> {
+    add(resource: TeamMember): Observable<any> {
         this.addValues.push(resource);
-        return of(this.addReturnValues.shift());
+        return of({});
     }
 
     deleteValue: TeamMember;
-    delete(resource: TeamMember): Observable<{}> {
+    delete(resource: TeamMember): Observable<any> {
         this.deleteValue = resource;
         return of({});
     }

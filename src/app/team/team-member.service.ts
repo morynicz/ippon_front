@@ -5,13 +5,14 @@ import { catchError } from 'rxjs/operators';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { IPPON_HOST, TEAMS_ENDPOINT, MEMBERS_ENDPOINT, NOT_ASSIGNED_ENDPOINT } from '../rest-api';
 import { Player } from '../player/player';
+import { TeamMemberServiceInterface } from './team-member-service-interface';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 }
 
 @Injectable()
-export class TeamMemberService {
+export class TeamMemberService implements TeamMemberServiceInterface {
   private getTeamsUrl(id: number): string {
     return IPPON_HOST + TEAMS_ENDPOINT + `${id}/` + MEMBERS_ENDPOINT;
   }
@@ -23,7 +24,7 @@ export class TeamMemberService {
   constructor(
     protected http: HttpClient
   ) { }
-  add(resource: TeamMember): Observable<void> {
+  add(resource: TeamMember): Observable<any> {
     return this.http.post(this.getMemberUrl(resource), null, httpOptions)
       .pipe(catchError(this.handleError<any>('add id=${resource.id}')));
   }
@@ -34,10 +35,10 @@ export class TeamMemberService {
       .pipe(catchError(this.handleError('getList', [])));
   }
 
-  delete(resource: TeamMember): Observable<{}> {
-    return this.http.delete<{}>(this.getMemberUrl(resource), httpOptions)
+  delete(resource: TeamMember): Observable<any> {
+    return this.http.delete<any>(this.getMemberUrl(resource), httpOptions)
       .pipe(
-        catchError(this.handleError<{}>('delete id=${resource}'))
+        catchError(this.handleError<any>('delete id=${resource}'))
       );
   }
 
