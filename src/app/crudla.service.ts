@@ -1,8 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Observable, of } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 import { Authorization } from './authorization/Authorization';
+import { CrudlaServiceInterface } from './crudla-service-interface';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -12,7 +13,7 @@ class Identifiable {
   id: number;
 }
 
-export class CrudlaService<Resource extends Identifiable> {
+export class CrudlaService<Resource extends Identifiable> implements CrudlaServiceInterface<Identifiable>{
   private getUrl(id: number): string {
     return `${this.url}${id}/`;
   }

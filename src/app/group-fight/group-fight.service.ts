@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { CrudfService } from '../crudf.service';
 import { HttpClient } from '@angular/common/http';
 import { IPPON_HOST, GROUP_FIGHTS_ENDPOINT, GROUPS_ENDPOINT, AUTHORIZATION_ENDPOINT } from '../rest-api';
 import { GroupFight } from './group-fight';

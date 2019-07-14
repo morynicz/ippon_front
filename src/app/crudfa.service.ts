@@ -3,16 +3,14 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Authorization } from './authorization/Authorization';
+import { Identifiable } from './identifiable';
+import { CrudfaServiceInterface } from './crudfa-service-interface';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 }
 
-class Identifiable {
-  id: number;
-}
-
-export class CrudfaService<Resource extends Identifiable> {
+export class CrudfaService<Resource extends Identifiable> implements CrudfaServiceInterface<Identifiable> {
   private getUrl(id: number): string {
     return `${this.url}${id}/`;
   }

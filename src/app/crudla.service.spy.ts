@@ -1,6 +1,9 @@
 import { Observable, of } from 'rxjs';
+import { Identifiable } from './identifiable';
+import { CrudServiceInterface } from './crud-service-interface';
+import { CrudlaServiceInterface } from './crudla-service-interface';
 
-export class CrudlaServiceSpy<Resource> {
+export class CrudlaServiceSpy<Resource extends Identifiable> implements CrudlaServiceInterface<Identifiable> {
   updateValue: Resource;
   update(resource: Resource): Observable<any> {
     this.updateValue = resource;

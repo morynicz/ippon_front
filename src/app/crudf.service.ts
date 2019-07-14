@@ -1,18 +1,14 @@
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
+import { Identifiable } from './identifiable';
+import { CrudServiceInterface } from './crud-service-interface';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 }
 
-class Identifiable {
-  id: number;
-}
-
-export class CrudfService<Resource extends Identifiable> {
+export class CrudfService<Resource extends Identifiable> implements CrudServiceInterface<Identifiable> {
   private getUrl(id: number): string {
     return `${this.url}${id}/`;
   }
