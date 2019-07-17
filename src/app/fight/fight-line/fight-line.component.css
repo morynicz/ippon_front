@@ -1,0 +1,11 @@
+.prepared {
+    background:white;
+}
+
+.started {
+    background:yellow;
+}
+
+.finished {
+    background: lightgreen;
+}

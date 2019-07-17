@@ -1,4 +1,4 @@
-<div class="row" *ngIf="teamFight != null">
+<div class="row {{teamFight?.status| fightStatus}}" *ngIf="teamFight != null">
   <h1 class="h3 col-8 text-center">
     <a routerLink="/team-fights/{{teamFight.id}}">
       <div class="row">

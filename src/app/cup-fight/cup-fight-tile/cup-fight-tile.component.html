@@ -1,14 +1,19 @@
-<div class="col">
-  <div *ngIf="cupFight.team_fight != undefined; else empty" class="row">
-    <div class="col">
-      <div class="row">
-        <div class="col">{{aka_team?.name}}</div>
-      </div>
-      <div class="row">
-        <div class="col">{{shiro_team?.name}}</div>
+<div class="col {{teamFight?.status|fightStatus}} outer">
+  <a routerLink="/team-fights/{{teamFight?.id}}">
+    <div *ngIf="cupFight.team_fight != undefined; else empty" class="row filled">
+      <div class="col">
+        <div class="row">
+          <div class="col">{{aka_team?.name}}</div>
+        </div>
+        <div class="row text-center">
+          <div class="col">vs</div>
+        </div>
+        <div class="row">
+          <div class="col">{{shiro_team?.name}}</div>
+        </div>
       </div>
     </div>
-  </div>
+  </a>
 </div>
 
 <ng-template #empty>

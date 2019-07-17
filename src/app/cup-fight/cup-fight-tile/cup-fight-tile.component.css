@@ -1,0 +1,15 @@
+.prepared {
+    background:white;
+}
+
+.started {
+    background:yellow;
+}
+
+.finished {
+    background: lightgreen;
+}
+
+.filled {
+    border: 1px solid black;
+}

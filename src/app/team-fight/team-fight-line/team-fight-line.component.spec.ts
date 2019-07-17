@@ -12,6 +12,7 @@ import { TeamFightService } from '../team-fight.service';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FightStatus } from '../../fight-status';
 import { FightWinner } from '../../fight-winner';
+import { FightStatusPipe } from '../../fight-status.pipe';
 
 const teamFightId: number = 13;
 const akaTeamId: number = 15;
@@ -59,7 +60,8 @@ describe('TeamFightLineComponent', () => {
 
     TestBed.configureTestingModule({
       declarations: [
-        TeamFightLineComponent
+        TeamFightLineComponent,
+        FightStatusPipe
       ],
       providers: [
         { provide: TeamService, useValue: teamService },

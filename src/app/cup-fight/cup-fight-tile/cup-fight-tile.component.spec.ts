@@ -10,6 +10,9 @@ import { TeamService } from '../../team/team.service';
 import { TeamFightService } from '../../team-fight/team-fight.service';
 import { FightStatus } from '../../fight-status';
 import { FightWinner } from '../../fight-winner';
+import { By } from '@angular/platform-browser';
+import { RouterTestingModule } from '@angular/router/testing';
+import { FightStatusPipe } from '../../fight-status.pipe';
 
 const cupFightId: number = 2754;
 const cupPhaseId: number = 478;
@@ -53,10 +56,16 @@ describe('CupFightTileComponent', () => {
     teamFightService = new TeamFightServiceSpy();
     teamService = new TeamServiceSpy();
     TestBed.configureTestingModule({
-      declarations: [CupFightTileComponent],
+      declarations: [
+        CupFightTileComponent,
+        FightStatusPipe
+      ],
       providers: [
         { provide: TeamService, useValue: teamService },
         { provide: TeamFightService, useValue: teamFightService }
+      ],
+      imports: [
+        RouterTestingModule
       ]
     })
       .compileComponents();
@@ -96,4 +105,20 @@ describe('CupFightTileComponent', () => {
     html = fixture.debugElement.nativeElement.textContent;
     expect(teamFightService.getValues.length).toBe(0);
   });
+
+  it('has a link to the underlying teamfight', async(() => {
+    component.cupFight = {
+      id: cupFightId,
+      cup_phase: cupPhaseId,
+      previous_aka_fight: null,
+      previous_shiro_fight: null,
+      team_fight: teamFightId
+    };
+    fixture.detectChanges();
+    fixture.whenStable().then(() => {
+      const link = fixture.debugElement.query(By.css('a'));
+      expect(link.nativeElement.getAttribute('ng-reflect-router-link'))
+        .toBe('/team-fights/' + teamFight.id);
+    });
+  }));
 });

@@ -11,6 +11,8 @@ import { TeamFightServiceSpy } from '../../team-fight/team-fight.service.spy';
 import { TeamFight } from '../../team-fight/team-fight';
 import { TeamService } from '../../team/team.service';
 import { TeamFightService } from '../../team-fight/team-fight.service';
+import { RouterTestingModule } from '@angular/router/testing';
+import { FightStatusPipe } from '../../fight-status.pipe';
 
 class TeamServiceSpyMapped extends TeamServiceSpy {
   getReturnValuesMap: Map<number, Team> = new Map<number, Team>();
@@ -41,11 +43,15 @@ describe('CupSideComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         CupSideComponent,
-        CupFightTileComponent
+        CupFightTileComponent,
+        FightStatusPipe
       ],
       providers: [
         { provide: TeamService, useValue: teamService },
         { provide: TeamFightService, useValue: teamFightService },
+      ],
+      imports: [
+        RouterTestingModule
       ]
     })
       .compileComponents();

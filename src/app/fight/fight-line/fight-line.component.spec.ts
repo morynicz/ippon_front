@@ -18,6 +18,7 @@ import { FightService } from '../fight.service';
 import { PlayerServiceSpy } from '../../player/player.service.spy';
 import { FightWinner } from '../../fight-winner';
 import { FightStatus } from '../../fight-status';
+import { FightStatusPipe } from '../../fight-status.pipe';
 
 const fightId: number = 4;
 
@@ -80,7 +81,8 @@ describe('FightLineComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         FightLineComponent,
-        PointTypePipe
+        PointTypePipe,
+        FightStatusPipe
       ],
       providers: [
         {

@@ -16,6 +16,7 @@ import { GroupFightService } from '../group-fight.service';
 import { By } from '@angular/platform-browser';
 import { FightStatus } from '../../fight-status';
 import { FightWinner } from '../../fight-winner';
+import { FightStatusPipe } from '../../fight-status.pipe';
 
 const groupFightId: number = 768;
 const groupId: number = 231;
@@ -74,7 +75,8 @@ describe('GroupFightLineComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         GroupFightLineComponent,
-        TeamFightLineComponent
+        TeamFightLineComponent,
+        FightStatusPipe
       ],
       providers: [
         { provide: TeamService, useValue: teamService },

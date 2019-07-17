@@ -27,6 +27,7 @@ import { PlayerServiceSpy } from '../../player/player.service.spy';
 import { FightStatus } from '../../fight-status';
 import { FightWinner } from '../../fight-winner';
 import { By } from '@angular/platform-browser';
+import { FightStatusPipe } from '../../fight-status.pipe';
 
 const teamFightId: number = 13;
 const akaTeamId: number = 15;
@@ -148,7 +149,8 @@ describe('TeamFightFullComponent', () => {
         FightLineComponent,
         PointTypePipe,
         FightFormComponent,
-        PlayerLineComponent
+        PlayerLineComponent,
+        FightStatusPipe
       ],
       providers: [
         { provide: TeamService, useValue: teamService },

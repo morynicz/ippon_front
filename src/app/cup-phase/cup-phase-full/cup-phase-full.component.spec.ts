@@ -21,6 +21,8 @@ import { FormsModule } from '@angular/forms';
 import { CupFightTileComponent } from '../../cup-fight/cup-fight-tile/cup-fight-tile.component';
 import { CupCreationComponent } from '../cup-creation/cup-creation.component';
 import { CupSideComponent } from '../cup-side/cup-side.component';
+import { RouterTestingModule } from '@angular/router/testing';
+import { FightStatusPipe } from '../../fight-status.pipe';
 
 class TeamFightServiceSpyMapped extends TeamFightServiceSpy {
   getReturnValuesMap: Map<number, TeamFight> = new Map<number, TeamFight>();
@@ -90,7 +92,8 @@ describe('CupPhaseFullComponent', () => {
         CupPhaseFullComponent,
         CupFightTileComponent,
         CupCreationComponent,
-        CupSideComponent
+        CupSideComponent,
+        FightStatusPipe
       ],
       providers: [
         { provide: TeamService, useValue: teamService },
@@ -105,7 +108,10 @@ describe('CupPhaseFullComponent', () => {
           }
         }
       ],
-      imports: [FormsModule]
+      imports: [
+        FormsModule,
+        RouterTestingModule
+      ]
     })
       .compileComponents();
   }));

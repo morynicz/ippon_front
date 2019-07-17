@@ -2,11 +2,11 @@
   <div class="col order-{{getOrderNo(i)}}" *ngFor="let el of [].constructor(cupFights.length); let i = index">
     <div *ngIf="i < (cupFights.length - 1)" id="level-{{i}}">
       <div *ngFor="let cupFight of cupFights[i]; let j=index" id="cup-fight-{{cupFight?.id}}">
-        <div class="node row">
+        <div class="node row" class="tile">
           <ippon-cup-fight-tile [cupFight]="cupFight"></ippon-cup-fight-tile>
         </div>
         <div *ngIf="j != (cupFights[i].length -1)">
-          <div *ngFor="let k of [].constructor(getSeparator(cupFights.length - i - 1))">
+          <div *ngFor="let k of [].constructor(getSeparator(cupFights.length - i - 1))" class="tile">
             <br><br>
           </div>
         </div>
@@ -14,7 +14,7 @@
     </div>
     <div *ngIf="i == (cupFights.length - 1)" id="leaf-area">
       <div *ngFor="let cupFight of cupFights[i]">
-        <div id="cup-fight-{{cupFight?.id}}" class="node row">
+        <div id="cup-fight-{{cupFight?.id}}" class="node row tile">
           <ippon-cup-fight-tile [cupFight]="cupFight"></ippon-cup-fight-tile>
         </div>
       </div>
