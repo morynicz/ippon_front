@@ -28,8 +28,8 @@
           User
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" *ngIf="!isLoggedIn" routerLink="/login" i18n>Log in</a>
-          <a class="dropdown-item" *ngIf="!isLoggedIn" routerLink="/registration" i18n>Register</a>
+          <a class="dropdown-item" *ngIf="!isLoggedIn" routerLink="/login" id="login" i18n>Log in</a>
+          <a class="dropdown-item" *ngIf="!isLoggedIn" routerLink="/registration" id="register" i18n>Register</a>
           <a class="dropdown-item" *ngIf="isLoggedIn" routerLink="/">{{user.username}}</a>
           <a class="dropdown-item" *ngIf="isLoggedIn" (click)="logout()" id="logout" i18n>Log out</a>
         </div>

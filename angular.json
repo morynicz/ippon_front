@@ -74,6 +74,9 @@
           "configurations": {
             "production": {
               "browserTarget": "ippon-frontend:build:production"
+            },
+            "e2e": {
+              "browserTarget": "ippon-frontend:build:test"
             }
           }
         },
