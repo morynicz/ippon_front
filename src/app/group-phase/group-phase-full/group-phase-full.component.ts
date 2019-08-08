@@ -19,15 +19,16 @@ export class GroupPhaseFullComponent implements OnInit {
     private groupPhaseService: GroupPhaseService,
     private groupService: GroupService,
     private route: ActivatedRoute) {
-      const id = +this.route.snapshot.paramMap.get('id');
-      this.groupPhaseService.get(id).subscribe(
-        response => this.groupPhase = response
-      );
-      this.loadGroups(id);
-      this.groupPhaseService.isAuthorized(id).subscribe(
-        response => this.isAuthorized = response
-      );
-     }
+    const id = +this.route.snapshot.paramMap.get('id');
+    this.groupPhaseService.get(id).subscribe(
+      response => this.groupPhase = response
+    );
+    this.loadGroups(id);
+    this.groupPhaseService.isAuthorized(id).subscribe(
+      response => this.isAuthorized = response
+    );
+    this.makeNewGroup();
+  }
 
   private loadGroups(id: number) {
     this.groupService.getList(id).subscribe(response => this.groups = response);
@@ -42,6 +43,10 @@ export class GroupPhaseFullComponent implements OnInit {
 
   onGroupCreation(): void {
     this.loadGroups(this.groupPhase.id);
+    this.makeNewGroup();
+  }
+
+  private makeNewGroup() {
     this.newGroup = new Group();
     this.newGroup.group_phase = this.groupPhase.id;
     this.newGroup.id = 0;

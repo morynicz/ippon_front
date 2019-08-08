@@ -142,6 +142,25 @@ describe('GroupPhaseFullComponent', () => {
       btn.nativeElement.click();
       expect(groupService.getListValues).toEqual([groupPhaseId]);
     });
-  });
 
+    describe("when name is written and create button is pushed", () => {
+      beforeEach(() => {
+        fixture.detectChanges();
+        const input = fixture.debugElement.query(By.css('[name="name"]'));
+        input.nativeElement.value = "ABC";
+        input.nativeElement.dispatchEvent(new Event('input'));
+        fixture.detectChanges();
+        let btn = fixture.debugElement.query(By.css("#save-group"));
+        btn.nativeElement.click();
+        fixture.detectChanges();
+      });
+
+      it("should create a group with correct group phase id", async(() => {
+        fixture.whenStable().then(() => {
+          expect(groupService.addValues[0].group_phase).toBe(groupPhaseId);
+          expect(groupService.addValues[0].id).toBe(0);
+        });
+      }));
+    });
+  });
 });
