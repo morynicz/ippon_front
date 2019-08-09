@@ -1,10 +1,10 @@
 <form class="form-horizontal row" role="form" name="fight-form" #fightForm="ngForm">
   <div class="form-group col-5">
     <div class="row">
-      <label for="shiro-player" class="col control-label" i18n>Shiro player</label>
+      <label for="aka-player" class="col control-label" i18n>Aka player</label>
       <div class="col">
-        <select id="shiro-player-select" [(ngModel)]="fight.shiro" name="shiro-player">
-          <option *ngFor="let player of shiroPlayers" [ngValue]="player.id">
+        <select id="aka-player-select" [(ngModel)]="fight.aka" name="aka-player">
+          <option *ngFor="let player of akaPlayers" [ngValue]="player.id">
             <ippon-player-line [player]="player"></ippon-player-line>
           </option>
         </select>
@@ -13,10 +13,10 @@
   </div>
   <div class="form-group col-5">
     <div class="row">
-      <label for="aka-player" class="col control-label" i18n>Aka player</label>
+      <label for="shiro-player" class="col control-label" i18n>Shiro player</label>
       <div class="col">
-        <select id="aka-player-select" [(ngModel)]="fight.aka" name="aka-player">
-          <option *ngFor="let player of akaPlayers" [ngValue]="player.id">
+        <select id="shiro-player-select" [(ngModel)]="fight.shiro" name="shiro-player">
+          <option *ngFor="let player of shiroPlayers" [ngValue]="player.id">
             <ippon-player-line [player]="player"></ippon-player-line>
           </option>
         </select>
