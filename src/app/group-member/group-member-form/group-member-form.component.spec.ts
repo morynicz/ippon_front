@@ -11,50 +11,7 @@ import { GroupMemberLineComponent } from '../group-member-line/group-member-line
 import { RouterTestingModule } from '@angular/router/testing';
 import { GroupMemberListComponent } from '../group-member-list/group-member-list.component';
 
-const tournamentId: number = 32;
-const groupId: number = 231;
-const teamFightId: number = 87;
-const unassignedTeams: Team[] = [
-  {
-    id: 22,
-    name: "T1",
-    members: [],
-    tournament: tournamentId
-  },
-  {
-    id: 27,
-    name: "T2",
-    members: [],
-    tournament: tournamentId
-  },
-  {
-    id: 28,
-    name: "T3",
-    members: [],
-    tournament: tournamentId
-  }
-]
 
-const assignedTeams: Team[] = [
-  {
-    id: 25,
-    name: "T4",
-    members: [],
-    tournament: tournamentId
-  },
-  {
-    id: 23,
-    name: "T5",
-    members: [],
-    tournament: tournamentId
-  },
-  {
-    id: 21,
-    name: "T6",
-    members: [],
-    tournament: tournamentId
-  }
-]
 
 
 describe('GroupMemberFormComponent', () => {
@@ -165,9 +122,12 @@ describe('GroupMemberFormComponent', () => {
       component.reloadRequest.subscribe(req => {
         reloadRequested = true;
       });
+      groupMemberService.getListReturnValue.push(assignedTeams.concat(unassignedTeams[0]));
+      groupMemberService.getNotAssignedReturnValue.push([unassignedTeams[1], unassignedTeams[2]]);
       fixture.detectChanges();
       btn = fixture.debugElement.query(By.css(`#add-member-${unassignedTeams[0].id}`));
       btn.nativeElement.click();
+      fixture.detectChanges();
     }));
 
     it("sends request to create member with selected team", () => {
@@ -181,6 +141,14 @@ describe('GroupMemberFormComponent', () => {
     it("triggers reload request in parent component", () => {
       expect(reloadRequested).toBe(true);
     });
+
+    it("triggers reload of teams", async(() => {
+      fixture.whenStable().then(() => {
+        expect(groupMemberService.getListValues).toEqual([groupId, groupId]);
+        expect(groupMemberService.getNotAssignedValues).toEqual([groupId, groupId]);
+      });
+    }));
+
   });
 
   describe("when delete-member button is pressed", () => {
@@ -193,8 +161,11 @@ describe('GroupMemberFormComponent', () => {
         reloadRequested = true;
       });
       fixture.detectChanges();
+      groupMemberService.getListReturnValue.push([assignedTeams[1], assignedTeams[2]]);
+      groupMemberService.getNotAssignedReturnValue.push(unassignedTeams.concat(assignedTeams[0]));
       btn = fixture.debugElement.query(By.css(`#delete-group-member-${assignedTeams[0].id}`));
       btn.nativeElement.click();
+      fixture.detectChanges();
     }));
 
     it("sends request to remove member with selected team", () => {
@@ -209,5 +180,11 @@ describe('GroupMemberFormComponent', () => {
       expect(reloadRequested).toBe(true);
     });
 
+    it("triggers reload of teams", async(() => {
+      fixture.whenStable().then(() => {
+        expect(groupMemberService.getListValues).toEqual([groupId, groupId]);
+        expect(groupMemberService.getNotAssignedValues).toEqual([groupId, groupId]);
+      });
+    }));
   });
 });

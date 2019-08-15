@@ -16,12 +16,12 @@ export class GroupMemberFormComponent implements OnInit {
   constructor(private groupMemberService: GroupMemberService) { }
 
   ngOnInit() {
-    this.groupMemberService.getList(this.group).subscribe(
-      response => this.assignedTeams = response
-    );
-    this.groupMemberService.getNotAssigned(this.group).subscribe(
-      response => this.unassignedTeams = response
-    )
+    this.loadTeams();
+  }
+
+  private loadTeams() {
+    this.groupMemberService.getList(this.group).subscribe(response => this.assignedTeams = response);
+    this.groupMemberService.getNotAssigned(this.group).subscribe(response => this.unassignedTeams = response);
   }
 
   private addMember(team: Team): void {
@@ -30,7 +30,7 @@ export class GroupMemberFormComponent implements OnInit {
       team: team.id
     }
     this.groupMemberService.add(member)
-      .subscribe(result => this.reloadRequest.emit(''));
+      .subscribe(result => this.reloadTeams());
   }
 
   private removeMember(team: Team): void {
@@ -44,5 +44,6 @@ export class GroupMemberFormComponent implements OnInit {
 
   reloadTeams(): void {
     this.reloadRequest.emit('');
+    this.loadTeams();
   }
 }

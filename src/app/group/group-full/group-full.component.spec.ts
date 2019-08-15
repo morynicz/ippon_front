@@ -231,7 +231,7 @@ describe('GroupFullComponent', () => {
       groupMemberService.getListValues = [];
       btn = fixture.debugElement.query(By.css(`#delete-group-member-${teams[0].id}`));
       btn.nativeElement.click();
-      expect(groupMemberService.getListValues).toEqual([groupId]);
+      expect(groupMemberService.getListValues).toEqual([groupId, groupId]);
     });
 
     it("reloads fights when fights reload is requested", (done) => {
