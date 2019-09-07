@@ -4,6 +4,7 @@ import { CupPhaseService } from '../cup-phase.service';
 import { CupPhase } from '../cup-phase';
 import { CupFightService } from '../../cup-fight/cup-fight.service';
 import { CupFight } from '../../cup-fight/cup-fight';
+import { PlannedPosition } from '../planned-position';
 
 
 @Component({
@@ -19,6 +20,7 @@ export class CupPhaseFullComponent implements OnInit {
   akaFights: CupFight[][] = [];
   shiroFights: CupFight[][] = [];
   fightMap: Map<number, CupFight>;
+  plannedPositions: PlannedPosition[] = [];
   constructor(private route: ActivatedRoute,
     private cupPhaseService: CupPhaseService,
     private cupFightService: CupFightService) { }
@@ -30,6 +32,7 @@ export class CupPhaseFullComponent implements OnInit {
       this.loadCupFights();
     });
     this.cupPhaseService.isAuthorized(id).subscribe((resp: boolean) => this.isAuthorized = resp);
+    this.cupPhaseService.getPlannedPositions(id).subscribe((resp: PlannedPosition[]) => this.plannedPositions = resp);
   }
 
   private loadCupFights() {

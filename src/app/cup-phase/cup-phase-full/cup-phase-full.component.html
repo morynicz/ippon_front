@@ -12,6 +12,13 @@
       <ippon-cup-side [cupFights]="shiroFights" [isReverseOrder]="false"></ippon-cup-side>
     </div>
   </div>
+  <div *ngIf="cupFights.length==0 && plannedPositions.length > 0" class="row">
+    <ul>
+      <li *ngFor="let plannedPos of plannedPositions">
+        {{plannedPos.label}}
+      </li>
+    </ul>
+  </div>
   <div *ngIf="isAuthorized">
     <ippon-cup-creation [cupPhase]="cupPhase" [cupFights]="cupFights" (reloadRequest)="loadCupFights()">
     </ippon-cup-creation>

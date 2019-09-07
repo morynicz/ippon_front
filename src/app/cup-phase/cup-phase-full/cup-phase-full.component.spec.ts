@@ -23,6 +23,8 @@ import { CupCreationComponent } from '../cup-creation/cup-creation.component';
 import { CupSideComponent } from '../cup-side/cup-side.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FightStatusPipe } from '../../fight-status.pipe';
+import { PlannedPosition } from '../planned-position';
+import { CupPlanningComponent } from '../cup-planning/cup-planning.component';
 
 class TeamFightServiceSpyMapped extends TeamFightServiceSpy {
   getReturnValuesMap: Map<number, TeamFight> = new Map<number, TeamFight>();
@@ -93,7 +95,8 @@ describe('CupPhaseFullComponent', () => {
         CupFightTileComponent,
         CupCreationComponent,
         CupSideComponent,
-        FightStatusPipe
+        FightStatusPipe,
+        CupPlanningComponent
       ],
       providers: [
         { provide: TeamService, useValue: teamService },
@@ -121,6 +124,7 @@ describe('CupPhaseFullComponent', () => {
       cupPhaseService.getReturnValues.push(cupPhase);
       cupFightService.getListReturnValues.push([]);
       teamService.getListReturnValues.push([]);
+      cupPhaseService.getPlannedPositionsReturnValues.push([]);
       fixture = TestBed.createComponent(CupPhaseFullComponent);
       component = fixture.componentInstance;
       fixture.detectChanges();
@@ -129,6 +133,85 @@ describe('CupPhaseFullComponent', () => {
 
     it("gets the cup phase information", () => {
       expect(cupPhaseService.getValues).toEqual([cupPhaseId]);
+    });
+
+
+  });
+
+  describe("when cup is not yet created but there are planned positions", () => {
+    let plannedPositions: PlannedPosition[] = [
+      {
+        id: 324,
+        label: "PosA",
+        cup_phase: cupPhaseId,
+        team: 0
+      },
+      {
+        id: 325,
+        label: "PosB",
+        cup_phase: cupPhaseId,
+        team: 0
+      },
+      {
+        id: 326,
+        label: "PosC",
+        cup_phase: cupPhaseId,
+        team: 0
+      },
+      {
+        id: 327,
+        label: "PosD",
+        cup_phase: cupPhaseId,
+        team: 0
+      },
+      {
+        id: 328,
+        label: "PosE",
+        cup_phase: cupPhaseId,
+        team: 0
+      },
+      {
+        id: 329,
+        label: "PosF",
+        cup_phase: cupPhaseId,
+        team: 0
+      },
+      {
+        id: 340,
+        label: "PosG",
+        cup_phase: cupPhaseId,
+        team: 0
+      },
+      {
+        id: 341,
+        label: "PosH",
+        cup_phase: cupPhaseId,
+        team: 0
+      }
+    ];
+    beforeEach(() => {
+      cupPhaseService.getReturnValues.push(cupPhase);
+      cupFightService.getListReturnValues.push([]);
+      teamService.getListReturnValues.push([]);
+      cupPhaseService.getPlannedPositionsReturnValues.push(plannedPositions);
+      fixture = TestBed.createComponent(CupPhaseFullComponent);
+      component = fixture.componentInstance;
+      fixture.detectChanges();
+      html = fixture.debugElement.nativeElement.textContent;
+
+    });
+
+    it("shows planned position names", () => {
+      fixture.detectChanges();
+      html = fixture.debugElement.nativeElement.textContent;
+      expect(html).toContain("PosA")
+      expect(html).toContain("PosB")
+      expect(html).toContain("PosC")
+      expect(html).toContain("PosD")
+      expect(html).toContain("PosE")
+      expect(html).toContain("PosF")
+      expect(html).toContain("PosG")
+      expect(html).toContain("PosH")
     });
   });
 
@@ -140,6 +223,7 @@ describe('CupPhaseFullComponent', () => {
       cupPhaseService.getReturnValues.push(cupPhase32Positions);
       cupPhaseService.isAuthorizedReturnValue = true;
       cupFightService.getListReturnValues.push(cupFights);
+      cupPhaseService.getPlannedPositionsReturnValues.push([]);
       teams.forEach(team => {
         teamService.getReturnValuesMap.set(team.id, team);
       });
