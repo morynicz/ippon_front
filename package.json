@@ -10,7 +10,9 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "postinstall": "./node_modules/@angular/cli/bin/ng build --aot --prod",
-    "heroku-postbuild": "ng build --configuration=production"
+    "heroku-postbuild": "ng build --configuration=production",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "engines": {
     "node": "10.16.0",
@@ -42,7 +44,8 @@
     "rxjs": "^6.5.2",
     "rxjs-compat": "^6.5.2",
     "rxjs-tslint": "^0.1.7",
-    "zone.js": "^0.9.1"
+    "zone.js": "^0.9.1",
+    "snyk": "^1.230.5"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.801.1",
@@ -65,5 +68,6 @@
     "ts-node": "^8.3.0",
     "tslint": "~5.12.1",
     "typescript": "3.4.5"
-  }
+  },
+  "snyk": true
 }
