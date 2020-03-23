@@ -175,7 +175,7 @@
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "ippon",
-      "styleext": "css"
+      "style": "css"
     },
     "@schematics/angular:directive": {
       "prefix": "ippon"
