@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { TeamFormComponent } from './team-form.component';
 import { TeamServiceSpy } from '../team.service.spy';
@@ -23,7 +23,7 @@ describe('TeamFormComponent', () => {
   let teamService: TeamServiceSpy;
   let reloadRequested: boolean;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     teamService = new TeamServiceSpy();
     reloadRequested = false;
     TestBed.configureTestingModule({

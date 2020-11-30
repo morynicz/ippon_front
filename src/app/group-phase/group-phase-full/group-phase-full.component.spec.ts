@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { GroupPhaseFullComponent } from './group-phase-full.component';
 import { Group } from '../../group/group';
@@ -47,7 +47,7 @@ describe('GroupPhaseFullComponent', () => {
   let groupService: GroupServiceSpy;
   let html;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     groupPhaseService = new GroupPhaseServiceSpy();
     groupPhaseService.getReturnValues.push(groupPhase);
     groupService = new GroupServiceSpy();
@@ -155,7 +155,7 @@ describe('GroupPhaseFullComponent', () => {
         fixture.detectChanges();
       });
 
-      it("should create a group with correct group phase id", async(() => {
+      it("should create a group with correct group phase id", waitForAsync(() => {
         fixture.whenStable().then(() => {
           expect(groupService.addValues[0].group_phase).toBe(groupPhaseId);
           expect(groupService.addValues[0].id).toBe(0);

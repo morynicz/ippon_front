@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { CupFightTileComponent } from './cup-fight-tile.component';
 import { CupFight } from '../cup-fight';
@@ -52,7 +52,7 @@ describe('CupFightTileComponent', () => {
   let teamFightService: TeamFightServiceSpy;
   let html;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     teamFightService = new TeamFightServiceSpy();
     teamService = new TeamServiceSpy();
     TestBed.configureTestingModule({
@@ -106,7 +106,7 @@ describe('CupFightTileComponent', () => {
     expect(teamFightService.getValues.length).toBe(0);
   });
 
-  it('has a link to the underlying teamfight', async(() => {
+  it('has a link to the underlying teamfight', waitForAsync(() => {
     component.cupFight = {
       id: cupFightId,
       cup_phase: cupPhaseId,

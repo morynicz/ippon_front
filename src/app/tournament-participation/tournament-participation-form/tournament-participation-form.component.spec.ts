@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { TournamentParticipationFormComponent } from './tournament-participation-form.component';
@@ -50,7 +50,7 @@ describe('TournamentParticipationFormComponent', () => {
   let html;
   let tournamentParticipantService: TournamentParticipantServiceSpy;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     tournamentParticipantService = new TournamentParticipantServiceSpy();
     tournamentParticipantService.updateParticipationReturnValue = participation;
     TestBed.configureTestingModule({
@@ -82,19 +82,19 @@ describe('TournamentParticipationFormComponent', () => {
       fixture.whenStable().then(() => {
       });
     });
-    it("should have paid checkbox set to true", async(() => {
+    it("should have paid checkbox set to true", waitForAsync(() => {
       fixture.whenStable().then(() => {
         let de = fixture.debugElement;
         expect(de.query(By.css('[name=is_paid]')).nativeElement.checked).toBe(true);
       });
     }));
-    it("should have registered checkbox set to false", async(() => {
+    it("should have registered checkbox set to false", waitForAsync(() => {
       fixture.whenStable().then(() => {
         let de = fixture.debugElement;
         expect(de.query(By.css('[name=is_registered]')).nativeElement.checked).toBe(false);
       });
     }));
-    it("should have qualified checkbox set to false", async(() => {
+    it("should have qualified checkbox set to false", waitForAsync(() => {
       fixture.whenStable().then(() => {
         let de = fixture.debugElement;
         expect(de.query(By.css('[name=is_qualified]')).nativeElement.checked).toBe(false);

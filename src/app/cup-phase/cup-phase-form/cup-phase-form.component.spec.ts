@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { CupPhaseFormComponent } from './cup-phase-form.component';
 import { CupPhase } from '../cup-phase';
@@ -24,7 +24,7 @@ describe('CupPhaseFormComponent', () => {
   let cupPhaseService: CupPhaseServiceSpy;
   let injectedCupPhase: CupPhase;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     cupPhaseService = new CupPhaseServiceSpy();
     TestBed.configureTestingModule({
       declarations: [CupPhaseFormComponent],

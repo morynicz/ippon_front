@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
@@ -55,7 +55,7 @@ describe('ClubFormComponent', () => {
   let location: LocationSpy;
 
   describe('when clubId is available', () => {
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
       clubService = new ClubServiceSpy();
       clubService.getReturnValues.push(club);
       location = new LocationSpy();
@@ -88,7 +88,7 @@ describe('ClubFormComponent', () => {
     });
 
     it('should load values of club with given id',
-      async(() => {
+      waitForAsync(() => {
         fixture.whenStable().then(() => {
           let de = fixture.debugElement;
           expect(de.query(By.css("[name=name]")).nativeElement.value)
@@ -112,12 +112,12 @@ describe('ClubFormComponent', () => {
           webpage: 'wwwwwww',
         };
         let btn;
-        beforeEach(async(() => {
+        beforeEach(waitForAsync(() => {
           fixture.detectChanges();
           btn = fixture.debugElement.query(By.css("#save-club"));
         }));
         it('should call club service updateClub with club values set in form',
-          async(() => {
+          waitForAsync(() => {
             fillForm(expectedClub, fixture);
             btn.nativeElement.click();
             fixture.detectChanges();
@@ -125,7 +125,7 @@ describe('ClubFormComponent', () => {
               expectClubsToBeEqual(clubService.updateValue, expectedClub);
             });
           }));
-        it('should go back to previous location', async(() => {
+        it('should go back to previous location', waitForAsync(() => {
           fillForm(expectedClub, fixture);
           btn.nativeElement.click();
           fixture.detectChanges();
@@ -137,7 +137,7 @@ describe('ClubFormComponent', () => {
   });
 
   describe('when clubId is not available', () => {
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
       clubService = new ClubServiceSpy();
       location = new LocationSpy();
       TestBed.configureTestingModule({
@@ -162,7 +162,7 @@ describe('ClubFormComponent', () => {
     });
 
     it('should not load any values',
-      async(() => {
+      waitForAsync(() => {
         fixture.whenStable().then(() => {
           let de = fixture.debugElement;
           expect(de.query(By.css("[name=name]")).nativeElement.value)
@@ -185,21 +185,21 @@ describe('ClubFormComponent', () => {
         webpage: 'wwwwwww',
       };
       let btn;
-      beforeEach(async(() => {
+      beforeEach(waitForAsync(() => {
         fixture.detectChanges();
         btn = fixture.debugElement.query(By.css("#save-club"));
         component.club = expectedClub;
         fixture.detectChanges();
       }));
       it('should call club service addClub with club values set in form',
-        async(() => {
+        waitForAsync(() => {
           fixture.whenStable().then(() => {
             btn.nativeElement.click();
             fixture.detectChanges();
             expectClubsToBeEqual(clubService.addValue, expectedClub);
           });
         }));
-      it('should go back to previous location', async(() => {
+      it('should go back to previous location', waitForAsync(() => {
         btn.nativeElement.click();
         fixture.detectChanges();
         fixture.whenStable().then(() => {

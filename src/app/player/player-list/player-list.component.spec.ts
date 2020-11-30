@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
@@ -28,7 +28,7 @@ describe('PlayersListComponent', () => {
   let fixture: ComponentFixture<PlayerListComponent>;
   let playerService: PlayerServiceSpy;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     playerService = new PlayerServiceSpy();
     playerService.getListReturnValues.push(dummyPlayers);
     TestBed.configureTestingModule({
@@ -50,13 +50,13 @@ describe('PlayersListComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should load players using player.service.getPlayers() on init', async(() => {
+  it('should load players using player.service.getPlayers() on init', waitForAsync(() => {
     fixture.whenStable().then(() => {
       expect(playerService.getListValue).toBeTruthy();
     });
   }));
 
-  it('should display loaded players', async(() => {
+  it('should display loaded players', waitForAsync(() => {
     fixture.whenStable().then(() => {
       const de = fixture.debugElement;
       const html = de.nativeElement;

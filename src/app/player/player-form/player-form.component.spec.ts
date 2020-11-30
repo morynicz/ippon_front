@@ -1,5 +1,5 @@
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { FormsModule } from '@angular/forms';
@@ -63,7 +63,7 @@ describe('PlayerFormComponent', () => {
   let location: LocationSpy;
 
   describe('when playerId is available', () => {
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
       playerService = new DeepPlayerServiceSpy();
       playerService.getReturnValues.push(player);
       clubService = new ClubServiceSpy();
@@ -95,7 +95,7 @@ describe('PlayerFormComponent', () => {
     });
 
     it('should load name of player with given id',
-      async(() => {
+      waitForAsync(() => {
         fixture.whenStable().then(() => {
           let de = fixture.debugElement;
           expect(de.query(By.css("[name=name]")).nativeElement.value)
@@ -104,7 +104,7 @@ describe('PlayerFormComponent', () => {
       }));
 
     it('should load surname of player with given id',
-      async(() => {
+      waitForAsync(() => {
         fixture.whenStable().then(() => {
           let de = fixture.debugElement;
           expect(de.query(By.css("[name=surname]")).nativeElement.value)
@@ -112,7 +112,7 @@ describe('PlayerFormComponent', () => {
         });
       }));
     it('should load rank of player with given id',
-      async(() => {
+      waitForAsync(() => {
         fixture.whenStable().then(() => {
           let de = fixture.debugElement;
           expect(de.query(By.css("[name=rank]")).nativeElement.value)
@@ -120,7 +120,7 @@ describe('PlayerFormComponent', () => {
         });
       }));
     it('should load sex of player with given id',
-      async(() => {
+      waitForAsync(() => {
         fixture.whenStable().then(() => {
           let de = fixture.debugElement;
           let sexInput = de.queryAll(By.css("[name=sex]"));
@@ -129,7 +129,7 @@ describe('PlayerFormComponent', () => {
         });
       }));
     it('should load club name of player with given id',
-      async(() => {
+      waitForAsync(() => {
         fixture.whenStable().then(() => {
           let de = fixture.debugElement;
           expect(de.query(By.css("[name=club]")).nativeElement
@@ -143,7 +143,7 @@ describe('PlayerFormComponent', () => {
       () => {
         let expectedPlayer: DeepPlayer;
         let btn;
-        beforeEach(async(() => {
+        beforeEach(waitForAsync(() => {
           fixture.detectChanges();
           btn = fixture.debugElement.query(By.css("#save-player"));
           expectedPlayer = {
@@ -161,12 +161,12 @@ describe('PlayerFormComponent', () => {
           fixture.detectChanges();
         }));
         it('should call player service updatePlayer with player values set in form',
-          async(() => {
+          waitForAsync(() => {
             fixture.whenStable().then(() => {
               expectPlayersToBeEqual(playerService.updateValue, expectedPlayer);
             });
           }));
-        it('should go back to previous location', async(() => {
+        it('should go back to previous location', waitForAsync(() => {
           fixture.whenStable().then(() => {
             expect(location.clicked).toBeTruthy();
           });
@@ -175,7 +175,7 @@ describe('PlayerFormComponent', () => {
   });
 
   describe('when playerId is not available', () => {
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
       playerService = new DeepPlayerServiceSpy();
       clubService = new ClubServiceSpy();
       clubService.getListReturnValues.push(clubs);
@@ -201,7 +201,7 @@ describe('PlayerFormComponent', () => {
       () => {
         let expectedPlayer: DeepPlayer;
         let btn;
-        beforeEach(async(() => {
+        beforeEach(waitForAsync(() => {
           fixture.detectChanges();
           btn = fixture.debugElement.query(By.css("#save-player"));
           expectedPlayer = {
@@ -218,12 +218,12 @@ describe('PlayerFormComponent', () => {
           btn.nativeElement.click();
         }));
         it('should call player service updatePlayer with player values set in form',
-          async(() => {
+          waitForAsync(() => {
             fixture.whenStable().then(() => {
               expectPlayersToBeEqual(playerService.addValue, expectedPlayer);
             });
           }));
-        it('should go back to previous location', async(() => {
+        it('should go back to previous location', waitForAsync(() => {
           fixture.whenStable().then(() => {
             expect(location.clicked).toBeTruthy();
           });

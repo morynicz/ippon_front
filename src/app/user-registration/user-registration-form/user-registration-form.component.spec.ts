@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { UserRegistrationFormComponent } from './user-registration-form.component';
 import { UserRegistration } from '../user-registartion';
@@ -30,7 +30,7 @@ describe('UserRegistrationFormComponent', () => {
   let userRegistrationService: UserRegistrationServiceSpy;
   let location: LocationSpy;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     userRegistrationService = new UserRegistrationServiceSpy();
     location = new LocationSpy();
     TestBed.configureTestingModule({
@@ -64,7 +64,7 @@ describe('UserRegistrationFormComponent', () => {
       expect(userRegistrationService.registrationCallValues).toContain(registration);
     });
 
-    it("should go back to root of application", async(() => {
+    it("should go back to root of application", waitForAsync(() => {
       fixture.whenStable().then(
         () => expect(location.clicked).toBeTruthy()
       );

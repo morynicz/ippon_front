@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { GroupMemberFormComponent } from './group-member-form.component';
 import { Team } from '../../team/team';
@@ -65,7 +65,7 @@ describe('GroupMemberFormComponent', () => {
   let groupMemberService: GroupMemberServiceSpy;
   let html;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     groupMemberService = new GroupMemberServiceSpy();
     groupMemberService.getListReturnValue.push(assignedTeams);
     groupMemberService.getNotAssignedReturnValue.push(unassignedTeams);
@@ -117,7 +117,7 @@ describe('GroupMemberFormComponent', () => {
     let btn;
     let reloadRequested: boolean;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
       reloadRequested = false;
       component.reloadRequest.subscribe(req => {
         reloadRequested = true;
@@ -142,7 +142,7 @@ describe('GroupMemberFormComponent', () => {
       expect(reloadRequested).toBe(true);
     });
 
-    it("triggers reload of teams", async(() => {
+    it("triggers reload of teams", waitForAsync(() => {
       fixture.whenStable().then(() => {
         expect(groupMemberService.getListValues).toEqual([groupId, groupId]);
         expect(groupMemberService.getNotAssignedValues).toEqual([groupId, groupId]);
@@ -155,7 +155,7 @@ describe('GroupMemberFormComponent', () => {
     let btn;
     let reloadRequested: boolean;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
       reloadRequested = false;
       component.reloadRequest.subscribe(req => {
         reloadRequested = true;
@@ -180,7 +180,7 @@ describe('GroupMemberFormComponent', () => {
       expect(reloadRequested).toBe(true);
     });
 
-    it("triggers reload of teams", async(() => {
+    it("triggers reload of teams", waitForAsync(() => {
       fixture.whenStable().then(() => {
         expect(groupMemberService.getListValues).toEqual([groupId, groupId]);
         expect(groupMemberService.getNotAssignedValues).toEqual([groupId, groupId]);

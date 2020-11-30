@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { TeamLineComponent } from './team-line.component';
 import { Team } from '../team';
@@ -23,7 +23,7 @@ describe('TeamLineComponent', () => {
   let teamService: TeamServiceSpy;
   let html;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     teamService = new TeamServiceSpy();
     TestBed.configureTestingModule({
       declarations: [TeamLineComponent],
@@ -64,7 +64,7 @@ describe('TeamLineComponent', () => {
     let btn;
     let reloadRequested: boolean;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
       reloadRequested = false;
       component.team = team;
       component.reloadRequest.subscribe(req => {

@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { GroupPhaseManagementComponent as GroupPhaseManagementComponent } from './group-phase-management.component';
 import { Tournament } from '../../tournament/tournament';
@@ -56,7 +56,7 @@ describe('GroupPhaseManagementComponent', () => {
   let tournamentService: TournamentServiceSpy;
   let html;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     groupPhaseService = new GroupPhaseServiceSpy();
     groupPhaseService.getListReturnValues.push(groupPhases);
     tournamentService = new TournamentServiceSpy();

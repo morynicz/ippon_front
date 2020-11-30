@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { By } from '@angular/platform-browser';
@@ -34,7 +34,7 @@ describe('PlayerFullComponent', () => {
   let clubService: ClubServiceSpy;
   let html;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     playerService = new PlayerServiceSpy();
     playerService.getReturnValues.push(expectedPlayer);
     clubService = new ClubServiceSpy();
@@ -42,7 +42,7 @@ describe('PlayerFullComponent', () => {
   }));
 
   describe('when user is not admin', () => {
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
       TestBed.configureTestingModule({
         declarations: [PlayerFullComponent, KendoRankPipe],
         imports: [RouterTestingModule],
@@ -72,7 +72,7 @@ describe('PlayerFullComponent', () => {
       expect(component).toBeTruthy();
     });
 
-    it("shows player's name", async(() => {
+    it("shows player's name", waitForAsync(() => {
       expect(html.textContent).toContain('P1');
     }));
     it("shows player's surname", () => {
@@ -80,7 +80,7 @@ describe('PlayerFullComponent', () => {
     });
   });
   describe("when user is admin", () => {
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
       playerService.isAuthorizedReturnValue = true;
       TestBed.configureTestingModule({
         declarations: [PlayerFullComponent, KendoRankPipe],
@@ -114,7 +114,7 @@ describe('PlayerFullComponent', () => {
       expect(html.querySelector('#edit-player')).toBeTruthy();
     });
     it('should call deletePlayer from player service with correct id when delete player button clicked',
-      async(() => {
+      waitForAsync(() => {
         fixture.whenStable().then(() => {
           fixture.detectChanges();
           const btn = fixture.debugElement.query(By.css('#delete-player'));

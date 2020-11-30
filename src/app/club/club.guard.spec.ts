@@ -1,4 +1,4 @@
-import { TestBed, async, inject } from '@angular/core/testing';
+import { TestBed, inject, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ActivatedRouteSnapshot, Router, RouterStateSnapshot, convertToParamMap } from '@angular/router';
 import { Component } from '@angular/core';
@@ -29,7 +29,7 @@ describe('ClubGuard', () => {
   let activatedRouteSnapshot: ActivatedRouteSnapshot;
   let clubId: number = 42;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [StubComponent],
       imports: [RouterTestingModule.withRoutes([
@@ -70,7 +70,7 @@ describe('ClubGuard', () => {
   });
 
   it('should return true when user is logged in and authorized club admin',
-    async(inject(
+    waitForAsync(inject(
       [ClubGuard, Router],
       (guard: ClubGuard) => {
         clubService.isAuthorizedReturnValue = true;
@@ -82,7 +82,7 @@ describe('ClubGuard', () => {
 
 
   it('should return false when user is logged in and not authorized club admin',
-    async(inject(
+    waitForAsync(inject(
       [ClubGuard, Router],
       (guard: ClubGuard) => {
         clubService.isAuthorizedReturnValue = false;
@@ -93,7 +93,7 @@ describe('ClubGuard', () => {
       })));
 
   it('should return false when user is not logged in',
-    async(inject(
+    waitForAsync(inject(
       [ClubGuard, Router],
       (guard: ClubGuard) => {
         clubService.isAuthorizedReturnValue = false;

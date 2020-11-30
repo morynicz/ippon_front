@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { TournamentTeamListComponent } from './tournament-team-list.component';
 import { TeamLineComponent } from '../../team/team-line/team-line.component';
@@ -97,7 +97,7 @@ describe('TournamentTeamListComponent', () => {
   let tournamentParticipantService: TournamentParticipantServiceSpy;
   let html;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     teamService = new TeamServiceSpy();
     teamService.getListReturnValues.push(teams);
     teamService.isAuthorizedReturnValue = false;

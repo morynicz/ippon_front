@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
@@ -68,7 +68,7 @@ describe('TournamentFormComponent', () => {
   let location: LocationSpy;
 
   describe('when tournament id is available', () => {
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
       tournamentService = new TournamentServiceSpy();
       tournamentService.getReturnValues.push(tournament);
       location = new LocationSpy();
@@ -102,7 +102,7 @@ describe('TournamentFormComponent', () => {
     });
 
     it('should load name of tournament with given id',
-      async(() => {
+      waitForAsync(() => {
         fixture.whenStable().then(() => {
           let de = fixture.debugElement;
           expect(de.query(By.css("[name=name]")).nativeElement.value)
@@ -111,7 +111,7 @@ describe('TournamentFormComponent', () => {
       }));
 
     it('should load description of tournament with given id',
-      async(() => {
+      waitForAsync(() => {
         fixture.whenStable().then(() => {
           let de = fixture.debugElement;
           expect(de.query(By.css("[name=description]")).nativeElement.value)
@@ -120,7 +120,7 @@ describe('TournamentFormComponent', () => {
       }));
 
     it('should load webpage of tournament with given id',
-      async(() => {
+      waitForAsync(() => {
         fixture.whenStable().then(() => {
           let de = fixture.debugElement;
           expect(de.query(By.css("[name=webpage]")).nativeElement.value)
@@ -129,7 +129,7 @@ describe('TournamentFormComponent', () => {
       }));
 
     it('should load city of tournament with given id',
-      async(() => {
+      waitForAsync(() => {
         fixture.whenStable().then(() => {
           let de = fixture.debugElement;
           expect(de.query(By.css("[name=city]")).nativeElement.value)
@@ -137,7 +137,7 @@ describe('TournamentFormComponent', () => {
         });
       }));
     it('should load date of tournament with given id',
-      async(() => {
+      waitForAsync(() => {
         fixture.whenStable().then(() => {
           let de = fixture.debugElement;
           let pipe = new DatePipe('en');
@@ -147,7 +147,7 @@ describe('TournamentFormComponent', () => {
       }));
 
     it('should load rank constraint of tournament with given id',
-      async(() => {
+      waitForAsync(() => {
         fixture.whenStable().then(() => {
           let de = fixture.debugElement;
           expect(de.query(By.css("[name=rank-constraint]")).nativeElement.value)
@@ -156,7 +156,7 @@ describe('TournamentFormComponent', () => {
       }));
 
     it('should load rank constraint value of tournament with given id',
-      async(() => {
+      waitForAsync(() => {
         fixture.whenStable().then(() => {
           let de = fixture.debugElement;
           expect(de.query(By.css("[name=rank-constraint-value]")).nativeElement.value)
@@ -165,7 +165,7 @@ describe('TournamentFormComponent', () => {
       }));
 
     it('should load age constraint of tournament with given id',
-      async(() => {
+      waitForAsync(() => {
         fixture.whenStable().then(() => {
           let de = fixture.debugElement;
           expect(de.query(By.css("[name=age-constraint]")).nativeElement.value)
@@ -174,7 +174,7 @@ describe('TournamentFormComponent', () => {
       }));
 
     it('should load age constraint value of tournament with given id',
-      async(() => {
+      waitForAsync(() => {
         fixture.whenStable().then(() => {
           let de = fixture.debugElement;
           expect(de.query(By.css("[name=age-constraint-value]")).nativeElement.value)
@@ -183,7 +183,7 @@ describe('TournamentFormComponent', () => {
       }));
 
     it('should load sex constraint of tournament with given id',
-      async(() => {
+      waitForAsync(() => {
         fixture.whenStable().then(() => {
           let de = fixture.debugElement;
           expect(de.query(By.css("[name=sex-constraint]")).nativeElement.value)
@@ -192,7 +192,7 @@ describe('TournamentFormComponent', () => {
       }));
 
     it('should load team size of tournament with given id',
-      async(() => {
+      waitForAsync(() => {
         fixture.whenStable().then(() => {
           let de = fixture.debugElement;
           expect(de.query(By.css("[name=team-size]")).nativeElement.value)
@@ -201,7 +201,7 @@ describe('TournamentFormComponent', () => {
       }));
 
     it('should load ko match length of tournament with given id',
-      async(() => {
+      waitForAsync(() => {
         fixture.whenStable().then(() => {
           let de = fixture.debugElement;
           expect(de.query(By.css("[name=ko-match-length]")).nativeElement.value)
@@ -210,7 +210,7 @@ describe('TournamentFormComponent', () => {
       }));
 
     it('should load group match length of tournament with given id',
-      async(() => {
+      waitForAsync(() => {
         fixture.whenStable().then(() => {
           let de = fixture.debugElement;
           expect(de.query(By.css("[name=group-match-length]")).nativeElement.value)
@@ -219,7 +219,7 @@ describe('TournamentFormComponent', () => {
       }));
 
     it('should load final match length of tournament with given id',
-      async(() => {
+      waitForAsync(() => {
         fixture.whenStable().then(() => {
           let de = fixture.debugElement;
           expect(de.query(By.css("[name=final-match-length]")).nativeElement.value)
@@ -228,7 +228,7 @@ describe('TournamentFormComponent', () => {
       }));
 
     it('should load finals depth of tournament with given id',
-      async(() => {
+      waitForAsync(() => {
         fixture.whenStable().then(() => {
           let de = fixture.debugElement;
           expect(de.query(By.css("[name=finals-depth]")).nativeElement.value)
@@ -241,7 +241,7 @@ describe('TournamentFormComponent', () => {
       () => {
         let expectedTournament: Tournament;
         let btn;
-        beforeEach(async(() => {
+        beforeEach(waitForAsync(() => {
           fixture.detectChanges();
           btn = fixture.debugElement.query(By.css("#save-tournament"));
           expectedTournament = {
@@ -269,12 +269,12 @@ describe('TournamentFormComponent', () => {
           fixture.detectChanges();
         }));
         it('should call tournament service updateTournament with tournament values set in form',
-          async(() => {
+          waitForAsync(() => {
             fixture.whenStable().then(() => {
               expectTournamentsToBeEqual(tournamentService.updateValue, expectedTournament);
             });
           }));
-        it('should go back to previous location', async(() => {
+        it('should go back to previous location', waitForAsync(() => {
           fixture.whenStable().then(() => {
             expect(location.clicked).toBeTruthy();
           });
@@ -283,7 +283,7 @@ describe('TournamentFormComponent', () => {
   });
 
   describe('when tournament id is not available', () => {
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
       tournamentService = new TournamentServiceSpy();
       location = new LocationSpy();
       TestBed.configureTestingModule({
@@ -309,7 +309,7 @@ describe('TournamentFormComponent', () => {
     });
 
     it('should prepare a new tournament instead of trying to get it from tournament service',
-      async(() => {
+      waitForAsync(() => {
         expect(tournamentService.getValues).not.toEqual([0]);
         expectTournamentsToBeEqual(component.tournament, new Tournament());
       }));
@@ -318,7 +318,7 @@ describe('TournamentFormComponent', () => {
       () => {
         let expectedTournament: Tournament;
         let btn;
-        beforeEach(async(() => {
+        beforeEach(waitForAsync(() => {
           fixture.detectChanges();
           btn = fixture.debugElement.query(By.css("#save-tournament"));
           expectedTournament = {
@@ -346,12 +346,12 @@ describe('TournamentFormComponent', () => {
           fixture.detectChanges();
         }));
         it('should call tournament service createTournament with tournament values set in form',
-          async(() => {
+          waitForAsync(() => {
             fixture.whenStable().then(() => {
               expectTournamentsToBeEqual(tournamentService.addValue, expectedTournament);
             });
           }));
-        it('should go back to previous location', async(() => {
+        it('should go back to previous location', waitForAsync(() => {
           fixture.whenStable().then(() => {
             expect(location.clicked).toBeTruthy();
           });

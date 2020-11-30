@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 
 import { Observable } from 'rxjs/Observable';
@@ -74,7 +74,7 @@ describe('FightFullComponent', () => {
   let pointService: PointServiceSpy;
   let html;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     fightService = new FightServiceSpy();
     playerService = new PlayerServiceSpy();
     playerService.getReturnValues = [

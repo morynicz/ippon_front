@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 
@@ -31,7 +31,7 @@ describe('PointFormComponent', () => {
   let pointService: PointServiceSpy;
   let html;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     pointService = new PointServiceSpy();
     TestBed.configureTestingModule({
       declarations: [
@@ -87,7 +87,7 @@ describe('PointFormComponent', () => {
       let reloadRequested: boolean;
       let akaPoint: Point;
 
-      beforeEach(async(() => {
+      beforeEach(waitForAsync(() => {
         akaPoint = {
           id: 0,
           fight: fightId,
@@ -120,7 +120,7 @@ describe('PointFormComponent', () => {
       let reloadRequested: boolean;
       let shiroPoint: Point;
 
-      beforeEach(async(() => {
+      beforeEach(waitForAsync(() => {
         shiroPoint = {
           id: 0,
           fight: fightId,

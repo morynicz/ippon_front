@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { TeamFightFullComponent } from './team-fight-full.component';
 import { TeamService } from '../../team/team.service';
@@ -123,7 +123,7 @@ describe('TeamFightFullComponent', () => {
   let pointService: PointServiceSpy;
   let html;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     teamService = new TeamServiceSpy();
     teamFightService = new TeamFightServiceSpy();
     fightService = new FightServiceSpy();

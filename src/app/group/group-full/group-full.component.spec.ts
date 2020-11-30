@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { GroupFullComponent } from './group-full.component';
 import { GroupServiceSpy } from '../group.service.spy';
@@ -91,7 +91,7 @@ describe('GroupFullComponent', () => {
   let groupMemberService: GroupMemberServiceSpy;
   let html: any;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     groupService = new GroupServiceSpy();
     groupService.getReturnValues.push(group);
     teamFightService = new TeamFightServiceSpy();
@@ -165,7 +165,7 @@ describe('GroupFullComponent', () => {
       expect(teamsArea.nativeElement.textContent).toContain(teams[2].name);
     });
 
-    it("should show scores of all teams in group inside designated area", async(() => {
+    it("should show scores of all teams in group inside designated area", waitForAsync(() => {
       let teamsArea = fixture.debugElement.query(By.css("#group-members-list"));
       fixture.whenStable().then(() => {
         expect(teamsArea.nativeElement.textContent).toContain(1);

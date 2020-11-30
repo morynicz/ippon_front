@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { GroupMemberListComponent } from './group-member-list.component';
 import { Team } from '../../team/team';
@@ -54,7 +54,7 @@ describe('GroupMemberListComponent', () => {
   let reloadRequested: boolean = false;
   let html;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     groupMemberService = new GroupMemberServiceSpy();
     groupMemberService.getScoreReturnValues.set(teams[0].id, { wins: 1, draws: 2, points: 3, id: teams[0].id });
     groupMemberService.getScoreReturnValues.set(teams[1].id, { wins: 4, draws: 5, points: 6, id: teams[1].id });
@@ -86,7 +86,7 @@ describe('GroupMemberListComponent', () => {
       fixture.detectChanges();
     });
 
-    it("should reload content", async(() => {
+    it("should reload content", waitForAsync(() => {
       component.teams = teams;
       fixture.detectChanges();
       fixture.detectChanges();
@@ -131,7 +131,7 @@ describe('GroupMemberListComponent', () => {
         expect(component).toBeTruthy();
       });
 
-      it("should show names of all teams in group inside designated area", async(() => {
+      it("should show names of all teams in group inside designated area", waitForAsync(() => {
         fixture.whenStable().then(() => {
           expect(html).toContain(teams[0].name);
           expect(html).toContain(teams[1].name);
@@ -139,7 +139,7 @@ describe('GroupMemberListComponent', () => {
         });
       }));
 
-      it("should show scores of all teams in group inside designated area", async(() => {
+      it("should show scores of all teams in group inside designated area", waitForAsync(() => {
         fixture.whenStable().then(() => {
           expect(html).toContain(1);
           expect(html).toContain(2);
@@ -169,7 +169,7 @@ describe('GroupMemberListComponent', () => {
         expect(html).toContain("Delete");
       });
 
-      it("should show names of all teams in group inside designated area", async(() => {
+      it("should show names of all teams in group inside designated area", waitForAsync(() => {
         fixture.whenStable().then(() => {
           expect(html).toContain(teams[0].name);
           expect(html).toContain(teams[1].name);
@@ -177,7 +177,7 @@ describe('GroupMemberListComponent', () => {
         });
       }));
 
-      it("should show scores of all teams in group inside designated area", async(() => {
+      it("should show scores of all teams in group inside designated area", waitForAsync(() => {
         fixture.whenStable().then(() => {
           expect(html).toContain(1);
           expect(html).toContain(2);

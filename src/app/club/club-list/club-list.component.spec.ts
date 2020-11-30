@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Observable';
@@ -45,7 +45,7 @@ describe('ClubListComponent', () => {
   let clubService: ClubServiceSpy;
   let authenticationService: AuthenticationServiceSpy;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     clubService = new ClubServiceSpy();
     clubService.getListReturnValues.push(clubs);
     authenticationService = new AuthenticationServiceSpy();
@@ -68,13 +68,13 @@ describe('ClubListComponent', () => {
       fixture.detectChanges();
     });
 
-    it('should load clubs using club.service.getClubs() on init', async(() => {
+    it('should load clubs using club.service.getClubs() on init', waitForAsync(() => {
       fixture.whenStable().then(() => {
         expect(clubService.getListValue).toBeTruthy();
       });
     }));
 
-    it('should display loaded clubs', async(() => {
+    it('should display loaded clubs', waitForAsync(() => {
       fixture.whenStable().then(() => {
         const de = fixture.debugElement;
         const html = de.nativeElement;
@@ -87,7 +87,7 @@ describe('ClubListComponent', () => {
       });
     }));
 
-    it('should not display "add Club" button if user not signed in', async(() => {
+    it('should not display "add Club" button if user not signed in', waitForAsync(() => {
       authenticationService.isLoggedInResult = false;
       fixture.whenStable().then(() => {
         const de = fixture.debugElement;
@@ -107,7 +107,7 @@ describe('ClubListComponent', () => {
     });
 
 
-    it('should should display "add Club" button if auth service isLoggedIn returns true', async(() => {
+    it('should should display "add Club" button if auth service isLoggedIn returns true', waitForAsync(() => {
       authenticationService.isLoggedInResult = true;
       fixture.detectChanges();
       fixture.whenStable().then(() => {

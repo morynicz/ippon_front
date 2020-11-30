@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { GroupLineComponent } from './group-line.component';
 import { Group } from '../group';
@@ -21,7 +21,7 @@ describe('GroupLineComponent', () => {
   let groupService: GroupServiceSpy;
   let html;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     groupService = new GroupServiceSpy();
     TestBed.configureTestingModule({
       declarations: [GroupLineComponent],
@@ -63,7 +63,7 @@ describe('GroupLineComponent', () => {
     let btn;
     let reloadRequested: boolean;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
       reloadRequested = false;
       component.reloadRequest.subscribe(req => {
         reloadRequested = true;

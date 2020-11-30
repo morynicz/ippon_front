@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import { NavbarComponent } from './navbar.component';
@@ -44,7 +44,7 @@ describe('NavbarComponent', () => {
   let fixture: ComponentFixture<NavbarComponent>;
   let authService: AuthenticationServiceSpy;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     authService = new AuthenticationServiceSpy();
     TestBed.configureTestingModule({
       declarations: [NavbarComponent],
@@ -62,7 +62,7 @@ describe('NavbarComponent', () => {
       fixture.detectChanges();
     });
 
-    it('should ask authenticationService if the user is signedIn', async(() => {
+    it('should ask authenticationService if the user is signedIn', waitForAsync(() => {
       expect(authService.isLoggedInCalled).toBeTruthy();
     }));
 

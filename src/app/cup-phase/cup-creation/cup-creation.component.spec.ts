@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { CupCreationComponent } from './cup-creation.component';
 import { Observable, of } from 'rxjs';
@@ -130,7 +130,7 @@ describe('CupCreationComponent', () => {
   let reloadRequested: boolean;
   let html;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     teamService = new TeamServiceSpyMapped();
     teamFightService = new CrdlaServiceSpyWithMemory<TeamFight>();
     cupFightService = new CrdlaServiceSpyWithMemory<CupFight>();
@@ -298,7 +298,7 @@ describe('CupCreationComponent', () => {
         expect(cupFightService.addValues).toEqual([expectedCupFight]);
       });
 
-      it("requests reload of cup fights", async(() => {
+      it("requests reload of cup fights", waitForAsync(() => {
         fixture.whenStable().then(() => {
           expect(reloadRequested).toBeTruthy();
         });
@@ -426,7 +426,7 @@ describe('CupCreationComponent', () => {
         generateButton.click();
       });
 
-      it("creates cup fights with selected teams", async(() => {
+      it("creates cup fights with selected teams", waitForAsync(() => {
         fixture.detectChanges();
         fixture.whenStable().then(() => {
           expect(teamFightService.addValues).toContain(expectedTeamFights[0], "first tf missing");
@@ -443,7 +443,7 @@ describe('CupCreationComponent', () => {
         });
       }));
 
-      it("requests reload of cup fights", async(() => {
+      it("requests reload of cup fights", waitForAsync(() => {
         fixture.whenStable().then(() => {
           expect(reloadRequested).toBeTruthy();
         });

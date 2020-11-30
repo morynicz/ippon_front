@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { TeamFightLineComponent } from './team-fight-line.component';
 import { TeamFight } from '../team-fight';
@@ -51,7 +51,7 @@ describe('TeamFightLineComponent', () => {
   let teamFightService: TeamFightServiceSpy;
   let de: DebugElement;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     teamService = new TeamServiceSpy();
     teamFightService = new TeamFightServiceSpy();
     teamFightService.getReturnValues.push(teamFight);
@@ -119,7 +119,7 @@ describe('TeamFightLineComponent', () => {
       let btn;
       let reloadRequested: boolean;
 
-      beforeEach(async(() => {
+      beforeEach(waitForAsync(() => {
         reloadRequested = false;
         component.reloadRequest.subscribe(req => {
           reloadRequested = true;

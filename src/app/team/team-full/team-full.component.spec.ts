@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { TeamFullComponent } from './team-full.component';
 import { Player } from '../../player/player';
@@ -53,7 +53,7 @@ describe('TeamFullComponent', () => {
   let teamMemberService: TeamMemberServiceSpy;
   let html;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     teamService = new TeamServiceSpy();
     teamService.getReturnValues.push(team);
     teamMemberService = new TeamMemberServiceSpy();
@@ -113,7 +113,7 @@ describe('TeamFullComponent', () => {
       let btn;
       let reloadRequested: boolean;
 
-      beforeEach(async(() => {
+      beforeEach(waitForAsync(() => {
         teamMemberService.getListReturnValue.push([members[1], members[2]]);
         teamMemberService.getNotAssignedReturnValue.push([unassigned[0], members[0]]);
         fixture.detectChanges();
@@ -136,7 +136,7 @@ describe('TeamFullComponent', () => {
     describe("when add member button is pressed", () => {
       let btn;
 
-      beforeEach(async(() => {
+      beforeEach(waitForAsync(() => {
         teamMemberService.getListReturnValue.push([members[0], members[1], members[2], unassigned[0]]);
         teamMemberService.getNotAssignedReturnValue.push([]);
         fixture.detectChanges();

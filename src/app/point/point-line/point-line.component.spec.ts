@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import { PointLineComponent } from './point-line.component';
@@ -28,7 +28,7 @@ describe('PointLineComponent', () => {
   let pipe: PointTypePipe;
   let pointService: PointServiceSpy;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     pointService = new PointServiceSpy();
     TestBed.configureTestingModule({
       declarations: [
@@ -91,7 +91,7 @@ describe('PointLineComponent', () => {
     let reloadRequested: boolean;
     let point: Point;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
       point = {
         id: 0,
         fight: fightId,

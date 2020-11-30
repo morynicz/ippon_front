@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { CupSideComponent } from './cup-side.component';
 import { cupFights, teams, teamFights } from '../cup-phase-full/test-scaffolding';
@@ -37,7 +37,7 @@ describe('CupSideComponent', () => {
   let teamFightService: TeamFightServiceSpyMapped;
   let html;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     teamService = new TeamServiceSpyMapped();
     teamFightService = new TeamFightServiceSpyMapped();
     TestBed.configureTestingModule({

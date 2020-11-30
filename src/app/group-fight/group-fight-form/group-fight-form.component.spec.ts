@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { GroupFightFormComponent } from './group-fight-form.component';
 import { GroupFightServiceSpy } from '../group-fight.service.spy';
@@ -64,7 +64,7 @@ describe('GroupFightFormComponent', () => {
   let reloadRequested: boolean;
   let html;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     teamFightService = new TeamFightServiceSpy();
     teamFightService.addReturnValues.push(teamFight);
     groupFightService = new GroupFightServiceSpy();

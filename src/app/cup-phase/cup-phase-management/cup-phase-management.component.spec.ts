@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { CupPhaseManagementComponent } from './cup-phase-management.component';
 import { Tournament } from '../../tournament/tournament';
@@ -62,7 +62,7 @@ describe('CupPhaseManagementComponent', () => {
   let tournamentService: TournamentServiceSpy;
   let html;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     cupPhaseService = new CupPhaseServiceSpy();
     cupPhaseService.getListReturnValues.push(cupPhases);
     tournamentService = new TournamentServiceSpy();

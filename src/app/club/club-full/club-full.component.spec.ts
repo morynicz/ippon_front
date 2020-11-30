@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
@@ -34,7 +34,7 @@ describe('ClubFullComponent', () => {
   let clubService: ClubServiceSpy;
 
   describe("when user is not admin", () => {
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
       clubService = new ClubServiceSpy();
       clubService.getPlayersReturnValues.push(players);
       clubService.getReturnValues.push(club);
@@ -72,7 +72,7 @@ describe('ClubFullComponent', () => {
       expect(html.textContent).toContain('W1');
     });
 
-    it('should display all club players', async(() => {
+    it('should display all club players', waitForAsync(() => {
       fixture.whenStable().then(() => {
         fixture.detectChanges();
         const de = fixture.debugElement;
@@ -86,7 +86,7 @@ describe('ClubFullComponent', () => {
       });
     }));
 
-    it('should not display admin controls if the user is not club admin', async(() => {
+    it('should not display admin controls if the user is not club admin', waitForAsync(() => {
       fixture.whenStable().then(() => {
         fixture.detectChanges();
         const de = fixture.debugElement;
@@ -98,7 +98,7 @@ describe('ClubFullComponent', () => {
     }));
   });
   describe("when user is admin", () => {
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
       clubService = new ClubServiceSpy();
       clubService.getReturnValues.push(club);
       clubService.isAuthorizedReturnValue = true;
@@ -129,7 +129,7 @@ describe('ClubFullComponent', () => {
     });
 
     it('should call deleteClub from club service with correct id when delete club button clicked',
-      async(() => {
+      waitForAsync(() => {
         fixture.whenStable().then(() => {
           fixture.detectChanges();
           const btn = fixture.debugElement.query(By.css('#delete-club'));

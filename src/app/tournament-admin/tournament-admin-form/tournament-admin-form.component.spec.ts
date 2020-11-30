@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 
@@ -52,7 +52,7 @@ describe('TournamentAdminFormComponent', () => {
   let adminService: TournamentAdminServiceSpy;
   let html;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     adminService = new TournamentAdminServiceSpy();
     adminService.updateAdminReturnValue = admin2;
     TestBed.configureTestingModule({
@@ -89,7 +89,7 @@ describe('TournamentAdminFormComponent', () => {
 
   describe("when update button is clicked", () => {
     let btn;
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
       component.admin = admin;
       fixture.detectChanges();
       btn = fixture.debugElement.query(By.css("#save-admin"));
@@ -107,7 +107,7 @@ describe('TournamentAdminFormComponent', () => {
   describe("when delete button is clicked", () => {
     let btn;
     let requested: boolean;
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
       component.admin = admin;
       requested = false;
       fixture.detectChanges();
@@ -121,7 +121,7 @@ describe('TournamentAdminFormComponent', () => {
       expect(adminService.deleteAdminValue).toBe(admin.id);
     });
     it("should request reloading admins",
-      async(() => {
+      waitForAsync(() => {
         expect(requested).toBe(true);
       }));
   });

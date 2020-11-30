@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -72,7 +72,7 @@ describe('TournamentParticipationListComponent', () => {
   let tournamentParticipantService: TournamentParticipantServiceSpy;
   let html;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     tournamentParticipantService = new TournamentParticipantServiceSpy();
     tournamentParticipantService.getParticipationsReturnValue = participations;
     tournamentParticipantService.getNonParticipantsReturnValue = players;

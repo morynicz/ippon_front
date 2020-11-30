@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { FightFormComponent } from './fight-form.component';
 import { TeamFight } from '../../team-fight/team-fight';
@@ -68,7 +68,7 @@ describe('FightFormComponent', () => {
   let fightService: FightServiceSpy;
   let reloadRequested: boolean;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     fightService = new FightServiceSpy();
     reloadRequested = false;
     TestBed.configureTestingModule({

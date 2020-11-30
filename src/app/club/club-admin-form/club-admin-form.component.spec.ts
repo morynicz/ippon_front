@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
@@ -39,7 +39,7 @@ describe('ClubAdminFormComponent', () => {
   let adminService: ClubAdminServiceSpy;
   let html;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     adminService = new ClubAdminServiceSpy();
     TestBed.configureTestingModule({
       declarations: [ClubAdminFormComponent],
@@ -68,7 +68,7 @@ describe('ClubAdminFormComponent', () => {
   describe("when delete button is clicked", () => {
     let btn;
     let requested: boolean;
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
       component.admin = admin;
       requested = false;
       fixture.detectChanges();
@@ -85,7 +85,7 @@ describe('ClubAdminFormComponent', () => {
       });
     });
     it("should request reloading admins",
-      async(() => {
+      waitForAsync(() => {
         fixture.whenStable().then(() => {
           expect(requested).toBe(true);
         });

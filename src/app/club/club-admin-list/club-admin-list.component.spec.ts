@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ActivatedRoute, convertToParamMap, ParamMap } from '@angular/router';
 import { Location } from '@angular/common';
@@ -74,7 +74,7 @@ describe('ClubAdminListComponent', () => {
   let adminService: ClubAdminServiceSpy;
   let html;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     adminService = new ClubAdminServiceSpy();
     adminService.getAdminsReturnValue = admins;
     adminService.getNonAdminsReturnValue = users;

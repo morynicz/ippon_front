@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Observable';
@@ -70,7 +70,7 @@ describe('TournamentListComponent', () => {
   let tournamentService: TournamentServiceSpy;
   let authenticationService: AuthenticationServiceSpy;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     tournamentService = new TournamentServiceSpy();
     tournamentService.getListReturnValues.push(tournaments);
     authenticationService = new AuthenticationServiceSpy();
@@ -93,13 +93,13 @@ describe('TournamentListComponent', () => {
       fixture.detectChanges();
     });
 
-    it('should load tournaments using tournament.service on init', async(() => {
+    it('should load tournaments using tournament.service on init', waitForAsync(() => {
       fixture.whenStable().then(() => {
         expect(tournamentService.getListValue).toBeTruthy();
       });
     }));
 
-    it('should display loaded tournaments', async(() => {
+    it('should display loaded tournaments', waitForAsync(() => {
       fixture.whenStable().then(() => {
         const de = fixture.debugElement;
         const html = de.nativeElement;
@@ -114,7 +114,7 @@ describe('TournamentListComponent', () => {
       });
     }));
 
-    it('should not display "add Tournament" button if user not signed in', async(() => {
+    it('should not display "add Tournament" button if user not signed in', waitForAsync(() => {
       authenticationService.isLoggedInResult = false;
       fixture.whenStable().then(() => {
         const de = fixture.debugElement;
@@ -134,7 +134,7 @@ describe('TournamentListComponent', () => {
       fixture.detectChanges();
     });
 
-    it('should should display "add Tournament" button if auth service isLoggedIn returns true', async(() => {
+    it('should should display "add Tournament" button if auth service isLoggedIn returns true', waitForAsync(() => {
       fixture.whenStable().then(() => {
         const de = fixture.debugElement;
         const html = de.nativeElement;

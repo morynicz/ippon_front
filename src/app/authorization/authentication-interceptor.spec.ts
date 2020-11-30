@@ -1,4 +1,4 @@
-import { TestBed, inject, async } from '@angular/core/testing';
+import { TestBed, inject, waitForAsync } from '@angular/core/testing';
 import { HttpRequest } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
@@ -46,7 +46,7 @@ describe('AuthenticationInterceptor', () => {
   }));
 
   it('should add the id_token to header when token present',
-    async(inject([AuthenticationInterceptor, HttpClient, HttpTestingController],
+    waitForAsync(inject([AuthenticationInterceptor, HttpClient, HttpTestingController],
       (interceptor: AuthenticationInterceptor,
         http: HttpClient,
         backend: HttpTestingController
@@ -60,7 +60,7 @@ describe('AuthenticationInterceptor', () => {
       })));
 
   it('should call token maintenance to keep token fresh',
-    async(inject([AuthenticationInterceptor, HttpClient, HttpTestingController],
+    waitForAsync(inject([AuthenticationInterceptor, HttpClient, HttpTestingController],
       (interceptor: AuthenticationInterceptor,
         http: HttpClient,
         backend: HttpTestingController
@@ -72,7 +72,7 @@ describe('AuthenticationInterceptor', () => {
       })));
 
   it('should add nothing to header when token not present',
-    async(inject([AuthenticationInterceptor, HttpClient, HttpTestingController],
+    waitForAsync(inject([AuthenticationInterceptor, HttpClient, HttpTestingController],
       (interceptor: AuthenticationInterceptor,
         http: HttpClient,
         backend: HttpTestingController

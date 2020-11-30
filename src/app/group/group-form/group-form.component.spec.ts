@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { GroupFormComponent } from './group-form.component';
 import { GroupService } from '../group.service';
@@ -22,7 +22,7 @@ describe('GroupFormComponent', () => {
   let groupService: GroupServiceSpy;
   let injectedGroup: Group;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     groupService = new GroupServiceSpy();
     TestBed.configureTestingModule({
       declarations: [GroupFormComponent],

@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { GroupPhaseLineComponent } from './group-phase-line.component';
 import { GroupPhaseService } from '../group-phase.service';
@@ -22,7 +22,7 @@ describe('GroupPhaseLineComponent', () => {
   let groupPhaseService: GroupPhaseServiceSpy;
   let html;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     groupPhaseService = new GroupPhaseServiceSpy();
     TestBed.configureTestingModule({
       declarations: [GroupPhaseLineComponent],
@@ -67,7 +67,7 @@ describe('GroupPhaseLineComponent', () => {
     let btn;
     let reloadRequested: boolean;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
       reloadRequested = false;
       component.groupPhase = groupPhase;
       component.reloadRequest.subscribe(req => {

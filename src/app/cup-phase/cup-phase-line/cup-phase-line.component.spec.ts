@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { CupPhaseLineComponent } from './cup-phase-line.component';
 import { CupPhase } from '../cup-phase';
@@ -24,7 +24,7 @@ describe('CupPhaseLineComponent', () => {
   let cupPhaseService: CupPhaseServiceSpy;
   let html;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     cupPhaseService = new CupPhaseServiceSpy();
     TestBed.configureTestingModule({
       declarations: [CupPhaseLineComponent],
@@ -77,7 +77,7 @@ describe('CupPhaseLineComponent', () => {
     let btn;
     let reloadRequested: boolean;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
       reloadRequested = false;
       component.cupPhase = cupPhase;
       component.reloadRequest.subscribe(req => {

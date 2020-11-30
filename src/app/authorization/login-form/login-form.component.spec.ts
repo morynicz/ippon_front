@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
 
@@ -33,7 +33,7 @@ describe('LoginFormComponent', () => {
   let authService: AuthenticationServiceSpy;
   let el: HTMLElement;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     authService = new AuthenticationServiceSpy();
     TestBed.configureTestingModule({
       declarations: [LoginFormComponent],
@@ -50,7 +50,7 @@ describe('LoginFormComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should call logIn function of authentication service when log in button pressed', async(() => {
+  it('should call logIn function of authentication service when log in button pressed', waitForAsync(() => {
     fixture.whenStable().then(() => {
       setInput('email', 'email@server.com', fixture);
       setInput('password', 'password1', fixture);
