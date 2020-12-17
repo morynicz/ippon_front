@@ -20,7 +20,7 @@
   "dependencies": {
     "@angular-devkit/core": "^10.2.0",
     "@angular/animations": "10.2.2",
-    "@angular/cli": "10.2.0",
+    "@angular/cli": "10.2.1",
     "@angular/common": "10.2.2",
     "@angular/compiler": "10.2.2",
     "@angular/compiler-cli": "^10.2.2",
